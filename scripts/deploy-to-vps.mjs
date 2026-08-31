@@ -60,14 +60,11 @@ async function uploadFileSFTP(conn, localPath, remotePath) {
   return new Promise((resolve, reject) => {
     conn.sftp((err, sftp) => {
       if (err) return reject(err);
-      const readStream = fs.createReadStream(localPath);
-      const writeStream = sftp.createWriteStream(remotePath);
-      writeStream.on('close', () => {
+      sftp.fastPut(localPath, remotePath, (err) => {
+        if (err) return reject(err);
         console.log(`✅ SFTP Upload Complete: ${path.basename(localPath)} -> ${remotePath}`);
         resolve();
       });
-      writeStream.on('error', (err) => reject(err));
-      readStream.pipe(writeStream);
     });
   });
 }

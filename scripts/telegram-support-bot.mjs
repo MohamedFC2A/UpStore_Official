@@ -701,7 +701,7 @@ async function renderCatalog(chatId, messageId, callbackQueryId, businessConnect
 
   const lang = getUserLanguage(chatId);
   const text = [
-    t('catalog_title', lang),
+    `🛍️ <b>${t('catalog_title', lang)}</b>`,
     '──────────────────',
     t('catalog_sub', lang),
   ].join('\n');
@@ -740,14 +740,19 @@ async function renderCategoryBrands(chatId, categoryId, messageId, callbackQuery
 
   const catName = lang === 'ar' ? category.name_ar : (category.name_en || category.name_ar);
   const text = [
-    `<b>${catName}</b>`,
+    `<b>${category.emoji || '📁'} ${catName}</b>`,
     '──────────────────',
-    t('catalog_sub', lang),
+    lang === 'ar'
+      ? 'اختر الخدمة أو الماركة المطلوبة لعرض باقاتها والأسعار:'
+      : 'Select a brand or service to view available tiers & pricing:',
   ].join('\n');
 
   const buttons = brands.map((b) => {
+    const prods = getProductsByBrand(b.id);
+    const minPrice = prods.length > 0 ? Math.min(...prods.map((p) => p.our_price)) : 0.19;
     const brandName = lang === 'ar' ? b.name_ar : (b.name_en || b.name_ar);
-    return [{ text: `${b.icon} ${brandName}`, callback_data: `brand_${b.id}` }];
+    const priceTag = lang === 'ar' ? `(من $${minPrice.toFixed(2)})` : `(From $${minPrice.toFixed(2)})`;
+    return [{ text: `${b.icon || '💎'} ${brandName} ${priceTag}`, callback_data: `brand_${b.id}` }];
   });
 
   buttons.push([
@@ -783,15 +788,32 @@ async function renderBrandTiers(chatId, brandId, messageId, callbackQueryId, bus
   }
 
   const brandName = lang === 'ar' ? brand.name_ar : (brand.name_en || brand.name_ar);
-  const text = [
-    `<b>${brandName}</b>`,
-    '──────────────────',
-    t('catalog_sub', lang),
-  ].join('\n');
+  const desc = brand.desc ? `<i>${brand.desc}</i>\n` : '';
 
-  const buttons = products.map((p) => [
-    { text: `${p.tier_name} (${p.duration_months}M) — $${p.our_price.toFixed(2)}`, callback_data: `prod_${p.short_id}` },
-  ]);
+  const text = [
+    `<b>${brand.icon || '💎'} ${brandName}</b>`,
+    '──────────────────',
+    desc,
+    lang === 'ar'
+      ? 'اختر فئة الاشتراك والمدة المناسبة لك للشراء الفوري:'
+      : 'Select your preferred subscription tier & duration:',
+  ].filter(Boolean).join('\n');
+
+  const buttons = products.map((p) => {
+    let label = '';
+    if (lang === 'ar') {
+      const match = (p.name_ar || '').match(/\(([^)]+)\)/);
+      label = match ? match[1] : (p.subscription_duration || p.name_ar);
+    } else {
+      label = p.name || p.subscription_duration;
+    }
+    return [
+      {
+        text: `⚡ ${label} — $${p.our_price.toFixed(2)}`,
+        callback_data: `prod_${p.short_id}`,
+      },
+    ];
+  });
 
   buttons.push([
     { text: `🔙 ${t('btn_back', lang)}`, callback_data: `cat_${brand.category_id}` },
@@ -822,18 +844,27 @@ async function renderProductDetails(chatId, shortId, messageId, callbackQueryId,
   }
 
   const brand = getBrandById(product.brand_id);
-  const brandTitle = brand ? (lang === 'ar' ? brand.name_ar : (brand.name_en || brand.name_ar)) : product.name_ar;
-  const prodTitle = `${brandTitle} — ${product.tier_name}`;
+  const prodTitle = lang === 'ar' ? product.name_ar : (product.name || product.name_ar);
+  const discountPct = product.market_price > product.our_price
+    ? Math.round(((product.market_price - product.our_price) / product.market_price) * 100)
+    : 0;
+
+  const advantages = (product.advantages_ar && product.advantages_ar.length > 0)
+    ? product.advantages_ar.slice(0, 4).map((a) => `• ${a}`).join('\n')
+    : '';
 
   const caption = [
-    `<b>${prodTitle}</b>`,
+    `<b>${product.icon_symbol || brand?.icon || '💎'} ${prodTitle}</b>`,
     '──────────────────',
-    `• <b>${t('product_price', lang)}</b> <code>$${product.our_price.toFixed(2)} USDT</code>`,
-    `• <b>${t('delivery', lang)}</b> ${t('instant_delivery', lang)}`,
-    `• <b>${t('warranty_badge', lang)}</b>`,
+    `💰 <b>${t('product_price', lang)}:</b> <code>$${product.our_price.toFixed(2)} USDT</code>${discountPct > 0 ? ` <i>(خصم ${discountPct}%)</i>` : ''}`,
+    `💵 <b>محلي:</b> <code>${product.price_egp} ج.م</code> | <code>${product.price_sar} ر.س</code>`,
+    `⏳ <b>المدة:</b> ${product.subscription_duration}`,
+    `🛡️ <b>الضمان:</b> ${product.warranty_duration}`,
+    `⚡ <b>التسليم:</b> ${t('instant_delivery', lang)}`,
+    advantages ? `──────────────────\n<b>المزايا:</b>\n${advantages}` : '',
     '──────────────────',
     t('choose_payment', lang),
-  ].join('\n');
+  ].filter(Boolean).join('\n');
 
   const keyboard = {
     inline_keyboard: [
