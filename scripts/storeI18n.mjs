@@ -193,6 +193,9 @@ export const I18N_STRINGS = {
     // Catalog & Categories
     catalog_title: '<b>أقسام المتجر</b>',
     catalog_sub: 'اختر القسم لتصفح الاشتراكات المتاحة:',
+    select_brand_sub: 'اختر الخدمة أو الماركة المطلوبة لعرض باقاتها والأسعار:',
+    select_tier_sub: 'اختر فئة الاشتراك والمدة المناسبة لك للشراء الفوري:',
+    starting_from: 'من',
     cat_ai: 'الذكاء الاصطناعي',
     cat_dev: 'أدوات المطورين',
     cat_design: 'التصميم والميديا',
@@ -201,10 +204,14 @@ export const I18N_STRINGS = {
     cat_prod: 'الإنتاجية والأوفيس',
 
     // Product Details
-    product_price: 'السعر:',
-    original_price: 'السعر الأصلي:',
-    discount: 'خصم:',
-    delivery: 'التسليم:',
+    product_price: 'السعر',
+    original_price: 'السعر الأصلي',
+    discount: 'خصم',
+    delivery: 'التسليم',
+    duration_label: 'المدة',
+    warranty_label: 'الضمان',
+    local_price_label: 'محلي',
+    features_label: 'المزايا',
     instant_delivery: 'فوري وتلقائي',
     warranty_badge: 'ضمان ذهبي كامل طوال المدة',
     choose_payment: 'اختر وسيلة الدفع المناسبة:',
@@ -257,6 +264,10 @@ export const I18N_STRINGS = {
     // My Orders
     orders_title: '<b>سجل طلباتي</b>',
     no_orders: 'لا توجد طلبات سابقة حتى الآن.',
+
+    // Bot Meta
+    bot_description: 'متجر UpStore الرسمي لاشتراكات الذكاء الاصطناعي وتطبيقات البرمجة والميديا بأرخص الأسعار العالمية مع تسليم فوري وضمان ذهبي 100% 👑.',
+    bot_short_description: 'أقوى اشتراكات وتراخيص الذكاء الاصطناعي والتطبيقات بأرخص سعر وتسليم فوري ⚡',
   },
 
   en: {
@@ -283,6 +294,9 @@ export const I18N_STRINGS = {
     // Catalog & Categories
     catalog_title: '<b>Store Categories</b>',
     catalog_sub: 'Select a category to explore available plans:',
+    select_brand_sub: 'Select a brand or service to view available tiers & pricing:',
+    select_tier_sub: 'Select your preferred subscription tier & duration for instant delivery:',
+    starting_from: 'From',
     cat_ai: 'Artificial Intelligence',
     cat_dev: 'Developer Tools',
     cat_design: 'Design & Creative',
@@ -291,10 +305,14 @@ export const I18N_STRINGS = {
     cat_prod: 'Productivity & Office',
 
     // Product Details
-    product_price: 'Price:',
-    original_price: 'Original:',
-    discount: 'Discount:',
-    delivery: 'Delivery:',
+    product_price: 'Price',
+    original_price: 'Original',
+    discount: 'Discount',
+    delivery: 'Delivery',
+    duration_label: 'Duration',
+    warranty_label: 'Warranty',
+    local_price_label: 'Local Equivalent',
+    features_label: 'Key Features',
     instant_delivery: 'Instant & Automated',
     warranty_badge: '100% full-term replacement warranty',
     choose_payment: 'Choose your payment method:',
@@ -347,6 +365,10 @@ export const I18N_STRINGS = {
     // My Orders
     orders_title: '<b>My Orders</b>',
     no_orders: 'You have no order history yet.',
+
+    // Bot Meta
+    bot_description: 'Official UpStore for premium AI subscriptions (ChatGPT Plus, Gemini, Claude, Cursor, Canva, Netflix) at ultra-affordable prices with instant delivery and 100% replacement warranty.',
+    bot_short_description: 'Official AI & developer subscriptions at wholesale prices with instant delivery ⚡',
   },
 
   es: {
@@ -369,8 +391,11 @@ export const I18N_STRINGS = {
     select_language_sub: 'Elige tu idioma preferido:',
     language_changed: 'Idioma cambiado con éxito ✅',
 
-    catalog_title: '<b>Categorías</b>',
+    catalog_title: '<b>Categorías de la Tienda</b>',
     catalog_sub: 'Selecciona una categoría:',
+    select_brand_sub: 'Selecciona una marca o servicio para ver planes y precios:',
+    select_tier_sub: 'Elige tu plan y duración preferidos para entrega inmediata:',
+    starting_from: 'Desde',
     cat_ai: 'Inteligencia Artificial',
     cat_dev: 'Herramientas de Desarrollador',
     cat_design: 'Diseño y Creatividad',
@@ -378,10 +403,14 @@ export const I18N_STRINGS = {
     cat_vpn: 'Seguridad y VPN',
     cat_prod: 'Productividad y Oficina',
 
-    product_price: 'Precio:',
-    original_price: 'Original:',
-    discount: 'Descuento:',
-    delivery: 'Entrega:',
+    product_price: 'Precio',
+    original_price: 'Original',
+    discount: 'Descuento',
+    delivery: 'Entrega',
+    duration_label: 'Duración',
+    warranty_label: 'Garantía',
+    local_price_label: 'Equivalente local',
+    features_label: 'Características',
     instant_delivery: 'Instantánea y Automática',
     warranty_badge: 'Garantía de reemplazo 100% durante todo el período',
     choose_payment: 'Elige el método de pago:',
@@ -428,6 +457,9 @@ export const I18N_STRINGS = {
 
     orders_title: '<b>Mis Pedidos</b>',
     no_orders: 'No tienes pedidos registrados todavía.',
+
+    bot_description: 'Tienda oficial UpStore de suscripciones premium de IA (ChatGPT Plus, Gemini, Claude, Cursor, Canva, Netflix) al mejor precio con entrega instantánea y garantía 100%.',
+    bot_short_description: 'Suscripciones oficiales de IA al mejor precio con entrega inmediata ⚡',
   },
 
   fr: {
@@ -452,6 +484,9 @@ export const I18N_STRINGS = {
 
     catalog_title: '<b>Catégories</b>',
     catalog_sub: 'Sélectionnez une catégorie:',
+    select_brand_sub: 'Sélectionnez une marque ou un service pour voir les forfaits et tarifs:',
+    select_tier_sub: 'Choisissez votre forfait et durée pour une livraison instantanée:',
+    starting_from: 'À partir de',
     cat_ai: 'Intelligence Artificielle',
     cat_dev: 'Outils Développeur',
     cat_design: 'Design & Médias',
@@ -459,10 +494,14 @@ export const I18N_STRINGS = {
     cat_vpn: 'Sécurité & VPN',
     cat_prod: 'Productivité & Bureau',
 
-    product_price: 'Prix:',
-    original_price: 'Original:',
-    discount: 'Réduction:',
-    delivery: 'Livraison:',
+    product_price: 'Prix',
+    original_price: 'Original',
+    discount: 'Réduction',
+    delivery: 'Livraison',
+    duration_label: 'Durée',
+    warranty_label: 'Garantie',
+    local_price_label: 'Équivalent local',
+    features_label: 'Avantages clés',
     instant_delivery: 'Instantanée et Automatique',
     warranty_badge: 'Garantie de remplacement 100% pendant toute la durée',
     choose_payment: 'Choisissez le moyen de paiement:',
@@ -509,11 +548,14 @@ export const I18N_STRINGS = {
 
     orders_title: '<b>Mes Commandes</b>',
     no_orders: 'Vous n’avez aucune commande pour le moment.',
+
+    bot_description: 'Boutique officielle UpStore pour abonnements IA premium (ChatGPT Plus, Gemini, Claude, Cursor, Canva, Netflix) aux prix les plus bas avec livraison instantanée et garantie 100%.',
+    bot_short_description: 'Abonnements IA officiels aux prix les plus bas avec livraison immédiate ⚡',
   },
 
   ru: {
     // Russian
-    main_menu_title: '<b>UpStore Digital</b>',
+    main_menu_title: '<b>UpStore Цифровой Магазин</b>',
     main_menu_sub: 'Официальные подписки на нейросети, инструменты для разработчиков и приложения.',
     btn_catalog: 'Товары',
     btn_orders: 'Мои заказы',
@@ -533,6 +575,9 @@ export const I18N_STRINGS = {
 
     catalog_title: '<b>Категории магазина</b>',
     catalog_sub: 'Выберите категорию товаров:',
+    select_brand_sub: 'Выберите сервис или бренд, чтобы увидеть тарифы и цены:',
+    select_tier_sub: 'Выберите подходящий тариф и срок для моментальной доставки:',
+    starting_from: 'От',
     cat_ai: 'Искусственный интеллект',
     cat_dev: 'Инструменты разработчика',
     cat_design: 'Дизайн и креатив',
@@ -540,11 +585,15 @@ export const I18N_STRINGS = {
     cat_vpn: 'Безопасность и VPN',
     cat_prod: 'Продуктивность и офис',
 
-    product_price: 'Цена:',
-    original_price: 'Обычная:',
-    discount: 'Скидка:',
-    delivery: 'Доставка:',
-    instant_delivery: 'Мгновенно и автоматически',
+    product_price: 'Цена',
+    original_price: 'Официальная',
+    discount: 'Скидка',
+    delivery: 'Доставка',
+    duration_label: 'Срок',
+    warranty_label: 'Гарантия',
+    local_price_label: 'В местной валюте',
+    features_label: 'Преимущества',
+    instant_delivery: 'Моментально и автоматически',
     warranty_badge: '100% гарантия замены на весь срок',
     choose_payment: 'Выберите способ оплаты:',
     btn_pay_bybit: 'Оплата через Bybit (0% комиссии)',
@@ -590,11 +639,14 @@ export const I18N_STRINGS = {
 
     orders_title: '<b>Мои заказы</b>',
     no_orders: 'У вас пока нет заказов.',
+
+    bot_description: 'Официальный магазин UpStore для премиум подписок ИИ (ChatGPT Plus, Gemini, Claude, Cursor, Canva, Netflix) по лучшим ценам с мгновенной выдачей и 100% гарантией.',
+    bot_short_description: 'Официальные подписки ИИ по выгодным ценам с мгновенной доставкой ⚡',
   },
 
   tr: {
     // Turkish
-    main_menu_title: '<b>UpStore Digital</b>',
+    main_menu_title: '<b>UpStore Dijital Mağaza</b>',
     main_menu_sub: 'Resmi yapay zeka abonelikleri, geliştirici araçları ve premium uygulamalar.',
     btn_catalog: 'Ürünler',
     btn_orders: 'Siparişlerim',
@@ -614,6 +666,9 @@ export const I18N_STRINGS = {
 
     catalog_title: '<b>Kategoriler</b>',
     catalog_sub: 'Bir kategori seçin:',
+    select_brand_sub: 'Mevcut paketleri ve fiyatları görmek için bir marka veya servis seçin:',
+    select_tier_sub: 'Anında teslimat için tercih ettiğiniz paket ve süreyi seçin:',
+    starting_from: 'Başlangıç',
     cat_ai: 'Yapay Zeka (AI)',
     cat_dev: 'Geliştirici Araçları',
     cat_design: 'Tasarım ve Medya',
@@ -621,10 +676,14 @@ export const I18N_STRINGS = {
     cat_vpn: 'Güvenlik ve VPN',
     cat_prod: 'Üretkenlik ve Ofis',
 
-    product_price: 'Fiyat:',
-    original_price: 'Orijinal:',
-    discount: 'İndirim:',
-    delivery: 'Teslimat:',
+    product_price: 'Fiyat',
+    original_price: 'Orijinal',
+    discount: 'İndirim',
+    delivery: 'Teslimat',
+    duration_label: 'Süre',
+    warranty_label: 'Garanti',
+    local_price_label: 'Yerel Para Birimi',
+    features_label: 'Özellikler',
     instant_delivery: 'Anında ve Otomatik',
     warranty_badge: 'Tüm süre boyunca %100 değişim garantisi',
     choose_payment: 'Ödeme yöntemini seçin:',
@@ -671,11 +730,14 @@ export const I18N_STRINGS = {
 
     orders_title: '<b>Siparişlerim</b>',
     no_orders: 'Henüz bir siparişiniz bulunmuyor.',
+
+    bot_description: 'Yapay zeka premium abonelikleri için resmi UpStore mağazası (ChatGPT Plus, Gemini, Claude, Cursor, Canva, Netflix). Anında teslimat ve %100 değişim garantisi.',
+    bot_short_description: 'En uygun fiyatlarla resmi yapay zeka abonelikleri ve anında teslimat ⚡',
   },
 
   de: {
     // German
-    main_menu_title: '<b>UpStore Digital</b>',
+    main_menu_title: '<b>UpStore Digitaler Store</b>',
     main_menu_sub: 'Offizielle KI-Abonnements, Entwicklertools und Premium-Apps.',
     btn_catalog: 'Produkte',
     btn_orders: 'Meine Bestellungen',
@@ -695,6 +757,9 @@ export const I18N_STRINGS = {
 
     catalog_title: '<b>Kategorien</b>',
     catalog_sub: 'Wählen Sie eine Kategorie:',
+    select_brand_sub: 'Wählen Sie eine Marke oder einen Dienst, um Tarife und Preise anzuzeigen:',
+    select_tier_sub: 'Wählen Sie Ihren bevorzugten Tarif und Zeitraum für sofortige Lieferung:',
+    starting_from: 'Ab',
     cat_ai: 'Künstliche Intelligenz',
     cat_dev: 'Entwickler-Tools',
     cat_design: 'Design & Medien',
@@ -702,10 +767,14 @@ export const I18N_STRINGS = {
     cat_vpn: 'Sicherheit & VPN',
     cat_prod: 'Produktivität & Office',
 
-    product_price: 'Preis:',
-    original_price: 'Original:',
-    discount: 'Rabatt:',
-    delivery: 'Lieferung:',
+    product_price: 'Preis',
+    original_price: 'Original',
+    discount: 'Rabatt',
+    delivery: 'Lieferung',
+    duration_label: 'Laufzeit',
+    warranty_label: 'Garantie',
+    local_price_label: 'Lokaler Preis',
+    features_label: 'Vorteile',
     instant_delivery: 'Sofort und automatisch',
     warranty_badge: '100% Ersatzgarantie über die gesamte Laufzeit',
     choose_payment: 'Zahlungsmethode wählen:',
@@ -752,6 +821,9 @@ export const I18N_STRINGS = {
 
     orders_title: '<b>Meine Bestellungen</b>',
     no_orders: 'Sie haben noch keine Bestellungen.',
+
+    bot_description: 'Offizieller UpStore für Premium-KI-Abonnements (ChatGPT Plus, Gemini, Claude, Cursor, Canva, Netflix) zu Bestpreisen mit Sofortlieferung und 100% Garantie.',
+    bot_short_description: 'Offizielle KI-Abonnements zu Großhandelspreisen mit Sofortlieferung ⚡',
   },
 };
 

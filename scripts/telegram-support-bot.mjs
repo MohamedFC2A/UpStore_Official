@@ -757,16 +757,14 @@ async function renderCategoryBrands(chatId, categoryId, messageId, callbackQuery
   const text = [
     `<b>${category.emoji || '📁'} ${catName}</b>`,
     '──────────────────',
-    lang === 'ar'
-      ? 'اختر الخدمة أو الماركة المطلوبة لعرض باقاتها والأسعار:'
-      : 'Select a brand or service to view available tiers & pricing:',
+    t('select_brand_sub', lang),
   ].join('\n');
 
   const buttons = brands.map((b) => {
     const prods = getProductsByBrand(b.id);
     const minPrice = prods.length > 0 ? Math.min(...prods.map((p) => p.our_price)) : 0.19;
     const brandName = lang === 'ar' ? b.name_ar : (b.name_en || b.name_ar);
-    const priceTag = lang === 'ar' ? `(من $${minPrice.toFixed(2)})` : `(From $${minPrice.toFixed(2)})`;
+    const priceTag = `(${t('starting_from', lang)} $${minPrice.toFixed(2)})`;
     return [{ text: `${b.icon || '💎'} ${brandName} ${priceTag}`, callback_data: `brand_${b.id}` }];
   });
 
@@ -809,9 +807,7 @@ async function renderBrandTiers(chatId, brandId, messageId, callbackQueryId, bus
     `<b>${brand.icon || '💎'} ${brandName}</b>`,
     '──────────────────',
     desc,
-    lang === 'ar'
-      ? 'اختر فئة الاشتراك والمدة المناسبة لك للشراء الفوري:'
-      : 'Select your preferred subscription tier & duration:',
+    t('select_tier_sub', lang),
   ].filter(Boolean).join('\n');
 
   const buttons = products.map((p) => {
@@ -868,15 +864,20 @@ async function renderProductDetails(chatId, shortId, messageId, callbackQueryId,
     ? product.advantages_ar.slice(0, 4).map((a) => `• ${a}`).join('\n')
     : '';
 
+  const discountText = discountPct > 0 ? ` <i>(${t('discount', lang)} ${discountPct}%)</i>` : '';
+  const localPriceText = lang === 'ar'
+    ? `💵 <b>${t('local_price_label', lang)}:</b> <code>${product.price_egp} ج.م</code> | <code>${product.price_sar} ر.س</code>`
+    : `💵 <b>${t('local_price_label', lang)}:</b> <code>${product.price_egp} EGP</code> | <code>${product.price_sar} SAR</code>`;
+
   const caption = [
     `<b>${product.icon_symbol || brand?.icon || '💎'} ${prodTitle}</b>`,
     '──────────────────',
-    `💰 <b>${t('product_price', lang)}:</b> <code>$${product.our_price.toFixed(2)} USDT</code>${discountPct > 0 ? ` <i>(خصم ${discountPct}%)</i>` : ''}`,
-    `💵 <b>محلي:</b> <code>${product.price_egp} ج.م</code> | <code>${product.price_sar} ر.س</code>`,
-    `⏳ <b>المدة:</b> ${product.subscription_duration}`,
-    `🛡️ <b>الضمان:</b> ${product.warranty_duration}`,
-    `⚡ <b>التسليم:</b> ${t('instant_delivery', lang)}`,
-    advantages ? `──────────────────\n<b>المزايا:</b>\n${advantages}` : '',
+    `💰 <b>${t('product_price', lang)}:</b> <code>$${product.our_price.toFixed(2)} USDT</code>${discountText}`,
+    localPriceText,
+    `⏳ <b>${t('duration_label', lang)}:</b> ${product.subscription_duration}`,
+    `🛡️ <b>${t('warranty_label', lang)}:</b> ${product.warranty_duration}`,
+    `⚡ <b>${t('delivery', lang)}:</b> ${t('instant_delivery', lang)}`,
+    advantages ? `──────────────────\n<b>${t('features_label', lang)}:</b>\n${advantages}` : '',
     '──────────────────',
     t('choose_payment', lang),
   ].filter(Boolean).join('\n');
