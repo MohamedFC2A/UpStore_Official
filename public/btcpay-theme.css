@@ -1,0 +1,222 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   UpStore — Cyberpunk/Dark-Modern BTCPay Server Custom Theme CSS
+   To apply: Paste your-domain/btcpay-theme.css in BTCPay Server -> Store Settings -> Checkout Experience -> Custom CSS URL
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@400;600;700;850&display=swap');
+
+:root {
+    --btcpay-bg: #0d0d11 !important;
+    --btcpay-bg-surface: #14141a !important;
+    --btcpay-bg-elevated: #1c1c24 !important;
+    --btcpay-primary: #00ff66 !important;
+    --btcpay-primary-hover: #1aff80 !important;
+    --btcpay-primary-dim: rgba(0, 255, 102, 0.1) !important;
+    --btcpay-secondary: #00f0ff !important;
+    --btcpay-text: #f3f4f6 !important;
+    --btcpay-text-muted: #9ca3af !important;
+    --btcpay-border: rgba(255, 255, 255, 0.06) !important;
+    
+    /* Greenfield / standard BTCPay css variables */
+    --color-bg-main: #0d0d11 !important;
+    --color-bg-card: #14141a !important;
+    --color-primary: #00ff66 !important;
+    --color-primary-text: #0d0d11 !important;
+    --color-text-main: #f3f4f6 !important;
+    --color-text-muted: #9ca3af !important;
+    --color-border-main: rgba(255, 255, 255, 0.06) !important;
+}
+
+/* Base Styles */
+body, html {
+    background-color: #0d0d11 !important;
+    background: #0d0d11 !important;
+    color: #f3f4f6 !important;
+    font-family: 'Plus Jakarta Sans', 'Cairo', system-ui, -apple-system, sans-serif !important;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* Layout container styling */
+.checkout-body, 
+.checkout-container,
+#checkout-app,
+main {
+    background-color: #0d0d11 !important;
+}
+
+/* Card overrides */
+.card,
+.payment-box,
+.checkout-card {
+    background-color: #14141a !important;
+    background: #14141a !important;
+    border: 1px solid rgba(255, 255, 255, 0.05) !important;
+    border-radius: 16px !important;
+    box-shadow: 0 4px 25px rgba(0, 0, 0, 0.45) !important;
+}
+
+/* Typography & Headers */
+h1, h2, h3, h4, h5, h6, .card-title, .title {
+    color: #ffffff !important;
+    font-weight: 700 !important;
+}
+
+/* BTCPay Server Buttons styling */
+.btn-primary, 
+.button-primary,
+button[type="submit"],
+.action-button,
+#pay-button {
+    background-color: #00ff66 !important;
+    background: #00ff66 !important;
+    color: #0d0d11 !important;
+    border: none !important;
+    font-weight: 700 !important;
+    font-family: 'Plus Jakarta Sans', 'Cairo', sans-serif !important;
+    border-radius: 12px !important;
+    transition: all 0.25s ease-in-out !important;
+    box-shadow: 0 4px 14px rgba(0, 255, 102, 0.2) !important;
+}
+
+.btn-primary:hover, 
+.button-primary:hover,
+button[type="submit"]:hover,
+.action-button:hover,
+#pay-button:hover {
+    background-color: #1aff80 !important;
+    background: #1aff80 !important;
+    box-shadow: 0 4px 20px rgba(0, 255, 102, 0.35) !important;
+    transform: translateY(-1px) !important;
+}
+
+.btn-secondary,
+.btn-outline-secondary,
+.button-secondary {
+    background-color: #1c1c24 !important;
+    color: #f3f4f6 !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    border-radius: 12px !important;
+}
+
+.btn-secondary:hover,
+.button-secondary:hover {
+    background-color: #24242e !important;
+    border-color: rgba(255, 255, 255, 0.15) !important;
+    color: #ffffff !important;
+}
+
+/* QR Code & Payment Info Container */
+.qr-container,
+.qr-wrapper,
+.qr-code-bg {
+    background-color: #ffffff !important; /* Keep white for QR scanner readability */
+    padding: 12px !important;
+    border-radius: 12px !important;
+    display: inline-block !important;
+    border: 3px solid #00ff66 !important;
+}
+
+/* Input Fields and Selects */
+.form-control,
+input,
+select,
+textarea {
+    background-color: #1c1c24 !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    color: #ffffff !important;
+    border-radius: 10px !important;
+}
+
+.form-control:focus,
+input:focus,
+select:focus {
+    background-color: #1c1c24 !important;
+    border-color: #00ff66 !important;
+    box-shadow: 0 0 0 3px rgba(0, 255, 102, 0.15) !important;
+    color: #ffffff !important;
+}
+
+/* Tabs & Navigation inside BTCPay checkout */
+.nav-tabs,
+.payment-tabs {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+}
+
+.nav-link,
+.tab-link {
+    color: #9ca3af !important;
+    border: none !important;
+    background: transparent !important;
+}
+
+.nav-link.active,
+.tab-link.active,
+.nav-link:hover {
+    color: #00ff66 !important;
+    border-bottom: 2px solid #00ff66 !important;
+    background: transparent !important;
+}
+
+/* Payment breakdown details (Item, Amount, Rate) */
+.payment-details,
+.invoice-details,
+.payment-info-row {
+    background-color: #1c1c24 !important;
+    border: 1px solid rgba(255, 255, 255, 0.04) !important;
+    border-radius: 12px !important;
+    padding: 16px !important;
+}
+
+.details-row,
+.info-row {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04) !important;
+    padding-bottom: 8px !important;
+    margin-bottom: 8px !important;
+}
+
+.details-row:last-child,
+.info-row:last-child {
+    border-bottom: none !important;
+    padding-bottom: 0 !important;
+    margin-bottom: 0 !important;
+}
+
+/* Status Badges */
+.badge {
+    border-radius: 20px !important;
+    padding: 6px 12px !important;
+    font-weight: 600 !important;
+}
+
+.badge-success,
+.badge-settled {
+    background-color: rgba(0, 255, 102, 0.1) !important;
+    color: #00ff66 !important;
+    border: 1px solid rgba(0, 255, 102, 0.2) !important;
+}
+
+.badge-warning,
+.badge-new {
+    background-color: rgba(245, 158, 11, 0.1) !important;
+    color: #f59e0b !important;
+    border: 1px solid rgba(245, 158, 11, 0.2) !important;
+}
+
+/* Copy buttons and icons */
+.copy-button,
+.btn-copy {
+    color: #00ff66 !important;
+}
+
+.copy-button:hover {
+    color: #1aff80 !important;
+}
+
+/* Timer styles */
+.timer,
+.expiry-timer,
+.time-left {
+    color: #00f0ff !important;
+    font-weight: 600 !important;
+    font-family: monospace !important;
+}

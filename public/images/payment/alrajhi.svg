@@ -1,0 +1,11 @@
+<svg viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="512" height="512" rx="100" fill="#002D62"/>
+  
+  <!-- Al Rajhi Geometric Blue & White Diamond -->
+  <g transform="translate(256, 210)">
+    <path d="M0 -125 L108 -18 L0 88 L-108 -18 Z" fill="#0077C8"/>
+    <path d="M0 -84 L72 -14 L0 56 L-72 -14 Z" fill="#FFFFFF"/>
+    <path d="M0 -42 L36 -10 L0 26 L-36 -10 Z" fill="#002D62"/>
+  </g>
+  <text x="256" y="415" font-family="'Segoe UI', Arial, sans-serif" font-weight="900" font-size="54" fill="#FFFFFF" text-anchor="middle" letter-spacing="4">AL RAJHI</text>
+</svg>

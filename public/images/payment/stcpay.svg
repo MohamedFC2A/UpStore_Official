@@ -1,0 +1,9 @@
+<svg viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="512" height="512" rx="100" fill="#4F008C"/>
+  
+  <g transform="translate(68, 150)">
+    <!-- STC Icon -->
+    <path d="M48 64C48 38 68 18 94 18H180V54H98C90 54 84 60 84 68C84 76 90 82 98 82H162C188 82 208 102 208 128C208 154 188 174 162 174H76V138H158C166 138 172 132 172 124C172 116 166 110 158 110H94C68 110 48 90 48 64Z" fill="#FF375F"/>
+    <text x="250" y="156" font-family="'Segoe UI', 'Helvetica Neue', Arial, sans-serif" font-weight="900" font-size="112" fill="#FFFFFF" letter-spacing="-2">pay</text>
+  </g>
+</svg>

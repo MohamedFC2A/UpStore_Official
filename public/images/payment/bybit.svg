@@ -1,0 +1,12 @@
+<svg viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- 1:1 Aspect Ratio Dark Background -->
+  <rect width="512" height="512" rx="96" fill="#121214"/>
+  <rect width="512" height="512" rx="96" stroke="#000000" stroke-width="12"/>
+
+  <!-- Centered Bybit Emblem -->
+  <g transform="translate(48, 48) scale(0.8125)">
+    <path d="M144 116H270C312 116 346 150 346 192C346 222 328 248 304 260C338 272 364 306 364 346C364 394 324 434 276 434H144V116Z" fill="#F7A600"/>
+    <path d="M210 178V234H262C278 234 290 222 290 206C290 190 278 178 262 178H210Z" fill="#121214"/>
+    <path d="M210 294V372H272C292 372 308 356 308 333C308 310 292 294 272 294H210Z" fill="#121214"/>
+  </g>
+</svg>

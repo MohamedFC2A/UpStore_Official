@@ -1,0 +1,4052 @@
+[
+  {
+    "width": 512,
+    "height": 512,
+    "emoji": "📱",
+    "set_name": "ApplicationEmoji",
+    "is_animated": true,
+    "is_video": false,
+    "type": "custom_emoji",
+    "custom_emoji_id": "5323379047315555501",
+    "thumbnail": {
+      "file_id": "AAMCAgADFQABapSlXCyTfv8Ibss3n_DC5WSXv3AAAq1EAAIKceBJ3IfD9BB1q4gBAAdtAAM9BA",
+      "file_unique_id": "AQADrUQAAgpx4Ely",
+      "file_size": 2198,
+      "width": 128,
+      "height": 128
+    },
+    "thumb": {
+      "file_id": "AAMCAgADFQABapSlXCyTfv8Ibss3n_DC5WSXv3AAAq1EAAIKceBJ3IfD9BB1q4gBAAdtAAM9BA",
+      "file_unique_id": "AQADrUQAAgpx4Ely",
+      "file_size": 2198,
+      "width": 128,
+      "height": 128
+    },
+    "file_id": "CAACAgIAAxUAAWqUpVwsk37_CG7LN5_wwuVkl79wAAKtRAACCnHgSdyHw_QQdauIPQQ",
+    "file_unique_id": "AgADrUQAAgpx4Ek",
+    "file_size": 1419
+  },
+  {
+    "width": 512,
+    "height": 512,
+    "emoji": "📱",
+    "set_name": "ApplicationEmoji",
+    "is_animated": true,
+    "is_video": false,
+    "type": "custom_emoji",
+    "custom_emoji_id": "5334954057192719331",
+    "thumbnail": {
+      "file_id": "AAMCAgADFQABapSlXKI0hElV4VtqkP_AfEjeJeoAAuNDAAJzkAlKXEQhHzb1LrEBAAdtAAM9BA",
+      "file_unique_id": "AQAD40MAAnOQCUpy",
+      "file_size": 4994,
+      "width": 128,
+      "height": 128
+    },
+    "thumb": {
+      "file_id": "AAMCAgADFQABapSlXKI0hElV4VtqkP_AfEjeJeoAAuNDAAJzkAlKXEQhHzb1LrEBAAdtAAM9BA",
+      "file_unique_id": "AQAD40MAAnOQCUpy",
+      "file_size": 4994,
+      "width": 128,
+      "height": 128
+    },
+    "file_id": "CAACAgIAAxUAAWqUpVyiNIRJVeFbapD_wHxI3iXqAALjQwACc5AJSlxEIR829S6xPQQ",
+    "file_unique_id": "AgAD40MAAnOQCUo",
+    "file_size": 2707
+  },
+  {
+    "width": 512,
+    "height": 512,
+    "emoji": "📱",
+    "set_name": "ApplicationEmoji",
+    "is_animated": true,
+    "is_video": false,
+    "type": "custom_emoji",
+    "custom_emoji_id": "5335012820935261564",
+    "thumbnail": {
+      "file_id": "AAMCAgADFQABapSlXHYTVzH2e7CrJfo53HLZrYgAAnw9AALlxQlKCaY3EKTUOWABAAdtAAM9BA",
+      "file_unique_id": "AQADfD0AAuXFCUpy",
+      "file_size": 3024,
+      "width": 128,
+      "height": 128
+    },
+    "thumb": {
+      "file_id": "AAMCAgADFQABapSlXHYTVzH2e7CrJfo53HLZrYgAAnw9AALlxQlKCaY3EKTUOWABAAdtAAM9BA",
+      "file_unique_id": "AQADfD0AAuXFCUpy",
+      "file_size": 3024,
+      "width": 128,
+      "height": 128
+    },
+    "file_id": "CAACAgIAAxUAAWqUpVx2E1cx9nuwqyX6Odxy2a2IAAJ8PQAC5cUJSgmmNxCk1DlgPQQ",
+    "file_unique_id": "AgADfD0AAuXFCUo",
+    "file_size": 1202
+  },
+  {
+    "width": 512,
+    "height": 512,
+    "emoji": "📱",
+    "set_name": "ApplicationEmoji",
+    "is_animated": true,
+    "is_video": false,
+    "type": "custom_emoji",
+    "custom_emoji_id": "5323764984486837459",
+    "thumbnail": {
+      "file_id": "AAMCAgADFQABapSlXPRVE0HKVQauReE7PeYsLZ4AAtM8AAIM0OFJP5m07QVyrzwBAAdtAAM9BA",
+      "file_unique_id": "AQAD0zwAAgzQ4Uly",
+      "file_size": 2978,
+      "width": 128,
+      "height": 128
+    },
+    "thumb": {
+      "file_id": "AAMCAgADFQABapSlXPRVE0HKVQauReE7PeYsLZ4AAtM8AAIM0OFJP5m07QVyrzwBAAdtAAM9BA",
+      "file_unique_id": "AQAD0zwAAgzQ4Uly",
+      "file_size": 2978,
+      "width": 128,
+      "height": 128
+    },
+    "file_id": "CAACAgIAAxUAAWqUpVz0VRNBylUGrkXhOz3mLC2eAALTPAACDNDhST-ZtO0Fcq88PQQ",
+    "file_unique_id": "AgAD0zwAAgzQ4Uk",
+    "file_size": 1279
+  },
+  {
+    "width": 512,
+    "height": 512,
+    "emoji": "📱",
+    "set_name": "ApplicationEmoji",
+    "is_animated": true,
+    "is_video": false,
+    "type": "custom_emoji",
+    "custom_emoji_id": "5325612636467903082",
+    "thumbnail": {
+      "file_id": "AAMCAgADFQABapSlXKDvLaNiyNERb9hSuXRI49gAAmo6AAJ6YOhJj6Zw720QL4gBAAdtAAM9BA",
+      "file_unique_id": "AQADajoAAnpg6Ely",
+      "file_size": 3158,
+      "width": 128,
+      "height": 128
+    },
+    "thumb": {
+      "file_id": "AAMCAgADFQABapSlXKDvLaNiyNERb9hSuXRI49gAAmo6AAJ6YOhJj6Zw720QL4gBAAdtAAM9BA",
+      "file_unique_id": "AQADajoAAnpg6Ely",
+      "file_size": 3158,
+      "width": 128,
+      "height": 128
+    },
+    "file_id": "CAACAgIAAxUAAWqUpVyg7y2jYsjREW_YUrl0SOPYAAJqOgACemDoSY-mcO9tEC-IPQQ",
+    "file_unique_id": "AgADajoAAnpg6Ek",
+    "file_size": 1484
+  },
+  {
+    "width": 512,
+    "height": 512,
+    "emoji": "📱",
+    "set_name": "ApplicationEmoji",
+    "is_animated": true,
+    "is_video": false,
+    "type": "custom_emoji",
+    "custom_emoji_id": "5323261730283863478",
+    "thumbnail": {
+      "file_id": "AAMCAgADFQABapSlXID1_b4X9Gx_mnGnoKsNFosAArY9AAJXBuBJfQssllOyuboBAAdtAAM9BA",
+      "file_unique_id": "AQADtj0AAlcG4Ely",
+      "file_size": 2210,
+      "width": 128,
+      "height": 128
+    },
+    "thumb": {
+      "file_id": "AAMCAgADFQABapSlXID1_b4X9Gx_mnGnoKsNFosAArY9AAJXBuBJfQssllOyuboBAAdtAAM9BA",
+      "file_unique_id": "AQADtj0AAlcG4Ely",
+      "file_size": 2210,
+      "width": 128,
+      "height": 128
+    },
+    "file_id": "CAACAgIAAxUAAWqUpVyA9f2-F_Rsf5pxp6CrDRaLAAK2PQACVwbgSX0LLJZTsrm6PQQ",
+    "file_unique_id": "AgADtj0AAlcG4Ek",
+    "file_size": 1092
+  },
+  {
+    "width": 512,
+    "height": 512,
+    "emoji": "📱",
+    "set_name": "ApplicationEmoji",
+    "is_animated": true,
+    "is_video": false,
+    "type": "custom_emoji",
+    "custom_emoji_id": "5330081305126255700",
+    "thumbnail": {
+      "file_id": "AAMCAgADFQABapSlXGnWS0Hl9PndvXWCV7uqgloAAlQ8AAK1QPhJLZVBAAGC_GzHAQAHbQADPQQ",
+      "file_unique_id": "AQADVDwAArVA-Ely",
+      "file_size": 4492,
+      "width": 128,
+      "height": 128
+    },
+    "thumb": {
+      "file_id": "AAMCAgADFQABapSlXGnWS0Hl9PndvXWCV7uqgloAAlQ8AAK1QPhJLZVBAAGC_GzHAQAHbQADPQQ",
+      "file_unique_id": "AQADVDwAArVA-Ely",
+      "file_size": 4492,
+      "width": 128,
+      "height": 128
+    },
+    "file_id": "CAACAgIAAxUAAWqUpVxp1ktB5fT53b11gle7qoJaAAJUPAACtUD4SS2VQQABgvxsxz0E",
+    "file_unique_id": "AgADVDwAArVA-Ek",
+    "file_size": 1545
+  },
+  {
+    "width": 512,
+    "height": 512,
+    "emoji": "📱",
+    "set_name": "ApplicationEmoji",
+    "is_animated": true,
+    "is_video": false,
+    "type": "custom_emoji",
+    "custom_emoji_id": "5334750591707005005",
+    "thumbnail": {
+      "file_id": "AAMCAgADFQABapSlXAKSgxlWwn9mDRKMfHkKN-4AAk1AAAJm1whKNXVfWuhJ8WwBAAdtAAM9BA",
+      "file_unique_id": "AQADTUAAAmbXCEpy",
+      "file_size": 3258,
+      "width": 128,
+      "height": 128
+    },
+    "thumb": {
+      "file_id": "AAMCAgADFQABapSlXAKSgxlWwn9mDRKMfHkKN-4AAk1AAAJm1whKNXVfWuhJ8WwBAAdtAAM9BA",
+      "file_unique_id": "AQADTUAAAmbXCEpy",
+      "file_size": 3258,
+      "width": 128,
+      "height": 128
+    },
+    "file_id": "CAACAgIAAxUAAWqUpVwCkoMZVsJ_Zg0SjHx5CjfuAAJNQAACZtcISjV1X1roSfFsPQQ",
+    "file_unique_id": "AgADTUAAAmbXCEo",
+    "file_size": 4984
+  },
+  {
+    "width": 512,
+    "height": 512,
+    "emoji": "📱",
+    "set_name": "ApplicationEmoji",
+    "is_animated": true,
+    "is_video": false,
+    "type": "custom_emoji",
+    "custom_emoji_id": "5330345557284109044",
+    "thumbnail": {
+      "file_id": "AAMCAgADFQABapSlXBTHZE7VlkHXC84ZtQqkpKgAAvQ6AAILMflJ70vGmY_ZaNQBAAdtAAM9BA",
+      "file_unique_id": "AQAD9DoAAgsx-Uly",
+      "file_size": 2122,
+      "width": 128,
+      "height": 128
+    },
+    "thumb": {
+      "file_id": "AAMCAgADFQABapSlXBTHZE7VlkHXC84ZtQqkpKgAAvQ6AAILMflJ70vGmY_ZaNQBAAdtAAM9BA",
+      "file_unique_id": "AQAD9DoAAgsx-Uly",
+      "file_size": 2122,
+      "width": 128,
+      "height": 128
+    },
+    "file_id": "CAACAgIAAxUAAWqUpVwUx2RO1ZZB1wvOGbUKpKSoAAL0OgACCzH5Se9LxpmP2WjUPQQ",
+    "file_unique_id": "AgAD9DoAAgsx-Uk",
+    "file_size": 2242
+  },
+  {
+    "width": 512,
+    "height": 512,
+    "emoji": "📱",
+    "set_name": "ApplicationEmoji",
+    "is_animated": true,
+    "is_video": false,
+    "type": "custom_emoji",
+    "custom_emoji_id": "5334595899869905653",
+    "thumbnail": {
+      "file_id": "AAMCAgADFQABapSlXAybwMYXRlcBKa_SezDDxY4AAvVCAAK1SghKz5LIivxvkvsBAAdtAAM9BA",
+      "file_unique_id": "AQAD9UIAArVKCEpy",
+      "file_size": 3554,
+      "width": 128,
+      "height": 128
+    },
+    "thumb": {
+      "file_id": "AAMCAgADFQABapSlXAybwMYXRlcBKa_SezDDxY4AAvVCAAK1SghKz5LIivxvkvsBAAdtAAM9BA",
+      "file_unique_id": "AQAD9UIAArVKCEpy",
+      "file_size": 3554,
+      "width": 128,
+      "height": 128
+    },
+    "file_id": "CAACAgIAAxUAAWqUpVwMm8DGF0ZXASmv0nsww8WOAAL1QgACtUoISs-SyIr8b5L7PQQ",
+    "file_unique_id": "AgAD9UIAArVKCEo",
+    "file_size": 3011
+  },
+  {
+    "width": 512,
+    "height": 512,
+    "emoji": "📱",
+    "set_name": "ApplicationEmoji",
+    "is_animated": true,
+    "is_video": false,
+    "type": "custom_emoji",
+    "custom_emoji_id": "5319160079465857105",
+    "thumbnail": {
+      "file_id": "AAMCAgADFQABapSlXENzxgcMVVYChW7ux847HO0AAlFAAALpc9FJT8H85EUj5LwBAAdtAAM9BA",
+      "file_unique_id": "AQADUUAAAulz0Uly",
+      "file_size": 4670,
+      "width": 128,
+      "height": 128
+    },
+    "thumb": {
+      "file_id": "AAMCAgADFQABapSlXENzxgcMVVYChW7ux847HO0AAlFAAALpc9FJT8H85EUj5LwBAAdtAAM9BA",
+      "file_unique_id": "AQADUUAAAulz0Uly",
+      "file_size": 4670,
+      "width": 128,
+      "height": 128
+    },
+    "file_id": "CAACAgIAAxUAAWqUpVxDc8YHDFVWAoVu7sfOOxztAAJRQAAC6XPRSU_B_ORFI-S8PQQ",
+    "file_unique_id": "AgADUUAAAulz0Uk",
+    "file_size": 1716
+  },
+  {
+    "width": 512,
+    "height": 512,
+    "emoji": "📱",
+    "set_name": "ApplicationEmoji",
+    "is_animated": true,
+    "is_video": false,
+    "type": "custom_emoji",
+    "custom_emoji_id": "5334933574493683027",
+    "thumbnail": {
+      "file_id": "AAMCAgADFQABapSlXNFFAWHdTFnmTOREkVQBd8gAAlM9AALSfQlKQU4t1xRvW_0BAAdtAAM9BA",
+      "file_unique_id": "AQADUz0AAtJ9CUpy",
+      "file_size": 3858,
+      "width": 128,
+      "height": 128
+    },
+    "thumb": {
+      "file_id": "AAMCAgADFQABapSlXNFFAWHdTFnmTOREkVQBd8gAAlM9AALSfQlKQU4t1xRvW_0BAAdtAAM9BA",
+      "file_unique_id": "AQADUz0AAtJ9CUpy",
+      "file_size": 3858,
+      "width": 128,
+      "height": 128
+    },
+    "file_id": "CAACAgIAAxUAAWqUpVzRRQFh3UxZ5kzkRJFUAXfIAAJTPQAC0n0JSkFOLdcUb1v9PQQ",
+    "file_unique_id": "AgADUz0AAtJ9CUo",
+    "file_size": 1814
+  },
+  {
+    "width": 512,
+    "height": 512,
+    "emoji": "📱",
+    "set_name": "ApplicationEmoji",
+    "is_animated": true,
+    "is_video": false,
+    "type": "custom_emoji",
+    "custom_emoji_id": "5325726234057915652",
+    "thumbnail": {
+      "file_id": "AAMCAgADFQABapSlXOlVLyjxV-DWxdt-J15AO7QAAgQ9AALLx-hJQMGMNRRNFE8BAAdtAAM9BA",
+      "file_unique_id": "AQADBD0AAsvH6Ely",
+      "file_size": 4182,
+      "width": 128,
+      "height": 128
+    },
+    "thumb": {
+      "file_id": "AAMCAgADFQABapSlXOlVLyjxV-DWxdt-J15AO7QAAgQ9AALLx-hJQMGMNRRNFE8BAAdtAAM9BA",
+      "file_unique_id": "AQADBD0AAsvH6Ely",
+      "file_size": 4182,
+      "width": 128,
+      "height": 128
+    },
+    "file_id": "CAACAgIAAxUAAWqUpVzpVS8o8Vfg1sXbfideQDu0AAIEPQACy8foSUDBjDUUTRRPPQQ",
+    "file_unique_id": "AgADBD0AAsvH6Ek",
+    "file_size": 2197
+  },
+  {
+    "width": 512,
+    "height": 512,
+    "emoji": "📱",
+    "set_name": "ApplicationEmoji",
+    "is_animated": true,
+    "is_video": false,
+    "type": "custom_emoji",
+    "custom_emoji_id": "5321403907820240828",
+    "thumbnail": {
+      "file_id": "AAMCAgADFQABapSlXMm9nNacl6GhC0Uz50Y3XpUAArw_AAKpbNlJjkYqSsntPncBAAdtAAM9BA",
+      "file_unique_id": "AQADvD8AAqls2Uly",
+      "file_size": 2748,
+      "width": 128,
+      "height": 128
+    },
+    "thumb": {
+      "file_id": "AAMCAgADFQABapSlXMm9nNacl6GhC0Uz50Y3XpUAArw_AAKpbNlJjkYqSsntPncBAAdtAAM9BA",
+      "file_unique_id": "AQADvD8AAqls2Uly",
+      "file_size": 2748,
+      "width": 128,
+      "height": 128
+    },
+    "file_id": "CAACAgIAAxUAAWqUpVzJvZzWnJehoQtFM-dGN16VAAK8PwACqWzZSY5GKkrJ7T53PQQ",
+    "file_unique_id": "AgADvD8AAqls2Uk",
+    "file_size": 1621
+  },
+  {
+    "width": 512,
+    "height": 512,
+    "emoji": "📱",
+    "set_name": "ApplicationEmoji",
+    "is_animated": true,
+    "is_video": false,
+    "type": "custom_emoji",
+    "custom_emoji_id": "5323608076446613036",
+    "thumbnail": {
+      "file_id": "AAMCAgADFQABapSlXIvsThOEiQZz3sZgxIxAdb8AAiw-AAJXQeFJWSvTakz6y5UBAAdtAAM9BA",
+      "file_unique_id": "AQADLD4AAldB4Uly",
+      "file_size": 3314,
+      "width": 128,
+      "height": 128
+    },
+    "thumb": {
+      "file_id": "AAMCAgADFQABapSlXIvsThOEiQZz3sZgxIxAdb8AAiw-AAJXQeFJWSvTakz6y5UBAAdtAAM9BA",
+      "file_unique_id": "AQADLD4AAldB4Uly",
+      "file_size": 3314,
+      "width": 128,
+      "height": 128
+    },
+    "file_id": "CAACAgIAAxUAAWqUpVyL7E4ThIkGc97GYMSMQHW_AAIsPgACV0HhSVkr02pM-suVPQQ",
+    "file_unique_id": "AgADLD4AAldB4Uk",
+    "file_size": 1991
+  },
+  {
+    "width": 512,
+    "height": 512,
+    "emoji": "📱",
+    "set_name": "ApplicationEmoji",
+    "is_animated": true,
+    "is_video": false,
+    "type": "custom_emoji",
+    "custom_emoji_id": "5325647210954637197",
+    "thumbnail": {
+      "file_id": "AAMCAgADFQABapSlXE4QI86ydkG8GbLYnGMlHuEAAo0_AALsf-hJy7dxdWu9CUQBAAdtAAM9BA",
+      "file_unique_id": "AQADjT8AAux_6Ely",
+      "file_size": 2394,
+      "width": 128,
+      "height": 128
+    },
+    "thumb": {
+      "file_id": "AAMCAgADFQABapSlXE4QI86ydkG8GbLYnGMlHuEAAo0_AALsf-hJy7dxdWu9CUQBAAdtAAM9BA",
+      "file_unique_id": "AQADjT8AAux_6Ely",
+      "file_size": 2394,
+      "width": 128,
+      "height": 128
+    },
+    "file_id": "CAACAgIAAxUAAWqUpVxOECPOsnZBvBmy2JxjJR7hAAKNPwAC7H_oScu3cXVrvQlEPQQ",
+    "file_unique_id": "AgADjT8AAux_6Ek",
+    "file_size": 1963
+  },
+  {
+    "width": 512,
+    "height": 512,
+    "emoji": "📱",
+    "set_name": "ApplicationEmoji",
+    "is_animated": true,
+    "is_video": false,
+    "type": "custom_emoji",
+    "custom_emoji_id": "5323687726615119535",
+    "thumbnail": {
+      "file_id": "AAMCAgADFQABapSlXJDWb0hcdJ04dad5tGXR_HMAAq9GAALIieFJfCBNpQomMUIBAAdtAAM9BA",
+      "file_unique_id": "AQADr0YAAsiJ4Uly",
+      "file_size": 3358,
+      "width": 128,
+      "height": 128
+    },
+    "thumb": {
+      "file_id": "AAMCAgADFQABapSlXJDWb0hcdJ04dad5tGXR_HMAAq9GAALIieFJfCBNpQomMUIBAAdtAAM9BA",
+      "file_unique_id": "AQADr0YAAsiJ4Uly",
+      "file_size": 3358,
+      "width": 128,
+      "height": 128
+    },
+    "file_id": "CAACAgIAAxUAAWqUpVyQ1m9IXHSdOHWnebRl0fxzAAKvRgACyInhSXwgTaUKJjFCPQQ",
+    "file_unique_id": "AgADr0YAAsiJ4Uk",
+    "file_size": 2181
+  },
+  {
+    "width": 512,
+    "height": 512,
+    "emoji": "📱",
+    "set_name": "ApplicationEmoji",
+    "is_animated": true,
+    "is_video": false,
+    "type": "custom_emoji",
+    "custom_emoji_id": "5321447183910716259",
+    "thumbnail": {
+      "file_id": "AAMCAgADFQABapSlXLyrKSt0Uwt0G2f0gSXxWc0AAmNDAAIFlNlJuQIbZzD7-74BAAdtAAM9BA",
+      "file_unique_id": "AQADY0MAAgWU2Uly",
+      "file_size": 3906,
+      "width": 128,
+      "height": 128
+    },
+    "thumb": {
+      "file_id": "AAMCAgADFQABapSlXLyrKSt0Uwt0G2f0gSXxWc0AAmNDAAIFlNlJuQIbZzD7-74BAAdtAAM9BA",
+      "file_unique_id": "AQADY0MAAgWU2Uly",
+      "file_size": 3906,
+      "width": 128,
+      "height": 128
+    },
+    "file_id": "CAACAgIAAxUAAWqUpVy8qykrdFMLdBtn9IEl8VnNAAJjQwACBZTZSbkCG2cw-_u-PQQ",
+    "file_unique_id": "AgADY0MAAgWU2Uk",
+    "file_size": 1615
+  },
+  {
+    "width": 512,
+    "height": 512,
+    "emoji": "📱",
+    "set_name": "ApplicationEmoji",
+    "is_animated": true,
+    "is_video": false,
+    "type": "custom_emoji",
+    "custom_emoji_id": "5325865356638569272",
+    "thumbnail": {
+      "file_id": "AAMCAgADFQABapSlXAVpqaedgluoGdtUQnmZCFkAAjhDAAJTRulJwNuetKbuxakBAAdtAAM9BA",
+      "file_unique_id": "AQADOEMAAlNG6Uly",
+      "file_size": 3180,
+      "width": 128,
+      "height": 128
+    },
+    "thumb": {
+      "file_id": "AAMCAgADFQABapSlXAVpqaedgluoGdtUQnmZCFkAAjhDAAJTRulJwNuetKbuxakBAAdtAAM9BA",
+      "file_unique_id": "AQADOEMAAlNG6Uly",
+      "file_size": 3180,
+      "width": 128,
+      "height": 128
+    },
+    "file_id": "CAACAgIAAxUAAWqUpVwFaamnnYJbqBnbVEJ5mQhZAAI4QwACU0bpScDbnrSm7sWpPQQ",
+    "file_unique_id": "AgADOEMAAlNG6Uk",
+    "file_size": 2411
+  },
+  {
+    "width": 512,
+    "height": 512,
+    "emoji": "📱",
+    "set_name": "ApplicationEmoji",
+    "is_animated": true,
+    "is_video": false,
+    "type": "custom_emoji",
+    "custom_emoji_id": "5325742125436910868",
+    "thumbnail": {
+      "file_id": "AAMCAgADFQABapSlXA83d3qOV27KUWw2-OAtZwsAAhQ9AAI_1uhJV2YcYrT8-3EBAAdtAAM9BA",
+      "file_unique_id": "AQADFD0AAj_W6Ely",
+      "file_size": 5474,
+      "width": 128,
+      "height": 128
+    },
+    "thumb": {
+      "file_id": "AAMCAgADFQABapSlXA83d3qOV27KUWw2-OAtZwsAAhQ9AAI_1uhJV2YcYrT8-3EBAAdtAAM9BA",
+      "file_unique_id": "AQADFD0AAj_W6Ely",
+      "file_size": 5474,
+      "width": 128,
+      "height": 128
+    },
+    "file_id": "CAACAgIAAxUAAWqUpVwPN3d6jlduylFsNvjgLWcLAAIUPQACP9boSVdmHGK0_PtxPQQ",
+    "file_unique_id": "AgADFD0AAj_W6Ek",
+    "file_size": 5109
+  },
+  {
+    "width": 512,
+    "height": 512,
+    "emoji": "📱",
+    "set_name": "ApplicationEmoji",
+    "is_animated": true,
+    "is_video": false,
+    "type": "custom_emoji",
+    "custom_emoji_id": "5328064671951896068",
+    "thumbnail": {
+      "file_id": "AAMCAgADFQABapSlXFgjkuXbVHSAL2laYsuUpDIAAgQ-AAKXFvFJQSfi21Y6Rr8BAAdtAAM9BA",
+      "file_unique_id": "AQADBD4AApcW8Uly",
+      "file_size": 4100,
+      "width": 128,
+      "height": 128
+    },
+    "thumb": {
+      "file_id": "AAMCAgADFQABapSlXFgjkuXbVHSAL2laYsuUpDIAAgQ-AAKXFvFJQSfi21Y6Rr8BAAdtAAM9BA",
+      "file_unique_id": "AQADBD4AApcW8Uly",
+      "file_size": 4100,
+      "width": 128,
+      "height": 128
+    },
+    "file_id": "CAACAgIAAxUAAWqUpVxYI5Ll21R0gC9pWmLLlKQyAAIEPgAClxbxSUEn4ttWOka_PQQ",
+    "file_unique_id": "AgADBD4AApcW8Uk",
+    "file_size": 3479
+  },
+  {
+    "width": 512,
+    "height": 512,
+    "emoji": "📱",
+    "set_name": "ApplicationEmoji",
+    "is_animated": true,
+    "is_video": false,
+    "type": "custom_emoji",
+    "custom_emoji_id": "5327959866159938948",
+    "thumbnail": {
+      "file_id": "AAMCAgADFQABapSlXFUr804Bs3m2qdlvna2OKWEAAoQ9AAJFt_BJpHKfO1Ua8NcBAAdtAAM9BA",
+      "file_unique_id": "AQADhD0AAkW38Ely",
+      "file_size": 3014,
+      "width": 128,
+      "height": 128
+    },
+    "thumb": {
+      "file_id": "AAMCAgADFQABapSlXFUr804Bs3m2qdlvna2OKWEAAoQ9AAJFt_BJpHKfO1Ua8NcBAAdtAAM9BA",
+      "file_unique_id": "AQADhD0AAkW38Ely",
+      "file_size": 3014,
+      "width": 128,
+      "height": 128
+    },
+    "file_id": "CAACAgIAAxUAAWqUpVxVK_NOAbN5tqnZb52tjilhAAKEPQACRbfwSaRynztVGvDXPQQ",
+    "file_unique_id": "AgADhD0AAkW38Ek",
+    "file_size": 934
+  },
+  {
+    "width": 512,
+    "height": 512,
+    "emoji": "📱",
+    "set_name": "ApplicationEmoji",
+    "is_animated": true,
+    "is_video": false,
+    "type": "custom_emoji",
+    "custom_emoji_id": "5330321861949539755",
+    "thumbnail": {
+      "file_id": "AAMCAgADFQABapSlXPeIqpzunpogpdIcDvSBa-gAAqtFAAJ-G_lJVPgokDn5ETUBAAdtAAM9BA",
+      "file_unique_id": "AQADq0UAAn4b-Uly",
+      "file_size": 3682,
+      "width": 128,
+      "height": 128
+    },
+    "thumb": {
+      "file_id": "AAMCAgADFQABapSlXPeIqpzunpogpdIcDvSBa-gAAqtFAAJ-G_lJVPgokDn5ETUBAAdtAAM9BA",
+      "file_unique_id": "AQADq0UAAn4b-Uly",
+      "file_size": 3682,
+      "width": 128,
+      "height": 128
+    },
+    "file_id": "CAACAgIAAxUAAWqUpVz3iKqc7p6aIKXSHA70gWvoAAKrRQACfhv5SVT4KJA5-RE1PQQ",
+    "file_unique_id": "AgADq0UAAn4b-Uk",
+    "file_size": 3247
+  },
+  {
+    "width": 512,
+    "height": 512,
+    "emoji": "📱",
+    "set_name": "ApplicationEmoji",
+    "is_animated": true,
+    "is_video": false,
+    "type": "custom_emoji",
+    "custom_emoji_id": "5328050550099427291",
+    "thumbnail": {
+      "file_id": "AAMCAgADFQABapSlXAtULMWzTMOH7lQWued3e4EAAts_AAK_CfFJzbNJs4RUEuQBAAdtAAM9BA",
+      "file_unique_id": "AQAD2z8AAr8J8Uly",
+      "file_size": 4602,
+      "width": 128,
+      "height": 128
+    },
+    "thumb": {
+      "file_id": "AAMCAgADFQABapSlXAtULMWzTMOH7lQWued3e4EAAts_AAK_CfFJzbNJs4RUEuQBAAdtAAM9BA",
+      "file_unique_id": "AQAD2z8AAr8J8Uly",
+      "file_size": 4602,
+      "width": 128,
+      "height": 128
+    },
+    "file_id": "CAACAgIAAxUAAWqUpVwLVCzFs0zDh-5UFrnnd3uBAALbPwACvwnxSc2zSbOEVBLkPQQ",
+    "file_unique_id": "AgAD2z8AAr8J8Uk",
+    "file_size": 1497
+  },
+  {
+    "width": 512,
+    "height": 512,
+    "emoji": "📱",
+    "set_name": "ApplicationEmoji",
+    "is_animated": true,
+    "is_video": false,
+    "type": "custom_emoji",
+    "custom_emoji_id": "5328175271654736902",
+    "thumbnail": {
+      "file_id": "AAMCAgADFQABapSlXELvWbG35RTz9HgXNyoxtK8AAgZEAAIue_FJ31eAhf59CXIBAAdtAAM9BA",
+      "file_unique_id": "AQADBkQAAi578Uly",
+      "file_size": 3610,
+      "width": 128,
+      "height": 128
+    },
+    "thumb": {
+      "file_id": "AAMCAgADFQABapSlXELvWbG35RTz9HgXNyoxtK8AAgZEAAIue_FJ31eAhf59CXIBAAdtAAM9BA",
+      "file_unique_id": "AQADBkQAAi578Uly",
+      "file_size": 3610,
+      "width": 128,
+      "height": 128
+    },
+    "file_id": "CAACAgIAAxUAAWqUpVxC71mxt-UU8_R4FzcqMbSvAAIGRAACLnvxSd9XgIX-fQlyPQQ",
+    "file_unique_id": "AgADBkQAAi578Uk",
+    "file_size": 1671
+  },
+  {
+    "width": 512,
+    "height": 512,
+    "emoji": "📱",
+    "set_name": "ApplicationEmoji",
+    "is_animated": true,
+    "is_video": false,
+    "type": "custom_emoji",
+    "custom_emoji_id": "5330248916224983855",
+    "thumbnail": {
+      "file_id": "AAMCAgADFQABapSlXH7qNI46Es0Ns63NpWpHxqsAAi9DAAIm2fhJYWxXJvoo-lkBAAdtAAM9BA",
+      "file_unique_id": "AQADL0MAAibZ-Ely",
+      "file_size": 3612,
+      "width": 128,
+      "height": 128
+    },
+    "thumb": {
+      "file_id": "AAMCAgADFQABapSlXH7qNI46Es0Ns63NpWpHxqsAAi9DAAIm2fhJYWxXJvoo-lkBAAdtAAM9BA",
+      "file_unique_id": "AQADL0MAAibZ-Ely",
+      "file_size": 3612,
+      "width": 128,
+      "height": 128
+    },
+    "file_id": "CAACAgIAAxUAAWqUpVx-6jSOOhLNDbOtzaVqR8arAAIvQwACJtn4SWFsVyb6KPpZPQQ",
+    "file_unique_id": "AgADL0MAAibZ-Ek",
+    "file_size": 3214
+  },
+  {
+    "width": 512,
+    "height": 512,
+    "emoji": "📱",
+    "set_name": "ApplicationEmoji",
+    "is_animated": true,
+    "is_video": false,
+    "type": "custom_emoji",
+    "custom_emoji_id": "5330237710655306682",
+    "thumbnail": {
+      "file_id": "AAMCAgADFQABapSlXKdVvwXtqBOB1JHH0VYyIdMAAro7AAL1zvhJOs8eDbZSSFgBAAdtAAM9BA",
+      "file_unique_id": "AQADujsAAvXO-Ely",
+      "file_size": 2728,
+      "width": 128,
+      "height": 128
+    },
+    "thumb": {
+      "file_id": "AAMCAgADFQABapSlXKdVvwXtqBOB1JHH0VYyIdMAAro7AAL1zvhJOs8eDbZSSFgBAAdtAAM9BA",
+      "file_unique_id": "AQADujsAAvXO-Ely",
+      "file_size": 2728,
+      "width": 128,
+      "height": 128
+    },
+    "file_id": "CAACAgIAAxUAAWqUpVynVb8F7agTgdSRx9FWMiHTAAK6OwAC9c74STrPHg22UkhYPQQ",
+    "file_unique_id": "AgADujsAAvXO-Ek",
+    "file_size": 3580
+  },
+  {
+    "width": 512,
+    "height": 512,
+    "emoji": "📱",
+    "set_name": "ApplicationEmoji",
+    "is_animated": true,
+    "is_video": false,
+    "type": "custom_emoji",
+    "custom_emoji_id": "5334592721594105691",
+    "thumbnail": {
+      "file_id": "AAMCAgADFQABapSlXBAOoOejh-63Hq_U6vHZKaMAAls_AALRRwhKjXKHzLQ4OgQBAAdtAAM9BA",
+      "file_unique_id": "AQADWz8AAtFHCEpy",
+      "file_size": 3434,
+      "width": 128,
+      "height": 128
+    },
+    "thumb": {
+      "file_id": "AAMCAgADFQABapSlXBAOoOejh-63Hq_U6vHZKaMAAls_AALRRwhKjXKHzLQ4OgQBAAdtAAM9BA",
+      "file_unique_id": "AQADWz8AAtFHCEpy",
+      "file_size": 3434,
+      "width": 128,
+      "height": 128
+    },
+    "file_id": "CAACAgIAAxUAAWqUpVwQDqDno4futx6v1Orx2SmjAAJbPwAC0UcISo1yh8y0ODoEPQQ",
+    "file_unique_id": "AgADWz8AAtFHCEo",
+    "file_size": 1247
+  },
+  {
+    "width": 512,
+    "height": 512,
+    "emoji": "📱",
+    "set_name": "ApplicationEmoji",
+    "is_animated": true,
+    "is_video": false,
+    "type": "custom_emoji",
+    "custom_emoji_id": "5327982530702359565",
+    "thumbnail": {
+      "file_id": "AAMCAgADFQABapSlXCEcrDZkiK_jxH0z-68WnSYAAg08AALiy_BJT7rCfy4qG1oBAAdtAAM9BA",
+      "file_unique_id": "AQADDTwAAuLL8Ely",
+      "file_size": 3316,
+      "width": 128,
+      "height": 128
+    },
+    "thumb": {
+      "file_id": "AAMCAgADFQABapSlXCEcrDZkiK_jxH0z-68WnSYAAg08AALiy_BJT7rCfy4qG1oBAAdtAAM9BA",
+      "file_unique_id": "AQADDTwAAuLL8Ely",
+      "file_size": 3316,
+      "width": 128,
+      "height": 128
+    },
+    "file_id": "CAACAgIAAxUAAWqUpVwhHKw2ZIiv48R9M_uvFp0mAAINPAAC4svwSU-6wn8uKhtaPQQ",
+    "file_unique_id": "AgADDTwAAuLL8Ek",
+    "file_size": 3274
+  },
+  {
+    "width": 512,
+    "height": 512,
+    "emoji": "📱",
+    "set_name": "ApplicationEmoji",
+    "is_animated": true,
+    "is_video": false,
+    "type": "custom_emoji",
+    "custom_emoji_id": "5328029650788563621",
+    "thumbnail": {
+      "file_id": "AAMCAgADFQABapSlXBLD4h1jW0RVJQzaBwbWvPoAAqU6AAK99vBJn-WeWuVAKYIBAAdtAAM9BA",
+      "file_unique_id": "AQADpToAAr328Ely",
+      "file_size": 2776,
+      "width": 128,
+      "height": 128
+    },
+    "thumb": {
+      "file_id": "AAMCAgADFQABapSlXBLD4h1jW0RVJQzaBwbWvPoAAqU6AAK99vBJn-WeWuVAKYIBAAdtAAM9BA",
+      "file_unique_id": "AQADpToAAr328Ely",
+      "file_size": 2776,
+      "width": 128,
+      "height": 128
+    },
+    "file_id": "CAACAgIAAxUAAWqUpVwSw-IdY1tEVSUM2gcG1rz6AAKlOgACvfbwSZ_lnlrlQCmCPQQ",
+    "file_unique_id": "AgADpToAAr328Ek",
+    "file_size": 2032
+  },
+  {
+    "width": 512,
+    "height": 512,
+    "emoji": "📱",
+    "set_name": "ApplicationEmoji",
+    "is_animated": true,
+    "is_video": false,
+    "type": "custom_emoji",
+    "custom_emoji_id": "5334792209940102096",
+    "thumbnail": {
+      "file_id": "AAMCAgADFQABapSlXF2h0bQzTnTFr6rAZ7di9G4AAtA7AAJA_QhKxGieFRsX2IsBAAdtAAM9BA",
+      "file_unique_id": "AQAD0DsAAkD9CEpy",
+      "file_size": 2416,
+      "width": 128,
+      "height": 128
+    },
+    "thumb": {
+      "file_id": "AAMCAgADFQABapSlXF2h0bQzTnTFr6rAZ7di9G4AAtA7AAJA_QhKxGieFRsX2IsBAAdtAAM9BA",
+      "file_unique_id": "AQAD0DsAAkD9CEpy",
+      "file_size": 2416,
+      "width": 128,
+      "height": 128
+    },
+    "file_id": "CAACAgIAAxUAAWqUpVxdodG0M050xa-qwGe3YvRuAALQOwACQP0ISsRonhUbF9iLPQQ",
+    "file_unique_id": "AgAD0DsAAkD9CEo",
+    "file_size": 1591
+  },
+  {
+    "width": 512,
+    "height": 512,
+    "emoji": "📱",
+    "set_name": "ApplicationEmoji",
+    "is_animated": true,
+    "is_video": false,
+    "type": "custom_emoji",
+    "custom_emoji_id": "5328242556612395440",
+    "thumbnail": {
+      "file_id": "AAMCAgADFQABapSlXMxbtg3mldqTgdNdRrJv3H8AArBBAAJguPFJooe-mIH0WXoBAAdtAAM9BA",
+      "file_unique_id": "AQADsEEAAmC48Uly",
+      "file_size": 1790,
+      "width": 128,
+      "height": 128
+    },
+    "thumb": {
+      "file_id": "AAMCAgADFQABapSlXMxbtg3mldqTgdNdRrJv3H8AArBBAAJguPFJooe-mIH0WXoBAAdtAAM9BA",
+      "file_unique_id": "AQADsEEAAmC48Uly",
+      "file_size": 1790,
+      "width": 128,
+      "height": 128
+    },
+    "file_id": "CAACAgIAAxUAAWqUpVzMW7YN5pXak4HTXUayb9x_AAKwQQACYLjxSaKHvpiB9Fl6PQQ",
+    "file_unique_id": "AgADsEEAAmC48Uk",
+    "file_size": 945
+  },
+  {
+    "width": 512,
+    "height": 512,
+    "emoji": "📱",
+    "set_name": "ApplicationEmoji",
+    "is_animated": true,
+    "is_video": false,
+    "type": "custom_emoji",
+    "custom_emoji_id": "5334678011054669335",
+    "thumbnail": {
+      "file_id": "AAMCAgADFQABapSlXGdsNcQfW0ceJgHmAAFXBA7vAAIXPgACY5UISu5_O3e1_JSFAQAHbQADPQQ",
+      "file_unique_id": "AQADFz4AAmOVCEpy",
+      "file_size": 2208,
+      "width": 128,
+      "height": 128
+    },
+    "thumb": {
+      "file_id": "AAMCAgADFQABapSlXGdsNcQfW0ceJgHmAAFXBA7vAAIXPgACY5UISu5_O3e1_JSFAQAHbQADPQQ",
+      "file_unique_id": "AQADFz4AAmOVCEpy",
+      "file_size": 2208,
+      "width": 128,
+      "height": 128
+    },
+    "file_id": "CAACAgIAAxUAAWqUpVxnbDXEH1tHHiYB5gABVwQO7wACFz4AAmOVCErufzt3tfyUhT0E",
+    "file_unique_id": "AgADFz4AAmOVCEo",
+    "file_size": 1963
+  },
+  {
+    "width": 512,
+    "height": 512,
+    "emoji": "📱",
+    "set_name": "ApplicationEmoji",
+    "is_animated": true,
+    "is_video": false,
+    "type": "custom_emoji",
+    "custom_emoji_id": "5332449498553663205",
+    "thumbnail": {
+      "file_id": "AAMCAgADFQABapSlXHGDqPZjdCU309UxPtflyoIAAuU-AAKRqgABSnBXio9DPt_0AQAHbQADPQQ",
+      "file_unique_id": "AQAD5T4AApGqAAFKcg",
+      "file_size": 4048,
+      "width": 128,
+      "height": 128
+    },
+    "thumb": {
+      "file_id": "AAMCAgADFQABapSlXHGDqPZjdCU309UxPtflyoIAAuU-AAKRqgABSnBXio9DPt_0AQAHbQADPQQ",
+      "file_unique_id": "AQAD5T4AApGqAAFKcg",
+      "file_size": 4048,
+      "width": 128,
+      "height": 128
+    },
+    "file_id": "CAACAgIAAxUAAWqUpVxxg6j2Y3QlN9PVMT7X5cqCAALlPgACkaoAAUpwV4qPQz7f9D0E",
+    "file_unique_id": "AgAD5T4AApGqAAFK",
+    "file_size": 2457
+  },
+  {
+    "width": 512,
+    "height": 512,
+    "emoji": "📱",
+    "set_name": "ApplicationEmoji",
+    "is_animated": true,
+    "is_video": false,
+    "type": "custom_emoji",
+    "custom_emoji_id": "5334764984142412896",
+    "thumbnail": {
+      "file_id": "AAMCAgADFQABapSlXEPB89k21C57keNc0dKPnk8AAmA8AAJ95AhK5fNp-dPfbroBAAdtAAM9BA",
+      "file_unique_id": "AQADYDwAAn3kCEpy",
+      "file_size": 2850,
+      "width": 128,
+      "height": 128
+    },
+    "thumb": {
+      "file_id": "AAMCAgADFQABapSlXEPB89k21C57keNc0dKPnk8AAmA8AAJ95AhK5fNp-dPfbroBAAdtAAM9BA",
+      "file_unique_id": "AQADYDwAAn3kCEpy",
+      "file_size": 2850,
+      "width": 128,
+      "height": 128
+    },
+    "file_id": "CAACAgIAAxUAAWqUpVxDwfPZNtQue5HjXNHSj55PAAJgPAACfeQISuXzafnT3266PQQ",
+    "file_unique_id": "AgADYDwAAn3kCEo",
+    "file_size": 1291
+  },
+  {
+    "width": 512,
+    "height": 512,
+    "emoji": "📱",
+    "set_name": "ApplicationEmoji",
+    "is_animated": true,
+    "is_video": false,
+    "type": "custom_emoji",
+    "custom_emoji_id": "5334853932915114338",
+    "thumbnail": {
+      "file_id": "AAMCAgADFQABapSlXNkRx7LvUPAH2ClvXYu88aAAAmJBAAJjNQlK8CM1qmn8fNwBAAdtAAM9BA",
+      "file_unique_id": "AQADYkEAAmM1CUpy",
+      "file_size": 2914,
+      "width": 128,
+      "height": 128
+    },
+    "thumb": {
+      "file_id": "AAMCAgADFQABapSlXNkRx7LvUPAH2ClvXYu88aAAAmJBAAJjNQlK8CM1qmn8fNwBAAdtAAM9BA",
+      "file_unique_id": "AQADYkEAAmM1CUpy",
+      "file_size": 2914,
+      "width": 128,
+      "height": 128
+    },
+    "file_id": "CAACAgIAAxUAAWqUpVzZEcey71DwB9gpb12LvPGgAAJiQQACYzUJSvAjNapp_HzcPQQ",
+    "file_unique_id": "AgADYkEAAmM1CUo",
+    "file_size": 1008
+  },
+  {
+    "width": 512,
+    "height": 512,
+    "emoji": "📱",
+    "set_name": "ApplicationEmoji",
+    "is_animated": true,
+    "is_video": false,
+    "type": "custom_emoji",
+    "custom_emoji_id": "5334807822146225472",
+    "thumbnail": {
+      "file_id": "AAMCAgADFQABapSlXKBrMM1Rff7oEu9A9qKP9u4AAkBFAAJzCwlKsqB447B3p_UBAAdtAAM9BA",
+      "file_unique_id": "AQADQEUAAnMLCUpy",
+      "file_size": 2406,
+      "width": 128,
+      "height": 128
+    },
+    "thumb": {
+      "file_id": "AAMCAgADFQABapSlXKBrMM1Rff7oEu9A9qKP9u4AAkBFAAJzCwlKsqB447B3p_UBAAdtAAM9BA",
+      "file_unique_id": "AQADQEUAAnMLCUpy",
+      "file_size": 2406,
+      "width": 128,
+      "height": 128
+    },
+    "file_id": "CAACAgIAAxUAAWqUpVygazDNUX3-6BLvQPaij_buAAJARQACcwsJSrKgeOOwd6f1PQQ",
+    "file_unique_id": "AgADQEUAAnMLCUo",
+    "file_size": 1680
+  },
+  {
+    "width": 512,
+    "height": 512,
+    "emoji": "📱",
+    "set_name": "ApplicationEmoji",
+    "is_animated": true,
+    "is_video": false,
+    "type": "custom_emoji",
+    "custom_emoji_id": "5332524123610430820",
+    "thumbnail": {
+      "file_id": "AAMCAgADFQABapSlXA_FsR24ElNIzCITLUn3b2gAAmQ9AAJw7gABSqCiNm2AaIwrAQAHbQADPQQ",
+      "file_unique_id": "AQADZD0AAnDuAAFKcg",
+      "file_size": 3420,
+      "width": 128,
+      "height": 128
+    },
+    "thumb": {
+      "file_id": "AAMCAgADFQABapSlXA_FsR24ElNIzCITLUn3b2gAAmQ9AAJw7gABSqCiNm2AaIwrAQAHbQADPQQ",
+      "file_unique_id": "AQADZD0AAnDuAAFKcg",
+      "file_size": 3420,
+      "width": 128,
+      "height": 128
+    },
+    "file_id": "CAACAgIAAxUAAWqUpVwPxbEduBJTSMwiEy1J929oAAJkPQACcO4AAUqgojZtgGiMKz0E",
+    "file_unique_id": "AgADZD0AAnDuAAFK",
+    "file_size": 2135
+  },
+  {
+    "width": 512,
+    "height": 512,
+    "emoji": "📱",
+    "set_name": "ApplicationEmoji",
+    "is_animated": true,
+    "is_video": false,
+    "type": "custom_emoji",
+    "custom_emoji_id": "5332823323917173335",
+    "thumbnail": {
+      "file_id": "AAMCAgADFQABapSlXB69Bq-81WuxIsFwHampOWcAAldCAAKP_gFKG0hkTPpX9-sBAAdtAAM9BA",
+      "file_unique_id": "AQADV0IAAo_-AUpy",
+      "file_size": 4088,
+      "width": 128,
+      "height": 128
+    },
+    "thumb": {
+      "file_id": "AAMCAgADFQABapSlXB69Bq-81WuxIsFwHampOWcAAldCAAKP_gFKG0hkTPpX9-sBAAdtAAM9BA",
+      "file_unique_id": "AQADV0IAAo_-AUpy",
+      "file_size": 4088,
+      "width": 128,
+      "height": 128
+    },
+    "file_id": "CAACAgIAAxUAAWqUpVwevQavvNVrsSLBcB2pqTlnAAJXQgACj_4BShtIZEz6V_frPQQ",
+    "file_unique_id": "AgADV0IAAo_-AUo",
+    "file_size": 2245
+  },
+  {
+    "width": 512,
+    "height": 512,
+    "emoji": "📱",
+    "set_name": "ApplicationEmoji",
+    "is_animated": true,
+    "is_video": false,
+    "type": "custom_emoji",
+    "custom_emoji_id": "5334663339446387801",
+    "thumbnail": {
+      "file_id": "AAMCAgADFQABapSlXOf_CuE_5jSpQRAQPBzZENoAAllEAAILiAhKEeIV601wu4wBAAdtAAM9BA",
+      "file_unique_id": "AQADWUQAAguICEpy",
+      "file_size": 3008,
+      "width": 128,
+      "height": 128
+    },
+    "thumb": {
+      "file_id": "AAMCAgADFQABapSlXOf_CuE_5jSpQRAQPBzZENoAAllEAAILiAhKEeIV601wu4wBAAdtAAM9BA",
+      "file_unique_id": "AQADWUQAAguICEpy",
+      "file_size": 3008,
+      "width": 128,
+      "height": 128
+    },
+    "file_id": "CAACAgIAAxUAAWqUpVzn_wrhP-Y0qUEQEDwc2RDaAAJZRAACC4gIShHiFetNcLuMPQQ",
+    "file_unique_id": "AgADWUQAAguICEo",
+    "file_size": 1575
+  },
+  {
+    "width": 512,
+    "height": 512,
+    "emoji": "📱",
+    "set_name": "ApplicationEmoji",
+    "is_animated": true,
+    "is_video": false,
+    "type": "custom_emoji",
+    "custom_emoji_id": "5334998226636390258",
+    "thumbnail": {
+      "file_id": "AAMCAgADFQABapSlXN9lFYBZg3Qz4UMc8oSLGwADcj8AAp-4CUq-jm0DqibW0AEAB20AAz0E",
+      "file_unique_id": "AQADcj8AAp-4CUpy",
+      "file_size": 3878,
+      "width": 128,
+      "height": 128
+    },
+    "thumb": {
+      "file_id": "AAMCAgADFQABapSlXN9lFYBZg3Qz4UMc8oSLGwADcj8AAp-4CUq-jm0DqibW0AEAB20AAz0E",
+      "file_unique_id": "AQADcj8AAp-4CUpy",
+      "file_size": 3878,
+      "width": 128,
+      "height": 128
+    },
+    "file_id": "CAACAgIAAxUAAWqUpVzfZRWAWYN0M-FDHPKEixsAA3I_AAKfuAlKvo5tA6om1tA9BA",
+    "file_unique_id": "AgADcj8AAp-4CUo",
+    "file_size": 1819
+  },
+  {
+    "width": 512,
+    "height": 512,
+    "emoji": "📱",
+    "set_name": "ApplicationEmoji",
+    "is_animated": true,
+    "is_video": false,
+    "type": "custom_emoji",
+    "custom_emoji_id": "5330337435500951363",
+    "thumbnail": {
+      "file_id": "AAMCAgADFQABapSlXAFjHieGlSA2VsS0gy_9QUQAAkM3AAKoKflJQSK90un1UPYBAAdtAAM9BA",
+      "file_unique_id": "AQADQzcAAqgp-Uly",
+      "file_size": 3012,
+      "width": 128,
+      "height": 128
+    },
+    "thumb": {
+      "file_id": "AAMCAgADFQABapSlXAFjHieGlSA2VsS0gy_9QUQAAkM3AAKoKflJQSK90un1UPYBAAdtAAM9BA",
+      "file_unique_id": "AQADQzcAAqgp-Uly",
+      "file_size": 3012,
+      "width": 128,
+      "height": 128
+    },
+    "file_id": "CAACAgIAAxUAAWqUpVwBYx4nhpUgNlbEtIMv_UFEAAJDNwACqCn5SUEivdLp9VD2PQQ",
+    "file_unique_id": "AgADQzcAAqgp-Uk",
+    "file_size": 996
+  },
+  {
+    "width": 512,
+    "height": 512,
+    "emoji": "📱",
+    "set_name": "ApplicationEmoji",
+    "is_animated": true,
+    "is_video": false,
+    "type": "custom_emoji",
+    "custom_emoji_id": "5334707727933390944",
+    "thumbnail": {
+      "file_id": "AAMCAgADFQABapSlXJA5EN6pQwbDa2A0TN70f2IAAmBAAAJqsAhKdrumWq0v99UBAAdtAAM9BA",
+      "file_unique_id": "AQADYEAAAmqwCEpy",
+      "file_size": 3206,
+      "width": 128,
+      "height": 128
+    },
+    "thumb": {
+      "file_id": "AAMCAgADFQABapSlXJA5EN6pQwbDa2A0TN70f2IAAmBAAAJqsAhKdrumWq0v99UBAAdtAAM9BA",
+      "file_unique_id": "AQADYEAAAmqwCEpy",
+      "file_size": 3206,
+      "width": 128,
+      "height": 128
+    },
+    "file_id": "CAACAgIAAxUAAWqUpVyQORDeqUMGw2tgNEze9H9iAAJgQAACarAISna7plqtL_fVPQQ",
+    "file_unique_id": "AgADYEAAAmqwCEo",
+    "file_size": 2155
+  },
+  {
+    "width": 512,
+    "height": 512,
+    "emoji": "📱",
+    "set_name": "ApplicationEmoji",
+    "is_animated": true,
+    "is_video": false,
+    "type": "custom_emoji",
+    "custom_emoji_id": "5334681713316479679",
+    "thumbnail": {
+      "file_id": "AAMCAgADFQABapSlXPvvPNrnfSnd9yMDSRHrTA4AAr9CAALBmAhKFkvWIUst3jABAAdtAAM9BA",
+      "file_unique_id": "AQADv0IAAsGYCEpy",
+      "file_size": 2456,
+      "width": 128,
+      "height": 128
+    },
+    "thumb": {
+      "file_id": "AAMCAgADFQABapSlXPvvPNrnfSnd9yMDSRHrTA4AAr9CAALBmAhKFkvWIUst3jABAAdtAAM9BA",
+      "file_unique_id": "AQADv0IAAsGYCEpy",
+      "file_size": 2456,
+      "width": 128,
+      "height": 128
+    },
+    "file_id": "CAACAgIAAxUAAWqUpVz77zza530p3fcjA0kR60wOAAK_QgACwZgIShZL1iFLLd4wPQQ",
+    "file_unique_id": "AgADv0IAAsGYCEo",
+    "file_size": 1124
+  },
+  {
+    "width": 512,
+    "height": 512,
+    "emoji": "📱",
+    "set_name": "ApplicationEmoji",
+    "is_animated": true,
+    "is_video": false,
+    "type": "custom_emoji",
+    "custom_emoji_id": "5334942061349059951",
+    "thumbnail": {
+      "file_id": "AAMCAgADFQABapSlXHrPF8GZZl2NyoPxI7bOvJkAAm89AAKKhQlKkpjY5VEX3pABAAdtAAM9BA",
+      "file_unique_id": "AQADbz0AAoqFCUpy",
+      "file_size": 3052,
+      "width": 128,
+      "height": 128
+    },
+    "thumb": {
+      "file_id": "AAMCAgADFQABapSlXHrPF8GZZl2NyoPxI7bOvJkAAm89AAKKhQlKkpjY5VEX3pABAAdtAAM9BA",
+      "file_unique_id": "AQADbz0AAoqFCUpy",
+      "file_size": 3052,
+      "width": 128,
+      "height": 128
+    },
+    "file_id": "CAACAgIAAxUAAWqUpVx6zxfBmWZdjcqD8SO2zryZAAJvPQACioUJSpKY2OVRF96QPQQ",
+    "file_unique_id": "AgADbz0AAoqFCUo",
+    "file_size": 1109
+  },
+  {
+    "width": 512,
+    "height": 512,
+    "emoji": "📱",
+    "set_name": "ApplicationEmoji",
+    "is_animated": true,
+    "is_video": false,
+    "type": "custom_emoji",
+    "custom_emoji_id": "5321533581472842536",
+    "thumbnail": {
+      "file_id": "AAMCAgADFQABapSlXJAnXcZqPa87pdIQz9CX3sgAAihDAAKZ4tlJ4TSCRPOkU9QBAAdtAAM9BA",
+      "file_unique_id": "AQADKEMAApni2Uly",
+      "file_size": 2020,
+      "width": 128,
+      "height": 128
+    },
+    "thumb": {
+      "file_id": "AAMCAgADFQABapSlXJAnXcZqPa87pdIQz9CX3sgAAihDAAKZ4tlJ4TSCRPOkU9QBAAdtAAM9BA",
+      "file_unique_id": "AQADKEMAApni2Uly",
+      "file_size": 2020,
+      "width": 128,
+      "height": 128
+    },
+    "file_id": "CAACAgIAAxUAAWqUpVyQJ13Gaj2vO6XSEM_Ql97IAAIoQwACmeLZSeE0gkTzpFPUPQQ",
+    "file_unique_id": "AgADKEMAApni2Uk",
+    "file_size": 2188
+  },
+  {
+    "width": 512,
+    "height": 512,
+    "emoji": "📱",
+    "set_name": "ApplicationEmoji",
+    "is_animated": true,
+    "is_video": false,
+    "type": "custom_emoji",
+    "custom_emoji_id": "5334932883003949665",
+    "thumbnail": {
+      "file_id": "AAMCAgADFQABapSlXIYy-CrGmvOttiRkN7QZsj4AAmFCAAIxfQlKM4iIRvlJB8oBAAdtAAM9BA",
+      "file_unique_id": "AQADYUIAAjF9CUpy",
+      "file_size": 3046,
+      "width": 128,
+      "height": 128
+    },
+    "thumb": {
+      "file_id": "AAMCAgADFQABapSlXIYy-CrGmvOttiRkN7QZsj4AAmFCAAIxfQlKM4iIRvlJB8oBAAdtAAM9BA",
+      "file_unique_id": "AQADYUIAAjF9CUpy",
+      "file_size": 3046,
+      "width": 128,
+      "height": 128
+    },
+    "file_id": "CAACAgIAAxUAAWqUpVyGMvgqxprzrbYkZDe0GbI-AAJhQgACMX0JSjOIiEb5SQfKPQQ",
+    "file_unique_id": "AgADYUIAAjF9CUo",
+    "file_size": 1425
+  },
+  {
+    "width": 512,
+    "height": 512,
+    "emoji": "📱",
+    "set_name": "ApplicationEmoji",
+    "is_animated": true,
+    "is_video": false,
+    "type": "custom_emoji",
+    "custom_emoji_id": "5346056560537779652",
+    "thumbnail": {
+      "file_id": "AAMCAgADFQABapSlXCGeKWhLdP_u1JKk0wPtGQYAAsQ9AAIeAjFKgn-f1hz_qswBAAdtAAM9BA",
+      "file_unique_id": "AQADxD0AAh4CMUpy",
+      "file_size": 3362,
+      "width": 128,
+      "height": 128
+    },
+    "thumb": {
+      "file_id": "AAMCAgADFQABapSlXCGeKWhLdP_u1JKk0wPtGQYAAsQ9AAIeAjFKgn-f1hz_qswBAAdtAAM9BA",
+      "file_unique_id": "AQADxD0AAh4CMUpy",
+      "file_size": 3362,
+      "width": 128,
+      "height": 128
+    },
+    "file_id": "CAACAgIAAxUAAWqUpVwhniloS3T_7tSSpNMD7RkGAALEPQACHgIxSoJ_n9Yc_6rMPQQ",
+    "file_unique_id": "AgADxD0AAh4CMUo",
+    "file_size": 1874
+  },
+  {
+    "width": 512,
+    "height": 512,
+    "emoji": "📱",
+    "set_name": "ApplicationEmoji",
+    "is_animated": true,
+    "is_video": false,
+    "type": "custom_emoji",
+    "custom_emoji_id": "5334955749409834455",
+    "thumbnail": {
+      "file_id": "AAMCAgADFQABapSlXDuS8tMllha4julBM5l_0XkAAtdFAAL9kQlKD1MBKBeKmZ4BAAdtAAM9BA",
+      "file_unique_id": "AQAD10UAAv2RCUpy",
+      "file_size": 2494,
+      "width": 128,
+      "height": 128
+    },
+    "thumb": {
+      "file_id": "AAMCAgADFQABapSlXDuS8tMllha4julBM5l_0XkAAtdFAAL9kQlKD1MBKBeKmZ4BAAdtAAM9BA",
+      "file_unique_id": "AQAD10UAAv2RCUpy",
+      "file_size": 2494,
+      "width": 128,
+      "height": 128
+    },
+    "file_id": "CAACAgIAAxUAAWqUpVw7kvLTJZYWuI7pQTOZf9F5AALXRQAC_ZEJSg9TASgXipmePQQ",
+    "file_unique_id": "AgAD10UAAv2RCUo",
+    "file_size": 1343
+  },
+  {
+    "width": 512,
+    "height": 512,
+    "emoji": "📱",
+    "set_name": "ApplicationEmoji",
+    "is_animated": true,
+    "is_video": false,
+    "type": "custom_emoji",
+    "custom_emoji_id": "5332394707655869572",
+    "thumbnail": {
+      "file_id": "AAMCAgADFQABapSlXNbjIm5aHVVOs0m72frlxoMAAoREAAK8eAABSpdyJE32z0MnAQAHbQADPQQ",
+      "file_unique_id": "AQADhEQAArx4AAFKcg",
+      "file_size": 3664,
+      "width": 128,
+      "height": 128
+    },
+    "thumb": {
+      "file_id": "AAMCAgADFQABapSlXNbjIm5aHVVOs0m72frlxoMAAoREAAK8eAABSpdyJE32z0MnAQAHbQADPQQ",
+      "file_unique_id": "AQADhEQAArx4AAFKcg",
+      "file_size": 3664,
+      "width": 128,
+      "height": 128
+    },
+    "file_id": "CAACAgIAAxUAAWqUpVzW4yJuWh1VTrNJu9n65caDAAKERAACvHgAAUqXciRN9s9DJz0E",
+    "file_unique_id": "AgADhEQAArx4AAFK",
+    "file_size": 1785
+  },
+  {
+    "width": 512,
+    "height": 512,
+    "emoji": "📱",
+    "set_name": "ApplicationEmoji",
+    "is_animated": true,
+    "is_video": false,
+    "type": "custom_emoji",
+    "custom_emoji_id": "5346024142124633117",
+    "thumbnail": {
+      "file_id": "AAMCAgADFQABapSlXClpMOail5xp_oenOWO8Qd4AAh1MAAKi5DBKp6WlQXuKHnMBAAdtAAM9BA",
+      "file_unique_id": "AQADHUwAAqLkMEpy",
+      "file_size": 1898,
+      "width": 128,
+      "height": 128
+    },
+    "thumb": {
+      "file_id": "AAMCAgADFQABapSlXClpMOail5xp_oenOWO8Qd4AAh1MAAKi5DBKp6WlQXuKHnMBAAdtAAM9BA",
+      "file_unique_id": "AQADHUwAAqLkMEpy",
+      "file_size": 1898,
+      "width": 128,
+      "height": 128
+    },
+    "file_id": "CAACAgIAAxUAAWqUpVwpaTDmopecaf6HpzljvEHeAAIdTAACouQwSqelpUF7ih5zPQQ",
+    "file_unique_id": "AgADHUwAAqLkMEo",
+    "file_size": 1043
+  },
+  {
+    "width": 512,
+    "height": 512,
+    "emoji": "📱",
+    "set_name": "ApplicationEmoji",
+    "is_animated": true,
+    "is_video": false,
+    "type": "custom_emoji",
+    "custom_emoji_id": "5346242859039209592",
+    "thumbnail": {
+      "file_id": "AAMCAgADFQABapSlXHWWTwO4GZ0Pw4mPjM_qhbcAAng4AAKOqzFKDyXH_PV8PzIBAAdtAAM9BA",
+      "file_unique_id": "AQADeDgAAo6rMUpy",
+      "file_size": 2772,
+      "width": 128,
+      "height": 128
+    },
+    "thumb": {
+      "file_id": "AAMCAgADFQABapSlXHWWTwO4GZ0Pw4mPjM_qhbcAAng4AAKOqzFKDyXH_PV8PzIBAAdtAAM9BA",
+      "file_unique_id": "AQADeDgAAo6rMUpy",
+      "file_size": 2772,
+      "width": 128,
+      "height": 128
+    },
+    "file_id": "CAACAgIAAxUAAWqUpVx1lk8DuBmdD8OJj4zP6oW3AAJ4OAACjqsxSg8lx_z1fD8yPQQ",
+    "file_unique_id": "AgADeDgAAo6rMUo",
+    "file_size": 1609
+  },
+  {
+    "width": 512,
+    "height": 512,
+    "emoji": "📱",
+    "set_name": "ApplicationEmoji",
+    "is_animated": true,
+    "is_video": false,
+    "type": "custom_emoji",
+    "custom_emoji_id": "5346309375197725525",
+    "thumbnail": {
+      "file_id": "AAMCAgADFQABapSlXLYr_iX35t-PGF4f2FOhJ60AAlVDAAIN6DFKnoI2KxFwsM4BAAdtAAM9BA",
+      "file_unique_id": "AQADVUMAAg3oMUpy",
+      "file_size": 3028,
+      "width": 128,
+      "height": 128
+    },
+    "thumb": {
+      "file_id": "AAMCAgADFQABapSlXLYr_iX35t-PGF4f2FOhJ60AAlVDAAIN6DFKnoI2KxFwsM4BAAdtAAM9BA",
+      "file_unique_id": "AQADVUMAAg3oMUpy",
+      "file_size": 3028,
+      "width": 128,
+      "height": 128
+    },
+    "file_id": "CAACAgIAAxUAAWqUpVy2K_4l9-bfjxheH9hToSetAAJVQwACDegxSp6CNisRcLDOPQQ",
+    "file_unique_id": "AgADVUMAAg3oMUo",
+    "file_size": 1066
+  },
+  {
+    "width": 512,
+    "height": 512,
+    "emoji": "📱",
+    "set_name": "ApplicationEmoji",
+    "is_animated": true,
+    "is_video": false,
+    "type": "custom_emoji",
+    "custom_emoji_id": "5357184657592962696",
+    "thumbnail": {
+      "file_id": "AAMCAgADFQABapSlXLKgKvtJcSvYftvUsWg8WVoAAohOAAIQi1hKqA_zDDpL4ewBAAdtAAM9BA",
+      "file_unique_id": "AQADiE4AAhCLWEpy",
+      "file_size": 2514,
+      "width": 128,
+      "height": 128
+    },
+    "thumb": {
+      "file_id": "AAMCAgADFQABapSlXLKgKvtJcSvYftvUsWg8WVoAAohOAAIQi1hKqA_zDDpL4ewBAAdtAAM9BA",
+      "file_unique_id": "AQADiE4AAhCLWEpy",
+      "file_size": 2514,
+      "width": 128,
+      "height": 128
+    },
+    "file_id": "CAACAgIAAxUAAWqUpVyyoCr7SXEr2H7b1LFoPFlaAAKITgACEItYSqgP8ww6S-HsPQQ",
+    "file_unique_id": "AgADiE4AAhCLWEo",
+    "file_size": 1545
+  },
+  {
+    "width": 512,
+    "height": 512,
+    "emoji": "📱",
+    "set_name": "ApplicationEmoji",
+    "is_animated": true,
+    "is_video": false,
+    "type": "custom_emoji",
+    "custom_emoji_id": "5346319945112240722",
+    "thumbnail": {
+      "file_id": "AAMCAgADFQABapSlXLO3IjgjdenMgy8Xao23P9sAAlJCAAKq8TFKXwumrm9G-pgBAAdtAAM9BA",
+      "file_unique_id": "AQADUkIAAqrxMUpy",
+      "file_size": 3556,
+      "width": 128,
+      "height": 128
+    },
+    "thumb": {
+      "file_id": "AAMCAgADFQABapSlXLO3IjgjdenMgy8Xao23P9sAAlJCAAKq8TFKXwumrm9G-pgBAAdtAAM9BA",
+      "file_unique_id": "AQADUkIAAqrxMUpy",
+      "file_size": 3556,
+      "width": 128,
+      "height": 128
+    },
+    "file_id": "CAACAgIAAxUAAWqUpVyztyI4I3XpzIMvF2qNtz_bAAJSQgACqvExSl8Lpq5vRvqYPQQ",
+    "file_unique_id": "AgADUkIAAqrxMUo",
+    "file_size": 1554
+  },
+  {
+    "width": 512,
+    "height": 512,
+    "emoji": "📱",
+    "set_name": "ApplicationEmoji",
+    "is_animated": true,
+    "is_video": false,
+    "type": "custom_emoji",
+    "custom_emoji_id": "5318911503938634641",
+    "thumbnail": {
+      "file_id": "AAMCAgADFQABapSlXMY-PrgtxGLBY5jD543XsAgAApFDAALVkdBJ_hp0Y-kkbYcBAAdtAAM9BA",
+      "file_unique_id": "AQADkUMAAtWR0Ely",
+      "file_size": 2074,
+      "width": 128,
+      "height": 128
+    },
+    "thumb": {
+      "file_id": "AAMCAgADFQABapSlXMY-PrgtxGLBY5jD543XsAgAApFDAALVkdBJ_hp0Y-kkbYcBAAdtAAM9BA",
+      "file_unique_id": "AQADkUMAAtWR0Ely",
+      "file_size": 2074,
+      "width": 128,
+      "height": 128
+    },
+    "file_id": "CAACAgIAAxUAAWqUpVzGPj64LcRiwWOYw-eN17AIAAKRQwAC1ZHQSf4adGPpJG2HPQQ",
+    "file_unique_id": "AgADkUMAAtWR0Ek",
+    "file_size": 1421
+  },
+  {
+    "width": 512,
+    "height": 512,
+    "emoji": "📱",
+    "set_name": "ApplicationEmoji",
+    "is_animated": true,
+    "is_video": false,
+    "type": "custom_emoji",
+    "custom_emoji_id": "5346134750417403743",
+    "thumbnail": {
+      "file_id": "AAMCAgADFQABapSlXDgfcdtx-Pc340uO5tkTsNkAAl8_AAI7STFK3IdVV18jS5EBAAdtAAM9BA",
+      "file_unique_id": "AQADXz8AAjtJMUpy",
+      "file_size": 4944,
+      "width": 128,
+      "height": 128
+    },
+    "thumb": {
+      "file_id": "AAMCAgADFQABapSlXDgfcdtx-Pc340uO5tkTsNkAAl8_AAI7STFK3IdVV18jS5EBAAdtAAM9BA",
+      "file_unique_id": "AQADXz8AAjtJMUpy",
+      "file_size": 4944,
+      "width": 128,
+      "height": 128
+    },
+    "file_id": "CAACAgIAAxUAAWqUpVw4H3Hbcfj3N-NLjubZE7DZAAJfPwACO0kxStyHVVdfI0uRPQQ",
+    "file_unique_id": "AgADXz8AAjtJMUo",
+    "file_size": 3400
+  },
+  {
+    "width": 512,
+    "height": 512,
+    "emoji": "📱",
+    "set_name": "ApplicationEmoji",
+    "is_animated": true,
+    "is_video": false,
+    "type": "custom_emoji",
+    "custom_emoji_id": "5345799562579688546",
+    "thumbnail": {
+      "file_id": "AAMCAgADFQABapSlXGC3hmc0IjGmNPX7Rv_tM5YAAmI8AAJhGDBKVOC20KK068cBAAdtAAM9BA",
+      "file_unique_id": "AQADYjwAAmEYMEpy",
+      "file_size": 3284,
+      "width": 128,
+      "height": 128
+    },
+    "thumb": {
+      "file_id": "AAMCAgADFQABapSlXGC3hmc0IjGmNPX7Rv_tM5YAAmI8AAJhGDBKVOC20KK068cBAAdtAAM9BA",
+      "file_unique_id": "AQADYjwAAmEYMEpy",
+      "file_size": 3284,
+      "width": 128,
+      "height": 128
+    },
+    "file_id": "CAACAgIAAxUAAWqUpVxgt4ZnNCIxpjT1-0b_7TOWAAJiPAACYRgwSlTgttCitOvHPQQ",
+    "file_unique_id": "AgADYjwAAmEYMEo",
+    "file_size": 1935
+  },
+  {
+    "width": 512,
+    "height": 512,
+    "emoji": "📱",
+    "set_name": "ApplicationEmoji",
+    "is_animated": true,
+    "is_video": false,
+    "type": "custom_emoji",
+    "custom_emoji_id": "5346242644290846992",
+    "thumbnail": {
+      "file_id": "AAMCAgADFQABapSlXHZvTx0GOddaQhsCLKr_V5kAAhBBAAJcqzFKXv4MZwoP0bkBAAdtAAM9BA",
+      "file_unique_id": "AQADEEEAAlyrMUpy",
+      "file_size": 3518,
+      "width": 128,
+      "height": 128
+    },
+    "thumb": {
+      "file_id": "AAMCAgADFQABapSlXHZvTx0GOddaQhsCLKr_V5kAAhBBAAJcqzFKXv4MZwoP0bkBAAdtAAM9BA",
+      "file_unique_id": "AQADEEEAAlyrMUpy",
+      "file_size": 3518,
+      "width": 128,
+      "height": 128
+    },
+    "file_id": "CAACAgIAAxUAAWqUpVx2b08dBjnXWkIbAiyq_1eZAAIQQQACXKsxSl7-DGcKD9G5PQQ",
+    "file_unique_id": "AgADEEEAAlyrMUo",
+    "file_size": 1459
+  },
+  {
+    "width": 512,
+    "height": 512,
+    "emoji": "📱",
+    "set_name": "ApplicationEmoji",
+    "is_animated": true,
+    "is_video": false,
+    "type": "custom_emoji",
+    "custom_emoji_id": "5345937224871461019",
+    "thumbnail": {
+      "file_id": "AAMCAgADFQABapSlXB4USMdex2uAVHTRN1KbopcAAptAAAKVlTBKrM0YE8O1d8QBAAdtAAM9BA",
+      "file_unique_id": "AQADm0AAApWVMEpy",
+      "file_size": 2050,
+      "width": 128,
+      "height": 128
+    },
+    "thumb": {
+      "file_id": "AAMCAgADFQABapSlXB4USMdex2uAVHTRN1KbopcAAptAAAKVlTBKrM0YE8O1d8QBAAdtAAM9BA",
+      "file_unique_id": "AQADm0AAApWVMEpy",
+      "file_size": 2050,
+      "width": 128,
+      "height": 128
+    },
+    "file_id": "CAACAgIAAxUAAWqUpVweFEjHXsdrgFR00TdSm6KXAAKbQAAClZUwSqzNGBPDtXfEPQQ",
+    "file_unique_id": "AgADm0AAApWVMEo",
+    "file_size": 1076
+  },
+  {
+    "width": 512,
+    "height": 512,
+    "emoji": "📱",
+    "set_name": "ApplicationEmoji",
+    "is_animated": true,
+    "is_video": false,
+    "type": "custom_emoji",
+    "custom_emoji_id": "5346251367369425932",
+    "thumbnail": {
+      "file_id": "AAMCAgADFQABapSlXO8kBagE2bsTlIuVNyNyKAkAAgxEAAJLszFKzgkSd_r5LOcBAAdtAAM9BA",
+      "file_unique_id": "AQADDEQAAkuzMUpy",
+      "file_size": 2520,
+      "width": 128,
+      "height": 128
+    },
+    "thumb": {
+      "file_id": "AAMCAgADFQABapSlXO8kBagE2bsTlIuVNyNyKAkAAgxEAAJLszFKzgkSd_r5LOcBAAdtAAM9BA",
+      "file_unique_id": "AQADDEQAAkuzMUpy",
+      "file_size": 2520,
+      "width": 128,
+      "height": 128
+    },
+    "file_id": "CAACAgIAAxUAAWqUpVzvJAWoBNm7E5SLlTcjcigJAAIMRAACS7MxSs4JEnf6-SznPQQ",
+    "file_unique_id": "AgADDEQAAkuzMUo",
+    "file_size": 1602
+  },
+  {
+    "width": 512,
+    "height": 512,
+    "emoji": "📱",
+    "set_name": "ApplicationEmoji",
+    "is_animated": true,
+    "is_video": false,
+    "type": "custom_emoji",
+    "custom_emoji_id": "5345776794958053103",
+    "thumbnail": {
+      "file_id": "AAMCAgADFQABapSlXIODvQ2ScKaiZ16Ex1aTXmgAAu8-AAKsAzBKadgVLT1XH6EBAAdtAAM9BA",
+      "file_unique_id": "AQAD7z4AAqwDMEpy",
+      "file_size": 4354,
+      "width": 128,
+      "height": 128
+    },
+    "thumb": {
+      "file_id": "AAMCAgADFQABapSlXIODvQ2ScKaiZ16Ex1aTXmgAAu8-AAKsAzBKadgVLT1XH6EBAAdtAAM9BA",
+      "file_unique_id": "AQAD7z4AAqwDMEpy",
+      "file_size": 4354,
+      "width": 128,
+      "height": 128
+    },
+    "file_id": "CAACAgIAAxUAAWqUpVyDg70NknCmomdehMdWk15oAALvPgACrAMwSmnYFS09Vx-hPQQ",
+    "file_unique_id": "AgAD7z4AAqwDMEo",
+    "file_size": 1649
+  },
+  {
+    "width": 512,
+    "height": 512,
+    "emoji": "📱",
+    "set_name": "ApplicationEmoji",
+    "is_animated": true,
+    "is_video": false,
+    "type": "custom_emoji",
+    "custom_emoji_id": "5346259862814734771",
+    "thumbnail": {
+      "file_id": "AAMCAgADFQABapSlXGdYf9jhpHePPaYVmJtDbU8AArM5AAIFuzFKEfY5jcWm4mABAAdtAAM9BA",
+      "file_unique_id": "AQADszkAAgW7MUpy",
+      "file_size": 3522,
+      "width": 128,
+      "height": 128
+    },
+    "thumb": {
+      "file_id": "AAMCAgADFQABapSlXGdYf9jhpHePPaYVmJtDbU8AArM5AAIFuzFKEfY5jcWm4mABAAdtAAM9BA",
+      "file_unique_id": "AQADszkAAgW7MUpy",
+      "file_size": 3522,
+      "width": 128,
+      "height": 128
+    },
+    "file_id": "CAACAgIAAxUAAWqUpVxnWH_Y4aR3jz2mFZibQ21PAAKzOQACBbsxShH2OY3FpuJgPQQ",
+    "file_unique_id": "AgADszkAAgW7MUo",
+    "file_size": 1639
+  },
+  {
+    "width": 512,
+    "height": 512,
+    "emoji": "📱",
+    "set_name": "ApplicationEmoji",
+    "is_animated": true,
+    "is_video": false,
+    "type": "custom_emoji",
+    "custom_emoji_id": "5345844509412444249",
+    "thumbnail": {
+      "file_id": "AAMCAgADFQABapSlXEWT7R2HVvAq4sbn_T9jAYAAAllIAAJCQTBKDAx0MlGeuzcBAAdtAAM9BA",
+      "file_unique_id": "AQADWUgAAkJBMEpy",
+      "file_size": 2676,
+      "width": 128,
+      "height": 128
+    },
+    "thumb": {
+      "file_id": "AAMCAgADFQABapSlXEWT7R2HVvAq4sbn_T9jAYAAAllIAAJCQTBKDAx0MlGeuzcBAAdtAAM9BA",
+      "file_unique_id": "AQADWUgAAkJBMEpy",
+      "file_size": 2676,
+      "width": 128,
+      "height": 128
+    },
+    "file_id": "CAACAgIAAxUAAWqUpVxFk-0dh1bwKuLG5_0_YwGAAAJZSAACQkEwSgwMdDJRnrs3PQQ",
+    "file_unique_id": "AgADWUgAAkJBMEo",
+    "file_size": 2466
+  },
+  {
+    "width": 512,
+    "height": 512,
+    "emoji": "📱",
+    "set_name": "ApplicationEmoji",
+    "is_animated": true,
+    "is_video": false,
+    "type": "custom_emoji",
+    "custom_emoji_id": "5346074681004801565",
+    "thumbnail": {
+      "file_id": "AAMCAgADFQABapSlXCvGNlbjk2Ru6jKO40REsYgAAh0-AAKZEjFKTpW-nJIQIScBAAdtAAM9BA",
+      "file_unique_id": "AQADHT4AApkSMUpy",
+      "file_size": 3474,
+      "width": 128,
+      "height": 128
+    },
+    "thumb": {
+      "file_id": "AAMCAgADFQABapSlXCvGNlbjk2Ru6jKO40REsYgAAh0-AAKZEjFKTpW-nJIQIScBAAdtAAM9BA",
+      "file_unique_id": "AQADHT4AApkSMUpy",
+      "file_size": 3474,
+      "width": 128,
+      "height": 128
+    },
+    "file_id": "CAACAgIAAxUAAWqUpVwrxjZW45NkbuoyjuNERLGIAAIdPgACmRIxSk6VvpySECEnPQQ",
+    "file_unique_id": "AgADHT4AApkSMUo",
+    "file_size": 1631
+  },
+  {
+    "width": 512,
+    "height": 512,
+    "emoji": "📱",
+    "set_name": "ApplicationEmoji",
+    "is_animated": true,
+    "is_video": false,
+    "type": "custom_emoji",
+    "custom_emoji_id": "5346296430166293639",
+    "thumbnail": {
+      "file_id": "AAMCAgADFQABapSlXNkrLypYuM8yj73OwWY_qFMAAoc8AAJH3DFKvZhhKgyYwtgBAAdtAAM9BA",
+      "file_unique_id": "AQADhzwAAkfcMUpy",
+      "file_size": 4008,
+      "width": 128,
+      "height": 128
+    },
+    "thumb": {
+      "file_id": "AAMCAgADFQABapSlXNkrLypYuM8yj73OwWY_qFMAAoc8AAJH3DFKvZhhKgyYwtgBAAdtAAM9BA",
+      "file_unique_id": "AQADhzwAAkfcMUpy",
+      "file_size": 4008,
+      "width": 128,
+      "height": 128
+    },
+    "file_id": "CAACAgIAAxUAAWqUpVzZKy8qWLjPMo-9zsFmP6hTAAKHPAACR9wxSr2YYSoMmMLYPQQ",
+    "file_unique_id": "AgADhzwAAkfcMUo",
+    "file_size": 1222
+  },
+  {
+    "width": 512,
+    "height": 512,
+    "emoji": "📱",
+    "set_name": "ApplicationEmoji",
+    "is_animated": true,
+    "is_video": false,
+    "type": "custom_emoji",
+    "custom_emoji_id": "5345967461441223890",
+    "thumbnail": {
+      "file_id": "AAMCAgADFQABapSlXPxUSZf6co6E4QH04W57j-8AAtI8AAIVsTBKIOWoKR90cbEBAAdtAAM9BA",
+      "file_unique_id": "AQAD0jwAAhWxMEpy",
+      "file_size": 2904,
+      "width": 128,
+      "height": 128
+    },
+    "thumb": {
+      "file_id": "AAMCAgADFQABapSlXPxUSZf6co6E4QH04W57j-8AAtI8AAIVsTBKIOWoKR90cbEBAAdtAAM9BA",
+      "file_unique_id": "AQAD0jwAAhWxMEpy",
+      "file_size": 2904,
+      "width": 128,
+      "height": 128
+    },
+    "file_id": "CAACAgIAAxUAAWqUpVz8VEmX-nKOhOEB9OFue4_vAALSPAACFbEwSiDlqCkfdHGxPQQ",
+    "file_unique_id": "AgAD0jwAAhWxMEo",
+    "file_size": 1153
+  },
+  {
+    "width": 512,
+    "height": 512,
+    "emoji": "📱",
+    "set_name": "ApplicationEmoji",
+    "is_animated": true,
+    "is_video": false,
+    "type": "custom_emoji",
+    "custom_emoji_id": "5346017678198848586",
+    "thumbnail": {
+      "file_id": "AAMCAgADFQABapSlXHF19legYGCKyHfxWq0H74gAAko8AALB3jBKpg1iEA4ogjQBAAdtAAM9BA",
+      "file_unique_id": "AQADSjwAAsHeMEpy",
+      "file_size": 3036,
+      "width": 128,
+      "height": 128
+    },
+    "thumb": {
+      "file_id": "AAMCAgADFQABapSlXHF19legYGCKyHfxWq0H74gAAko8AALB3jBKpg1iEA4ogjQBAAdtAAM9BA",
+      "file_unique_id": "AQADSjwAAsHeMEpy",
+      "file_size": 3036,
+      "width": 128,
+      "height": 128
+    },
+    "file_id": "CAACAgIAAxUAAWqUpVxxdfZXoGBgish38VqtB--IAAJKPAACwd4wSqYNYhAOKII0PQQ",
+    "file_unique_id": "AgADSjwAAsHeMEo",
+    "file_size": 1665
+  },
+  {
+    "width": 512,
+    "height": 512,
+    "emoji": "📱",
+    "set_name": "ApplicationEmoji",
+    "is_animated": true,
+    "is_video": false,
+    "type": "custom_emoji",
+    "custom_emoji_id": "5346188613602263703",
+    "thumbnail": {
+      "file_id": "AAMCAgADFQABapSlXLkn29NxvLEN2iik7K4j3yQAApdCAAI4ejFKMgh8d7fRpVQBAAdtAAM9BA",
+      "file_unique_id": "AQADl0IAAjh6MUpy",
+      "file_size": 2990,
+      "width": 128,
+      "height": 128
+    },
+    "thumb": {
+      "file_id": "AAMCAgADFQABapSlXLkn29NxvLEN2iik7K4j3yQAApdCAAI4ejFKMgh8d7fRpVQBAAdtAAM9BA",
+      "file_unique_id": "AQADl0IAAjh6MUpy",
+      "file_size": 2990,
+      "width": 128,
+      "height": 128
+    },
+    "file_id": "CAACAgIAAxUAAWqUpVy5J9vTcbyxDdoopOyuI98kAAKXQgACOHoxSjIIfHe30aVUPQQ",
+    "file_unique_id": "AgADl0IAAjh6MUo",
+    "file_size": 1495
+  },
+  {
+    "width": 512,
+    "height": 512,
+    "emoji": "📱",
+    "set_name": "ApplicationEmoji",
+    "is_animated": true,
+    "is_video": false,
+    "type": "custom_emoji",
+    "custom_emoji_id": "5345845252441784353",
+    "thumbnail": {
+      "file_id": "AAMCAgADFQABapSlXNwukRW2MlkfOLLfKe0fc1YAAiFAAALvQTBK2DGZCCSkS58BAAdtAAM9BA",
+      "file_unique_id": "AQADIUAAAu9BMEpy",
+      "file_size": 2260,
+      "width": 128,
+      "height": 128
+    },
+    "thumb": {
+      "file_id": "AAMCAgADFQABapSlXNwukRW2MlkfOLLfKe0fc1YAAiFAAALvQTBK2DGZCCSkS58BAAdtAAM9BA",
+      "file_unique_id": "AQADIUAAAu9BMEpy",
+      "file_size": 2260,
+      "width": 128,
+      "height": 128
+    },
+    "file_id": "CAACAgIAAxUAAWqUpVzcLpEVtjJZHziy3yntH3NWAAIhQAAC70EwStgxmQgkpEufPQQ",
+    "file_unique_id": "AgADIUAAAu9BMEo",
+    "file_size": 1066
+  },
+  {
+    "width": 512,
+    "height": 512,
+    "emoji": "📱",
+    "set_name": "ApplicationEmoji",
+    "is_animated": true,
+    "is_video": false,
+    "type": "custom_emoji",
+    "custom_emoji_id": "5346008706012169915",
+    "thumbnail": {
+      "file_id": "AAMCAgADFQABapSlXFJtHhNG9jCdxf2zQq6qNtoAArtGAAKY1jBKKRPlzH6NcfEBAAdtAAM9BA",
+      "file_unique_id": "AQADu0YAApjWMEpy",
+      "file_size": 4062,
+      "width": 128,
+      "height": 128
+    },
+    "thumb": {
+      "file_id": "AAMCAgADFQABapSlXFJtHhNG9jCdxf2zQq6qNtoAArtGAAKY1jBKKRPlzH6NcfEBAAdtAAM9BA",
+      "file_unique_id": "AQADu0YAApjWMEpy",
+      "file_size": 4062,
+      "width": 128,
+      "height": 128
+    },
+    "file_id": "CAACAgIAAxUAAWqUpVxSbR4TRvYwncX9s0KuqjbaAAK7RgACmNYwSikT5cx-jXHxPQQ",
+    "file_unique_id": "AgADu0YAApjWMEo",
+    "file_size": 1493
+  },
+  {
+    "width": 512,
+    "height": 512,
+    "emoji": "📱",
+    "set_name": "ApplicationEmoji",
+    "is_animated": true,
+    "is_video": false,
+    "type": "custom_emoji",
+    "custom_emoji_id": "5346066456142429527",
+    "thumbnail": {
+      "file_id": "AAMCAgADFQABapSlXK_MULIIPiVABge3UfnS76IAAlc9AAIeCzFKH2lxL8pxrjcBAAdtAAM9BA",
+      "file_unique_id": "AQADVz0AAh4LMUpy",
+      "file_size": 2316,
+      "width": 128,
+      "height": 128
+    },
+    "thumb": {
+      "file_id": "AAMCAgADFQABapSlXK_MULIIPiVABge3UfnS76IAAlc9AAIeCzFKH2lxL8pxrjcBAAdtAAM9BA",
+      "file_unique_id": "AQADVz0AAh4LMUpy",
+      "file_size": 2316,
+      "width": 128,
+      "height": 128
+    },
+    "file_id": "CAACAgIAAxUAAWqUpVyvzFCyCD4lQAYHt1H50u-iAAJXPQACHgsxSh9pcS_Kca43PQQ",
+    "file_unique_id": "AgADVz0AAh4LMUo",
+    "file_size": 1117
+  },
+  {
+    "width": 512,
+    "height": 512,
+    "emoji": "📱",
+    "set_name": "ApplicationEmoji",
+    "is_animated": true,
+    "is_video": false,
+    "type": "custom_emoji",
+    "custom_emoji_id": "5346172593374248407",
+    "thumbnail": {
+      "file_id": "AAMCAgADFQABapSlXO6IPC2b5x5ELshNUwn7wy4AAtc9AAKmazFKKaiwgcykAlYBAAdtAAM9BA",
+      "file_unique_id": "AQAD1z0AAqZrMUpy",
+      "file_size": 2856,
+      "width": 128,
+      "height": 128
+    },
+    "thumb": {
+      "file_id": "AAMCAgADFQABapSlXO6IPC2b5x5ELshNUwn7wy4AAtc9AAKmazFKKaiwgcykAlYBAAdtAAM9BA",
+      "file_unique_id": "AQAD1z0AAqZrMUpy",
+      "file_size": 2856,
+      "width": 128,
+      "height": 128
+    },
+    "file_id": "CAACAgIAAxUAAWqUpVzuiDwtm-ceRC7ITVMJ-8MuAALXPQACpmsxSimosIHMpAJWPQQ",
+    "file_unique_id": "AgAD1z0AAqZrMUo",
+    "file_size": 1391
+  },
+  {
+    "width": 512,
+    "height": 512,
+    "emoji": "📱",
+    "set_name": "ApplicationEmoji",
+    "is_animated": true,
+    "is_video": false,
+    "type": "custom_emoji",
+    "custom_emoji_id": "5346181118884331907",
+    "thumbnail": {
+      "file_id": "AAMCAgADFQABapSlXLvg7fXuysreH90RCofYoXcAAoNBAAJnczFKVxyBefwk2ScBAAdtAAM9BA",
+      "file_unique_id": "AQADg0EAAmdzMUpy",
+      "file_size": 2982,
+      "width": 128,
+      "height": 128
+    },
+    "thumb": {
+      "file_id": "AAMCAgADFQABapSlXLvg7fXuysreH90RCofYoXcAAoNBAAJnczFKVxyBefwk2ScBAAdtAAM9BA",
+      "file_unique_id": "AQADg0EAAmdzMUpy",
+      "file_size": 2982,
+      "width": 128,
+      "height": 128
+    },
+    "file_id": "CAACAgIAAxUAAWqUpVy74O317srK3h_dEQqH2KF3AAKDQQACZ3MxSlccgXn8JNknPQQ",
+    "file_unique_id": "AgADg0EAAmdzMUo",
+    "file_size": 3277
+  },
+  {
+    "width": 512,
+    "height": 512,
+    "emoji": "📱",
+    "set_name": "ApplicationEmoji",
+    "is_animated": true,
+    "is_video": false,
+    "type": "custom_emoji",
+    "custom_emoji_id": "5346308584923740680",
+    "thumbnail": {
+      "file_id": "AAMCAgADFQABapSlXOwq8vXBZ8je5Q_ifJR0f7EAAgg6AAJV5zFKa9_OEwTTO3kBAAdtAAM9BA",
+      "file_unique_id": "AQADCDoAAlXnMUpy",
+      "file_size": 2950,
+      "width": 128,
+      "height": 128
+    },
+    "thumb": {
+      "file_id": "AAMCAgADFQABapSlXOwq8vXBZ8je5Q_ifJR0f7EAAgg6AAJV5zFKa9_OEwTTO3kBAAdtAAM9BA",
+      "file_unique_id": "AQADCDoAAlXnMUpy",
+      "file_size": 2950,
+      "width": 128,
+      "height": 128
+    },
+    "file_id": "CAACAgIAAxUAAWqUpVzsKvL1wWfI3uUP4nyUdH-xAAIIOgACVecxSmvfzhME0zt5PQQ",
+    "file_unique_id": "AgADCDoAAlXnMUo",
+    "file_size": 2205
+  },
+  {
+    "width": 512,
+    "height": 512,
+    "emoji": "📱",
+    "set_name": "ApplicationEmoji",
+    "is_animated": true,
+    "is_video": false,
+    "type": "custom_emoji",
+    "custom_emoji_id": "5346284438617604231",
+    "thumbnail": {
+      "file_id": "AAMCAgADFQABapSlXOAKAAEKgIrhf3-feeK9J5zwAAKHQAACX9ExShC4zbeUbuceAQAHbQADPQQ",
+      "file_unique_id": "AQADh0AAAl_RMUpy",
+      "file_size": 2092,
+      "width": 128,
+      "height": 128
+    },
+    "thumb": {
+      "file_id": "AAMCAgADFQABapSlXOAKAAEKgIrhf3-feeK9J5zwAAKHQAACX9ExShC4zbeUbuceAQAHbQADPQQ",
+      "file_unique_id": "AQADh0AAAl_RMUpy",
+      "file_size": 2092,
+      "width": 128,
+      "height": 128
+    },
+    "file_id": "CAACAgIAAxUAAWqUpVzgCgABCoCK4X9_n3nivSec8AACh0AAAl_RMUoQuM23lG7nHj0E",
+    "file_unique_id": "AgADh0AAAl_RMUo",
+    "file_size": 998
+  },
+  {
+    "width": 512,
+    "height": 512,
+    "emoji": "📱",
+    "set_name": "ApplicationEmoji",
+    "is_animated": true,
+    "is_video": false,
+    "type": "custom_emoji",
+    "custom_emoji_id": "5346024520081751155",
+    "thumbnail": {
+      "file_id": "AAMCAgADFQABapSlXDS24GJJ7h4fQJ304HPcB28AAnM8AAL65DBKVkEJo2WlgCsBAAdtAAM9BA",
+      "file_unique_id": "AQADczwAAvrkMEpy",
+      "file_size": 2332,
+      "width": 128,
+      "height": 128
+    },
+    "thumb": {
+      "file_id": "AAMCAgADFQABapSlXDS24GJJ7h4fQJ304HPcB28AAnM8AAL65DBKVkEJo2WlgCsBAAdtAAM9BA",
+      "file_unique_id": "AQADczwAAvrkMEpy",
+      "file_size": 2332,
+      "width": 128,
+      "height": 128
+    },
+    "file_id": "CAACAgIAAxUAAWqUpVw0tuBiSe4eH0Cd9OBz3AdvAAJzPAAC-uQwSlZBCaNlpYArPQQ",
+    "file_unique_id": "AgADczwAAvrkMEo",
+    "file_size": 1172
+  },
+  {
+    "width": 512,
+    "height": 512,
+    "emoji": "📱",
+    "set_name": "ApplicationEmoji",
+    "is_animated": true,
+    "is_video": false,
+    "type": "custom_emoji",
+    "custom_emoji_id": "5346213374088723754",
+    "thumbnail": {
+      "file_id": "AAMCAgADFQABapSlXE6y4BhtHCaKf5S9A6KRUoUAAio9AAK9kDFK9eF7kWKOHM8BAAdtAAM9BA",
+      "file_unique_id": "AQADKj0AAr2QMUpy",
+      "file_size": 3014,
+      "width": 128,
+      "height": 128
+    },
+    "thumb": {
+      "file_id": "AAMCAgADFQABapSlXE6y4BhtHCaKf5S9A6KRUoUAAio9AAK9kDFK9eF7kWKOHM8BAAdtAAM9BA",
+      "file_unique_id": "AQADKj0AAr2QMUpy",
+      "file_size": 3014,
+      "width": 128,
+      "height": 128
+    },
+    "file_id": "CAACAgIAAxUAAWqUpVxOsuAYbRwmin-UvQOikVKFAAIqPQACvZAxSvXhe5FijhzPPQQ",
+    "file_unique_id": "AgADKj0AAr2QMUo",
+    "file_size": 1358
+  },
+  {
+    "width": 512,
+    "height": 512,
+    "emoji": "📱",
+    "set_name": "ApplicationEmoji",
+    "is_animated": true,
+    "is_video": false,
+    "type": "custom_emoji",
+    "custom_emoji_id": "5345833716159627218",
+    "thumbnail": {
+      "file_id": "AAMCAgADFQABapSlXMCEIaAL1rcp5HjFzXX2-RkAAtI_AAJxNzBKF9G39jg_bjwBAAdtAAM9BA",
+      "file_unique_id": "AQAD0j8AAnE3MEpy",
+      "file_size": 1926,
+      "width": 128,
+      "height": 128
+    },
+    "thumb": {
+      "file_id": "AAMCAgADFQABapSlXMCEIaAL1rcp5HjFzXX2-RkAAtI_AAJxNzBKF9G39jg_bjwBAAdtAAM9BA",
+      "file_unique_id": "AQAD0j8AAnE3MEpy",
+      "file_size": 1926,
+      "width": 128,
+      "height": 128
+    },
+    "file_id": "CAACAgIAAxUAAWqUpVzAhCGgC9a3KeR4xc119vkZAALSPwACcTcwShfRt_Y4P248PQQ",
+    "file_unique_id": "AgAD0j8AAnE3MEo",
+    "file_size": 1688
+  },
+  {
+    "width": 512,
+    "height": 512,
+    "emoji": "📱",
+    "set_name": "ApplicationEmoji",
+    "is_animated": true,
+    "is_video": false,
+    "type": "custom_emoji",
+    "custom_emoji_id": "5346103513120258857",
+    "thumbnail": {
+      "file_id": "AAMCAgADFQABapSlXOHzAwzl1muHRYbAGn6IphgAAik7AALSLDFKjgu9HmWYY_8BAAdtAAM9BA",
+      "file_unique_id": "AQADKTsAAtIsMUpy",
+      "file_size": 4220,
+      "width": 128,
+      "height": 128
+    },
+    "thumb": {
+      "file_id": "AAMCAgADFQABapSlXOHzAwzl1muHRYbAGn6IphgAAik7AALSLDFKjgu9HmWYY_8BAAdtAAM9BA",
+      "file_unique_id": "AQADKTsAAtIsMUpy",
+      "file_size": 4220,
+      "width": 128,
+      "height": 128
+    },
+    "file_id": "CAACAgIAAxUAAWqUpVzh8wMM5dZrh0WGwBp-iKYYAAIpOwAC0iwxSo4LvR5lmGP_PQQ",
+    "file_unique_id": "AgADKTsAAtIsMUo",
+    "file_size": 1487
+  },
+  {
+    "width": 512,
+    "height": 512,
+    "emoji": "📱",
+    "set_name": "ApplicationEmoji",
+    "is_animated": true,
+    "is_video": false,
+    "type": "custom_emoji",
+    "custom_emoji_id": "5345818383126384016",
+    "thumbnail": {
+      "file_id": "AAMCAgADFQABapSlXMuokumr1iaJOKC94XC8T4QAApBNAAJ_KTBK-oSiuXPDec4BAAdtAAM9BA",
+      "file_unique_id": "AQADkE0AAn8pMEpy",
+      "file_size": 3066,
+      "width": 128,
+      "height": 128
+    },
+    "thumb": {
+      "file_id": "AAMCAgADFQABapSlXMuokumr1iaJOKC94XC8T4QAApBNAAJ_KTBK-oSiuXPDec4BAAdtAAM9BA",
+      "file_unique_id": "AQADkE0AAn8pMEpy",
+      "file_size": 3066,
+      "width": 128,
+      "height": 128
+    },
+    "file_id": "CAACAgIAAxUAAWqUpVzLqJLpq9YmiTigveFwvE-EAAKQTQACfykwSvqEorlzw3nOPQQ",
+    "file_unique_id": "AgADkE0AAn8pMEo",
+    "file_size": 1301
+  },
+  {
+    "width": 512,
+    "height": 512,
+    "emoji": "📱",
+    "set_name": "ApplicationEmoji",
+    "is_animated": true,
+    "is_video": false,
+    "type": "custom_emoji",
+    "custom_emoji_id": "5359584650958226302",
+    "thumbnail": {
+      "file_id": "AAMCAgADFQABapSlXDlgG84JNnSes8DNbARY1c8AAn5DAALYEWFK0LrrLshMhiQBAAdtAAM9BA",
+      "file_unique_id": "AQADfkMAAtgRYUpy",
+      "file_size": 3174,
+      "width": 128,
+      "height": 128
+    },
+    "thumb": {
+      "file_id": "AAMCAgADFQABapSlXDlgG84JNnSes8DNbARY1c8AAn5DAALYEWFK0LrrLshMhiQBAAdtAAM9BA",
+      "file_unique_id": "AQADfkMAAtgRYUpy",
+      "file_size": 3174,
+      "width": 128,
+      "height": 128
+    },
+    "file_id": "CAACAgIAAxUAAWqUpVw5YBvOCTZ0nrPAzWwEWNXPAAJ-QwAC2BFhStC66y7ITIYkPQQ",
+    "file_unique_id": "AgADfkMAAtgRYUo",
+    "file_size": 1398
+  },
+  {
+    "width": 512,
+    "height": 512,
+    "emoji": "📱",
+    "set_name": "ApplicationEmoji",
+    "is_animated": true,
+    "is_video": false,
+    "type": "custom_emoji",
+    "custom_emoji_id": "5359321266383766546",
+    "thumbnail": {
+      "file_id": "AAMCAgADFQABapSlXEM9UW6J3Bn6jtB604l3n8cAAhJEAAJMImBK_-g6uwqgdyQBAAdtAAM9BA",
+      "file_unique_id": "AQADEkQAAkwiYEpy",
+      "file_size": 2594,
+      "width": 128,
+      "height": 128
+    },
+    "thumb": {
+      "file_id": "AAMCAgADFQABapSlXEM9UW6J3Bn6jtB604l3n8cAAhJEAAJMImBK_-g6uwqgdyQBAAdtAAM9BA",
+      "file_unique_id": "AQADEkQAAkwiYEpy",
+      "file_size": 2594,
+      "width": 128,
+      "height": 128
+    },
+    "file_id": "CAACAgIAAxUAAWqUpVxDPVFuidwZ-o7QetOJd5_HAAISRAACTCJgSv_oOrsKoHckPQQ",
+    "file_unique_id": "AgADEkQAAkwiYEo",
+    "file_size": 1687
+  },
+  {
+    "width": 512,
+    "height": 512,
+    "emoji": "📱",
+    "set_name": "ApplicationEmoji",
+    "is_animated": true,
+    "is_video": false,
+    "type": "custom_emoji",
+    "custom_emoji_id": "5359320566304096699",
+    "thumbnail": {
+      "file_id": "AAMCAgADFQABapSlXKn5A6DXQRJh0SKszwOBNeQAArtBAAKpIWBKhzRd-lA1AAFtAQAHbQADPQQ",
+      "file_unique_id": "AQADu0EAAqkhYEpy",
+      "file_size": 2908,
+      "width": 128,
+      "height": 128
+    },
+    "thumb": {
+      "file_id": "AAMCAgADFQABapSlXKn5A6DXQRJh0SKszwOBNeQAArtBAAKpIWBKhzRd-lA1AAFtAQAHbQADPQQ",
+      "file_unique_id": "AQADu0EAAqkhYEpy",
+      "file_size": 2908,
+      "width": 128,
+      "height": 128
+    },
+    "file_id": "CAACAgIAAxUAAWqUpVyp-QOg10ESYdEirM8DgTXkAAK7QQACqSFgSoc0XfpQNQABbT0E",
+    "file_unique_id": "AgADu0EAAqkhYEo",
+    "file_size": 1057
+  },
+  {
+    "width": 512,
+    "height": 512,
+    "emoji": "📱",
+    "set_name": "ApplicationEmoji",
+    "is_animated": true,
+    "is_video": false,
+    "type": "custom_emoji",
+    "custom_emoji_id": "5359437015752401733",
+    "thumbnail": {
+      "file_id": "AAMCAgADFQABapSlXPyM4b1B3-Jgq1Pb6bQolYwAAkVjAAKSi2BK_SwV8HnaUCsBAAdtAAM9BA",
+      "file_unique_id": "AQADRWMAApKLYEpy",
+      "file_size": 2208,
+      "width": 128,
+      "height": 128
+    },
+    "thumb": {
+      "file_id": "AAMCAgADFQABapSlXPyM4b1B3-Jgq1Pb6bQolYwAAkVjAAKSi2BK_SwV8HnaUCsBAAdtAAM9BA",
+      "file_unique_id": "AQADRWMAApKLYEpy",
+      "file_size": 2208,
+      "width": 128,
+      "height": 128
+    },
+    "file_id": "CAACAgIAAxUAAWqUpVz8jOG9Qd_iYKtT2-m0KJWMAAJFYwACkotgSv0sFfB52lArPQQ",
+    "file_unique_id": "AgADRWMAApKLYEo",
+    "file_size": 1805
+  },
+  {
+    "width": 512,
+    "height": 512,
+    "emoji": "📱",
+    "set_name": "ApplicationEmoji",
+    "is_animated": true,
+    "is_video": false,
+    "type": "custom_emoji",
+    "custom_emoji_id": "5364036341610858181",
+    "thumbnail": {
+      "file_id": "AAMCAgADFQABapSlXLsNYselM03h0KLj2KUAAdUAA8VGAAKi4nBK0UqLt92hibABAAdtAAM9BA",
+      "file_unique_id": "AQADxUYAAqLicEpy",
+      "file_size": 2344,
+      "width": 128,
+      "height": 128
+    },
+    "thumb": {
+      "file_id": "AAMCAgADFQABapSlXLsNYselM03h0KLj2KUAAdUAA8VGAAKi4nBK0UqLt92hibABAAdtAAM9BA",
+      "file_unique_id": "AQADxUYAAqLicEpy",
+      "file_size": 2344,
+      "width": 128,
+      "height": 128
+    },
+    "file_id": "CAACAgIAAxUAAWqUpVy7DWLHpTNN4dCi49ilAAHVAAPFRgACouJwStFKi7fdoYmwPQQ",
+    "file_unique_id": "AgADxUYAAqLicEo",
+    "file_size": 1089
+  },
+  {
+    "width": 512,
+    "height": 512,
+    "emoji": "📱",
+    "set_name": "ApplicationEmoji",
+    "is_animated": true,
+    "is_video": false,
+    "type": "custom_emoji",
+    "custom_emoji_id": "5364075889669718872",
+    "thumbnail": {
+      "file_id": "AAMCAgADFQABapSlXEGQEDsJByhfiRKO6eAbfLYAAlhDAAKaBnFKH9yoIqkaROMBAAdtAAM9BA",
+      "file_unique_id": "AQADWEMAApoGcUpy",
+      "file_size": 3024,
+      "width": 128,
+      "height": 128
+    },
+    "thumb": {
+      "file_id": "AAMCAgADFQABapSlXEGQEDsJByhfiRKO6eAbfLYAAlhDAAKaBnFKH9yoIqkaROMBAAdtAAM9BA",
+      "file_unique_id": "AQADWEMAApoGcUpy",
+      "file_size": 3024,
+      "width": 128,
+      "height": 128
+    },
+    "file_id": "CAACAgIAAxUAAWqUpVxBkBA7CQcoX4kSjungG3y2AAJYQwACmgZxSh_cqCKpGkTjPQQ",
+    "file_unique_id": "AgADWEMAApoGcUo",
+    "file_size": 1339
+  },
+  {
+    "width": 512,
+    "height": 512,
+    "emoji": "📱",
+    "set_name": "ApplicationEmoji",
+    "is_animated": true,
+    "is_video": false,
+    "type": "custom_emoji",
+    "custom_emoji_id": "5364111181415996352",
+    "thumbnail": {
+      "file_id": "AAMCAgADFQABapSlXDAxU2iOPqtKnX7G7JT38eUAAsBbAAKzJnFKyIjfSphVcw4BAAdtAAM9BA",
+      "file_unique_id": "AQADwFsAArMmcUpy",
+      "file_size": 2422,
+      "width": 128,
+      "height": 128
+    },
+    "thumb": {
+      "file_id": "AAMCAgADFQABapSlXDAxU2iOPqtKnX7G7JT38eUAAsBbAAKzJnFKyIjfSphVcw4BAAdtAAM9BA",
+      "file_unique_id": "AQADwFsAArMmcUpy",
+      "file_size": 2422,
+      "width": 128,
+      "height": 128
+    },
+    "file_id": "CAACAgIAAxUAAWqUpVwwMVNojj6rSp1-xuyU9_HlAALAWwACsyZxSsiI30qYVXMOPQQ",
+    "file_unique_id": "AgADwFsAArMmcUo",
+    "file_size": 1493
+  },
+  {
+    "width": 512,
+    "height": 512,
+    "emoji": "📱",
+    "set_name": "ApplicationEmoji",
+    "is_animated": true,
+    "is_video": false,
+    "type": "custom_emoji",
+    "custom_emoji_id": "5366068097365066701",
+    "thumbnail": {
+      "file_id": "AAMCAgADFQABapSlXNbG_BwFh1fS2TYJez6oGCYAAs1DAAKBGnhKT_GAM4RfcWIBAAdtAAM9BA",
+      "file_unique_id": "AQADzUMAAoEaeEpy",
+      "file_size": 3624,
+      "width": 128,
+      "height": 128
+    },
+    "thumb": {
+      "file_id": "AAMCAgADFQABapSlXNbG_BwFh1fS2TYJez6oGCYAAs1DAAKBGnhKT_GAM4RfcWIBAAdtAAM9BA",
+      "file_unique_id": "AQADzUMAAoEaeEpy",
+      "file_size": 3624,
+      "width": 128,
+      "height": 128
+    },
+    "file_id": "CAACAgIAAxUAAWqUpVzWxvwcBYdX0tk2CXs-qBgmAALNQwACgRp4Sk_xgDOEX3FiPQQ",
+    "file_unique_id": "AgADzUMAAoEaeEo",
+    "file_size": 1087
+  },
+  {
+    "width": 512,
+    "height": 512,
+    "emoji": "📱",
+    "set_name": "ApplicationEmoji",
+    "is_animated": true,
+    "is_video": false,
+    "type": "custom_emoji",
+    "custom_emoji_id": "5363831115188553043",
+    "thumbnail": {
+      "file_id": "AAMCAgADFQABapSlXCG_l8hZA6EhO9HhmlJYgKAAAlNFAAL7J3BKRxjrHsOJ8YEBAAdtAAM9BA",
+      "file_unique_id": "AQADU0UAAvsncEpy",
+      "file_size": 3044,
+      "width": 128,
+      "height": 128
+    },
+    "thumb": {
+      "file_id": "AAMCAgADFQABapSlXCG_l8hZA6EhO9HhmlJYgKAAAlNFAAL7J3BKRxjrHsOJ8YEBAAdtAAM9BA",
+      "file_unique_id": "AQADU0UAAvsncEpy",
+      "file_size": 3044,
+      "width": 128,
+      "height": 128
+    },
+    "file_id": "CAACAgIAAxUAAWqUpVwhv5fIWQOhITvR4ZpSWICgAAJTRQAC-ydwSkcY6x7DifGBPQQ",
+    "file_unique_id": "AgADU0UAAvsncEo",
+    "file_size": 2964
+  },
+  {
+    "width": 512,
+    "height": 512,
+    "emoji": "📱",
+    "set_name": "ApplicationEmoji",
+    "is_animated": true,
+    "is_video": false,
+    "type": "custom_emoji",
+    "custom_emoji_id": "5363810946022131056",
+    "thumbnail": {
+      "file_id": "AAMCAgADFQABapSlXLVnb8etxligWvX0kHpBkXcAAnBFAAKjFXBKy5uj9rlcTj0BAAdtAAM9BA",
+      "file_unique_id": "AQADcEUAAqMVcEpy",
+      "file_size": 2880,
+      "width": 128,
+      "height": 128
+    },
+    "thumb": {
+      "file_id": "AAMCAgADFQABapSlXLVnb8etxligWvX0kHpBkXcAAnBFAAKjFXBKy5uj9rlcTj0BAAdtAAM9BA",
+      "file_unique_id": "AQADcEUAAqMVcEpy",
+      "file_size": 2880,
+      "width": 128,
+      "height": 128
+    },
+    "file_id": "CAACAgIAAxUAAWqUpVy1Z2_HrcZYoFr19JB6QZF3AAJwRQACoxVwSsubo_a5XE49PQQ",
+    "file_unique_id": "AgADcEUAAqMVcEo",
+    "file_size": 1281
+  },
+  {
+    "width": 512,
+    "height": 512,
+    "emoji": "📱",
+    "set_name": "ApplicationEmoji",
+    "is_animated": true,
+    "is_video": false,
+    "type": "custom_emoji",
+    "custom_emoji_id": "5364199932620194408",
+    "thumbnail": {
+      "file_id": "AAMCAgADFQABapSlXBElKOmqy-CNqLkJ1gF-JtQAAmhCAAJrd3FKSTO5MPT5Bp8BAAdtAAM9BA",
+      "file_unique_id": "AQADaEIAAmt3cUpy",
+      "file_size": 3036,
+      "width": 128,
+      "height": 128
+    },
+    "thumb": {
+      "file_id": "AAMCAgADFQABapSlXBElKOmqy-CNqLkJ1gF-JtQAAmhCAAJrd3FKSTO5MPT5Bp8BAAdtAAM9BA",
+      "file_unique_id": "AQADaEIAAmt3cUpy",
+      "file_size": 3036,
+      "width": 128,
+      "height": 128
+    },
+    "file_id": "CAACAgIAAxUAAWqUpVwRJSjpqsvgjai5CdYBfibUAAJoQgACa3dxSkkzuTD0-QafPQQ",
+    "file_unique_id": "AgADaEIAAmt3cUo",
+    "file_size": 5719
+  },
+  {
+    "width": 512,
+    "height": 512,
+    "emoji": "📱",
+    "set_name": "ApplicationEmoji",
+    "is_animated": true,
+    "is_video": false,
+    "type": "custom_emoji",
+    "custom_emoji_id": "5363899233369868662",
+    "thumbnail": {
+      "file_id": "AAMCAgADFQABapSlXMNnw7c-Ic_ga9dYto-jO5UAAnZJAALvZXBKKCXBvUqo76sBAAdtAAM9BA",
+      "file_unique_id": "AQADdkkAAu9lcEpy",
+      "file_size": 3048,
+      "width": 128,
+      "height": 128
+    },
+    "thumb": {
+      "file_id": "AAMCAgADFQABapSlXMNnw7c-Ic_ga9dYto-jO5UAAnZJAALvZXBKKCXBvUqo76sBAAdtAAM9BA",
+      "file_unique_id": "AQADdkkAAu9lcEpy",
+      "file_size": 3048,
+      "width": 128,
+      "height": 128
+    },
+    "file_id": "CAACAgIAAxUAAWqUpVzDZ8O3PiHP4GvXWLaPozuVAAJ2SQAC72VwSiglwb1KqO-rPQQ",
+    "file_unique_id": "AgADdkkAAu9lcEo",
+    "file_size": 1499
+  },
+  {
+    "width": 512,
+    "height": 512,
+    "emoji": "📱",
+    "set_name": "ApplicationEmoji",
+    "is_animated": true,
+    "is_video": false,
+    "type": "custom_emoji",
+    "custom_emoji_id": "5359772714691216710",
+    "thumbnail": {
+      "file_id": "AAMCAgADFQABapSlXCkw1iqDCIA_c8dSk9ncETwAAkZFAALjvGFKIXkFzmVZQJkBAAdtAAM9BA",
+      "file_unique_id": "AQADRkUAAuO8YUpy",
+      "file_size": 2264,
+      "width": 128,
+      "height": 128
+    },
+    "thumb": {
+      "file_id": "AAMCAgADFQABapSlXCkw1iqDCIA_c8dSk9ncETwAAkZFAALjvGFKIXkFzmVZQJkBAAdtAAM9BA",
+      "file_unique_id": "AQADRkUAAuO8YUpy",
+      "file_size": 2264,
+      "width": 128,
+      "height": 128
+    },
+    "file_id": "CAACAgIAAxUAAWqUpVwpMNYqgwiAP3PHUpPZ3BE8AAJGRQAC47xhSiF5Bc5lWUCZPQQ",
+    "file_unique_id": "AgADRkUAAuO8YUo",
+    "file_size": 1235
+  },
+  {
+    "width": 512,
+    "height": 512,
+    "emoji": "📱",
+    "set_name": "ApplicationEmoji",
+    "is_animated": true,
+    "is_video": false,
+    "type": "custom_emoji",
+    "custom_emoji_id": "5359472852959512416",
+    "thumbnail": {
+      "file_id": "AAMCAgADFQABapSlXNh8yTe-TGwsnjbzZBo2uqoAAmBHAAIqrGBKYaXBrqDka7UBAAdtAAM9BA",
+      "file_unique_id": "AQADYEcAAiqsYEpy",
+      "file_size": 2954,
+      "width": 128,
+      "height": 128
+    },
+    "thumb": {
+      "file_id": "AAMCAgADFQABapSlXNh8yTe-TGwsnjbzZBo2uqoAAmBHAAIqrGBKYaXBrqDka7UBAAdtAAM9BA",
+      "file_unique_id": "AQADYEcAAiqsYEpy",
+      "file_size": 2954,
+      "width": 128,
+      "height": 128
+    },
+    "file_id": "CAACAgIAAxUAAWqUpVzYfMk3vkxsLJ4282QaNrqqAAJgRwACKqxgSmGlwa6g5Gu1PQQ",
+    "file_unique_id": "AgADYEcAAiqsYEo",
+    "file_size": 1488
+  },
+  {
+    "width": 512,
+    "height": 512,
+    "emoji": "📱",
+    "set_name": "ApplicationEmoji",
+    "is_animated": true,
+    "is_video": false,
+    "type": "custom_emoji",
+    "custom_emoji_id": "5357394595594388140",
+    "thumbnail": {
+      "file_id": "AAMCAgADFQABapSlXFL81IQxL0FJLiDIUwsFxrEAAqxCAANKWUqvB5RAlUQ0rAEAB20AAz0E",
+      "file_unique_id": "AQADrEIAA0pZSnI",
+      "file_size": 2264,
+      "width": 128,
+      "height": 128
+    },
+    "thumb": {
+      "file_id": "AAMCAgADFQABapSlXFL81IQxL0FJLiDIUwsFxrEAAqxCAANKWUqvB5RAlUQ0rAEAB20AAz0E",
+      "file_unique_id": "AQADrEIAA0pZSnI",
+      "file_size": 2264,
+      "width": 128,
+      "height": 128
+    },
+    "file_id": "CAACAgIAAxUAAWqUpVxS_NSEMS9BSS4gyFMLBcaxAAKsQgADSllKrweUQJVENKw9BA",
+    "file_unique_id": "AgADrEIAA0pZSg",
+    "file_size": 1502
+  },
+  {
+    "width": 512,
+    "height": 512,
+    "emoji": "📱",
+    "set_name": "ApplicationEmoji",
+    "is_animated": true,
+    "is_video": false,
+    "type": "custom_emoji",
+    "custom_emoji_id": "5363989350373671453",
+    "thumbnail": {
+      "file_id": "AAMCAgADFQABapSlXMimU6gjVv_XbGi6gpxX1bMAAh1CAALlt3BKM6b5D7MxA0YBAAdtAAM9BA",
+      "file_unique_id": "AQADHUIAAuW3cEpy",
+      "file_size": 2066,
+      "width": 128,
+      "height": 128
+    },
+    "thumb": {
+      "file_id": "AAMCAgADFQABapSlXMimU6gjVv_XbGi6gpxX1bMAAh1CAALlt3BKM6b5D7MxA0YBAAdtAAM9BA",
+      "file_unique_id": "AQADHUIAAuW3cEpy",
+      "file_size": 2066,
+      "width": 128,
+      "height": 128
+    },
+    "file_id": "CAACAgIAAxUAAWqUpVzIplOoI1b_12xouoKcV9WzAAIdQgAC5bdwSjOm-Q-zMQNGPQQ",
+    "file_unique_id": "AgADHUIAAuW3cEo",
+    "file_size": 1684
+  },
+  {
+    "width": 512,
+    "height": 512,
+    "emoji": "📱",
+    "set_name": "ApplicationEmoji",
+    "is_animated": true,
+    "is_video": false,
+    "type": "custom_emoji",
+    "custom_emoji_id": "5364101182732127639",
+    "thumbnail": {
+      "file_id": "AAMCAgADFQABapSlXEf8TUKsNGX0eS_i2KBMqPsAApdNAAKbHXFKzVFqSCZP6ZEBAAdtAAM9BA",
+      "file_unique_id": "AQADl00AApsdcUpy",
+      "file_size": 2056,
+      "width": 128,
+      "height": 128
+    },
+    "thumb": {
+      "file_id": "AAMCAgADFQABapSlXEf8TUKsNGX0eS_i2KBMqPsAApdNAAKbHXFKzVFqSCZP6ZEBAAdtAAM9BA",
+      "file_unique_id": "AQADl00AApsdcUpy",
+      "file_size": 2056,
+      "width": 128,
+      "height": 128
+    },
+    "file_id": "CAACAgIAAxUAAWqUpVxH_E1CrDRl9Hkv4tigTKj7AAKXTQACmx1xSs1RakgmT-mRPQQ",
+    "file_unique_id": "AgADl00AApsdcUo",
+    "file_size": 1655
+  },
+  {
+    "width": 512,
+    "height": 512,
+    "emoji": "📱",
+    "set_name": "ApplicationEmoji",
+    "is_animated": true,
+    "is_video": false,
+    "type": "custom_emoji",
+    "custom_emoji_id": "5359480394922082925",
+    "thumbnail": {
+      "file_id": "AAMCAgADFQABapSlXNj2vIb7o2YyoOLkfMKOUjYAAm1CAAIGs2BK0x2Q61_cAAFZAQAHbQADPQQ",
+      "file_unique_id": "AQADbUIAAgazYEpy",
+      "file_size": 2416,
+      "width": 128,
+      "height": 128
+    },
+    "thumb": {
+      "file_id": "AAMCAgADFQABapSlXNj2vIb7o2YyoOLkfMKOUjYAAm1CAAIGs2BK0x2Q61_cAAFZAQAHbQADPQQ",
+      "file_unique_id": "AQADbUIAAgazYEpy",
+      "file_size": 2416,
+      "width": 128,
+      "height": 128
+    },
+    "file_id": "CAACAgIAAxUAAWqUpVzY9ryG-6NmMqDi5HzCjlI2AAJtQgACBrNgStMdkOtf3AABWT0E",
+    "file_unique_id": "AgADbUIAAgazYEo",
+    "file_size": 1402
+  },
+  {
+    "width": 512,
+    "height": 512,
+    "emoji": "📱",
+    "set_name": "ApplicationEmoji",
+    "is_animated": true,
+    "is_video": false,
+    "type": "custom_emoji",
+    "custom_emoji_id": "5359320531944358335",
+    "thumbnail": {
+      "file_id": "AAMCAgADFQABapSlXFsG8kDKsXGIPbCv3G6JNJQAAr9BAAKhIWBKAzyBJPtQ7SABAAdtAAM9BA",
+      "file_unique_id": "AQADv0EAAqEhYEpy",
+      "file_size": 2378,
+      "width": 128,
+      "height": 128
+    },
+    "thumb": {
+      "file_id": "AAMCAgADFQABapSlXFsG8kDKsXGIPbCv3G6JNJQAAr9BAAKhIWBKAzyBJPtQ7SABAAdtAAM9BA",
+      "file_unique_id": "AQADv0EAAqEhYEpy",
+      "file_size": 2378,
+      "width": 128,
+      "height": 128
+    },
+    "file_id": "CAACAgIAAxUAAWqUpVxbBvJAyrFxiD2wr9xuiTSUAAK_QQACoSFgSgM8gST7UO0gPQQ",
+    "file_unique_id": "AgADv0EAAqEhYEo",
+    "file_size": 1382
+  },
+  {
+    "width": 512,
+    "height": 512,
+    "emoji": "📱",
+    "set_name": "ApplicationEmoji",
+    "is_animated": true,
+    "is_video": false,
+    "type": "custom_emoji",
+    "custom_emoji_id": "5363858422590619939",
+    "thumbnail": {
+      "file_id": "AAMCAgADFQABapSlXEKNLNQ4FZOfS0nsk4AOHIsAAiNBAALRQHBKLWIHlrh125sBAAdtAAM9BA",
+      "file_unique_id": "AQADI0EAAtFAcEpy",
+      "file_size": 1792,
+      "width": 128,
+      "height": 128
+    },
+    "thumb": {
+      "file_id": "AAMCAgADFQABapSlXEKNLNQ4FZOfS0nsk4AOHIsAAiNBAALRQHBKLWIHlrh125sBAAdtAAM9BA",
+      "file_unique_id": "AQADI0EAAtFAcEpy",
+      "file_size": 1792,
+      "width": 128,
+      "height": 128
+    },
+    "file_id": "CAACAgIAAxUAAWqUpVxCjSzUOBWTn0tJ7JOADhyLAAIjQQAC0UBwSi1iB5a4ddubPQQ",
+    "file_unique_id": "AgADI0EAAtFAcEo",
+    "file_size": 1271
+  },
+  {
+    "width": 512,
+    "height": 512,
+    "emoji": "📱",
+    "set_name": "ApplicationEmoji",
+    "is_animated": true,
+    "is_video": false,
+    "type": "custom_emoji",
+    "custom_emoji_id": "5363973751052452405",
+    "thumbnail": {
+      "file_id": "AAMCAgADFQABapSlXBvw5IeGvt4MOdfzQBTvtnwAAjVCAAK1qXBKxHT_e2DLlb0BAAdtAAM9BA",
+      "file_unique_id": "AQADNUIAArWpcEpy",
+      "file_size": 1748,
+      "width": 128,
+      "height": 128
+    },
+    "thumb": {
+      "file_id": "AAMCAgADFQABapSlXBvw5IeGvt4MOdfzQBTvtnwAAjVCAAK1qXBKxHT_e2DLlb0BAAdtAAM9BA",
+      "file_unique_id": "AQADNUIAArWpcEpy",
+      "file_size": 1748,
+      "width": 128,
+      "height": 128
+    },
+    "file_id": "CAACAgIAAxUAAWqUpVwb8OSHhr7eDDnX80AU77Z8AAI1QgACtalwSsR0_3tgy5W9PQQ",
+    "file_unique_id": "AgADNUIAArWpcEo",
+    "file_size": 1408
+  },
+  {
+    "width": 512,
+    "height": 512,
+    "emoji": "📱",
+    "set_name": "ApplicationEmoji",
+    "is_animated": true,
+    "is_video": false,
+    "type": "custom_emoji",
+    "custom_emoji_id": "5364121867294621703",
+    "thumbnail": {
+      "file_id": "AAMCAgADFQABapSlXGla51m8L4nCMnczF9Gjf-cAAgdAAAJrMHFKaueGAbRYj60BAAdtAAM9BA",
+      "file_unique_id": "AQADB0AAAmswcUpy",
+      "file_size": 2530,
+      "width": 128,
+      "height": 128
+    },
+    "thumb": {
+      "file_id": "AAMCAgADFQABapSlXGla51m8L4nCMnczF9Gjf-cAAgdAAAJrMHFKaueGAbRYj60BAAdtAAM9BA",
+      "file_unique_id": "AQADB0AAAmswcUpy",
+      "file_size": 2530,
+      "width": 128,
+      "height": 128
+    },
+    "file_id": "CAACAgIAAxUAAWqUpVxpWudZvC-JwjJ3MxfRo3_nAAIHQAACazBxSmrnhgG0WI-tPQQ",
+    "file_unique_id": "AgADB0AAAmswcUo",
+    "file_size": 1169
+  },
+  {
+    "width": 512,
+    "height": 512,
+    "emoji": "📱",
+    "set_name": "ApplicationEmoji",
+    "is_animated": true,
+    "is_video": false,
+    "type": "custom_emoji",
+    "custom_emoji_id": "5364339557712020484",
+    "thumbnail": {
+      "file_id": "AAMCAgADFQABapSlXHJOD-sM1AABMKJHxIrAfqs5AAIERAACaPZxSsyyA-H5srt0AQAHbQADPQQ",
+      "file_unique_id": "AQADBEQAAmj2cUpy",
+      "file_size": 2594,
+      "width": 128,
+      "height": 128
+    },
+    "thumb": {
+      "file_id": "AAMCAgADFQABapSlXHJOD-sM1AABMKJHxIrAfqs5AAIERAACaPZxSsyyA-H5srt0AQAHbQADPQQ",
+      "file_unique_id": "AQADBEQAAmj2cUpy",
+      "file_size": 2594,
+      "width": 128,
+      "height": 128
+    },
+    "file_id": "CAACAgIAAxUAAWqUpVxyTg_rDNQAATCiR8SKwH6rOQACBEQAAmj2cUrMsgPh-bK7dD0E",
+    "file_unique_id": "AgADBEQAAmj2cUo",
+    "file_size": 2171
+  },
+  {
+    "width": 512,
+    "height": 512,
+    "emoji": "📱",
+    "set_name": "ApplicationEmoji",
+    "is_animated": true,
+    "is_video": false,
+    "type": "custom_emoji",
+    "custom_emoji_id": "5364314346253991843",
+    "thumbnail": {
+      "file_id": "AAMCAgADFQABapSlXJCARfyKaNTPDK-FYe9G4C0AAqM_AAJ633FKcJ2TUZ28tv4BAAdtAAM9BA",
+      "file_unique_id": "AQADoz8AAnrfcUpy",
+      "file_size": 2498,
+      "width": 128,
+      "height": 128
+    },
+    "thumb": {
+      "file_id": "AAMCAgADFQABapSlXJCARfyKaNTPDK-FYe9G4C0AAqM_AAJ633FKcJ2TUZ28tv4BAAdtAAM9BA",
+      "file_unique_id": "AQADoz8AAnrfcUpy",
+      "file_size": 2498,
+      "width": 128,
+      "height": 128
+    },
+    "file_id": "CAACAgIAAxUAAWqUpVyQgEX8imjUzwyvhWHvRuAtAAKjPwACet9xSnCdk1GdvLb-PQQ",
+    "file_unique_id": "AgADoz8AAnrfcUo",
+    "file_size": 3565
+  },
+  {
+    "width": 512,
+    "height": 512,
+    "emoji": "📱",
+    "set_name": "ApplicationEmoji",
+    "is_animated": true,
+    "is_video": false,
+    "type": "custom_emoji",
+    "custom_emoji_id": "5363892211098339885",
+    "thumbnail": {
+      "file_id": "AAMCAgADFQABapSlXHV1B7ryiY-_uF5GejStj84AAi1KAAKMX3BK82tscE_HYi0BAAdtAAM9BA",
+      "file_unique_id": "AQADLUoAAoxfcEpy",
+      "file_size": 2706,
+      "width": 128,
+      "height": 128
+    },
+    "thumb": {
+      "file_id": "AAMCAgADFQABapSlXHV1B7ryiY-_uF5GejStj84AAi1KAAKMX3BK82tscE_HYi0BAAdtAAM9BA",
+      "file_unique_id": "AQADLUoAAoxfcEpy",
+      "file_size": 2706,
+      "width": 128,
+      "height": 128
+    },
+    "file_id": "CAACAgIAAxUAAWqUpVx1dQe68omPv7heRno0rY_OAAItSgACjF9wSvNrbHBPx2ItPQQ",
+    "file_unique_id": "AgADLUoAAoxfcEo",
+    "file_size": 1280
+  },
+  {
+    "width": 512,
+    "height": 512,
+    "emoji": "📱",
+    "set_name": "ApplicationEmoji",
+    "is_animated": true,
+    "is_video": false,
+    "type": "custom_emoji",
+    "custom_emoji_id": "5364343191254352560",
+    "thumbnail": {
+      "file_id": "AAMCAgADFQABapSlXLc4fR1T4Q9ovj1p4cFSa7EAArBCAAK2-XFKYtlVr7VPxS4BAAdtAAM9BA",
+      "file_unique_id": "AQADsEIAArb5cUpy",
+      "file_size": 2166,
+      "width": 128,
+      "height": 128
+    },
+    "thumb": {
+      "file_id": "AAMCAgADFQABapSlXLc4fR1T4Q9ovj1p4cFSa7EAArBCAAK2-XFKYtlVr7VPxS4BAAdtAAM9BA",
+      "file_unique_id": "AQADsEIAArb5cUpy",
+      "file_size": 2166,
+      "width": 128,
+      "height": 128
+    },
+    "file_id": "CAACAgIAAxUAAWqUpVy3OH0dU-EPaL49aeHBUmuxAAKwQgACtvlxSmLZVa-1T8UuPQQ",
+    "file_unique_id": "AgADsEIAArb5cUo",
+    "file_size": 3116
+  },
+  {
+    "width": 512,
+    "height": 512,
+    "emoji": "📱",
+    "set_name": "ApplicationEmoji",
+    "is_animated": true,
+    "is_video": false,
+    "type": "custom_emoji",
+    "custom_emoji_id": "5357286671656176924",
+    "thumbnail": {
+      "file_id": "AAMCAgADFQABapSlXEzJOfaLKChNHY7P2Sjz4yMAAhxNAALY51hKFYdE0K_dfzkBAAdtAAM9BA",
+      "file_unique_id": "AQADHE0AAtjnWEpy",
+      "file_size": 2418,
+      "width": 128,
+      "height": 128
+    },
+    "thumb": {
+      "file_id": "AAMCAgADFQABapSlXEzJOfaLKChNHY7P2Sjz4yMAAhxNAALY51hKFYdE0K_dfzkBAAdtAAM9BA",
+      "file_unique_id": "AQADHE0AAtjnWEpy",
+      "file_size": 2418,
+      "width": 128,
+      "height": 128
+    },
+    "file_id": "CAACAgIAAxUAAWqUpVxMyTn2iygoTR2Oz9ko8-MjAAIcTQAC2OdYShWHRNCv3X85PQQ",
+    "file_unique_id": "AgADHE0AAtjnWEo",
+    "file_size": 1248
+  },
+  {
+    "width": 512,
+    "height": 512,
+    "emoji": "📱",
+    "set_name": "ApplicationEmoji",
+    "is_animated": true,
+    "is_video": false,
+    "type": "custom_emoji",
+    "custom_emoji_id": "5359602676935968589",
+    "thumbnail": {
+      "file_id": "AAMCAgADFQABapSlXC1_JptqNjPdj0ReBPDVgZYAAk1HAAI9ImFKL9Js4U0nYhIBAAdtAAM9BA",
+      "file_unique_id": "AQADTUcAAj0iYUpy",
+      "file_size": 3106,
+      "width": 128,
+      "height": 128
+    },
+    "thumb": {
+      "file_id": "AAMCAgADFQABapSlXC1_JptqNjPdj0ReBPDVgZYAAk1HAAI9ImFKL9Js4U0nYhIBAAdtAAM9BA",
+      "file_unique_id": "AQADTUcAAj0iYUpy",
+      "file_size": 3106,
+      "width": 128,
+      "height": 128
+    },
+    "file_id": "CAACAgIAAxUAAWqUpVwtfyabajYz3Y9EXgTw1YGWAAJNRwACPSJhSi_SbOFNJ2ISPQQ",
+    "file_unique_id": "AgADTUcAAj0iYUo",
+    "file_size": 1306
+  },
+  {
+    "width": 512,
+    "height": 512,
+    "emoji": "📱",
+    "set_name": "ApplicationEmoji",
+    "is_animated": true,
+    "is_video": false,
+    "type": "custom_emoji",
+    "custom_emoji_id": "5363977152666550281",
+    "thumbnail": {
+      "file_id": "AAMCAgADFQABapSlXA6tEmM0gSH8UjxNU-4hpEUAAglAAALNrHBKlenWMdM9-MUBAAdtAAM9BA",
+      "file_unique_id": "AQADCUAAAs2scEpy",
+      "file_size": 2410,
+      "width": 128,
+      "height": 128
+    },
+    "thumb": {
+      "file_id": "AAMCAgADFQABapSlXA6tEmM0gSH8UjxNU-4hpEUAAglAAALNrHBKlenWMdM9-MUBAAdtAAM9BA",
+      "file_unique_id": "AQADCUAAAs2scEpy",
+      "file_size": 2410,
+      "width": 128,
+      "height": 128
+    },
+    "file_id": "CAACAgIAAxUAAWqUpVwOrRJjNIEh_FI8TVPuIaRFAAIJQAACzaxwSpXp1jHTPfjFPQQ",
+    "file_unique_id": "AgADCUAAAs2scEo",
+    "file_size": 1647
+  },
+  {
+    "width": 512,
+    "height": 512,
+    "emoji": "📱",
+    "set_name": "ApplicationEmoji",
+    "is_animated": true,
+    "is_video": false,
+    "type": "custom_emoji",
+    "custom_emoji_id": "5364182988974211543",
+    "thumbnail": {
+      "file_id": "AAMCAgADFQABapSlXON8bAQ-wIDuoJKuUfHmPwQAAtdBAAICaHFK2z-oiVkik3MBAAdtAAM9BA",
+      "file_unique_id": "AQAD10EAAgJocUpy",
+      "file_size": 2340,
+      "width": 128,
+      "height": 128
+    },
+    "thumb": {
+      "file_id": "AAMCAgADFQABapSlXON8bAQ-wIDuoJKuUfHmPwQAAtdBAAICaHFK2z-oiVkik3MBAAdtAAM9BA",
+      "file_unique_id": "AQAD10EAAgJocUpy",
+      "file_size": 2340,
+      "width": 128,
+      "height": 128
+    },
+    "file_id": "CAACAgIAAxUAAWqUpVzjfGwEPsCA7qCSrlHx5j8EAALXQQACAmhxSts_qIlZIpNzPQQ",
+    "file_unique_id": "AgAD10EAAgJocUo",
+    "file_size": 1577
+  },
+  {
+    "width": 512,
+    "height": 512,
+    "emoji": "📱",
+    "set_name": "ApplicationEmoji",
+    "is_animated": true,
+    "is_video": false,
+    "type": "custom_emoji",
+    "custom_emoji_id": "5364290083983736876",
+    "thumbnail": {
+      "file_id": "AAMCAgADFQABapSlXDBFzQUCYVgDIsWIhMybbQ8AAixAAAJpyXFKb4-XEXckaqQBAAdtAAM9BA",
+      "file_unique_id": "AQADLEAAAmnJcUpy",
+      "file_size": 3408,
+      "width": 128,
+      "height": 128
+    },
+    "thumb": {
+      "file_id": "AAMCAgADFQABapSlXDBFzQUCYVgDIsWIhMybbQ8AAixAAAJpyXFKb4-XEXckaqQBAAdtAAM9BA",
+      "file_unique_id": "AQADLEAAAmnJcUpy",
+      "file_size": 3408,
+      "width": 128,
+      "height": 128
+    },
+    "file_id": "CAACAgIAAxUAAWqUpVwwRc0FAmFYAyLFiITMm20PAAIsQAACaclxSm-PlxF3JGqkPQQ",
+    "file_unique_id": "AgADLEAAAmnJcUo",
+    "file_size": 1538
+  },
+  {
+    "width": 512,
+    "height": 512,
+    "emoji": "📱",
+    "set_name": "ApplicationEmoji",
+    "is_animated": true,
+    "is_video": false,
+    "type": "custom_emoji",
+    "custom_emoji_id": "5364105576483668906",
+    "thumbnail": {
+      "file_id": "AAMCAgADFQABapSlXO6jNLE54GRJzqOA2H02QFAAAqpDAAKaIXFKVXixvSsiY9kBAAdtAAM9BA",
+      "file_unique_id": "AQADqkMAApohcUpy",
+      "file_size": 3550,
+      "width": 128,
+      "height": 128
+    },
+    "thumb": {
+      "file_id": "AAMCAgADFQABapSlXO6jNLE54GRJzqOA2H02QFAAAqpDAAKaIXFKVXixvSsiY9kBAAdtAAM9BA",
+      "file_unique_id": "AQADqkMAApohcUpy",
+      "file_size": 3550,
+      "width": 128,
+      "height": 128
+    },
+    "file_id": "CAACAgIAAxUAAWqUpVzuozSxOeBkSc6jgNh9NkBQAAKqQwACmiFxSlV4sb0rImPZPQQ",
+    "file_unique_id": "AgADqkMAApohcUo",
+    "file_size": 1908
+  },
+  {
+    "width": 512,
+    "height": 512,
+    "emoji": "📱",
+    "set_name": "ApplicationEmoji",
+    "is_animated": true,
+    "is_video": false,
+    "type": "custom_emoji",
+    "custom_emoji_id": "5364006925379846491",
+    "thumbnail": {
+      "file_id": "AAMCAgADFQABapSlXH1WXuCk8J_MVxyVvN4D_usAAltBAALhx3BKHqLHQF_e4S0BAAdtAAM9BA",
+      "file_unique_id": "AQADW0EAAuHHcEpy",
+      "file_size": 2984,
+      "width": 128,
+      "height": 128
+    },
+    "thumb": {
+      "file_id": "AAMCAgADFQABapSlXH1WXuCk8J_MVxyVvN4D_usAAltBAALhx3BKHqLHQF_e4S0BAAdtAAM9BA",
+      "file_unique_id": "AQADW0EAAuHHcEpy",
+      "file_size": 2984,
+      "width": 128,
+      "height": 128
+    },
+    "file_id": "CAACAgIAAxUAAWqUpVx9Vl7gpPCfzFcclbzeA_7rAAJbQQAC4cdwSh6ix0Bf3uEtPQQ",
+    "file_unique_id": "AgADW0EAAuHHcEo",
+    "file_size": 3395
+  },
+  {
+    "width": 512,
+    "height": 512,
+    "emoji": "📱",
+    "set_name": "ApplicationEmoji",
+    "is_animated": true,
+    "is_video": false,
+    "type": "custom_emoji",
+    "custom_emoji_id": "5363986369666369188",
+    "thumbnail": {
+      "file_id": "AAMCAgADFQABapSlXE00pP2u3mfue7rsKvpxGugAAqRGAAIvtXBKZM7CumgUVg0BAAdtAAM9BA",
+      "file_unique_id": "AQADpEYAAi-1cEpy",
+      "file_size": 2532,
+      "width": 128,
+      "height": 128
+    },
+    "thumb": {
+      "file_id": "AAMCAgADFQABapSlXE00pP2u3mfue7rsKvpxGugAAqRGAAIvtXBKZM7CumgUVg0BAAdtAAM9BA",
+      "file_unique_id": "AQADpEYAAi-1cEpy",
+      "file_size": 2532,
+      "width": 128,
+      "height": 128
+    },
+    "file_id": "CAACAgIAAxUAAWqUpVxNNKT9rt5n7nu67Cr6cRroAAKkRgACL7VwSmTOwrpoFFYNPQQ",
+    "file_unique_id": "AgADpEYAAi-1cEo",
+    "file_size": 1541
+  },
+  {
+    "width": 512,
+    "height": 512,
+    "emoji": "📱",
+    "set_name": "ApplicationEmoji",
+    "is_animated": true,
+    "is_video": false,
+    "type": "custom_emoji",
+    "custom_emoji_id": "5364226346669065610",
+    "thumbnail": {
+      "file_id": "AAMCAgADFQABapSlXKuZzbnGR5zXVcgj5QfudSgAAopFAAJxj3FKJmtjxDE6Sm0BAAdtAAM9BA",
+      "file_unique_id": "AQADikUAAnGPcUpy",
+      "file_size": 2950,
+      "width": 128,
+      "height": 128
+    },
+    "thumb": {
+      "file_id": "AAMCAgADFQABapSlXKuZzbnGR5zXVcgj5QfudSgAAopFAAJxj3FKJmtjxDE6Sm0BAAdtAAM9BA",
+      "file_unique_id": "AQADikUAAnGPcUpy",
+      "file_size": 2950,
+      "width": 128,
+      "height": 128
+    },
+    "file_id": "CAACAgIAAxUAAWqUpVyrmc25xkec11XII-UH7nUoAAKKRQACcY9xSiZrY8QxOkptPQQ",
+    "file_unique_id": "AgADikUAAnGPcUo",
+    "file_size": 1385
+  },
+  {
+    "width": 512,
+    "height": 512,
+    "emoji": "📱",
+    "set_name": "ApplicationEmoji",
+    "is_animated": true,
+    "is_video": false,
+    "type": "custom_emoji",
+    "custom_emoji_id": "5363863671040657237",
+    "thumbnail": {
+      "file_id": "AAMCAgADFQABapSlXLq47_U7r_tyQMXo3fKF33QAAlVHAAKXRXBK_uPeTUAUCJABAAdtAAM9BA",
+      "file_unique_id": "AQADVUcAApdFcEpy",
+      "file_size": 3160,
+      "width": 128,
+      "height": 128
+    },
+    "thumb": {
+      "file_id": "AAMCAgADFQABapSlXLq47_U7r_tyQMXo3fKF33QAAlVHAAKXRXBK_uPeTUAUCJABAAdtAAM9BA",
+      "file_unique_id": "AQADVUcAApdFcEpy",
+      "file_size": 3160,
+      "width": 128,
+      "height": 128
+    },
+    "file_id": "CAACAgIAAxUAAWqUpVy6uO_1O6_7ckDF6N3yhd90AAJVRwACl0VwSv7j3k1AFAiQPQQ",
+    "file_unique_id": "AgADVUcAApdFcEo",
+    "file_size": 1492
+  },
+  {
+    "width": 512,
+    "height": 512,
+    "emoji": "📱",
+    "set_name": "ApplicationEmoji",
+    "is_animated": true,
+    "is_video": false,
+    "type": "custom_emoji",
+    "custom_emoji_id": "5359726582447487916",
+    "thumbnail": {
+      "file_id": "AAMCAgADFQABapSlXGSNX2WM4CcLDz_N5_CGyfEAAqw7AALukmFK-wABi1pMJYKEAQAHbQADPQQ",
+      "file_unique_id": "AQADrDsAAu6SYUpy",
+      "file_size": 3622,
+      "width": 128,
+      "height": 128
+    },
+    "thumb": {
+      "file_id": "AAMCAgADFQABapSlXGSNX2WM4CcLDz_N5_CGyfEAAqw7AALukmFK-wABi1pMJYKEAQAHbQADPQQ",
+      "file_unique_id": "AQADrDsAAu6SYUpy",
+      "file_size": 3622,
+      "width": 128,
+      "height": 128
+    },
+    "file_id": "CAACAgIAAxUAAWqUpVxkjV9ljOAnCw8_zefwhsnxAAKsOwAC7pJhSvsAAYtaTCWChD0E",
+    "file_unique_id": "AgADrDsAAu6SYUo",
+    "file_size": 1612
+  },
+  {
+    "width": 512,
+    "height": 512,
+    "emoji": "📱",
+    "set_name": "ApplicationEmoji",
+    "is_animated": true,
+    "is_video": false,
+    "type": "custom_emoji",
+    "custom_emoji_id": "5372937764411031477",
+    "thumbnail": {
+      "file_id": "AAMCAgADFQABapSlXCGqmfa0oQE1ytEubcJnm6wAArU_AAJugpBKNNSAnmC4z8MBAAdtAAM9BA",
+      "file_unique_id": "AQADtT8AAm6CkEpy",
+      "file_size": 2916,
+      "width": 128,
+      "height": 128
+    },
+    "thumb": {
+      "file_id": "AAMCAgADFQABapSlXCGqmfa0oQE1ytEubcJnm6wAArU_AAJugpBKNNSAnmC4z8MBAAdtAAM9BA",
+      "file_unique_id": "AQADtT8AAm6CkEpy",
+      "file_size": 2916,
+      "width": 128,
+      "height": 128
+    },
+    "file_id": "CAACAgIAAxUAAWqUpVwhqpn2tKEBNcrRLm3CZ5usAAK1PwACboKQSjTUgJ5guM_DPQQ",
+    "file_unique_id": "AgADtT8AAm6CkEo",
+    "file_size": 1867
+  },
+  {
+    "width": 512,
+    "height": 512,
+    "emoji": "📱",
+    "set_name": "ApplicationEmoji",
+    "is_animated": true,
+    "is_video": false,
+    "type": "custom_emoji",
+    "custom_emoji_id": "5359618237602480327",
+    "thumbnail": {
+      "file_id": "AAMCAgADFQABapSlXPbo6JTXq8pizeBdrrQsn7oAAsdAAAJkMGFKjRKty30WNrIBAAdtAAM9BA",
+      "file_unique_id": "AQADx0AAAmQwYUpy",
+      "file_size": 3648,
+      "width": 128,
+      "height": 128
+    },
+    "thumb": {
+      "file_id": "AAMCAgADFQABapSlXPbo6JTXq8pizeBdrrQsn7oAAsdAAAJkMGFKjRKty30WNrIBAAdtAAM9BA",
+      "file_unique_id": "AQADx0AAAmQwYUpy",
+      "file_size": 3648,
+      "width": 128,
+      "height": 128
+    },
+    "file_id": "CAACAgIAAxUAAWqUpVz26OiU16vKYs3gXa60LJ-6AALHQAACZDBhSo0Srct9FjayPQQ",
+    "file_unique_id": "AgADx0AAAmQwYUo",
+    "file_size": 2219
+  },
+  {
+    "width": 512,
+    "height": 512,
+    "emoji": "📱",
+    "set_name": "ApplicationEmoji",
+    "is_animated": true,
+    "is_video": false,
+    "type": "custom_emoji",
+    "custom_emoji_id": "5371089601328857708",
+    "thumbnail": {
+      "file_id": "AAMCAgADFQABapSlXNIjPMeWOP601uIJ4VXfpycAAmxCAAKJ8YlKSwpZINQSZA4BAAdtAAM9BA",
+      "file_unique_id": "AQADbEIAAonxiUpy",
+      "file_size": 2680,
+      "width": 128,
+      "height": 128
+    },
+    "thumb": {
+      "file_id": "AAMCAgADFQABapSlXNIjPMeWOP601uIJ4VXfpycAAmxCAAKJ8YlKSwpZINQSZA4BAAdtAAM9BA",
+      "file_unique_id": "AQADbEIAAonxiUpy",
+      "file_size": 2680,
+      "width": 128,
+      "height": 128
+    },
+    "file_id": "CAACAgIAAxUAAWqUpVzSIzzHljj-tNbiCeFV36cnAAJsQgACifGJSksKWSDUEmQOPQQ",
+    "file_unique_id": "AgADbEIAAonxiUo",
+    "file_size": 1395
+  },
+  {
+    "width": 512,
+    "height": 512,
+    "emoji": "📱",
+    "set_name": "ApplicationEmoji",
+    "is_animated": true,
+    "is_video": false,
+    "type": "custom_emoji",
+    "custom_emoji_id": "5359758030198031389",
+    "thumbnail": {
+      "file_id": "AAMCAgADFQABapSlXDGBs2sXN8fJp1PigDkBPmUAAh1EAAKIr2FKVoP1V8Y7vEoBAAdtAAM9BA",
+      "file_unique_id": "AQADHUQAAoivYUpy",
+      "file_size": 3428,
+      "width": 128,
+      "height": 128
+    },
+    "thumb": {
+      "file_id": "AAMCAgADFQABapSlXDGBs2sXN8fJp1PigDkBPmUAAh1EAAKIr2FKVoP1V8Y7vEoBAAdtAAM9BA",
+      "file_unique_id": "AQADHUQAAoivYUpy",
+      "file_size": 3428,
+      "width": 128,
+      "height": 128
+    },
+    "file_id": "CAACAgIAAxUAAWqUpVwxgbNrFzfHyadT4oA5AT5lAAIdRAACiK9hSlaD9VfGO7xKPQQ",
+    "file_unique_id": "AgADHUQAAoivYUo",
+    "file_size": 1308
+  },
+  {
+    "width": 512,
+    "height": 512,
+    "emoji": "📱",
+    "set_name": "ApplicationEmoji",
+    "is_animated": true,
+    "is_video": false,
+    "type": "custom_emoji",
+    "custom_emoji_id": "5359503252738029857",
+    "thumbnail": {
+      "file_id": "AAMCAgADFQABapSlXPVGezMzHdylZOaMxVWPQQoAAiE5AALQx2BKxBD1OGZ16dUBAAdtAAM9BA",
+      "file_unique_id": "AQADITkAAtDHYEpy",
+      "file_size": 3506,
+      "width": 128,
+      "height": 128
+    },
+    "thumb": {
+      "file_id": "AAMCAgADFQABapSlXPVGezMzHdylZOaMxVWPQQoAAiE5AALQx2BKxBD1OGZ16dUBAAdtAAM9BA",
+      "file_unique_id": "AQADITkAAtDHYEpy",
+      "file_size": 3506,
+      "width": 128,
+      "height": 128
+    },
+    "file_id": "CAACAgIAAxUAAWqUpVz1RnszMx3cpWTmjMVVj0EKAAIhOQAC0MdgSsQQ9ThmdenVPQQ",
+    "file_unique_id": "AgADITkAAtDHYEo",
+    "file_size": 2121
+  },
+  {
+    "width": 512,
+    "height": 512,
+    "emoji": "📱",
+    "set_name": "ApplicationEmoji",
+    "is_animated": true,
+    "is_video": false,
+    "type": "custom_emoji",
+    "custom_emoji_id": "5362034259785694259",
+    "thumbnail": {
+      "file_id": "AAMCAgADFQABapSlXJsuL-Zw5aqjoUrBNZ8hOIoAAjM8AALAxWlKI101eCrUKjoBAAdtAAM9BA",
+      "file_unique_id": "AQADMzwAAsDFaUpy",
+      "file_size": 3654,
+      "width": 128,
+      "height": 128
+    },
+    "thumb": {
+      "file_id": "AAMCAgADFQABapSlXJsuL-Zw5aqjoUrBNZ8hOIoAAjM8AALAxWlKI101eCrUKjoBAAdtAAM9BA",
+      "file_unique_id": "AQADMzwAAsDFaUpy",
+      "file_size": 3654,
+      "width": 128,
+      "height": 128
+    },
+    "file_id": "CAACAgIAAxUAAWqUpVybLi_mcOWqo6FKwTWfITiKAAIzPAACwMVpSiNdNXgq1Co6PQQ",
+    "file_unique_id": "AgADMzwAAsDFaUo",
+    "file_size": 2464
+  },
+  {
+    "width": 512,
+    "height": 512,
+    "emoji": "📱",
+    "set_name": "ApplicationEmoji",
+    "is_animated": true,
+    "is_video": false,
+    "type": "custom_emoji",
+    "custom_emoji_id": "5361963895336485277",
+    "thumbnail": {
+      "file_id": "AAMCAgADFQABapSlXB3tc_WWGDaBC89bnM_lUEoAAp1BAALBhWlK74TwvVhlXKYBAAdtAAM9BA",
+      "file_unique_id": "AQADnUEAAsGFaUpy",
+      "file_size": 3224,
+      "width": 128,
+      "height": 128
+    },
+    "thumb": {
+      "file_id": "AAMCAgADFQABapSlXB3tc_WWGDaBC89bnM_lUEoAAp1BAALBhWlK74TwvVhlXKYBAAdtAAM9BA",
+      "file_unique_id": "AQADnUEAAsGFaUpy",
+      "file_size": 3224,
+      "width": 128,
+      "height": 128
+    },
+    "file_id": "CAACAgIAAxUAAWqUpVwd7XP1lhg2gQvPW5zP5VBKAAKdQQACwYVpSu-E8L1YZVymPQQ",
+    "file_unique_id": "AgADnUEAAsGFaUo",
+    "file_size": 1625
+  },
+  {
+    "width": 512,
+    "height": 512,
+    "emoji": "📱",
+    "set_name": "ApplicationEmoji",
+    "is_animated": true,
+    "is_video": false,
+    "type": "custom_emoji",
+    "custom_emoji_id": "5361575381184823162",
+    "thumbnail": {
+      "file_id": "AAMCAgADFQABapSlXMOx5-zL6AABPkJ8GnqajnQzAAJ6PwACZyRoSpWtgJkWFL2pAQAHbQADPQQ",
+      "file_unique_id": "AQADej8AAmckaEpy",
+      "file_size": 5166,
+      "width": 128,
+      "height": 128
+    },
+    "thumb": {
+      "file_id": "AAMCAgADFQABapSlXMOx5-zL6AABPkJ8GnqajnQzAAJ6PwACZyRoSpWtgJkWFL2pAQAHbQADPQQ",
+      "file_unique_id": "AQADej8AAmckaEpy",
+      "file_size": 5166,
+      "width": 128,
+      "height": 128
+    },
+    "file_id": "CAACAgIAAxUAAWqUpVzDsefsy-gAAT5CfBp6mo50MwACej8AAmckaEqVrYCZFhS9qT0E",
+    "file_unique_id": "AgADej8AAmckaEo",
+    "file_size": 2740
+  },
+  {
+    "width": 512,
+    "height": 512,
+    "emoji": "📱",
+    "set_name": "ApplicationEmoji",
+    "is_animated": true,
+    "is_video": false,
+    "type": "custom_emoji",
+    "custom_emoji_id": "5370988368949690738",
+    "thumbnail": {
+      "file_id": "AAMCAgADFQABapSlXJFkClbpSguZmOIbcuxPsyYAAnJBAAJ3lYlKJPy6g99fI7kBAAdtAAM9BA",
+      "file_unique_id": "AQADckEAAneViUpy",
+      "file_size": 2858,
+      "width": 128,
+      "height": 128
+    },
+    "thumb": {
+      "file_id": "AAMCAgADFQABapSlXJFkClbpSguZmOIbcuxPsyYAAnJBAAJ3lYlKJPy6g99fI7kBAAdtAAM9BA",
+      "file_unique_id": "AQADckEAAneViUpy",
+      "file_size": 2858,
+      "width": 128,
+      "height": 128
+    },
+    "file_id": "CAACAgIAAxUAAWqUpVyRZApW6UoLmZjiG3LsT7MmAAJyQQACd5WJSiT8uoPfXyO5PQQ",
+    "file_unique_id": "AgADckEAAneViUo",
+    "file_size": 1587
+  },
+  {
+    "width": 512,
+    "height": 512,
+    "emoji": "📱",
+    "set_name": "ApplicationEmoji",
+    "is_animated": true,
+    "is_video": false,
+    "type": "custom_emoji",
+    "custom_emoji_id": "5373262983629650845",
+    "thumbnail": {
+      "file_id": "AAMCAgADFQABapSlXKIAAetLXxoEhNm4VBtk6-otAAKdOwACN6qRSnvXZuOL1zDSAQAHbQADPQQ",
+      "file_unique_id": "AQADnTsAAjeqkUpy",
+      "file_size": 3350,
+      "width": 128,
+      "height": 128
+    },
+    "thumb": {
+      "file_id": "AAMCAgADFQABapSlXKIAAetLXxoEhNm4VBtk6-otAAKdOwACN6qRSnvXZuOL1zDSAQAHbQADPQQ",
+      "file_unique_id": "AQADnTsAAjeqkUpy",
+      "file_size": 3350,
+      "width": 128,
+      "height": 128
+    },
+    "file_id": "CAACAgIAAxUAAWqUpVyiAAHrS18aBITZuFQbZOvqLQACnTsAAjeqkUp712bji9cw0j0E",
+    "file_unique_id": "AgADnTsAAjeqkUo",
+    "file_size": 2040
+  },
+  {
+    "width": 512,
+    "height": 512,
+    "emoji": "📱",
+    "set_name": "ApplicationEmoji",
+    "is_animated": true,
+    "is_video": false,
+    "type": "custom_emoji",
+    "custom_emoji_id": "5373193993569977969",
+    "thumbnail": {
+      "file_id": "AAMCAgADFQABapSlXCqQU52BU4kiYWXVeRiW15AAAnFGAAJ4a5FKucVHxt3lGh8BAAdtAAM9BA",
+      "file_unique_id": "AQADcUYAAnhrkUpy",
+      "file_size": 2648,
+      "width": 128,
+      "height": 128
+    },
+    "thumb": {
+      "file_id": "AAMCAgADFQABapSlXCqQU52BU4kiYWXVeRiW15AAAnFGAAJ4a5FKucVHxt3lGh8BAAdtAAM9BA",
+      "file_unique_id": "AQADcUYAAnhrkUpy",
+      "file_size": 2648,
+      "width": 128,
+      "height": 128
+    },
+    "file_id": "CAACAgIAAxUAAWqUpVwqkFOdgVOJImFl1XkYlteQAAJxRgACeGuRSrnFR8bd5RofPQQ",
+    "file_unique_id": "AgADcUYAAnhrkUo",
+    "file_size": 1298
+  },
+  {
+    "width": 512,
+    "height": 512,
+    "emoji": "📱",
+    "set_name": "ApplicationEmoji",
+    "is_animated": true,
+    "is_video": false,
+    "type": "custom_emoji",
+    "custom_emoji_id": "5372994299065550645",
+    "thumbnail": {
+      "file_id": "AAMCAgADFQABapSlXPyiQ3irgB9eFNY73wvE1uAAAjVHAALZtZBK2tkROp5IiKEBAAdtAAM9BA",
+      "file_unique_id": "AQADNUcAAtm1kEpy",
+      "file_size": 3614,
+      "width": 128,
+      "height": 128
+    },
+    "thumb": {
+      "file_id": "AAMCAgADFQABapSlXPyiQ3irgB9eFNY73wvE1uAAAjVHAALZtZBK2tkROp5IiKEBAAdtAAM9BA",
+      "file_unique_id": "AQADNUcAAtm1kEpy",
+      "file_size": 3614,
+      "width": 128,
+      "height": 128
+    },
+    "file_id": "CAACAgIAAxUAAWqUpVz8okN4q4AfXhTWO98LxNbgAAI1RwAC2bWQStrZETqeSIihPQQ",
+    "file_unique_id": "AgADNUcAAtm1kEo",
+    "file_size": 1555
+  },
+  {
+    "width": 512,
+    "height": 512,
+    "emoji": "📱",
+    "set_name": "ApplicationEmoji",
+    "is_animated": true,
+    "is_video": false,
+    "type": "custom_emoji",
+    "custom_emoji_id": "5372878055775683161",
+    "thumbnail": {
+      "file_id": "AAMCAgADFQABapSlXIkgNMkNK2tNN0vn1ChIt-MAAllCAAIgTJBKZMxVbk_jPWsBAAdtAAM9BA",
+      "file_unique_id": "AQADWUIAAiBMkEpy",
+      "file_size": 2848,
+      "width": 128,
+      "height": 128
+    },
+    "thumb": {
+      "file_id": "AAMCAgADFQABapSlXIkgNMkNK2tNN0vn1ChIt-MAAllCAAIgTJBKZMxVbk_jPWsBAAdtAAM9BA",
+      "file_unique_id": "AQADWUIAAiBMkEpy",
+      "file_size": 2848,
+      "width": 128,
+      "height": 128
+    },
+    "file_id": "CAACAgIAAxUAAWqUpVyJIDTJDStrTTdL59QoSLfjAAJZQgACIEyQSmTMVW5P4z1rPQQ",
+    "file_unique_id": "AgADWUIAAiBMkEo",
+    "file_size": 1488
+  },
+  {
+    "width": 512,
+    "height": 512,
+    "emoji": "📱",
+    "set_name": "ApplicationEmoji",
+    "is_animated": true,
+    "is_video": false,
+    "type": "custom_emoji",
+    "custom_emoji_id": "5373246052868571826",
+    "thumbnail": {
+      "file_id": "AAMCAgADFQABapSlXISkdIz_nbmDXvDC2XdFtwUAArJCAALRmpFKBGGOskWU3P8BAAdtAAM9BA",
+      "file_unique_id": "AQADskIAAtGakUpy",
+      "file_size": 3320,
+      "width": 128,
+      "height": 128
+    },
+    "thumb": {
+      "file_id": "AAMCAgADFQABapSlXISkdIz_nbmDXvDC2XdFtwUAArJCAALRmpFKBGGOskWU3P8BAAdtAAM9BA",
+      "file_unique_id": "AQADskIAAtGakUpy",
+      "file_size": 3320,
+      "width": 128,
+      "height": 128
+    },
+    "file_id": "CAACAgIAAxUAAWqUpVyEpHSM_525g17wwtl3RbcFAAKyQgAC0ZqRSgRhjrJFlNz_PQQ",
+    "file_unique_id": "AgADskIAAtGakUo",
+    "file_size": 1266
+  },
+  {
+    "width": 512,
+    "height": 512,
+    "emoji": "📱",
+    "set_name": "ApplicationEmoji",
+    "is_animated": true,
+    "is_video": false,
+    "type": "custom_emoji",
+    "custom_emoji_id": "5373025510592888616",
+    "thumbnail": {
+      "file_id": "AAMCAgADFQABapSlXGzbgogxS_yqHvHoUYPdOMgAAig_AAI80pBKS9pblU8ZTcQBAAdtAAM9BA",
+      "file_unique_id": "AQADKD8AAjzSkEpy",
+      "file_size": 3054,
+      "width": 128,
+      "height": 128
+    },
+    "thumb": {
+      "file_id": "AAMCAgADFQABapSlXGzbgogxS_yqHvHoUYPdOMgAAig_AAI80pBKS9pblU8ZTcQBAAdtAAM9BA",
+      "file_unique_id": "AQADKD8AAjzSkEpy",
+      "file_size": 3054,
+      "width": 128,
+      "height": 128
+    },
+    "file_id": "CAACAgIAAxUAAWqUpVxs24KIMUv8qh7x6FGD3TjIAAIoPwACPNKQSkvaW5VPGU3EPQQ",
+    "file_unique_id": "AgADKD8AAjzSkEo",
+    "file_size": 1412
+  },
+  {
+    "width": 512,
+    "height": 512,
+    "emoji": "📱",
+    "set_name": "ApplicationEmoji",
+    "is_animated": true,
+    "is_video": false,
+    "type": "custom_emoji",
+    "custom_emoji_id": "5373145666597961572",
+    "thumbnail": {
+      "file_id": "AAMCAgADFQABapSlXAVm6XG4uWe7fc6ZQKzIwu0AAmQ_AAKEP5FKgVdYb--POe0BAAdtAAM9BA",
+      "file_unique_id": "AQADZD8AAoQ_kUpy",
+      "file_size": 1704,
+      "width": 128,
+      "height": 128
+    },
+    "thumb": {
+      "file_id": "AAMCAgADFQABapSlXAVm6XG4uWe7fc6ZQKzIwu0AAmQ_AAKEP5FKgVdYb--POe0BAAdtAAM9BA",
+      "file_unique_id": "AQADZD8AAoQ_kUpy",
+      "file_size": 1704,
+      "width": 128,
+      "height": 128
+    },
+    "file_id": "CAACAgIAAxUAAWqUpVwFZulxuLlnu33OmUCsyMLtAAJkPwAChD-RSoFXWG_vjzntPQQ",
+    "file_unique_id": "AgADZD8AAoQ_kUo",
+    "file_size": 1466
+  },
+  {
+    "width": 512,
+    "height": 512,
+    "emoji": "📱",
+    "set_name": "ApplicationEmoji",
+    "is_animated": true,
+    "is_video": false,
+    "type": "custom_emoji",
+    "custom_emoji_id": "5373054312643575332",
+    "thumbnail": {
+      "file_id": "AAMCAgADFQABapSlXBJqSr6lBVMDucXP86GEM-EAAiQ-AAJu7JBKmH-VcbSMrTYBAAdtAAM9BA",
+      "file_unique_id": "AQADJD4AAm7skEpy",
+      "file_size": 2694,
+      "width": 128,
+      "height": 128
+    },
+    "thumb": {
+      "file_id": "AAMCAgADFQABapSlXBJqSr6lBVMDucXP86GEM-EAAiQ-AAJu7JBKmH-VcbSMrTYBAAdtAAM9BA",
+      "file_unique_id": "AQADJD4AAm7skEpy",
+      "file_size": 2694,
+      "width": 128,
+      "height": 128
+    },
+    "file_id": "CAACAgIAAxUAAWqUpVwSakq-pQVTA7nFz_OhhDPhAAIkPgACbuyQSph_lXG0jK02PQQ",
+    "file_unique_id": "AgADJD4AAm7skEo",
+    "file_size": 1144
+  },
+  {
+    "width": 512,
+    "height": 512,
+    "emoji": "📱",
+    "set_name": "ApplicationEmoji",
+    "is_animated": true,
+    "is_video": false,
+    "type": "custom_emoji",
+    "custom_emoji_id": "5372917956021862036",
+    "thumbnail": {
+      "file_id": "AAMCAgADFQABapSlXONqc7Li8RGFAk8SqYLZC3wAApQ-AAJqcJBKR3OPVFRdb74BAAdtAAM9BA",
+      "file_unique_id": "AQADlD4AAmpwkEpy",
+      "file_size": 3736,
+      "width": 128,
+      "height": 128
+    },
+    "thumb": {
+      "file_id": "AAMCAgADFQABapSlXONqc7Li8RGFAk8SqYLZC3wAApQ-AAJqcJBKR3OPVFRdb74BAAdtAAM9BA",
+      "file_unique_id": "AQADlD4AAmpwkEpy",
+      "file_size": 3736,
+      "width": 128,
+      "height": 128
+    },
+    "file_id": "CAACAgIAAxUAAWqUpVzjanOy4vERhQJPEqmC2Qt8AAKUPgACanCQSkdzj1RUXW--PQQ",
+    "file_unique_id": "AgADlD4AAmpwkEo",
+    "file_size": 1817
+  },
+  {
+    "width": 512,
+    "height": 512,
+    "emoji": "📱",
+    "set_name": "ApplicationEmoji",
+    "is_animated": true,
+    "is_video": false,
+    "type": "custom_emoji",
+    "custom_emoji_id": "5373232592441065346",
+    "thumbnail": {
+      "file_id": "AAMCAgADFQABapSlXOOsk-mHw1NC_AsJhqa1tYsAAoI_AAKTjpFKmXehCcjPw9cBAAdtAAM9BA",
+      "file_unique_id": "AQADgj8AApOOkUpy",
+      "file_size": 3152,
+      "width": 128,
+      "height": 128
+    },
+    "thumb": {
+      "file_id": "AAMCAgADFQABapSlXOOsk-mHw1NC_AsJhqa1tYsAAoI_AAKTjpFKmXehCcjPw9cBAAdtAAM9BA",
+      "file_unique_id": "AQADgj8AApOOkUpy",
+      "file_size": 3152,
+      "width": 128,
+      "height": 128
+    },
+    "file_id": "CAACAgIAAxUAAWqUpVzjrJPph8NTQvwLCYamtbWLAAKCPwACk46RSpl3oQnIz8PXPQQ",
+    "file_unique_id": "AgADgj8AApOOkUo",
+    "file_size": 1955
+  },
+  {
+    "width": 512,
+    "height": 512,
+    "emoji": "📱",
+    "set_name": "ApplicationEmoji",
+    "is_animated": true,
+    "is_video": false,
+    "type": "custom_emoji",
+    "custom_emoji_id": "5370577035636786019",
+    "thumbnail": {
+      "file_id": "AAMCAgADFQABapSlXJA5tiSU3gEqHQsG90_kRS0AAmNDAAJcH4hKk9sBza9Ag-ABAAdtAAM9BA",
+      "file_unique_id": "AQADY0MAAlwfiEpy",
+      "file_size": 2634,
+      "width": 128,
+      "height": 128
+    },
+    "thumb": {
+      "file_id": "AAMCAgADFQABapSlXJA5tiSU3gEqHQsG90_kRS0AAmNDAAJcH4hKk9sBza9Ag-ABAAdtAAM9BA",
+      "file_unique_id": "AQADY0MAAlwfiEpy",
+      "file_size": 2634,
+      "width": 128,
+      "height": 128
+    },
+    "file_id": "CAACAgIAAxUAAWqUpVyQObYklN4BKh0LBvdP5EUtAAJjQwACXB-ISpPbAc2vQIPgPQQ",
+    "file_unique_id": "AgADY0MAAlwfiEo",
+    "file_size": 1369
+  },
+  {
+    "width": 512,
+    "height": 512,
+    "emoji": "📱",
+    "set_name": "ApplicationEmoji",
+    "is_animated": true,
+    "is_video": false,
+    "type": "custom_emoji",
+    "custom_emoji_id": "5372878077250519677",
+    "thumbnail": {
+      "file_id": "AAMCAgADFQABapSlXFEnf9GGrgajWPNJjqsdWUwAAn1CAAIlTJBKwJEnaxkHlfwBAAdtAAM9BA",
+      "file_unique_id": "AQADfUIAAiVMkEpy",
+      "file_size": 2708,
+      "width": 128,
+      "height": 128
+    },
+    "thumb": {
+      "file_id": "AAMCAgADFQABapSlXFEnf9GGrgajWPNJjqsdWUwAAn1CAAIlTJBKwJEnaxkHlfwBAAdtAAM9BA",
+      "file_unique_id": "AQADfUIAAiVMkEpy",
+      "file_size": 2708,
+      "width": 128,
+      "height": 128
+    },
+    "file_id": "CAACAgIAAxUAAWqUpVxRJ3_Rhq4Go1jzSY6rHVlMAAJ9QgACJUyQSsCRJ2sZB5X8PQQ",
+    "file_unique_id": "AgADfUIAAiVMkEo",
+    "file_size": 1779
+  },
+  {
+    "width": 512,
+    "height": 512,
+    "emoji": "📱",
+    "set_name": "ApplicationEmoji",
+    "is_animated": true,
+    "is_video": false,
+    "type": "custom_emoji",
+    "custom_emoji_id": "5373229590258925215",
+    "thumbnail": {
+      "file_id": "AAMCAgADFQABapSlXO-9Q2KHY4ODO7jbwldvzPkAAp8-AALYi5FKjxfSm8tD_SkBAAdtAAM9BA",
+      "file_unique_id": "AQADnz4AAtiLkUpy",
+      "file_size": 3988,
+      "width": 128,
+      "height": 128
+    },
+    "thumb": {
+      "file_id": "AAMCAgADFQABapSlXO-9Q2KHY4ODO7jbwldvzPkAAp8-AALYi5FKjxfSm8tD_SkBAAdtAAM9BA",
+      "file_unique_id": "AQADnz4AAtiLkUpy",
+      "file_size": 3988,
+      "width": 128,
+      "height": 128
+    },
+    "file_id": "CAACAgIAAxUAAWqUpVzvvUNih2ODgzu428JXb8z5AAKfPgAC2IuRSo8X0pvLQ_0pPQQ",
+    "file_unique_id": "AgADnz4AAtiLkUo",
+    "file_size": 2836
+  },
+  {
+    "width": 512,
+    "height": 512,
+    "emoji": "📱",
+    "set_name": "ApplicationEmoji",
+    "is_animated": true,
+    "is_video": false,
+    "type": "custom_emoji",
+    "custom_emoji_id": "5373054600406382936",
+    "thumbnail": {
+      "file_id": "AAMCAgADFQABapSlXHBbq4liAoW_62fqH0uVb_MAAlg5AAKx7JBKNnDpCmO39_YBAAdtAAM9BA",
+      "file_unique_id": "AQADWDkAArHskEpy",
+      "file_size": 2434,
+      "width": 128,
+      "height": 128
+    },
+    "thumb": {
+      "file_id": "AAMCAgADFQABapSlXHBbq4liAoW_62fqH0uVb_MAAlg5AAKx7JBKNnDpCmO39_YBAAdtAAM9BA",
+      "file_unique_id": "AQADWDkAArHskEpy",
+      "file_size": 2434,
+      "width": 128,
+      "height": 128
+    },
+    "file_id": "CAACAgIAAxUAAWqUpVxwW6uJYgKFv-tn6h9LlW_zAAJYOQACseyQSjZw6Qpjt_f2PQQ",
+    "file_unique_id": "AgADWDkAArHskEo",
+    "file_size": 1863
+  },
+  {
+    "width": 512,
+    "height": 512,
+    "emoji": "📱",
+    "set_name": "ApplicationEmoji",
+    "is_animated": true,
+    "is_video": false,
+    "type": "custom_emoji",
+    "custom_emoji_id": "5370852523429085514",
+    "thumbnail": {
+      "file_id": "AAMCAgADFQABapSlXEWc-SklW_a8ylTaogpjLD0AAkpBAALqGYlK06nWNdhFOQwBAAdtAAM9BA",
+      "file_unique_id": "AQADSkEAAuoZiUpy",
+      "file_size": 2456,
+      "width": 128,
+      "height": 128
+    },
+    "thumb": {
+      "file_id": "AAMCAgADFQABapSlXEWc-SklW_a8ylTaogpjLD0AAkpBAALqGYlK06nWNdhFOQwBAAdtAAM9BA",
+      "file_unique_id": "AQADSkEAAuoZiUpy",
+      "file_size": 2456,
+      "width": 128,
+      "height": 128
+    },
+    "file_id": "CAACAgIAAxUAAWqUpVxFnPkpJVv2vMpU2qIKYyw9AAJKQQAC6hmJStOp1jXYRTkMPQQ",
+    "file_unique_id": "AgADSkEAAuoZiUo",
+    "file_size": 5526
+  },
+  {
+    "width": 512,
+    "height": 512,
+    "emoji": "📱",
+    "set_name": "ApplicationEmoji",
+    "is_animated": true,
+    "is_video": false,
+    "type": "custom_emoji",
+    "custom_emoji_id": "5370722600668382252",
+    "thumbnail": {
+      "file_id": "AAMCAgADFQABapSlXB6QHneJPYmFpI_SPC7dUwADLEQAAsCjiEpsioYd0-VyNAEAB20AAz0E",
+      "file_unique_id": "AQADLEQAAsCjiEpy",
+      "file_size": 3208,
+      "width": 128,
+      "height": 128
+    },
+    "thumb": {
+      "file_id": "AAMCAgADFQABapSlXB6QHneJPYmFpI_SPC7dUwADLEQAAsCjiEpsioYd0-VyNAEAB20AAz0E",
+      "file_unique_id": "AQADLEQAAsCjiEpy",
+      "file_size": 3208,
+      "width": 128,
+      "height": 128
+    },
+    "file_id": "CAACAgIAAxUAAWqUpVwekB53iT2JhaSP0jwu3VMAAyxEAALAo4hKbIqGHdPlcjQ9BA",
+    "file_unique_id": "AgADLEQAAsCjiEo",
+    "file_size": 1768
+  },
+  {
+    "width": 512,
+    "height": 512,
+    "emoji": "📱",
+    "set_name": "ApplicationEmoji",
+    "is_animated": true,
+    "is_video": false,
+    "type": "custom_emoji",
+    "custom_emoji_id": "5373130604147654226",
+    "thumbnail": {
+      "file_id": "AAMCAgADFQABapSlXLNDeMbIEfK-uSw8cwLG1AEAAlI-AALRMZFKv3vuQkc9CcoBAAdtAAM9BA",
+      "file_unique_id": "AQADUj4AAtExkUpy",
+      "file_size": 2558,
+      "width": 128,
+      "height": 128
+    },
+    "thumb": {
+      "file_id": "AAMCAgADFQABapSlXLNDeMbIEfK-uSw8cwLG1AEAAlI-AALRMZFKv3vuQkc9CcoBAAdtAAM9BA",
+      "file_unique_id": "AQADUj4AAtExkUpy",
+      "file_size": 2558,
+      "width": 128,
+      "height": 128
+    },
+    "file_id": "CAACAgIAAxUAAWqUpVyzQ3jGyBHyvrksPHMCxtQBAAJSPgAC0TGRSr977kJHPQnKPQQ",
+    "file_unique_id": "AgADUj4AAtExkUo",
+    "file_size": 1941
+  },
+  {
+    "width": 512,
+    "height": 512,
+    "emoji": "📱",
+    "set_name": "ApplicationEmoji",
+    "is_animated": true,
+    "is_video": false,
+    "type": "custom_emoji",
+    "custom_emoji_id": "5370857634440170316",
+    "thumbnail": {
+      "file_id": "AAMCAgADFQABapSlXDdaW_2hHWOKzT8qZuTAeSEAAkxLAAKQHolKuXbu7Rn587IBAAdtAAM9BA",
+      "file_unique_id": "AQADTEsAApAeiUpy",
+      "file_size": 2194,
+      "width": 128,
+      "height": 128
+    },
+    "thumb": {
+      "file_id": "AAMCAgADFQABapSlXDdaW_2hHWOKzT8qZuTAeSEAAkxLAAKQHolKuXbu7Rn587IBAAdtAAM9BA",
+      "file_unique_id": "AQADTEsAApAeiUpy",
+      "file_size": 2194,
+      "width": 128,
+      "height": 128
+    },
+    "file_id": "CAACAgIAAxUAAWqUpVw3Wlv9oR1jis0_KmbkwHkhAAJMSwACkB6JSrl27u0Z-fOyPQQ",
+    "file_unique_id": "AgADTEsAApAeiUo",
+    "file_size": 1132
+  },
+  {
+    "width": 512,
+    "height": 512,
+    "emoji": "📱",
+    "set_name": "ApplicationEmoji",
+    "is_animated": true,
+    "is_video": false,
+    "type": "custom_emoji",
+    "custom_emoji_id": "5373306783706137993",
+    "thumbnail": {
+      "file_id": "AAMCAgADFQABapSlXDdQiniJ19fqS-J-yLIelV0AAolFAAIN0pFKINicOLR3CL4BAAdtAAM9BA",
+      "file_unique_id": "AQADiUUAAg3SkUpy",
+      "file_size": 2948,
+      "width": 128,
+      "height": 128
+    },
+    "thumb": {
+      "file_id": "AAMCAgADFQABapSlXDdQiniJ19fqS-J-yLIelV0AAolFAAIN0pFKINicOLR3CL4BAAdtAAM9BA",
+      "file_unique_id": "AQADiUUAAg3SkUpy",
+      "file_size": 2948,
+      "width": 128,
+      "height": 128
+    },
+    "file_id": "CAACAgIAAxUAAWqUpVw3UIp4idfX6kvifsiyHpVdAAKJRQACDdKRSiDYnDi0dwi-PQQ",
+    "file_unique_id": "AgADiUUAAg3SkUo",
+    "file_size": 1316
+  },
+  {
+    "width": 512,
+    "height": 512,
+    "emoji": "📱",
+    "set_name": "ApplicationEmoji",
+    "is_animated": true,
+    "is_video": false,
+    "type": "custom_emoji",
+    "custom_emoji_id": "5373019729566908647",
+    "thumbnail": {
+      "file_id": "AAMCAgADFQABapSlXLZg1qyz8LbHle8PH66PMW8AAudAAAL6zJBKBRhVVTJ1VjsBAAdtAAM9BA",
+      "file_unique_id": "AQAD50AAAvrMkEpy",
+      "file_size": 3312,
+      "width": 128,
+      "height": 128
+    },
+    "thumb": {
+      "file_id": "AAMCAgADFQABapSlXLZg1qyz8LbHle8PH66PMW8AAudAAAL6zJBKBRhVVTJ1VjsBAAdtAAM9BA",
+      "file_unique_id": "AQAD50AAAvrMkEpy",
+      "file_size": 3312,
+      "width": 128,
+      "height": 128
+    },
+    "file_id": "CAACAgIAAxUAAWqUpVy2YNass_C2x5XvDx-ujzFvAALnQAAC-syQSgUYVVUydVY7PQQ",
+    "file_unique_id": "AgAD50AAAvrMkEo",
+    "file_size": 1469
+  },
+  {
+    "width": 512,
+    "height": 512,
+    "emoji": "📱",
+    "set_name": "ApplicationEmoji",
+    "is_animated": true,
+    "is_video": false,
+    "type": "custom_emoji",
+    "custom_emoji_id": "5373144051690258848",
+    "thumbnail": {
+      "file_id": "AAMCAgADFQABapSlXLWvdrM7FM30FrfT18jtlxMAAqBBAAIMPpFK7Gtzkc1UK1ABAAdtAAM9BA",
+      "file_unique_id": "AQADoEEAAgw-kUpy",
+      "file_size": 3440,
+      "width": 128,
+      "height": 128
+    },
+    "thumb": {
+      "file_id": "AAMCAgADFQABapSlXLWvdrM7FM30FrfT18jtlxMAAqBBAAIMPpFK7Gtzkc1UK1ABAAdtAAM9BA",
+      "file_unique_id": "AQADoEEAAgw-kUpy",
+      "file_size": 3440,
+      "width": 128,
+      "height": 128
+    },
+    "file_id": "CAACAgIAAxUAAWqUpVy1r3azOxTN9Ba309fI7ZcTAAKgQQACDD6RSuxrc5HNVCtQPQQ",
+    "file_unique_id": "AgADoEEAAgw-kUo",
+    "file_size": 1768
+  },
+  {
+    "width": 512,
+    "height": 512,
+    "emoji": "📱",
+    "set_name": "ApplicationEmoji",
+    "is_animated": true,
+    "is_video": false,
+    "type": "custom_emoji",
+    "custom_emoji_id": "5373265917092316632",
+    "thumbnail": {
+      "file_id": "AAMCAgADFQABapSlXPoiP-dGEqJTXgG66cfPRg0AAthFAALirJFK7WL-GLhffZsBAAdtAAM9BA",
+      "file_unique_id": "AQAD2EUAAuKskUpy",
+      "file_size": 3160,
+      "width": 128,
+      "height": 128
+    },
+    "thumb": {
+      "file_id": "AAMCAgADFQABapSlXPoiP-dGEqJTXgG66cfPRg0AAthFAALirJFK7WL-GLhffZsBAAdtAAM9BA",
+      "file_unique_id": "AQAD2EUAAuKskUpy",
+      "file_size": 3160,
+      "width": 128,
+      "height": 128
+    },
+    "file_id": "CAACAgIAAxUAAWqUpVz6Ij_nRhKiU14BuunHz0YNAALYRQAC4qyRSu1i_hi4X32bPQQ",
+    "file_unique_id": "AgAD2EUAAuKskUo",
+    "file_size": 1910
+  },
+  {
+    "width": 512,
+    "height": 512,
+    "emoji": "📱",
+    "set_name": "ApplicationEmoji",
+    "is_animated": true,
+    "is_video": false,
+    "type": "custom_emoji",
+    "custom_emoji_id": "5373261557700509032",
+    "thumbnail": {
+      "file_id": "AAMCAgADFQABapSlXPabE7s7guik_upWDQz7khsAAmg9AALrqJFKyPNnr1PIMTQBAAdtAAM9BA",
+      "file_unique_id": "AQADaD0AAuuokUpy",
+      "file_size": 2418,
+      "width": 128,
+      "height": 128
+    },
+    "thumb": {
+      "file_id": "AAMCAgADFQABapSlXPabE7s7guik_upWDQz7khsAAmg9AALrqJFKyPNnr1PIMTQBAAdtAAM9BA",
+      "file_unique_id": "AQADaD0AAuuokUpy",
+      "file_size": 2418,
+      "width": 128,
+      "height": 128
+    },
+    "file_id": "CAACAgIAAxUAAWqUpVz2mxO7O4LopP7qVg0M-5IbAAJoPQAC66iRSsjzZ69TyDE0PQQ",
+    "file_unique_id": "AgADaD0AAuuokUo",
+    "file_size": 1491
+  }
+]

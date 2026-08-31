@@ -1,0 +1,53 @@
+name: AI Changelog Auto Sync
+
+on:
+  push:
+    branches:
+      - master
+      - main
+    paths-ignore:
+      - 'src/data/changelogs.json'
+      - '.github/workflows/**'
+      - '**.md'
+      - 'LICENSE'
+      - '.gitignore'
+
+permissions:
+  contents: write
+
+jobs:
+  sync-changelog:
+    name: Sync AI Changelog from Commits
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Generate AI Changelog
+        env:
+          NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+          DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
+          POLLINATIONS_API_KEY: ${{ secrets.POLLINATIONS_API_KEY }}
+        run: node scripts/sync-changelog-ai.mjs
+
+      - name: Commit & Push Updated Changelog
+        run: |
+          git config --global user.name "UpStore AI Bot"
+          git config --global user.email "bot@upstore.one"
+          
+          if [ -n "$(git status --porcelain src/data/changelogs.json)" ]; then
+            git add src/data/changelogs.json
+            git commit -m "chore(changelog): auto-update AI release notes [skip ci]"
+            git push origin HEAD:${{ github.ref_name }}
+            echo "Successfully committed and pushed updated changelog."
+          else
+            echo "No changes detected in changelog."
+          fi

@@ -1,0 +1,45 @@
+{
+  "name": "upstore",
+  "version": "0.1.0",
+  "private": true,
+  "description": "UpStore — World's Lowest-Priced Digital Marketplace",
+  "scripts": {
+    "dev": "next dev --webpack",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint",
+    "bot:support": "node scripts/telegram-support-bot.mjs",
+    "changelog:sync": "node scripts/sync-changelog-ai.mjs"
+  },
+  "dependencies": {
+    "@supabase/ssr": "^0.10.3",
+    "@supabase/supabase-js": "^2.107.0",
+    "axios": "^1.17.0",
+    "framer-motion": "^12.40.0",
+    "gsap": "^3.15.0",
+    "lenis": "^1.3.26",
+    "lucide-react": "^1.17.0",
+    "next": "16.2.7",
+    "qrcode": "^1.5.4",
+    "react": "19.2.4",
+    "react-dom": "19.2.4",
+    "stripe": "^22.2.0",
+    "tesseract.js": "^7.0.0",
+    "zustand": "^5.0.14"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^20",
+    "@types/qrcode": "^1.5.6",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "16.2.7",
+    "ssh2": "^1.17.0",
+    "tailwindcss": "^4",
+    "typescript": "^5"
+  },
+  "overrides": {
+    "postcss": "^8.5.15"
+  }
+}

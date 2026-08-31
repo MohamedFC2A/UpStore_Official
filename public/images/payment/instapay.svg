@@ -1,0 +1,19 @@
+<svg viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Solid White Container with Purple Border -->
+  <rect width="512" height="512" rx="100" fill="#FFFFFF"/>
+  <rect x="8" y="8" width="496" height="496" rx="92" stroke="#4F008C" stroke-width="16"/>
+  
+  <!-- InstaPay Stylized Dynamic Chevron Symbol -->
+  <g transform="translate(130, 80) scale(1.15)">
+    <!-- Left Purple Wing -->
+    <path d="M30 40 L90 130 L30 220 L75 220 L135 130 L75 40 Z" fill="#4F008C"/>
+    <!-- Right Orange Wing -->
+    <path d="M110 40 L170 130 L110 220 L155 220 L215 130 L155 40 Z" fill="#FF6600"/>
+  </g>
+
+  <!-- Typography: insta (Purple) + pay (Orange) -->
+  <g transform="translate(256, 400)">
+    <text x="-130" y="0" font-family="'Segoe UI', 'Helvetica Neue', Arial, sans-serif" font-weight="900" font-size="78" fill="#4F008C" letter-spacing="-1">insta</text>
+    <text x="35" y="0" font-family="'Segoe UI', 'Helvetica Neue', Arial, sans-serif" font-weight="900" font-size="78" fill="#FF6600" letter-spacing="-1">pay</text>
+  </g>
+</svg>
