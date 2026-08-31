@@ -4,8 +4,9 @@ import path from 'path';
 
 const VPS_HOST = '104.207.77.162';
 const VPS_PORT = 22022;
+const VPS_USER = 'root';
 const VPS_PASS = 'Mohamedgg2008#';
-const USERNAMES = ['root', 'ubuntu'];
+const REMOTE_APP_DIR = '/root/upstorebot';
 
 async function executeCommand(conn, cmd) {
   return new Promise((resolve, reject) => {
