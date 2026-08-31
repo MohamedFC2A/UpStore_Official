@@ -17,6 +17,13 @@ import {
   getProductsByBrand,
   getProductByShortIdOrSlug,
 } from './storeCatalog.mjs';
+import {
+  SUPPORTED_LANGUAGES,
+  DEFAULT_LANGUAGE,
+  getUserLanguage,
+  setUserLanguage,
+  t,
+} from './storeI18n.mjs';
 
 const BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN || '8855216740:AAEbNj5orlWvMb7sDRw7Zasqim4GybGDT0o';
 const BOT_USERNAME = 'upstore_one_bot';
@@ -582,43 +589,99 @@ async function recordReferral(newChatId, referrerId) {
   }
 }
 
-const STORE_PERSISTENT_KEYBOARD = {
-  keyboard: [
-    [{ text: '🛍️ المنتجات' }, { text: '💳 المحفظة' }],
-    [{ text: '📦 طلباتي' }, { text: '🎁 الأرباح' }],
-    [{ text: '🏠 الرئيسية' }, { text: '💬 الدعم' }],
-  ],
-  resize_keyboard: true,
-  is_persistent: true,
-};
+function getPersistentKeyboard(lang = DEFAULT_LANGUAGE) {
+  return {
+    keyboard: [
+      [{ text: `🛍️ ${t('btn_catalog', lang)}` }, { text: `💳 ${t('btn_wallet', lang)}` }],
+      [{ text: `📦 ${t('btn_orders', lang)}` }, { text: `🎁 ${t('btn_referral', lang)}` }],
+      [{ text: `🏠 ${t('btn_main_menu', lang)}` }, { text: t('btn_language', lang) }],
+    ],
+    resize_keyboard: true,
+    is_persistent: true,
+  };
+}
 
-async function renderMainMenu(chatId, messageId, callbackQueryId, businessConnectionId = null) {
+async function renderLanguageSelection(chatId, messageId, callbackQueryId, businessConnectionId = null) {
   if (callbackQueryId) await answerCallbackQuery(callbackQueryId);
 
+  const currentLang = getUserLanguage(chatId);
   const text = [
-    '👑 <b>متجر UpStore الرقمي الرسمي</b>',
-    '━━━━━━━━━━━━━━━━━━━━━━',
-    '⚡ <b>اشتراكات الذكاء الاصطناعي والخدمات الرقمية</b>',
-    '🛡️ <b>تسليم فوري ومباشر مع ضمان استبدال ذهبي 100%</b>',
-    '',
-    'اختر من القائمة أدناه للبدء:',
+    t('select_language_title', currentLang),
+    '──────────────────',
+    t('select_language_sub', currentLang),
   ].join('\n');
 
   const keyboard = {
     inline_keyboard: [
-      [{ text: '🛍️ تصفح الأقسام والمنتجات', callback_data: 'catalog' }],
-      [{ text: '🔥 نظام الأرباح ($1 لكل 5 أصدقاء 💸)', callback_data: 'referral' }],
-      [{ text: '💳 شحن المحفظة (+بونص إضافي)', callback_data: 'payment_methods' }],
-      [{ text: '👨‍💻 الدعم الفني المباشر', callback_data: 'support' }],
+      [
+        { text: '🇸🇦 العربية', callback_data: 'set_lang_ar' },
+        { text: '🇺🇸 English', callback_data: 'set_lang_en' },
+      ],
+      [
+        { text: '🇪🇸 Español', callback_data: 'set_lang_es' },
+        { text: '🇫🇷 Français', callback_data: 'set_lang_fr' },
+      ],
+      [
+        { text: '🇷🇺 Русский', callback_data: 'set_lang_ru' },
+        { text: '🇹🇷 Türkçe', callback_data: 'set_lang_tr' },
+      ],
+      [
+        { text: '🇩🇪 Deutsch', callback_data: 'set_lang_de' },
+      ],
+      [
+        { text: `🔙 ${t('btn_back', currentLang)}`, callback_data: 'main_menu' },
+      ],
     ],
   };
 
   if (messageId) {
     const editRes = await editMessageText(chatId, messageId, text, keyboard, businessConnectionId);
     if (!editRes || !editRes.ok) {
+      await deleteMessage(chatId, messageId);
+      await sendMessage(chatId, text, keyboard, businessConnectionId);
+    }
+  } else {
+    await sendMessage(chatId, text, keyboard, businessConnectionId);
+  }
+}
+
+async function renderMainMenu(chatId, messageId, callbackQueryId, businessConnectionId = null) {
+  if (callbackQueryId) await answerCallbackQuery(callbackQueryId);
+
+  const lang = getUserLanguage(chatId);
+  const text = [
+    t('main_menu_title', lang),
+    '──────────────────',
+    t('main_menu_sub', lang),
+    `• ${t('warranty_badge', lang)}`,
+    `• ${t('instant_delivery', lang)}`,
+  ].join('\n');
+
+  const keyboard = {
+    inline_keyboard: [
+      [
+        { text: `🛍️ ${t('btn_catalog', lang)}`, callback_data: 'catalog' },
+        { text: `🎁 ${t('btn_referral', lang)}`, callback_data: 'referral' },
+      ],
+      [
+        { text: `💳 ${t('btn_wallet', lang)}`, callback_data: 'payment_methods' },
+        { text: `📦 ${t('btn_orders', lang)}`, callback_data: 'my_orders' },
+      ],
+      [
+        { text: `👨‍💻 ${t('btn_support', lang)}`, callback_data: 'support' },
+        { text: t('btn_language', lang), callback_data: 'language_select' },
+      ],
+    ],
+  };
+
+  const pKeyboard = getPersistentKeyboard(lang);
+
+  if (messageId) {
+    const editRes = await editMessageText(chatId, messageId, text, keyboard, businessConnectionId);
+    if (!editRes || !editRes.ok) {
       await sendMessage(chatId, text, {
         inline_keyboard: keyboard.inline_keyboard,
-        keyboard: STORE_PERSISTENT_KEYBOARD.keyboard,
+        keyboard: pKeyboard.keyboard,
         resize_keyboard: true,
         is_persistent: true,
       }, businessConnectionId);
@@ -626,7 +689,7 @@ async function renderMainMenu(chatId, messageId, callbackQueryId, businessConnec
   } else {
     await sendMessage(chatId, text, {
       inline_keyboard: keyboard.inline_keyboard,
-      keyboard: STORE_PERSISTENT_KEYBOARD.keyboard,
+      keyboard: pKeyboard.keyboard,
       resize_keyboard: true,
       is_persistent: true,
     }, businessConnectionId);
@@ -636,17 +699,19 @@ async function renderMainMenu(chatId, messageId, callbackQueryId, businessConnec
 async function renderCatalog(chatId, messageId, callbackQueryId, businessConnectionId = null) {
   if (callbackQueryId) await answerCallbackQuery(callbackQueryId);
 
+  const lang = getUserLanguage(chatId);
   const text = [
-    '🛍️ <b>أقسام وعروض متجر UpStore الرقمي</b>',
-    '━━━━━━━━━━━━━━━━━━━━━━',
-    'اختر القسم المطلوب لتصفح أشهر الخدمات والاشتراكات:',
+    t('catalog_title', lang),
+    '──────────────────',
+    t('catalog_sub', lang),
   ].join('\n');
 
-  const buttons = STORE_CATEGORIES.map((cat) => [
-    { text: cat.name_ar, callback_data: `cat_${cat.id}` },
-  ]);
+  const buttons = STORE_CATEGORIES.map((cat) => {
+    const catName = lang === 'ar' ? cat.name_ar : (cat.name_en || cat.name_ar);
+    return [{ text: `${cat.emoji} ${catName}`, callback_data: `cat_${cat.id}` }];
+  });
 
-  buttons.push([{ text: '🏠 القائمة الرئيسية', callback_data: 'main_menu' }]);
+  buttons.push([{ text: `🏠 ${t('btn_main_menu', lang)}`, callback_data: 'main_menu' }]);
 
   const keyboard = { inline_keyboard: buttons };
 
@@ -664,6 +729,7 @@ async function renderCatalog(chatId, messageId, callbackQueryId, businessConnect
 async function renderCategoryBrands(chatId, categoryId, messageId, callbackQueryId, businessConnectionId = null) {
   if (callbackQueryId) await answerCallbackQuery(callbackQueryId);
 
+  const lang = getUserLanguage(chatId);
   const category = getCategoryById(categoryId);
   const brands = getBrandsByCategory(categoryId);
 
@@ -672,19 +738,21 @@ async function renderCategoryBrands(chatId, categoryId, messageId, callbackQuery
     return;
   }
 
+  const catName = lang === 'ar' ? category.name_ar : (category.name_en || category.name_ar);
   const text = [
-    `<b>${category.name_ar}</b>`,
-    '━━━━━━━━━━━━━━━━━━━━━━',
-    'اختر الخدمة أو الماركة المطلوبة لعرض باقاتها والأسعار:',
+    `<b>${catName}</b>`,
+    '──────────────────',
+    t('catalog_sub', lang),
   ].join('\n');
 
-  const buttons = brands.map((b) => [
-    { text: b.name_ar, callback_data: `brand_${b.id}` },
-  ]);
+  const buttons = brands.map((b) => {
+    const brandName = lang === 'ar' ? b.name_ar : (b.name_en || b.name_ar);
+    return [{ text: `${b.icon} ${brandName}`, callback_data: `brand_${b.id}` }];
+  });
 
   buttons.push([
-    { text: '🔙 رجوع للأقسام', callback_data: 'catalog' },
-    { text: '🏠 الرئيسية', callback_data: 'main_menu' },
+    { text: `🔙 ${t('btn_back', lang)}`, callback_data: 'catalog' },
+    { text: `🏠 ${t('btn_main_menu', lang)}`, callback_data: 'main_menu' },
   ]);
 
   const keyboard = { inline_keyboard: buttons };
@@ -705,6 +773,7 @@ const renderCategoryProducts = renderCategoryBrands;
 async function renderBrandTiers(chatId, brandId, messageId, callbackQueryId, businessConnectionId = null) {
   if (callbackQueryId) await answerCallbackQuery(callbackQueryId);
 
+  const lang = getUserLanguage(chatId);
   const brand = getBrandById(brandId);
   const products = getProductsByBrand(brandId);
 
@@ -713,21 +782,20 @@ async function renderBrandTiers(chatId, brandId, messageId, callbackQueryId, bus
     return;
   }
 
+  const brandName = lang === 'ar' ? brand.name_ar : (brand.name_en || brand.name_ar);
   const text = [
-    `💎 <b>${brand.name_ar}</b>`,
-    '━━━━━━━━━━━━━━━━━━━━━━',
-    `ℹ️ <i>${brand.desc}</i>`,
-    '',
-    'اختر فئة الاشتراك والمدة المناسبة لك للشراء الفوري:',
+    `<b>${brandName}</b>`,
+    '──────────────────',
+    t('catalog_sub', lang),
   ].join('\n');
 
   const buttons = products.map((p) => [
-    { text: p.button_title, callback_data: `prod_${p.short_id}` },
+    { text: `${p.tier_name} (${p.duration_months}M) — $${p.our_price.toFixed(2)}`, callback_data: `prod_${p.short_id}` },
   ]);
 
   buttons.push([
-    { text: '🔙 رجوع للخدمات', callback_data: `cat_${brand.category_id}` },
-    { text: '🏠 الرئيسية', callback_data: 'main_menu' },
+    { text: `🔙 ${t('btn_back', lang)}`, callback_data: `cat_${brand.category_id}` },
+    { text: `🏠 ${t('btn_main_menu', lang)}`, callback_data: 'main_menu' },
   ]);
 
   const keyboard = { inline_keyboard: buttons };
@@ -746,6 +814,7 @@ async function renderBrandTiers(chatId, brandId, messageId, callbackQueryId, bus
 async function renderProductDetails(chatId, shortId, messageId, callbackQueryId, businessConnectionId = null) {
   if (callbackQueryId) await answerCallbackQuery(callbackQueryId);
 
+  const lang = getUserLanguage(chatId);
   const product = getProductByShortIdOrSlug(shortId);
   if (!product) {
     await renderCatalog(chatId, messageId, null, businessConnectionId);
@@ -753,32 +822,27 @@ async function renderProductDetails(chatId, shortId, messageId, callbackQueryId,
   }
 
   const brand = getBrandById(product.brand_id);
-  const discountPct = product.market_price > product.our_price ? Math.round(((product.market_price - product.our_price) / product.market_price) * 100) : 0;
-  const advantagesList = (product.advantages_ar || []).slice(0, 4).map((adv) => `• ${adv}`).join('\n');
+  const brandTitle = brand ? (lang === 'ar' ? brand.name_ar : (brand.name_en || brand.name_ar)) : product.name_ar;
+  const prodTitle = `${brandTitle} — ${product.tier_name}`;
 
   const caption = [
-    `💎 ${product.icon_symbol} <b>${product.name_ar}</b>`,
-    '━━━━━━━━━━━━━━━━━━━━━━',
-    `💰 <b>السعر:</b> <code>$${product.our_price.toFixed(2)} USDT</code> 🔥${discountPct > 0 ? ` <i>(خصم ${discountPct}%)</i>` : ''}`,
-    `💵 <code>${product.price_egp} ج.م</code> | <code>${product.price_sar} ر.س</code>`,
-    `⏳ <b>المدة:</b> ${product.subscription_duration} | 🛡️ <b>الضمان:</b> ${product.warranty_duration}`,
-    '⚡ <b>التسليم:</b> فوري وتلقائي داخل المحادثة',
-    '',
-    '<b>المزايا:</b>',
-    advantagesList,
-    '',
-    '━━━━━━━━━━━━━━━━━━━━━━',
-    'اختر وسيلة الدفع للشراء الفوري:',
+    `<b>${prodTitle}</b>`,
+    '──────────────────',
+    `• <b>${t('product_price', lang)}</b> <code>$${product.our_price.toFixed(2)} USDT</code>`,
+    `• <b>${t('delivery', lang)}</b> ${t('instant_delivery', lang)}`,
+    `• <b>${t('warranty_badge', lang)}</b>`,
+    '──────────────────',
+    t('choose_payment', lang),
   ].join('\n');
 
   const keyboard = {
     inline_keyboard: [
-      [{ text: `⚡ Bybit Pay ($${product.our_price.toFixed(2)} USDT)`, callback_data: `buy_bybit_${product.short_id}` }],
-      [{ text: `🟡 Binance Pay ($${product.our_price.toFixed(2)} USDT)`, callback_data: `buy_binance_${product.short_id}` }],
-      [{ text: `📱 انستاباي / كاش (${product.price_egp} ج.م)`, callback_data: `buy_local_${product.short_id}` }],
+      [{ text: `⚡ Bybit Pay ($${product.our_price.toFixed(2)})`, callback_data: `buy_bybit_${product.short_id}` }],
+      [{ text: `🟡 Binance Pay ($${product.our_price.toFixed(2)})`, callback_data: `buy_binance_${product.short_id}` }],
+      [{ text: `📱 InstaPay / Cash (${product.price_egp} EGP)`, callback_data: `buy_local_${product.short_id}` }],
       [
-        { text: '🔙 رجوع للباقات', callback_data: `brand_${product.brand_id}` },
-        { text: '🏠 الرئيسية', callback_data: 'main_menu' },
+        { text: `🔙 ${t('btn_back', lang)}`, callback_data: `brand_${product.brand_id}` },
+        { text: `🏠 ${t('btn_main_menu', lang)}`, callback_data: 'main_menu' },
       ],
     ],
   };
@@ -797,6 +861,7 @@ async function renderProductDetails(chatId, shortId, messageId, callbackQueryId,
 async function renderDirectBybitCheckout(chatId, shortId, messageId, callbackQueryId, businessConnectionId = null) {
   if (callbackQueryId) await answerCallbackQuery(callbackQueryId);
 
+  const lang = getUserLanguage(chatId);
   const product = getProductByShortIdOrSlug(shortId) || STORE_CATALOG[0];
   const orderRef = `UP-${Math.floor(100000 + Math.random() * 900000)}`;
 
@@ -816,39 +881,30 @@ async function renderDirectBybitCheckout(chatId, shortId, messageId, callbackQue
   }
 
   const text = [
-    '⚡ <b>دفع مباشر عبر Bybit Pay</b>',
-    '━━━━━━━━━━━━━━━━━━━━━━',
-    `📦 <b>المنتج:</b> ${product.name_ar}`,
-    `🆔 <b>رقم الطلب:</b> <code>#${orderRef}</code>`,
-    '',
-    '💵 <b>المبلغ المطلوب (USDT):</b>',
-    `<code>${product.our_price.toFixed(2)}</code> <i>(اضغط على الرقم للنسخ)</i>`,
-    '',
-    '🆔 <b>Bybit UID (معرف الحساب):</b>',
-    '<code>47183921</code> <i>(اضغط على الرقم للنسخ)</i>',
-    '',
-    '━━━━━━━━━━━━━━━━━━━━━━',
-    '📌 <b>طريقة الدفع والتفعيل:</b>',
-    '1. افتح Bybit ➔ <b>تحويل (Transfer)</b> ➔ <b>تحويل داخلي</b>.',
-    `2. أدخل الـ UID: <code>47183921</code> والمبلغ <code>${product.our_price.toFixed(2)}</code> وحوّل (رسوم 0%).`,
-    '3. بعد التحويل، <b>أرسل معرف العملية (TXID / Transfer ID) هنا في الشات</b>.',
-    '4. يتم فحص المعرف تلقائياً وتسليم الحساب فوراً ⚡.',
+    t('bybit_checkout_title', lang),
+    '──────────────────',
+    `<b>${t('bybit_uid_label', lang)}</b> <code>47183921</code>`,
+    `<b>${t('bybit_amount_label', lang)}</b> <code>${product.our_price.toFixed(2)}</code> USDT`,
+    `<i>(${t('btn_copy_hint', lang)})</i>`,
+    '──────────────────',
+    t('bybit_step1', lang),
+    t('bybit_step2', lang),
   ].join('\n');
 
   const keyboard = {
     inline_keyboard: [
       [
         {
-          text: '🔍 فحص وتأكيد الدفع التلقائي ⚡',
+          text: `⚡ ${t('btn_verify_bybit', lang)}`,
           callback_data: `check_bybit_${product.short_id}_${orderRef}`,
         },
       ],
       [
-        { text: '👨‍💻 مساعدة من الدعم الفني', callback_data: 'support' },
+        { text: `👨‍💻 ${t('btn_support', lang)}`, callback_data: 'support' },
       ],
       [
-        { text: '🔙 رجوع للمنتج', callback_data: `prod_${product.short_id}` },
-        { text: '🏠 الرئيسية', callback_data: 'main_menu' },
+        { text: `🔙 ${t('btn_back', lang)}`, callback_data: `prod_${product.short_id}` },
+        { text: `🏠 ${t('btn_main_menu', lang)}`, callback_data: 'main_menu' },
       ],
     ],
   };
@@ -867,6 +923,7 @@ async function renderDirectBybitCheckout(chatId, shortId, messageId, callbackQue
 async function renderDirectBinanceCheckout(chatId, shortId, messageId, callbackQueryId, businessConnectionId = null) {
   if (callbackQueryId) await answerCallbackQuery(callbackQueryId);
 
+  const lang = getUserLanguage(chatId);
   const product = getProductByShortIdOrSlug(shortId) || STORE_CATALOG[0];
   const orderRef = `UP-${Math.floor(100000 + Math.random() * 900000)}`;
 
@@ -886,39 +943,30 @@ async function renderDirectBinanceCheckout(chatId, shortId, messageId, callbackQ
   }
 
   const text = [
-    '🟡 <b>دفع مباشر عبر Binance Pay</b>',
-    '━━━━━━━━━━━━━━━━━━━━━━',
-    `📦 <b>المنتج:</b> ${product.name_ar}`,
-    `🆔 <b>رقم الطلب:</b> <code>#${orderRef}</code>`,
-    '',
-    '💵 <b>المبلغ المطلوب (USDT):</b>',
-    `<code>${product.our_price.toFixed(2)}</code> <i>(اضغط على الرقم للنسخ)</i>`,
-    '',
-    '🆔 <b>Binance Pay / UID:</b>',
-    '<code>764476139</code> <i>(اضغط على الرقم للنسخ)</i>',
-    '',
-    '━━━━━━━━━━━━━━━━━━━━━━',
-    '📌 <b>طريقة الدفع والتفعيل:</b>',
-    '1. افتح تطبيق Binance ➔ <b>Pay (إرسال)</b> أو <b>تحويل داخلي</b>.',
-    `2. أدخل الـ Binance ID: <code>764476139</code> والمبلغ <code>${product.our_price.toFixed(2)}</code> (رسوم 0%).`,
-    '3. بعد التحويل، <b>أرسل معرف العملية (Order ID / Pay ID) هنا في الشات</b>.',
-    '4. يتم التحقق والتسليم الفوري للحساب والمفتاح ⚡.',
+    t('binance_checkout_title', lang),
+    '──────────────────',
+    `<b>${t('binance_id_label', lang)}</b> <code>764476139</code>`,
+    `<b>${t('bybit_amount_label', lang)}</b> <code>${product.our_price.toFixed(2)}</code> USDT`,
+    `<i>(${t('btn_copy_hint', lang)})</i>`,
+    '──────────────────',
+    t('binance_step1', lang),
+    t('binance_step2', lang),
   ].join('\n');
 
   const keyboard = {
     inline_keyboard: [
       [
         {
-          text: '🔍 تأكيد الدفع مع الدعم ⚡',
+          text: `🟡 ${t('btn_verify_binance', lang)}`,
           callback_data: `check_binance_${product.short_id}_${orderRef}`,
         },
       ],
       [
-        { text: '👨‍💻 مساعدة من الدعم الفني', callback_data: 'support' },
+        { text: `👨‍💻 ${t('btn_support', lang)}`, callback_data: 'support' },
       ],
       [
-        { text: '🔙 رجوع للمنتج', callback_data: `prod_${product.short_id}` },
-        { text: '🏠 الرئيسية', callback_data: 'main_menu' },
+        { text: `🔙 ${t('btn_back', lang)}`, callback_data: `prod_${product.short_id}` },
+        { text: `🏠 ${t('btn_main_menu', lang)}`, callback_data: 'main_menu' },
       ],
     ],
   };
@@ -935,6 +983,7 @@ async function renderDirectBinanceCheckout(chatId, shortId, messageId, callbackQ
 }
 
 async function deliverInstantOrder(chatId, product, orderRef, txInfo, messageId = null, businessConnectionId = null) {
+  const lang = getUserLanguage(chatId);
   if (supabase) {
     try {
       await supabase.from('orders').update({
@@ -949,27 +998,29 @@ async function deliverInstantOrder(chatId, product, orderRef, txInfo, messageId 
   const generatedUser = `upstore_vip_${Math.floor(10000 + Math.random() * 90000)}@gmail.com`;
   const generatedPass = `UpStore#${Math.floor(100000 + Math.random() * 900000)}`;
 
+  const brand = getBrandById(product.brand_id);
+  const prodTitle = brand ? (lang === 'ar' ? brand.name_ar : (brand.name_en || brand.name_ar)) : product.name_ar;
+
   const deliveryText = [
-    '🎉 <b>تم تأكيد استلام الدفع بنجاح! ⚡</b>',
-    '━━━━━━━━━━━━━━━━━━━━━━',
-    `📦 <b>المنتج:</b> ${product.name_ar}`,
-    `🆔 <b>رقم الطلب:</b> <code>#${orderRef}</code>`,
-    `💎 <b>المبلغ المستلم:</b> <code>${txInfo.amount} USDT</code>`,
-    `🛡️ <b>الضمان:</b> ${product.warranty_duration}`,
-    '━━━━━━━━━━━━━━━━━━━━━━',
-    '🔑 <b>بيانات التفعيل والحساب الخاص بك:</b>',
-    `• <b>الحساب / المعرف:</b> <code>${generatedUser}</code>`,
-    `• <b>كلمة المرور:</b> <code>${generatedPass}</code>`,
-    `• <b>مدة الصلاحية:</b> ${product.subscription_duration}`,
-    '',
-    '✨ <i>تم تفعيل الضمان الذهبي لحسابك تلقائياً بنجاح. لأي مساعدة تواصل مع: @UPSTORE_HELP</i>',
+    '✅ <b>Payment Confirmed / تم تأكيد الدفع!</b>',
+    '──────────────────',
+    `📦 <b>Product:</b> ${prodTitle}`,
+    `🆔 <b>Order:</b> <code>#${orderRef}</code>`,
+    `💎 <b>Amount:</b> <code>${txInfo.amount} USDT</code>`,
+    '──────────────────',
+    '🔑 <b>Account Credentials / بيانات الحساب:</b>',
+    `• <b>Username / Email:</b> <code>${generatedUser}</code>`,
+    `• <b>Password:</b> <code>${generatedPass}</code>`,
+    `• <b>Duration:</b> ${product.subscription_duration}`,
+    '──────────────────',
+    '✨ <i>Warranty active 100%. Support: @UPSTORE_HELP</i>',
   ].join('\n');
 
   const keyboard = {
     inline_keyboard: [
-      [{ text: '📦 تصفح طلباتي ومفاتيحي', callback_data: 'my_orders' }],
-      [{ text: '🛍️ تصفح باقي المنتجات', callback_data: 'catalog' }],
-      [{ text: '👨‍💻 الدعم الفني المباشر', callback_data: 'support' }],
+      [{ text: `📦 ${t('btn_orders', lang)}`, callback_data: 'my_orders' }],
+      [{ text: `🛍️ ${t('btn_catalog', lang)}`, callback_data: 'catalog' }],
+      [{ text: `👨‍💻 ${t('btn_support', lang)}`, callback_data: 'support' }],
     ],
   };
 
@@ -982,6 +1033,7 @@ async function deliverInstantOrder(chatId, product, orderRef, txInfo, messageId 
 async function renderDirectLocalCheckout(chatId, shortId, messageId, callbackQueryId, businessConnectionId = null) {
   if (callbackQueryId) await answerCallbackQuery(callbackQueryId);
 
+  const lang = getUserLanguage(chatId);
   const product = getProductByShortIdOrSlug(shortId) || STORE_CATALOG[0];
   const orderRef = `UP-${Math.floor(100000 + Math.random() * 900000)}`;
 
@@ -1001,34 +1053,24 @@ async function renderDirectLocalCheckout(chatId, shortId, messageId, callbackQue
   }
 
   const text = [
-    '📱 <b>فاتورة الدفع المحلي (InstaPay & كاش)</b>',
-    '━━━━━━━━━━━━━━━━━━━━━━',
-    `📦 <b>المنتج:</b> ${product.name_ar}`,
-    `🆔 <b>رقم الطلب:</b> <code>#${orderRef}</code>`,
-    '',
-    '💵 <b>المبلغ المطلوب:</b>',
-    `<code>${product.price_egp}</code> ج.م <i>(اضغط على الرقم للنسخ)</i>`,
-    `أو <code>${product.price_sar}</code> ر.س <i>(اضغط على الرقم للنسخ)</i>`,
-    '',
-    '💳 <b>عنوان انستاباي (InstaPay Username):</b>',
-    '<code>mo_matany@instapay</code> <i>(اضغط للنسخ)</i>',
-    '',
-    '📱 <b>محافظ كاش مصر (فودافون / اتصالات / أورنج / WE):</b>',
-    '<code>01041140422</code> <i>(اضغط على الرقم للنسخ)</i>',
-    '',
-    '━━━━━━━━━━━━━━━━━━━━━━',
-    '📌 <b>بعد التحويل:</b>',
-    'أرسل صورة الإشعار أو رقم المحفظة المحول منها هنا في الشات للتسليم الفوري ⚡.',
+    t('local_checkout_title', lang),
+    '──────────────────',
+    `<b>${t('instapay_label', lang)}</b> <code>mo_matany@instapay</code>`,
+    `<b>${t('vfcash_label', lang)}</b> <code>01041140422</code>`,
+    `<b>${t('local_amount_label', lang)}</b> <code>${product.price_egp}</code> EGP / <code>${product.price_sar}</code> SAR`,
+    `<i>(${t('btn_copy_hint', lang)})</i>`,
+    '──────────────────',
+    t('local_step', lang),
   ].join('\n');
 
   const keyboard = {
     inline_keyboard: [
       [
-        { text: '👨‍💻 تأكيد الإيصال للدعم', callback_data: 'support' },
+        { text: `👨‍💻 ${t('btn_support', lang)}`, callback_data: 'support' },
       ],
       [
-        { text: '🔙 رجوع للمنتج', callback_data: `prod_${product.short_id}` },
-        { text: '🏠 الرئيسية', callback_data: 'main_menu' },
+        { text: `🔙 ${t('btn_back', lang)}`, callback_data: `prod_${product.short_id}` },
+        { text: `🏠 ${t('btn_main_menu', lang)}`, callback_data: 'main_menu' },
       ],
     ],
   };
@@ -1047,6 +1089,7 @@ async function renderDirectLocalCheckout(chatId, shortId, messageId, callbackQue
 async function renderMyOrders(chatId, messageId, callbackQueryId, businessConnectionId = null) {
   if (callbackQueryId) await answerCallbackQuery(callbackQueryId);
 
+  const lang = getUserLanguage(chatId);
   let ordersText = '';
   if (supabase) {
     try {
@@ -1059,44 +1102,39 @@ async function renderMyOrders(chatId, messageId, callbackQueryId, businessConnec
 
       if (orders && orders.length > 0) {
         orders.forEach((o, i) => {
-          const title = o.products?.name_ar || o.products?.name || 'منتج رقمي';
+          const title = (lang === 'ar' ? o.products?.name_ar : o.products?.name) || 'Digital Product';
           const shortId = o.id.slice(0, 8).toUpperCase();
-          let statusBadge = '⏳ قيد المراجعة';
-          if (o.status === 'completed' || o.status === 'fulfilled') {
-            statusBadge = '✅ مكتمل ومُسلّم';
-          }
+          let statusBadge = o.status === 'completed' || o.status === 'fulfilled' ? 'Completed' : 'Pending';
 
-          ordersText += `<b>${i + 1}. طلب #${shortId} — ${title}</b>\n`;
-          ordersText += `• الحالة: <code>${statusBadge}</code> | المبلغ: <code>$${Number(o.amount).toFixed(2)}</code>\n`;
+          ordersText += `<b>${i + 1}. #${shortId} — ${title}</b>\n`;
+          ordersText += `• Status: <code>${statusBadge}</code> | Amount: <code>$${Number(o.amount).toFixed(2)}</code>\n`;
           if ((o.status === 'completed' || o.status === 'fulfilled') && o.product_key && o.product_key !== 'PENDING_TELEGRAM_FULFILLMENT') {
-            ordersText += `• المفتاح / البيانات:\n<code>${o.product_key}</code>\n`;
+            ordersText += `• Info: <code>${o.product_key}</code>\n`;
           }
-          ordersText += '━━━━━━━━━━━━━━━━━━\n';
+          ordersText += '──────────────────\n';
         });
       }
     } catch {}
   }
 
   if (!ordersText) {
-    ordersText = 'لا توجد طلبات مسجلة لهذا الحساب حالياً.\nيمكنك طلب منتجك الآن واستلام المفتاح فوراً ⚡.';
+    ordersText = t('no_orders', lang);
   }
 
   const text = [
-    '📦 <b>لوحة تتبع الطلبات والمفاتيح الرقمية:</b>',
-    '━━━━━━━━━━━━━━━━━━━━━━',
+    t('orders_title', lang),
+    '──────────────────',
     ordersText,
-    '',
-    '🛡️ <i>كافة طلباتك مضمونة 100% طوال فترة الاشتراك.</i>',
   ].join('\n');
 
   const keyboard = {
     inline_keyboard: [
       [
-        { text: '🔄 تحديث الطلبات', callback_data: 'my_orders' },
-        { text: '👨‍💻 مساعدة في طلب', callback_data: 'support' },
+        { text: `🔄 ${t('btn_refresh', lang)}`, callback_data: 'my_orders' },
+        { text: `👨‍💻 ${t('btn_support', lang)}`, callback_data: 'support' },
       ],
       [
-        { text: '🏠 القائمة الرئيسية', callback_data: 'main_menu' },
+        { text: `🏠 ${t('btn_main_menu', lang)}`, callback_data: 'main_menu' },
       ],
     ],
   };
@@ -1115,39 +1153,25 @@ async function renderMyOrders(chatId, messageId, callbackQueryId, businessConnec
 async function renderPaymentMethodsScreen(chatId, messageId, callbackQueryId, businessConnectionId = null) {
   if (callbackQueryId) await answerCallbackQuery(callbackQueryId);
 
+  const lang = getUserLanguage(chatId);
   const text = [
-    '💳 <b>محفظة UpStore وبونص الشحن الإضافي</b>',
-    '━━━━━━━━━━━━━━━━━━━━━━',
-    '🎁 <b>عرض مضاعفة الرصيد الحصري:</b>',
-    '• اشحن <b>$15</b> ➔ احصل على <b>+$1.5 مجاناً</b> <i>(الرصيد: $16.5)</i>',
-    '• اشحن <b>$30</b> ➔ احصل على <b>+$3.0 مجاناً</b> <i>(الرصيد: $33.0)</i>',
-    '• اشحن <b>$45</b> ➔ احصل على <b>+$4.5 مجاناً</b> <i>(الرصيد: $49.5)</i>',
-    '• اشحن <b>$60</b> ➔ احصل على <b>+$6.0 مجاناً</b> <i>(الرصيد: $66.0)</i>',
-    '',
-    '━━━━━━━━━━━━━━━━━━━━━━',
-    '⚡ <b>بيانات التحويل المعتمدة (رسوم 0%):</b>',
-    '• <b>Bybit UID:</b>',
-    '<code>47183921</code> <i>(اضغط على الرقم للنسخ)</i>',
-    '',
-    '• <b>Binance Pay / UID:</b>',
-    '<code>764476139</code> <i>(اضغط على الرقم للنسخ)</i>',
-    '',
-    '• <b>InstaPay:</b>',
-    '<code>mo_matany@instapay</code> <i>(اضغط للنسخ)</i>',
-    '',
-    '• <b>محافظ كاش مصر:</b>',
-    '<code>01041140422</code> <i>(اضغط على الرقم للنسخ)</i>',
-    '',
-    '━━━━━━━━━━━━━━━━━━━━━━',
-    '📌 بعد التحويل، أرسل <b>معرف العملية</b> هنا لشحن الرصيد مع البونص فوراً 🚀.',
+    `<b>${t('btn_wallet', lang)} — UpStore</b>`,
+    '──────────────────',
+    '• <b>Bybit UID:</b> <code>47183921</code>',
+    '• <b>Binance Pay ID:</b> <code>764476139</code>',
+    '• <b>InstaPay:</b> <code>mo_matany@instapay</code>',
+    '• <b>Cash (Vodafone/Orange/WE):</b> <code>01041140422</code>',
+    `<i>(${t('btn_copy_hint', lang)})</i>`,
+    '──────────────────',
+    t('local_step', lang),
   ].join('\n');
 
   const keyboard = {
     inline_keyboard: [
-      [{ text: '⚡ شحن Bybit (+بونص تلقائي)', callback_data: 'buy_bybit_643361f7' }],
-      [{ text: '🟡 شحن Binance (+بونص تلقائي)', callback_data: 'buy_binance_643361f7' }],
-      [{ text: '👨‍💻 شحن كاش وإنستاباي مع الدعم', callback_data: 'support' }],
-      [{ text: '🏠 القائمة الرئيسية', callback_data: 'main_menu' }],
+      [{ text: '⚡ Bybit Pay', callback_data: 'buy_bybit_643361f7' }],
+      [{ text: '🟡 Binance Pay', callback_data: 'buy_binance_643361f7' }],
+      [{ text: `👨‍💻 ${t('btn_support', lang)}`, callback_data: 'support' }],
+      [{ text: `🏠 ${t('btn_main_menu', lang)}`, callback_data: 'main_menu' }],
     ],
   };
 
@@ -1165,24 +1189,20 @@ async function renderPaymentMethodsScreen(chatId, messageId, callbackQueryId, bu
 async function renderWarrantyPolicyScreen(chatId, messageId, callbackQueryId, businessConnectionId = null) {
   if (callbackQueryId) await answerCallbackQuery(callbackQueryId);
 
+  const lang = getUserLanguage(chatId);
   const text = [
-    '🛡️ <b>سياسة الضمان الذهبي والاستبدال 100%</b>',
-    '━━━━━━━━━━━━━━━━━━━━━━',
-    '<b>نلتزم بتقديم أعلى مستويات الأمان والضمان لعملائنا:</b>',
-    '',
-    '1. <b>ضمان استبدال فوري:</b> يغطي كامل مدة الاشتراك، وفي حال أي توقف يتم الاستبدال فوراً ⚡.',
-    '2. <b>حسابات وتراخيص رسمية:</b> معتمدة ومضمونة وخالية من أي إغلاقات مفاجئة 💎.',
-    '3. <b>دعم فني بشري متواصل:</b> متواجدون على مدار الساعة لحل أي عطل فوراً 👨‍💻.',
-    '4. <b>استرداد كامل:</b> في حال تعذر حل أي مشكلة، يحق لك استرداد المبلغ بالكامل فوراً 💰.',
+    t('warranty_title', lang),
+    '──────────────────',
+    t('warranty_desc', lang),
   ].join('\n');
 
   const keyboard = {
     inline_keyboard: [
       [
-        { text: '👨‍💻 التحدث مع الدعم الفني', callback_data: 'support' },
+        { text: `👨‍💻 ${t('btn_support', lang)}`, callback_data: 'support' },
       ],
       [
-        { text: '🏠 القائمة الرئيسية', callback_data: 'main_menu' },
+        { text: `🏠 ${t('btn_main_menu', lang)}`, callback_data: 'main_menu' },
       ],
     ],
   };
@@ -1201,61 +1221,47 @@ async function renderWarrantyPolicyScreen(chatId, messageId, callbackQueryId, bu
 async function renderReferralScreen(chatId, messageId, callbackQueryId, businessConnectionId = null) {
   if (callbackQueryId) await answerCallbackQuery(callbackQueryId);
 
+  const lang = getUserLanguage(chatId);
   const stats = await getUserReferralStats(chatId);
   const invitedCount = stats.invitedCount || (stats.referrals ? stats.referrals.length : 0);
-  const points = invitedCount; // 1 point per friend
+  const points = invitedCount;
   const earnedDollars = Math.floor(points / 5) * 1.0;
   const nextMilestonePoints = (Math.floor(points / 5) + 1) * 5;
   const remainingPoints = nextMilestonePoints - points;
   const refLink = `https://t.me/upstore_one_bot?start=ref_${chatId}`;
 
-  const shareTextTelegram = encodeURIComponent(
-    '🔥 متجر UpStore الرقمي 🚀\n\n' +
-    'أقوى وأرخص اشتراكات الذكاء الاصطناعي والتطبيقات الرسمية (ChatGPT, Gemini, Cursor, Canva, Netflix) بأسعار تبدأ من $0.19 مع ضمان ذهبي 100%!\n\n' +
-    'ادخل واكتشف العروض الحصرية من هنا 👇\n' + refLink
-  );
-
-  const shareTextWhatsApp = encodeURIComponent(
-    '🔥 متجر UpStore الرقمي — اشتراكات ذكاء اصطناعي وتطبيقات رسمية بأسعار تبدأ من $0.19 فقط وضمان استبدال ذهبي!\n\nتصفح المتجر من هنا: ' + refLink
-  );
+  const shareText = encodeURIComponent(`UpStore — AI & Premium Accounts: ${refLink}`);
 
   const text = [
-    '🔥 <b>نظام المكافآت ورصيد المحفظة المجاني — UpStore</b> 🎁',
-    '━━━━━━━━━━━━━━━━━━━━━━',
-    '⚡ <b>شارك رابط دعوتك واكسب رصيد محفظة لشراء أي اشتراك مجاناً!</b>',
+    t('referral_title', lang),
+    '──────────────────',
+    t('referral_desc', lang),
     '',
-    '💎 <b>معادلة المكافآت النارية:</b>',
-    '• كل صديق ينضم عبر رابطك = <b>⭐ 1 نقطة فورية</b>',
-    '• كل <b>5 نقاط</b> = <b>💵 $1.00 دولار</b> يضاف تلقائياً لرصيد محفظتك!',
-    '• <i>استخدم رصيدك في شراء وتجديد أي اشتراك داخل البوت بـ $0.00! 🚀</i>',
-    '',
-    '━━━━━━━━━━━━━━━━━━━━━━',
-    '📊 <b>إحصائيات رصيدك ومكافآتك الحالية:</b>',
-    `👥 <b>الأصدقاء المدعوون:</b> <code>${invitedCount}</code> صديق`,
-    `⭐ <b>مجموع النقاط:</b> <code>${points}</code> نقطة`,
-    `💵 <b>رصيدك المكتسب للمشتريات:</b> <code>$${earnedDollars.toFixed(2)} USDT</code>`,
-    `🎯 <b>للدولار القادم:</b> متبقي <code>${remainingPoints}</code> نقاط فقط`,
-    '━━━━━━━━━━━━━━━━━━━━━━',
-    '🔗 <b>رابط الدعوة الخاص بك (اضغط للنسخ):</b>',
+    t('referral_formula', lang),
+    '──────────────────',
+    `• <b>${t('invited_friends', lang)}</b> <code>${invitedCount}</code>`,
+    `• <b>${t('total_points', lang)}</b> <code>${points}</code>`,
+    `• <b>${t('wallet_balance', lang)}</b> <code>$${earnedDollars.toFixed(2)} USDT</code>`,
+    `• <b>${t('points_to_next', lang)}</b> <code>${remainingPoints}</code>`,
+    '──────────────────',
+    `🔗 <b>${t('ref_link_label', lang)}</b>`,
     `<code>${refLink}</code>`,
-    '',
-    '📢 <b>انشر الرابط الآن في جروبات تليجرام وواتساب واجمع نقاطك لشراء حساباتك مجاناً! 💎</b>',
   ].join('\n');
 
   const keyboard = {
     inline_keyboard: [
       [
-        { text: '🚀 مشاركة فورية على تليجرام', url: `https://t.me/share/url?url=${refLink}&text=${shareTextTelegram}` },
+        { text: `🚀 ${t('btn_share_tg', lang)}`, url: `https://t.me/share/url?url=${refLink}&text=${shareText}` },
       ],
       [
-        { text: '💬 مشاركة عبر واتساب', url: `https://api.whatsapp.com/send?text=${shareTextWhatsApp}` },
+        { text: `💬 ${t('btn_share_wa', lang)}`, url: `https://api.whatsapp.com/send?text=${shareText}` },
       ],
       [
-        { text: '🛍️ تصفح المنتجات والشراء بالرصيد', callback_data: 'catalog' },
-        { text: '🔄 تحديث الرصيد', callback_data: 'referral' },
+        { text: `🛍️ ${t('btn_shop_with_balance', lang)}`, callback_data: 'catalog' },
+        { text: `🔄 ${t('btn_refresh', lang)}`, callback_data: 'referral' },
       ],
       [
-        { text: '🏠 القائمة الرئيسية', callback_data: 'main_menu' },
+        { text: `🏠 ${t('btn_main_menu', lang)}`, callback_data: 'main_menu' },
       ],
     ],
   };
@@ -1274,22 +1280,21 @@ async function renderReferralScreen(chatId, messageId, callbackQueryId, business
 async function renderSupportScreen(chatId, messageId, callbackQueryId, businessConnectionId = null) {
   if (callbackQueryId) await answerCallbackQuery(callbackQueryId);
 
+  const lang = getUserLanguage(chatId);
   const text = [
-    '👨‍💻 <b>خدمة العملاء والدعم الفني المباشر</b>',
-    '━━━━━━━━━━━━━━━━━━━━━━',
-    'نحن هنا لمساعدتك وخدمتك على مدار الساعة ⚡:',
-    '',
-    '• <b>الدعم الفني البشري:</b> تواصل مباشرة مع فريق الدعم لحل أي عطل أو استبدال فوري 🛡️.',
-    '• <b>المساعد الذكي:</b> يمكنك كتابة أي استفسار أو إرسال معرف التحويل / صورة الإيصال في هذه المحادثة وسنخدمك فوراً!',
+    t('support_title', lang),
+    '──────────────────',
+    t('support_desc', lang),
+    `• <b>${t('support_handle', lang)}</b> @UPSTORE_HELP`,
   ].join('\n');
 
   const keyboard = {
     inline_keyboard: [
       [
-        { text: '🛡️ الضمان الذهبي 100%', callback_data: 'warranty_policy' },
+        { text: `🛡️ ${t('btn_warranty', lang)}`, callback_data: 'warranty_policy' },
       ],
       [
-        { text: '🏠 القائمة الرئيسية', callback_data: 'main_menu' },
+        { text: `🏠 ${t('btn_main_menu', lang)}`, callback_data: 'main_menu' },
       ],
     ],
   };
@@ -1430,6 +1435,17 @@ async function handleUpdate(update) {
       await renderSupportScreen(chatId, messageId, callbackId, businessConnectionId);
       return;
     }
+    if (data === 'language_select') {
+      await renderLanguageSelection(chatId, messageId, callbackId, businessConnectionId);
+      return;
+    }
+    if (data.startsWith('set_lang_')) {
+      const langCode = data.replace('set_lang_', '').trim();
+      setUserLanguage(chatId, langCode);
+      await answerCallbackQuery(callbackId, t('language_changed', langCode), false);
+      await renderMainMenu(chatId, messageId, null, businessConnectionId);
+      return;
+    }
     if (data === 'SUPPORT_RESET_MEMORY') {
       resetChatHistory(chatId);
       await answerCallbackQuery(callbackId, 'تم بدء جلسة جديدة بنجاح ✅', false);
@@ -1516,11 +1532,32 @@ async function handleUpdate(update) {
     return;
   }
 
+  const lower = text.toLowerCase();
+
+  if (
+    text === '/lang' ||
+    text === '/language' ||
+    text.includes('اللغة') ||
+    lower.includes('language') ||
+    lower.includes('idioma') ||
+    lower.includes('langue') ||
+    lower.includes('язык') ||
+    lower.includes('dil') ||
+    lower.includes('sprache')
+  ) {
+    await renderLanguageSelection(chatId, null, null, businessConnectionId);
+    return;
+  }
+
   if (
     text === '/help' ||
     text === '/menu' ||
     text === 'main_menu' ||
-    text.includes('الرئيسية')
+    text.includes('الرئيسية') ||
+    lower.includes('home') ||
+    lower.includes('inicio') ||
+    lower.includes('accueil') ||
+    lower.includes('главная')
   ) {
     await renderMainMenu(chatId, null, null, businessConnectionId);
     return;
@@ -1530,7 +1567,12 @@ async function handleUpdate(update) {
     text === '/products' ||
     text.includes('الأقسام') ||
     text.includes('المنتجات') ||
-    text.includes('تصفح')
+    lower.includes('product') ||
+    lower.includes('catalog') ||
+    lower.includes('catálogo') ||
+    lower.includes('produit') ||
+    lower.includes('товары') ||
+    lower.includes('ürün')
   ) {
     await renderCatalog(chatId, null, null, businessConnectionId);
     return;
@@ -1539,7 +1581,12 @@ async function handleUpdate(update) {
     text === '/orders' ||
     text.includes('طلبات') ||
     text.includes('مفاتيح') ||
-    text.includes('مشترياتي')
+    text.includes('مشترياتي') ||
+    lower.includes('order') ||
+    lower.includes('pedido') ||
+    lower.includes('commande') ||
+    lower.includes('заказ') ||
+    lower.includes('sipariş')
   ) {
     await renderMyOrders(chatId, null, null, businessConnectionId);
     return;
@@ -1548,7 +1595,7 @@ async function handleUpdate(update) {
     text === '/bybit' ||
     text === '/crypto' ||
     text === '/usdt' ||
-    text.toLowerCase() === 'bybit' ||
+    lower === 'bybit' ||
     text.includes('بايبيت')
   ) {
     await renderDirectBybitCheckout(chatId, '643361f7', null, null, businessConnectionId);
@@ -1556,9 +1603,15 @@ async function handleUpdate(update) {
   }
   if (
     text === '/payments' ||
+    text === '/wallet' ||
     text.includes('طرق الدفع') ||
     text.includes('المحفظة') ||
-    text.includes('الرصيد')
+    text.includes('الرصيد') ||
+    lower.includes('wallet') ||
+    lower.includes('billetera') ||
+    lower.includes('portefeuille') ||
+    lower.includes('кошелек') ||
+    lower.includes('cüzdan')
   ) {
     await renderPaymentMethodsScreen(chatId, null, null, businessConnectionId);
     return;
@@ -1566,7 +1619,9 @@ async function handleUpdate(update) {
   if (
     text === '/warranty' ||
     text.includes('الضمان') ||
-    text.includes('سياسة الضمان')
+    text.includes('سياسة الضمان') ||
+    lower.includes('warranty') ||
+    lower.includes('garant')
   ) {
     await renderWarrantyPolicyScreen(chatId, null, null, businessConnectionId);
     return;
@@ -1580,7 +1635,13 @@ async function handleUpdate(update) {
     text.includes('المكافآت') ||
     text.includes('المكافات') ||
     text.includes('نقاط') ||
-    text.includes('دعوة')
+    text.includes('دعوة') ||
+    lower.includes('reward') ||
+    lower.includes('referral') ||
+    lower.includes('recompensa') ||
+    lower.includes('récompense') ||
+    lower.includes('бонус') ||
+    lower.includes('ödül')
   ) {
     await renderReferralScreen(chatId, null, null, businessConnectionId);
     return;
@@ -1588,7 +1649,11 @@ async function handleUpdate(update) {
   if (
     text === '/support' ||
     text.includes('الدعم') ||
-    text.includes('خدمة العملاء')
+    text.includes('خدمة العملاء') ||
+    lower.includes('support') ||
+    lower.includes('soporte') ||
+    lower.includes('поддержк') ||
+    lower.includes('destek')
   ) {
     await renderSupportScreen(chatId, null, null, businessConnectionId);
     return;
