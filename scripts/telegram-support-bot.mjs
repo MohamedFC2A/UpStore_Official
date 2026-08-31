@@ -22,6 +22,7 @@ import {
   DEFAULT_LANGUAGE,
   getUserLanguage,
   setUserLanguage,
+  detectUserLanguage,
   t,
 } from './storeI18n.mjs';
 
@@ -605,6 +606,8 @@ async function renderLanguageSelection(chatId, messageId, callbackQueryId, busin
   if (callbackQueryId) await answerCallbackQuery(callbackQueryId);
 
   const currentLang = getUserLanguage(chatId);
+  const chk = (code) => (currentLang === code ? ' ✓' : '');
+
   const text = [
     t('select_language_title', currentLang),
     '──────────────────',
@@ -614,19 +617,19 @@ async function renderLanguageSelection(chatId, messageId, callbackQueryId, busin
   const keyboard = {
     inline_keyboard: [
       [
-        { text: '🇸🇦 العربية', callback_data: 'set_lang_ar' },
-        { text: '🇺🇸 English', callback_data: 'set_lang_en' },
+        { text: `🇸🇦 العربية${chk('ar')}`, callback_data: 'set_lang_ar' },
+        { text: `🇺🇸 English${chk('en')}`, callback_data: 'set_lang_en' },
       ],
       [
-        { text: '🇪🇸 Español', callback_data: 'set_lang_es' },
-        { text: '🇫🇷 Français', callback_data: 'set_lang_fr' },
+        { text: `🇪🇸 Español${chk('es')}`, callback_data: 'set_lang_es' },
+        { text: `🇫🇷 Français${chk('fr')}`, callback_data: 'set_lang_fr' },
       ],
       [
-        { text: '🇷🇺 Русский', callback_data: 'set_lang_ru' },
-        { text: '🇹🇷 Türkçe', callback_data: 'set_lang_tr' },
+        { text: `🇷🇺 Русский${chk('ru')}`, callback_data: 'set_lang_ru' },
+        { text: `🇹🇷 Türkçe${chk('tr')}`, callback_data: 'set_lang_tr' },
       ],
       [
-        { text: '🇩🇪 Deutsch', callback_data: 'set_lang_de' },
+        { text: `🇩🇪 Deutsch${chk('de')}`, callback_data: 'set_lang_de' },
       ],
       [
         { text: `🔙 ${t('btn_back', currentLang)}`, callback_data: 'main_menu' },
@@ -1474,7 +1477,10 @@ async function handleUpdate(update) {
       const langCode = data.replace('set_lang_', '').trim();
       setUserLanguage(chatId, langCode);
       await answerCallbackQuery(callbackId, t('language_changed', langCode), false);
-      await renderMainMenu(chatId, messageId, null, businessConnectionId);
+      if (messageId) {
+        await deleteMessage(chatId, messageId);
+      }
+      await renderMainMenu(chatId, null, null, businessConnectionId);
       return;
     }
     if (data === 'SUPPORT_RESET_MEMORY') {
@@ -1489,6 +1495,8 @@ async function handleUpdate(update) {
   if (!message) return;
 
   const chatId = message.chat.id;
+  const userLangCode = message.from?.language_code || '';
+  detectUserLanguage(chatId, userLangCode);
 
   if (message.photo && Array.isArray(message.photo) && message.photo.length > 0) {
     const quota = getMediaQuota(chatId);

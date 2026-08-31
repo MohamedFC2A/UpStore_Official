@@ -12,6 +12,9 @@
  *  7. de - Deutsch (German) 🇩🇪
  */
 
+import fs from 'fs';
+import path from 'path';
+
 export const SUPPORTED_LANGUAGES = {
   ar: { code: 'ar', name: 'العربية', flag: '🇸🇦' },
   en: { code: 'en', name: 'English', flag: '🇺🇸' },
@@ -24,8 +27,42 @@ export const SUPPORTED_LANGUAGES = {
 
 export const DEFAULT_LANGUAGE = 'ar';
 
+// Persistent storage path
+const DATA_DIR = path.join(process.cwd(), 'data');
+const LANG_FILE = path.join(DATA_DIR, 'user_languages.json');
+
 // In-Memory user language cache: Map<chatId, langCode>
 const userLanguageMap = new Map();
+
+// Load persisted user languages from disk on startup
+try {
+  if (fs.existsSync(LANG_FILE)) {
+    const raw = fs.readFileSync(LANG_FILE, 'utf-8');
+    const parsed = JSON.parse(raw);
+    for (const [k, v] of Object.entries(parsed)) {
+      if (SUPPORTED_LANGUAGES[v]) {
+        userLanguageMap.set(String(k), v);
+      }
+    }
+  }
+} catch (err) {
+  console.warn('[i18n Disk Load Warning]:', err.message);
+}
+
+function saveLanguagesToDisk() {
+  try {
+    if (!fs.existsSync(DATA_DIR)) {
+      fs.mkdirSync(DATA_DIR, { recursive: true });
+    }
+    const obj = {};
+    for (const [k, v] of userLanguageMap.entries()) {
+      obj[k] = v;
+    }
+    fs.writeFileSync(LANG_FILE, JSON.stringify(obj, null, 2), 'utf-8');
+  } catch (err) {
+    console.error('[i18n Disk Save Error]:', err.message);
+  }
+}
 
 /**
  * Get user language or fallback to default
@@ -36,12 +73,34 @@ export function getUserLanguage(chatId) {
 }
 
 /**
- * Set user language
+ * Detect or initialize user language from Telegram's language_code
+ */
+export function detectUserLanguage(chatId, telegramLangCode = '') {
+  const cid = String(chatId);
+  if (userLanguageMap.has(cid)) {
+    return userLanguageMap.get(cid);
+  }
+
+  if (telegramLangCode) {
+    const prefix = telegramLangCode.slice(0, 2).toLowerCase();
+    if (SUPPORTED_LANGUAGES[prefix]) {
+      userLanguageMap.set(cid, prefix);
+      saveLanguagesToDisk();
+      return prefix;
+    }
+  }
+
+  return DEFAULT_LANGUAGE;
+}
+
+/**
+ * Set user language explicitly
  */
 export function setUserLanguage(chatId, langCode) {
   const cid = String(chatId);
   if (SUPPORTED_LANGUAGES[langCode]) {
     userLanguageMap.set(cid, langCode);
+    saveLanguagesToDisk();
     return true;
   }
   return false;
