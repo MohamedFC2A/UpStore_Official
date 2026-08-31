@@ -409,19 +409,46 @@ async function deleteMessage(chatId, messageId) {
   } catch {}
 }
 
-function getKeyboardForQueryAndReply(userQuery, botReply) {
+function matchPersistentButton(text) {
+  if (!text) return null;
+  const clean = text.replace(/^[^\p{L}\p{N}]+/gu, '').trim().toLowerCase();
+
+  // Test across all 7 supported languages
+  for (const l of Object.keys(SUPPORTED_LANGUAGES)) {
+    const cat = (t('btn_catalog', l) || '').toLowerCase();
+    const orders = (t('btn_orders', l) || '').toLowerCase();
+    const wallet = (t('btn_wallet', l) || '').toLowerCase();
+    const ref = (t('btn_referral', l) || '').toLowerCase();
+    const supp = (t('btn_support', l) || '').toLowerCase();
+    const war = (t('btn_warranty', l) || '').toLowerCase();
+    const home = (t('btn_main_menu', l) || '').toLowerCase();
+    const lang = (t('btn_language', l) || '').toLowerCase();
+
+    if (clean === cat || clean.includes(cat) || text.includes(t('btn_catalog', l))) return 'catalog';
+    if (clean === orders || clean.includes(orders) || text.includes(t('btn_orders', l))) return 'my_orders';
+    if (clean === wallet || clean.includes(wallet) || text.includes(t('btn_wallet', l))) return 'payment_methods';
+    if (clean === ref || clean.includes(ref) || text.includes(t('btn_referral', l))) return 'referral';
+    if (clean === supp || clean.includes(supp) || text.includes(t('btn_support', l))) return 'support';
+    if (clean === war || clean.includes(war) || text.includes(t('btn_warranty', l))) return 'warranty_policy';
+    if (clean === home || clean.includes(home) || text.includes(t('btn_main_menu', l))) return 'main_menu';
+    if (clean.includes('language') || clean.includes('idioma') || clean.includes('langue') || clean.includes('язык') || clean.includes('dil') || clean.includes('sprache') || text.includes(t('btn_language', l))) return 'language_select';
+  }
+  return null;
+}
+
+function getKeyboardForQueryAndReply(userQuery, botReply, lang = DEFAULT_LANGUAGE) {
   const q = `${userQuery || ''} ${botReply || ''}`.toLowerCase();
   const buttons = [];
 
   if (/gemini|جيمناي|جيميني/.test(q)) {
     buttons.push([
       { text: '✦ Gemini 18m — $0.19 🔥', callback_data: 'prod_643361f7' },
-      { text: '⚡ دفع Bybit فوري', callback_data: 'buy_bybit_643361f7' },
+      { text: `⚡ ${t('btn_pay_bybit', lang)}`, callback_data: 'buy_bybit_643361f7' },
     ]);
   } else if (/netflix|نتفلكس/.test(q)) {
     buttons.push([
       { text: '🎬 Netflix 4K — $0.25 🔥', callback_data: 'prod_netflix_4k' },
-      { text: '⚡ دفع Bybit فوري', callback_data: 'buy_bybit_netflix_4k' },
+      { text: `⚡ ${t('btn_pay_bybit', lang)}`, callback_data: 'buy_bybit_netflix_4k' },
     ]);
   } else if (/chatgpt|gpt|شات/.test(q)) {
     buttons.push([
@@ -430,37 +457,19 @@ function getKeyboardForQueryAndReply(userQuery, botReply) {
     ]);
   } else if (/canva|كانفا/.test(q)) {
     buttons.push([
-      { text: '🎨 Canva Pro (سنة) — $0.35 🔥', callback_data: 'prod_a1b2c3d4' },
-      { text: '👑 Canva Pro (دائم) — $0.79 🔥', callback_data: 'prod_canvapro_life' },
-    ]);
-  }
-
-  const isNoMoneyOrRecharge = /معيش|ليس لدي|ماعندي|ما عندي|رصيد غير كافي|شحن المحفظة|شحن رصيد|بونص|شحن|محفظة فاضية|فلوس/.test(q);
-  if (isNoMoneyOrRecharge && buttons.length === 0) {
-    buttons.push([
-      { text: '💳 شحن المحفظة (+بونص إضافي)', callback_data: 'payment_methods' },
-      { text: '👨‍💻 مساعدة من الدعم', callback_data: 'support' },
-    ]);
-  }
-
-  if (/دفع|تحويل|إيصال|فودافون|انستاباي|bybit|usdt/.test(q) && buttons.length === 0) {
-    buttons.push([
-      { text: '⚡ شحن Bybit فوري', callback_data: 'buy_bybit_643361f7' },
-      { text: '💳 طرق الدفع والمحافظ', callback_data: 'payment_methods' },
-    ]);
-  }
-
-  if (/عطل|مشكلة|استبدال|ضمان|دعم|help|support/.test(q) && buttons.length === 0) {
-    buttons.push([
-      { text: '👨‍💻 الدعم الفني المباشر', callback_data: 'support' },
-      { text: '🛡️ الضمان الذهبي 100%', callback_data: 'warranty_policy' },
+      { text: '🎨 Canva Pro (1Y) — $0.35 🔥', callback_data: 'prod_a1b2c3d4' },
+      { text: '👑 Canva Lifetime — $0.79 🔥', callback_data: 'prod_canvapro_life' },
     ]);
   }
 
   if (buttons.length === 0) {
     buttons.push([
-      { text: '🛍️ تصفح الأقسام والمنتجات', callback_data: 'catalog' },
-      { text: '💳 شحن المحفظة (+بونص)', callback_data: 'payment_methods' },
+      { text: `🛍️ ${t('btn_catalog', lang)}`, callback_data: 'catalog' },
+      { text: `💳 ${t('btn_wallet', lang)}`, callback_data: 'payment_methods' },
+    ]);
+    buttons.push([
+      { text: `👨‍💻 ${t('btn_support', lang)}`, callback_data: 'support' },
+      { text: `🛡️ ${t('btn_warranty', lang)}`, callback_data: 'warranty_policy' },
     ]);
   }
 
@@ -468,12 +477,15 @@ function getKeyboardForQueryAndReply(userQuery, botReply) {
 }
 
 async function generateDeepSeekReply(chatId, userQuery) {
+  const lang = getUserLanguage(chatId);
   const history = getChatHistory(chatId);
+  const langName = SUPPORTED_LANGUAGES[lang]?.name || 'العربية';
+
   const systemPrompt = [
     `You are Lead Senior Technical Support Specialist at UpStore Telegram Store (@${BOT_USERNAME}).`,
-    'Ultra-concise in 1-3 sentences in Arabic. Answer the exact inquiry directly without fluff.',
+    `CRITICAL INSTRUCTION: You MUST write your reply in the user's active language: ${lang} (${langName}).`,
+    'Ultra-concise in 1-3 sentences. Answer the exact inquiry directly without fluff.',
     'Fire 90% OFF Prices: Gemini 18m ($0.19 / 10 EGP), Netflix 4K ($0.25 / 12 EGP), Canva Pro ($0.35 / 18 EGP), Cursor Pro ($0.49 / 25 EGP), ChatGPT Plus ($0.49 / 25 EGP), Canva Lifetime ($0.79 / 40 EGP), ChatGPT Pro ($2.49 / 125 EGP).',
-    'Deposit Bonus Tiers: $15 -> +$1.5 Free ($16.5) | $30 -> +$3.0 Free ($33.0) | $45 -> +$4.5 Free ($49.5) | $60 -> +$6.0 Free ($66.0). Direct users to wallet to recharge.',
     'Payment: Bybit Pay links, Binance Pay, InstaPay (mo_matany@instapay), Vodafone Cash (01041140422).',
     'Warranty: 100% Gold Replacement Warranty. Human help @UPSTORE_HELP.',
   ].join('\n');
@@ -495,9 +507,9 @@ async function generateDeepSeekReply(chatId, userQuery) {
 
     if (!res.ok) throw new Error(`API status ${res.status}`);
     const data = await res.json();
-    return data?.choices?.[0]?.message?.content?.trim() || 'أهلاً بك في دعم UpStore ✨. تفضل بطرح استفسارك وسنساعدك فوراً، أو تواصل مع الدعم البشري @UPSTORE_HELP 👨‍💻.';
+    return data?.choices?.[0]?.message?.content?.trim() || `${t('support_desc', lang)} @UPSTORE_HELP 👨‍💻`;
   } catch (err) {
-    return 'أهلاً بك في دعم UpStore ✨. تفضل بطرح استفسارك وسنساعدك فوراً، أو تواصل مع الدعم البشري @UPSTORE_HELP 👨‍💻.';
+    return `${t('support_desc', lang)} @UPSTORE_HELP 👨‍💻`;
   }
 }
 
@@ -1571,6 +1583,41 @@ async function handleUpdate(update) {
     return;
   }
 
+  // ── EXACT PERSISTENT KEYBOARD BUTTON MATCHING ACROSS ALL 7 LANGUAGES ──
+  const btnAction = matchPersistentButton(text);
+  if (btnAction === 'main_menu') {
+    await renderMainMenu(chatId, null, null, businessConnectionId);
+    return;
+  }
+  if (btnAction === 'catalog') {
+    await renderCatalog(chatId, null, null, businessConnectionId);
+    return;
+  }
+  if (btnAction === 'my_orders') {
+    await renderMyOrders(chatId, null, null, businessConnectionId);
+    return;
+  }
+  if (btnAction === 'payment_methods') {
+    await renderPaymentMethodsScreen(chatId, null, null, businessConnectionId);
+    return;
+  }
+  if (btnAction === 'referral') {
+    await renderReferralScreen(chatId, null, null, businessConnectionId);
+    return;
+  }
+  if (btnAction === 'support') {
+    await renderSupportScreen(chatId, null, null, businessConnectionId);
+    return;
+  }
+  if (btnAction === 'warranty_policy') {
+    await renderWarrantyPolicyScreen(chatId, null, null, businessConnectionId);
+    return;
+  }
+  if (btnAction === 'language_select') {
+    await renderLanguageSelection(chatId, null, null, businessConnectionId);
+    return;
+  }
+
   const lower = text.toLowerCase();
 
   if (
@@ -1772,7 +1819,8 @@ async function handleUpdate(update) {
   await sendChatAction(chatId, 'typing', businessConnectionId);
   const aiReply = await generateDeepSeekReply(chatId, text);
   appendChatHistory(chatId, text, aiReply);
-  await sendMessage(chatId, aiReply, getKeyboardForQueryAndReply(text, aiReply), businessConnectionId);
+  const lang = getUserLanguage(chatId);
+  await sendMessage(chatId, aiReply, getKeyboardForQueryAndReply(text, aiReply, lang), businessConnectionId);
 }
 
 async function runLongPolling() {
