@@ -14,6 +14,7 @@
 
 import fs from 'fs';
 import path from 'path';
+import { createClient } from '@supabase/supabase-js';
 
 export const SUPPORTED_LANGUAGES = {
   ar: { code: 'ar', name: 'العربية', flag: '🇸🇦' },
@@ -27,12 +28,50 @@ export const SUPPORTED_LANGUAGES = {
 
 export const DEFAULT_LANGUAGE = 'ar';
 
+// Comprehensive Locale to Supported Language Mapping
+const LOCALE_TO_LANG = {
+  // Arabic (Middle East & North Africa)
+  ar: 'ar', fa: 'ar', ur: 'ar', ps: 'ar',
+
+  // Spanish & Portuguese / Latin America
+  es: 'es', pt: 'es', ca: 'es', gl: 'es',
+
+  // French & Romance
+  fr: 'fr', it: 'fr', ro: 'fr',
+
+  // Russian & CIS Countries
+  ru: 'ru', uk: 'ru', be: 'ru', kk: 'ru', uz: 'ru', az: 'ru', hy: 'ru', ka: 'ru', tg: 'ru', ky: 'ru',
+
+  // Turkish & Turkic
+  tr: 'tr', tk: 'tr', tt: 'tr',
+
+  // German & Central/Northern Europe
+  de: 'de', nl: 'de', sv: 'de', no: 'de', da: 'de', fi: 'de', pl: 'de', cs: 'de',
+
+  // English & Global
+  en: 'en', ja: 'en', ko: 'en', zh: 'en', hi: 'en', id: 'en', vi: 'en', th: 'en',
+};
+
 // Persistent storage path
 const DATA_DIR = path.join(process.cwd(), 'data');
 const LANG_FILE = path.join(DATA_DIR, 'user_languages.json');
 
 // In-Memory user language cache: Map<chatId, langCode>
 const userLanguageMap = new Map();
+
+// Cloud Supabase client for multi-server synchronization
+const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.SUPABASE_URL || 'https://nkjutiglgywdfxfqkhzp.supabase.co';
+const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '';
+let supabase = null;
+try {
+  if (SUPABASE_URL && SUPABASE_SERVICE_ROLE_KEY) {
+    supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, {
+      auth: { persistSession: false, autoRefreshToken: false },
+    });
+  }
+} catch (err) {
+  console.warn('[i18n Supabase Warning]:', err.message);
+}
 
 // Load persisted user languages from disk on startup
 try {
@@ -73,7 +112,7 @@ export function getUserLanguage(chatId) {
 }
 
 /**
- * Detect or initialize user language from Telegram's language_code
+ * Smart Auto-Detect: Detect or initialize user language from Telegram's language_code
  */
 export function detectUserLanguage(chatId, telegramLangCode = '') {
   const cid = String(chatId);
@@ -81,26 +120,49 @@ export function detectUserLanguage(chatId, telegramLangCode = '') {
     return userLanguageMap.get(cid);
   }
 
+  let matchedLang = DEFAULT_LANGUAGE;
+
   if (telegramLangCode) {
-    const prefix = telegramLangCode.slice(0, 2).toLowerCase();
-    if (SUPPORTED_LANGUAGES[prefix]) {
-      userLanguageMap.set(cid, prefix);
-      saveLanguagesToDisk();
-      return prefix;
+    const clean = telegramLangCode.toLowerCase().split(/[-_]/)[0].trim();
+    if (LOCALE_TO_LANG[clean]) {
+      matchedLang = LOCALE_TO_LANG[clean];
+    } else if (SUPPORTED_LANGUAGES[clean]) {
+      matchedLang = clean;
+    } else {
+      matchedLang = 'en'; // Global fallback for international users
     }
   }
 
-  return DEFAULT_LANGUAGE;
+  userLanguageMap.set(cid, matchedLang);
+  saveLanguagesToDisk();
+
+  if (supabase) {
+    supabase.from('site_settings').upsert({
+      key: `tg_lang_${cid}`,
+      value: matchedLang,
+      updated_at: new Date().toISOString(),
+    }).catch(() => {});
+  }
+
+  return matchedLang;
 }
 
 /**
- * Set user language explicitly
+ * Set user language explicitly (User manually selects language)
  */
 export function setUserLanguage(chatId, langCode) {
   const cid = String(chatId);
   if (SUPPORTED_LANGUAGES[langCode]) {
     userLanguageMap.set(cid, langCode);
     saveLanguagesToDisk();
+
+    if (supabase) {
+      supabase.from('site_settings').upsert({
+        key: `tg_lang_${cid}`,
+        value: langCode,
+        updated_at: new Date().toISOString(),
+      }).catch(() => {});
+    }
     return true;
   }
   return false;

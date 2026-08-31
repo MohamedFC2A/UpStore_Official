@@ -1370,9 +1370,10 @@ async function handleUpdate(update) {
     const chatId = cb.message?.chat?.id || cb.from?.id;
     const messageId = cb.message?.message_id;
     const callbackId = cb.id;
-    const data = (cb.data || '').trim();
-
     if (!chatId || !data) return;
+
+    const fromLang = cb.from?.language_code || '';
+    detectUserLanguage(chatId, fromLang);
 
     if (data === 'main_menu') {
       await renderMainMenu(chatId, messageId, callbackId, businessConnectionId);
