@@ -2599,10 +2599,105 @@ async function handleUpdate(update) {
   await sendMessage(chatId, fastStoreResponse, {
     inline_keyboard: [
       [{ text: `🛍️ ${t('btn_catalog', lang)}`, callback_data: 'catalog' }, { text: `💳 ${t('btn_wallet', lang)}`, callback_data: 'payment_methods' }],
-      [{ text: `🏆 ${t('btn_about', lang)}`, callback_data: 'about_store' }, { text: `📦 ${t('btn_orders', lang)}`, callback_data: 'my_orders' }],
+      [{ text: `🤍 ${t('btn_about', lang)}`, callback_data: 'about_store' }, { text: `📦 ${t('btn_orders', lang)}`, callback_data: 'my_orders' }],
       [{ text: `🛡️ ${t('btn_warranty', lang)}`, callback_data: 'warranty_policy' }, { text: `👨‍💻 ${t('btn_support', lang)}`, callback_data: 'support' }],
     ],
   }, businessConnectionId);
+}
+
+async function initTelegramSeoAndCommands() {
+  console.log('🔍 Initializing Telegram Bot SEO, Descriptions, and Menu Commands...');
+  try {
+    // 1. Set Bot Name
+    await fetch(`${TELEGRAM_API}/setMyName`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        name: 'UpStore 🤍 ارخص متجر جملة واشتراكات AI',
+        language_code: 'ar'
+      })
+    }).catch(() => {});
+
+    await fetch(`${TELEGRAM_API}/setMyName`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        name: 'UpStore 🤍 Wholesale AI & Digital Store'
+      })
+    }).catch(() => {});
+
+    // 2. Set Full Descriptions (shown in profile & start screen)
+    const arDesc = `🤍 متجر UpStore الرقمي بالجملة ⚡\n\nأرخص متجر لبيع المنتجات الرقمية والاشتراكات في العالم بسعر الجملة 🤝.\nمخصص لدعم التجار والمشاريع الناشئة والشباب للبدء في البيع والربح بأقل تكلفة ممكنة، مع ضمان استبدال رسمي 100% وتسليم فوري تلقائي ⚡.\n\n✨ متوفر لدينا بأرخص سعر جملة:\n• اشتراكات الذكاء الاصطناعي (ChatGPT Plus, Claude 3.7 / Opus 5, Gemini 3.1 Pro, Grok 3, Cursor Composer)\n• أدوات المطورين والبرمجة (Cursor Pro, GitHub Copilot, Replit, JetBrains)\n• برامج التصميم والإبداع (Canva Pro, Adobe Creative Cloud, Midjourney, Freepik)\n• الترفيه والأمان (Netflix 4K, Spotify, YouTube Premium, NordVPN)\n\n💳 دفع مباشر بدون عمولة: Bybit & Binance Pay ودفع محلي فوري.\n👨‍💻 دعم فني مباشر 24/7 عبر @UPSTORE_HELP 🤍`;
+
+    const enDesc = `🤍 UpStore Wholesale Digital Store ⚡\n\nThe world's cheapest wholesale digital goods and AI subscriptions store 🤝.\nDesigned to empower resellers, agencies, and entrepreneurs to start their digital business with maximum profit margins, instant automated delivery, and 100% official replacement warranty ⚡.\n\n✨ Available at direct factory wholesale prices:\n• AI Subscriptions (ChatGPT Plus, Claude 3.7 / Opus 5, Gemini 3.1 Pro, Grok 3, Cursor Composer)\n• Developer Tools (Cursor Pro, GitHub Copilot, Replit, JetBrains)\n• Design & Media (Canva Pro, Adobe Creative Cloud, Midjourney, Freepik)\n• Entertainment & VPN (Netflix 4K, Spotify, YouTube Premium, NordVPN)\n\n💳 0% Fee Instant Crypto Payments: Bybit & Binance Pay.\n👨‍💻 24/7 Dedicated Human Support via @UPSTORE_HELP 🤍`;
+
+    await fetch(`${TELEGRAM_API}/setMyDescription`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ description: arDesc, language_code: 'ar' })
+    }).catch(() => {});
+
+    await fetch(`${TELEGRAM_API}/setMyDescription`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ description: enDesc })
+    }).catch(() => {});
+
+    // 3. Set Short Descriptions (shown in chat previews & search results - max 120 chars)
+    const arShort = `🤍 أرخص متجر جملة للمنتجات الرقمية واشتراكات الذكاء الاصطناعي في العالم ⚡ دعم التجار وضمان استبدال 100% 🤝`;
+    const enShort = `🤍 World's cheapest wholesale store for AI subscriptions & digital products ⚡ Instant delivery & 100% warranty 🤝`;
+
+    await fetch(`${TELEGRAM_API}/setMyShortDescription`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ short_description: arShort, language_code: 'ar' })
+    }).catch(() => {});
+
+    await fetch(`${TELEGRAM_API}/setMyShortDescription`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ short_description: enShort })
+    }).catch(() => {});
+
+    // 4. Set Bot Commands
+    const arCommands = [
+      { command: 'start', description: 'فتح القائمة الرئيسية للمتجر 🤍' },
+      { command: 'catalog', description: 'تصفح المنتجات والأسعار بالجملة 🛍️' },
+      { command: 'wallet', description: 'شحن المحفظة وعرض الرصيد 💳' },
+      { command: 'orders', description: 'متابعة مشترياتي وطلباتي 📦' },
+      { command: 'about', description: 'عن متجر UpStore وتاريخنا 🤍' },
+      { command: 'warranty', description: 'سياسة الضمان والاستبدال الرسمي 🛡️' },
+      { command: 'support', description: 'التحدث مع الدعم الفني @UPSTORE_HELP 👨‍💻' },
+      { command: 'language', description: 'تغيير لغة البوت 🌐' }
+    ];
+
+    const enCommands = [
+      { command: 'start', description: 'Open UpStore main menu 🤍' },
+      { command: 'catalog', description: 'Browse wholesale catalog & prices 🛍️' },
+      { command: 'wallet', description: 'Top up wallet & check balance 💳' },
+      { command: 'orders', description: 'View my active orders & serials 📦' },
+      { command: 'about', description: 'About UpStore wholesale heritage 🤍' },
+      { command: 'warranty', description: '100% Official warranty policy 🛡️' },
+      { command: 'support', description: 'Contact human support @UPSTORE_HELP 👨‍💻' },
+      { command: 'language', description: 'Switch bot language 🌐' }
+    ];
+
+    await fetch(`${TELEGRAM_API}/setMyCommands`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ commands: arCommands, language_code: 'ar' })
+    }).catch(() => {});
+
+    await fetch(`${TELEGRAM_API}/setMyCommands`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ commands: enCommands })
+    }).catch(() => {});
+
+    console.log('✅ Telegram Bot SEO, Descriptions, and Menu Commands successfully set!');
+  } catch (err) {
+    console.warn('[SEO Init Warning]:', err.message);
+  }
 }
 
 async function runLongPolling() {
@@ -2617,6 +2712,9 @@ async function runLongPolling() {
 
   console.log(`🚀 @${BOT_USERNAME} is active and listening for incoming updates (Direct & Business)...`);
   
+  // Set up Telegram SEO & Menu commands
+  initTelegramSeoAndCommands().catch((e) => console.warn('[SEO Setup]:', e.message));
+
   // Launch @upstorelive_bot polling daemon concurrently
   try {
     startLiveBotPolling();

@@ -82,7 +82,7 @@ const durTest = getLocalizedDuration('18 شهراً كاملاً', 'en');
 const warTest = getLocalizedWarranty('18 شهراً ضمان ذهبي', 'en');
 console.log('\nDuration (en):', durTest);
 console.log('Warranty (en):', warTest);
-if (durTest !== '18 Full Months' || warTest !== '18 Months Golden Warranty') {
+if (durTest !== '18 Full Months' || warTest !== '18 Months Replacement Warranty') {
   console.error('❌ Duration/Warranty localization failed for English!');
   process.exit(1);
 }

@@ -9,21 +9,21 @@ export const STORE_CATEGORIES = [
 
 export const STORE_BRANDS = [
   // AI
-  { id: 'gemini', category_id: 'ai', name_ar: 'Google Gemini Advanced', name_en: 'Google Gemini Advanced', icon: '✦', desc: 'أحدث نماذج Gemini 2.5 Pro و Gemini 3.7 Flash مع 2TB سحابية' },
-  { id: 'chatgpt', category_id: 'ai', name_ar: 'ChatGPT (OpenAI Plus/Pro/Team)', name_en: 'ChatGPT Plus/Pro/Team', icon: '🟢', desc: 'نماذج GPT-4o و OpenAI o1 و o3-mini مع الصوت المباشر' },
-  { id: 'claude', category_id: 'ai', name_ar: 'Claude AI (Anthropic Pro/Team)', name_en: 'Claude AI Pro/Team', icon: '🟣', desc: 'أقوى نموذج تفكير وبرمجة Claude 3.7 Sonnet مع Hybrid Reasoning' },
-  { id: 'perplexity', category_id: 'ai', name_ar: 'Perplexity AI Pro', name_en: 'Perplexity AI Pro', icon: '🌌', desc: 'البحث الأكاديمي والذكي بنماذج Sonar و Claude 3.7 و Deep Research' },
+  { id: 'gemini', category_id: 'ai', name_ar: 'Google Gemini Advanced', name_en: 'Google Gemini Advanced', icon: '✦', desc: 'أحدث نماذج Gemini 3.1 Pro و Gemini 3.7 Flash مع 2TB سحابية' },
+  { id: 'chatgpt', category_id: 'ai', name_ar: 'ChatGPT (OpenAI Plus/Pro/Team)', name_en: 'ChatGPT Plus/Pro/Team', icon: '🟢', desc: 'نماذج OpenAI o3-mini و o1 Pro Mode و GPT-4o مع الصوت المباشر' },
+  { id: 'claude', category_id: 'ai', name_ar: 'Claude AI (Anthropic Pro/Team)', name_en: 'Claude AI Pro/Team', icon: '🟣', desc: 'نماذج Claude 3.7 Sonnet و Claude Opus 5 و Claude Fable 5 مع Hybrid Reasoning' },
+  { id: 'perplexity', category_id: 'ai', name_ar: 'Perplexity AI Pro', name_en: 'Perplexity AI Pro', icon: '🌌', desc: 'البحث الأكاديمي والذكي بنماذج Sonar Reasoning Pro و Claude 3.7 و Deep Research' },
   { id: 'midjourney', category_id: 'ai', name_ar: 'Midjourney AI Imaging', name_en: 'Midjourney AI', icon: '🌟', desc: 'أعلى دقة لتوليد الصور والتصاميم الفنية بإصدارات v6.1 و Niji 6' },
   { id: 'elevenlabs', category_id: 'ai', name_ar: 'ElevenLabs Voice & Video AI', name_en: 'ElevenLabs Voice & Video AI', icon: '🎙️', desc: 'توليد أصوات بشرية فائقة واستنساخ صوتي ودبلجة بالـ AI' },
-  { id: 'grok', category_id: 'ai', name_ar: 'Grok 2 / SuperGrok (xAI)', name_en: 'Grok 2 SuperGrok (xAI)', icon: '⚡', desc: 'ذكاء إيلون ماسك المباشر مع بيانات X وتوليد الصور Flux.1' },
-  { id: 'runway', category_id: 'ai', name_ar: 'Runway Gen-3 Video AI', name_en: 'Runway Gen-3 Video', icon: '🎬', desc: 'صناعة ومونتاج الفيديو السينمائي بالذكاء الاصطناعي Gen-3' },
+  { id: 'grok', category_id: 'ai', name_ar: 'Grok 3 / SuperGrok (xAI)', name_en: 'Grok 3 SuperGrok (xAI)', icon: '⚡', desc: 'أحدث نماذج Grok 3 مع Flux.1 وبيانات منصة X اللحظية' },
+  { id: 'runway', category_id: 'ai', name_ar: 'Runway Gen-3 Video AI', name_en: 'Runway Gen-3 Video', icon: '🎬', desc: 'صناعة ومونتاج الفيديو السينمائي بالذكاء الاصطناعي Gen-3 Alpha & Turbo' },
 
   // DEV
-  { id: 'cursor', category_id: 'dev', name_ar: 'Cursor AI (Pro & Ultra)', name_en: 'Cursor AI Pro & Ultra', icon: '💻', desc: 'محرر الأكواد الذكي الأقوى بنماذج Claude 3.7 و Composer' },
+  { id: 'cursor', category_id: 'dev', name_ar: 'Cursor AI (Pro & Ultra)', name_en: 'Cursor AI Pro & Ultra', icon: '💻', desc: 'محرر الأكواد الذكي بنماذج Claude 3.7 و Gemini 3.1 Pro و Composer Agent' },
   { id: 'copilot', category_id: 'dev', name_ar: 'GitHub Copilot & Student', name_en: 'GitHub Copilot & Student', icon: '🐙', desc: 'مساعد البرمجة الذكي داخل VS Code مع Copilot Chat' },
   { id: 'v0dev', category_id: 'dev', name_ar: 'v0.dev / Bolt.new Pro', name_en: 'v0.dev / Bolt.new Pro', icon: '⚡', desc: 'بناء واجهات وتطبيقات Fullstack الويب بالذكاء الاصطناعي' },
   { id: 'jetbrains', category_id: 'dev', name_ar: 'JetBrains All Products Pack', name_en: 'JetBrains All Products Pack', icon: '📦', desc: 'كل بيئات جيت برينز الـ 16 (IntelliJ, WebStorm, PyCharm)' },
-  { id: 'replit', category_id: 'dev', name_ar: 'Replit Core & Agent Pro', name_en: 'Replit Core & Agent', icon: '🔥', desc: 'بيئة تطوير سحابية وبناء مشاريع ذاتية عبر Replit Agent' },
+  { id: 'replit', category_id: 'dev', name_ar: 'Replit Core & Agent Pro', name_en: 'Replit Core & Agent', icon: '🔥', desc: 'بيئة تطوير سحابية وبناء مشاريع ذاتية عبر Replit Agent Pro' },
 
   // DESIGN
   { id: 'canva', category_id: 'design', name_ar: 'Canva Pro (Magic Studio)', name_en: 'Canva Pro Magic Studio', icon: '🎨', desc: '100M+ قالب وتصميم مع كافة أدوات Magic Studio والذكاء الاصطناعي' },
@@ -73,7 +73,7 @@ export const STORE_CATALOG = [
     price_sar: 0.8,
     subscription_duration: 'شهر كامل (30 يوم)',
     warranty_duration: 'شهر كامل ضمان استبدال',
-    advantages_ar: ['أحدث نماذج Gemini 2.5 Pro و Gemini 3.7 Flash فائقة الذكاء', 'مساحة تخزين سحابية ضخمة 2TB على Google One', 'تكامل كامل مع Google Workspace والبحث المعمق Deep Research', 'ضمان استبدال فوري 100% طوال المدة'],
+    advantages_ar: ['أحدث نماذج Gemini 3.1 Pro و Gemini 3.7 Flash و 2.5 Pro', 'مساحة تخزين سحابية ضخمة 2TB على Google One', 'تكامل كامل مع Google Workspace والبحث المعمق Deep Research', 'ضمان استبدال فوري 100% طوال المدة'],
   },
   {
     id: 'gemini_3m_prod',
@@ -90,7 +90,7 @@ export const STORE_CATALOG = [
     price_sar: 1.2,
     subscription_duration: '3 شهور كاملة',
     warranty_duration: '3 شهور ضمان استبدال',
-    advantages_ar: ['أحدث نماذج Gemini المتقدمة للبرمجة والتفكير المنطقي المعقد', 'مساحة تخزين 2TB Google One سحابية مشتركة', 'دعم كتابة الأكواد والتحليل البياني المتقدم', 'ضمان استبدال ذهبي طوال 3 شهور'],
+    advantages_ar: ['أحدث نماذج Gemini 3.1 Pro المتقدمة للبرمجة والتفكير المعقد', 'مساحة تخزين 2TB Google One سحابية مشتركة', 'دعم كتابة الأكواد والتحليل البياني المتقدم', 'ضمان استبدال ذهبي طوال 3 شهور'],
   },
   {
     id: 'gemini_6m_prod',
@@ -107,7 +107,7 @@ export const STORE_CATALOG = [
     price_sar: 1.5,
     subscription_duration: '6 شهور كاملة',
     warranty_duration: '6 شهور ضمان استبدال',
-    advantages_ar: ['وصول فائق السرعة وبأعلى حدود استهلاك لنماذج Google Gemini', 'سعة 2TB سحابية على Google Drive و Gmail و Photos', 'تكامل مباشر مع بيئات التطوير والبحث العلمي', 'ضمان كامل طوال نصف سنة'],
+    advantages_ar: ['وصول فائق السرعة وبأعلى حدود استهلاك لنماذج Google Gemini 3.1 Pro و 3.7 Flash', 'سعة 2TB سحابية على Google Drive و Gmail و Photos', 'تكامل مباشر مع بيئات التطوير والبحث العلمي', 'ضمان كامل طوال نصف سنة'],
   },
   {
     id: 'gemini_12m_prod',
@@ -141,7 +141,7 @@ export const STORE_CATALOG = [
     price_sar: 2.5,
     subscription_duration: '18 شهراً كاملاً',
     warranty_duration: '18 شهراً ضمان ذهبي',
-    advantages_ar: ['وصول لأحدث نماذج Gemini 2.5 Pro و Gemini 3.7 للبرمجة المتقدمة', 'سعة تخزين ضخمة 2TB سحابية Google One كاملة المدة', 'دعم فني خاص VIP وضمان استبدال كامل 18 شهراً'],
+    advantages_ar: ['وصول لأحدث نماذج Gemini 3.1 Pro و Gemini 3.7 Flash للبرمجة المتقدمة', 'سعة تخزين ضخمة 2TB سحابية Google One كاملة المدة', 'دعم فني خاص VIP وضمان استبدال كامل 18 شهراً'],
   },
   {
     id: 'gemini_team_prod',
@@ -177,7 +177,7 @@ export const STORE_CATALOG = [
     price_sar: 2.0,
     subscription_duration: 'شهر كامل (30 يوم)',
     warranty_duration: 'شهر كامل ضمان استبدال',
-    advantages_ar: ['الوصول الكامل لنماذج GPT-4o ونماذج التفكير الاستدلالي OpenAI o1 و o3-mini', 'الوضع الصوتي المتقدم المباشر Advanced Voice Mode وتوليد صور DALL-E 3', 'ميزة Canvas التفاعلية للبرمجة والكتابة + رفع ملفات وتحليل بيانات غير محدود', 'ضمان استبدال فوري 100% طوال المدة'],
+    advantages_ar: ['الوصول الكامل لنماذج GPT-4o ونماذج التفكير الاستدلالي OpenAI o3-mini و o1 Pro Mode', 'الوضع الصوتي المتقدم المباشر Advanced Voice Mode وتوليد صور DALL-E 3', 'ميزة Canvas التفاعلية للبرمجة والكتابة + رفع ملفات وتحليل بيانات غير محدود', 'ضمان استبدال فوري 100% طوال المدة'],
   },
   {
     id: 'chatgpt_plus_3m_prod',
@@ -194,7 +194,7 @@ export const STORE_CATALOG = [
     price_sar: 4.0,
     subscription_duration: '3 شهور كاملة',
     warranty_duration: '3 شهور ضمان استبدال',
-    advantages_ar: ['وصول دائم بدون انقطاع لنماذج GPT-4o و o1 مع أعلى حدود رسائل', 'تحليل البيانات المتقدم ورفع المستندات والأكواد الضخمة', 'إنشاء واستخدام المساعدات المخصصة Custom GPTs', 'ضمان استبدال فوري طوال 3 شهور'],
+    advantages_ar: ['وصول دائم بدون انقطاع لنماذج GPT-4o و o3-mini و o1 مع أعلى حدود رسائل', 'تحليل البيانات المتقدم ورفع المستندات والأكواد الضخمة', 'إنشاء واستخدام المساعدات المخصصة Custom GPTs', 'ضمان استبدال فوري طوال 3 شهور'],
   },
   {
     id: 'chatgpt_plus_6m_prod',
@@ -245,7 +245,7 @@ export const STORE_CATALOG = [
     price_sar: 9.5,
     subscription_duration: 'شهر كامل (30 يوم)',
     warranty_duration: 'شهر كامل ضمان استبدال',
-    advantages_ar: ['وصول حصري لنموذج OpenAI o1 Pro Mode لأعلى دقة استدلال ومنطق بالعالم', 'استخدام غير محدود نهائياً وبأعلى سرعة لنموذج GPT-4o بدون أي حدود رسائل', 'أقصى طاقة حوسبية من خوادم OpenAI المخصصة مع ضمان VIP كامل'],
+    advantages_ar: ['وصول حصري لنموذج OpenAI o1 Pro Mode و o3-mini لأعلى دقة استدلال بالعالم', 'استخدام غير محدود نهائياً وبأعلى سرعة لنموذج GPT-4o بدون أي حدود رسائل', 'أقصى طاقة حوسبية من خوادم OpenAI المخصصة مع ضمان VIP كامل'],
   },
   {
     id: 'chatgpt_team_prod',
@@ -281,7 +281,7 @@ export const STORE_CATALOG = [
     price_sar: 2.0,
     subscription_duration: 'شهر كامل (30 يوم)',
     warranty_duration: 'شهر كامل ضمان استبدال',
-    advantages_ar: ['وصول حصري لنموذج Claude 3.7 Sonnet الرائد مع نمط Hybrid Reasoning', 'ميزة Claude Artifacts التفاعلية لتجربة وتشغيل الأكواد والواجهات لحظياً', 'أعلى دقة في الكتابة والتحليل المنطقي والبرمجة المعقدة', 'ضمان استبدال فوري 100% طوال المدة'],
+    advantages_ar: ['وصول حصري لنماذج Claude 3.7 Sonnet و Claude Opus 5 و Claude Fable 5', 'نمط التفكير الهجين Hybrid Reasoning وميزة Claude Artifacts التفاعلية', 'أعلى دقة في الكتابة والتحليل المنطقي والبرمجة المعقدة', 'ضمان استبدال فوري 100% طوال المدة'],
   },
   {
     id: 'claude_3m_prod',
@@ -298,7 +298,7 @@ export const STORE_CATALOG = [
     price_sar: 4.0,
     subscription_duration: '3 شهور كاملة',
     warranty_duration: '3 شهور ضمان استبدال',
-    advantages_ar: ['استخدام مكثف بـ 5 أضعاف مقارنة بالحساب المجاني بنماذج Sonnet و Haiku', 'نافذة سياق ضخمة حتى 200,000 Tokens لقراءة أضخم الكتب والملفات والأكواد', 'ضمان استبدال كامل طوال الـ 3 شهور'],
+    advantages_ar: ['استخدام مكثف بـ 5 أضعاف مقارنة بالحساب المجاني بنماذج Sonnet و Opus', 'نافذة سياق ضخمة حتى 200,000 Tokens لقراءة أضخم الكتب والملفات والأكواد', 'ضمان استبدال كامل طوال الـ 3 شهور'],
   },
   {
     id: 'claude_6m_prod',
@@ -332,7 +332,7 @@ export const STORE_CATALOG = [
     price_sar: 8.0,
     subscription_duration: 'سنة كاملة (12 شهر)',
     warranty_duration: 'سنة كاملة ضمان استبدال',
-    advantages_ar: ['مساحة عمل للفرق مع أعلى حدود استهلاك لنموذج Claude 3.7 Sonnet', 'إدارة مستندات ومشاريع مشتركة وتحليلات متقدمة', 'ضمان ذهبي سنوي شامل'],
+    advantages_ar: ['مساحة عمل للفرق مع أعلى حدود استهلاك لنموذج Claude 3.7 Sonnet و Opus', 'إدارة مستندات ومشاريع مشتركة وتحليلات متقدمة', 'ضمان ذهبي سنوي شامل'],
   },
 
   // ── 4. PERPLEXITY AI ──
@@ -351,7 +351,7 @@ export const STORE_CATALOG = [
     price_sar: 1.5,
     subscription_duration: 'شهر كامل (30 يوم)',
     warranty_duration: 'شهر كامل ضمان استبدال',
-    advantages_ar: ['أكثر من 300+ بحث Pro يومياً مع مصادر موثقة لحظياً عبر Sonar Reasoning', 'إمكانية التبديل بين Claude 3.7 Sonnet و GPT-4o و Sonar Deep Research', 'رفع ملفات ومستندات وصور غير محدود للتحليل الأكاديمي', 'ضمان استبدال كامل طوال الشهر'],
+    advantages_ar: ['أكثر من 300+ بحث Pro يومياً مع مصادر موثقة لحظياً عبر Sonar Reasoning Pro', 'إمكانية التبديل بين Claude 3.7 Sonnet و GPT-4o و Sonar Deep Research', 'رفع ملفات ومستندات وصور غير محدود للتحليل الأكاديمي', 'ضمان استبدال كامل طوال الشهر'],
   },
   {
     id: 'perplexity_1y_prod',
@@ -447,9 +447,9 @@ export const STORE_CATALOG = [
     short_id: 'grok_1m',
     brand_id: 'grok',
     category_id: 'ai',
-    name: 'Grok 2 SuperGrok 1m',
-    name_ar: 'SuperGrok 2 (شهر كامل)',
-    button_title: '⚡ SuperGrok 2 (شهر) — $0.39 🔥',
+    name: 'Grok 3 SuperGrok 1m',
+    name_ar: 'SuperGrok 3 (شهر كامل)',
+    button_title: '⚡ SuperGrok 3 (شهر) — $0.39 🔥',
     icon_symbol: '⚡',
     market_price: 16.00,
     our_price: 0.39,
@@ -457,16 +457,16 @@ export const STORE_CATALOG = [
     price_sar: 1.5,
     subscription_duration: 'شهر كامل (30 يوم)',
     warranty_duration: 'شهر كامل ضمان استبدال',
-    advantages_ar: ['توليد صور فائقة الواقعية والحرية عبر نموذج Flux.1 المتطور', 'معلومات حية ولحظية مرتبطة مباشرة ببيانات وتغريدات منصة X', 'قدرات برمجة وتحليل نصوص متقدمة مع ضمان كامل طوال الشهر'],
+    advantages_ar: ['أحدث نماذج Grok 3 المتطورة مع توليد صور واقعية عبر Flux.1', 'معلومات حية ولحظية مرتبطة مباشرة ببيانات وتغريدات منصة X', 'قدرات تفكير متقدمة مع ضمان كامل طوال الشهر'],
   },
   {
     id: 'grok_1y_prod',
     short_id: 'grok_1y',
     brand_id: 'grok',
     category_id: 'ai',
-    name: 'Grok 2 SuperGrok 1y',
-    name_ar: 'SuperGrok 2 (سنة كاملة)',
-    button_title: '⚡ SuperGrok 2 (سنة) — $0.99 🔥',
+    name: 'Grok 3 SuperGrok 1y',
+    name_ar: 'SuperGrok 3 (سنة كاملة)',
+    button_title: '⚡ SuperGrok 3 (سنة) — $0.99 🔥',
     icon_symbol: '⚡',
     market_price: 160.00,
     our_price: 0.99,
@@ -474,7 +474,7 @@ export const STORE_CATALOG = [
     price_sar: 4.0,
     subscription_duration: 'سنة كاملة (12 شهر)',
     warranty_duration: 'سنة كاملة ضمان استبدال',
-    advantages_ar: ['اشتراك سنوي كامل غير محدود مع أولوية تشغيل قصوى', 'توليد نصوص وتحليل وسائط ورسوم بيانية مستمرة', 'ضمان سنوي شامل 100%'],
+    advantages_ar: ['اشتراك سنوي كامل غير محدود بنماذج Grok 3 مع أولوية تشغيل قصوى', 'توليد نصوص وتحليل وسائط ورسوم بيانية مستمرة', 'ضمان سنوي شامل 100%'],
   },
   {
     id: 'runway_1m_prod',
@@ -510,7 +510,7 @@ export const STORE_CATALOG = [
     price_sar: 2.0,
     subscription_duration: 'شهر كامل (30 يوم)',
     warranty_duration: 'شهر كامل ضمان استبدال',
-    advantages_ar: ['500 طلب سريع Fast Requests شهرياً بنماذج Claude 3.7 Sonnet و GPT-4o', 'ميزة Cursor Composer لتعديل وبرمجة ملفات متعددة في نفس اللحظة Multi-File', 'إكمال تلقائي ذكي Tab Autocomplete وتصحيح تلقائي لأخطاء الـ Terminal', 'ضمان استبدال فوري 100% طوال المدة'],
+    advantages_ar: ['500 طلب سريع Fast Requests شهرياً بنماذج Claude 3.7 Sonnet و Gemini 3.1 Pro و GPT-4o', 'ميزة Cursor Composer لتعديل وبرمجة ملفات متعددة في نفس اللحظة Multi-File', 'إكمال تلقائي ذكي Tab Autocomplete وتصحيح تلقائي لأخطاء الـ Terminal', 'ضمان استبدال فوري 100% طوال المدة'],
   },
   {
     id: 'cursor_3m_prod',
