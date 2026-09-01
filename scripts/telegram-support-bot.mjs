@@ -1033,6 +1033,8 @@ async function renderDirectBybitCheckout(chatId, shortId, messageId, callbackQue
     '──────────────────',
     t('bybit_step1', lang),
     t('bybit_step2', lang),
+    '──────────────────',
+    t('bybit_underpay_notice', lang),
   ].join('\n');
 
   const keyboard = {
@@ -1446,8 +1448,8 @@ async function renderWalletTopupScreen(chatId, defaultAmount = 5.0, returnProdId
 
   const bonusLines = bonus > 0
     ? [
-        `🎁 <b>${isAr ? 'بونص إضافي هدية:' : 'Bonus Credit:'}</b> <code>+$${bonus.toFixed(2)} USDT</code>`,
-        `💎 <b>${isAr ? 'إجمالي ما سيضاف لمحفظتك:' : 'Total Wallet Credit:'}</b> <code>$${totalCredited.toFixed(2)} USDT</code>`,
+        `🎁 <b>${t('wallet_bonus_label', lang)}</b> <code>+$${bonus.toFixed(2)} USDT</code>`,
+        `💎 <b>${t('wallet_total_credited_label', lang)}</b> <code>$${totalCredited.toFixed(2)} USDT</code>`,
       ]
     : [];
 
@@ -1455,10 +1457,10 @@ async function renderWalletTopupScreen(chatId, defaultAmount = 5.0, returnProdId
     t('wallet_title', lang),
     '──────────────────',
     `💰 <b>${t('wallet_current_balance', lang)}</b> <code>$${wallet.balance.toFixed(2)} USDT</code>`,
-    `⚡ <b>${t('topup_package_label', lang) || 'باقة الشحن المختارة:'}</b> <code>$${amt.toFixed(2)} USDT</code>`,
+    `⚡ <b>${t('topup_package_label', lang)}</b> <code>$${amt.toFixed(2)} USDT</code>`,
     ...bonusLines,
     '──────────────────',
-    t('wallet_min_deposit_notice', lang),
+    t('wallet_underpay_notice', lang),
     '──────────────────',
     t('wallet_topup_select_method', lang, { amount: amt.toFixed(2) }),
   ].join('\n');
@@ -1520,8 +1522,8 @@ async function renderWalletTopupMethod(chatId, method, amount, returnProdId = nu
 
   const bonusBlock = bonus > 0
     ? [
-        `🎁 <b>${isAr ? 'بونص إضافي فوري:' : 'Instant Bonus:'}</b> <code>+$${bonus.toFixed(2)} USDT</code>`,
-        `💎 <b>${isAr ? 'إجمالي الرصيد المضاف:' : 'Total Credited:'}</b> <code>$${totalCredited.toFixed(2)} USDT</code>`,
+        `🎁 <b>${t('wallet_bonus_label', lang)}</b> <code>+$${bonus.toFixed(2)} USDT</code>`,
+        `💎 <b>${t('wallet_total_credited_label', lang)}</b> <code>$${totalCredited.toFixed(2)} USDT</code>`,
         '──────────────────',
       ]
     : [];
@@ -1529,37 +1531,53 @@ async function renderWalletTopupMethod(chatId, method, amount, returnProdId = nu
   if (method === 'bybit') {
     methodTitle = 'Bybit Internal Transfer';
     lines = [
-      `<b>⚡ شحن المحفظة عبر Bybit Pay ($${amt.toFixed(2)} USDT)</b>`,
+      `<b>⚡ ${isAr ? 'شحن المحفظة عبر Bybit Pay' : 'Top-Up Wallet via Bybit Pay'} ($${amt.toFixed(2)} USDT)</b>`,
       '──────────────────',
       `• <b>Bybit UID:</b> <code>47183921</code>`,
-      `• <b>المبلغ المطلوب تحويله:</b> <code>${amt.toFixed(2)}</code> USDT`,
+      `• <b>${isAr ? 'المبلغ المطلوب تحويله:' : 'Amount to Transfer:'}</b> <code>${amt.toFixed(2)}</code> USDT`,
       ...bonusBlock,
       `<i>(${t('btn_copy_hint', lang)})</i>`,
       '──────────────────',
-      '1. حوّل المبلغ إلى معرف Bybit أعلاه عبر التحويل الداخلي (Internal Transfer).',
-      '2. بعد التحويل، اضغط على زر التحقق بالأسفل أو أرسل رقم التحويل هنا لإيداع الرصيد تلقائياً.',
+      isAr
+        ? '1. حوّل المبلغ إلى معرف Bybit أعلاه عبر التحويل الداخلي (Internal Transfer).'
+        : '1. Transfer the exact amount to the Bybit UID above via Internal Transfer.',
+      isAr
+        ? '2. بعد التحويل، اضغط على زر التحقق بالأسفل أو أرسل رقم التحويل هنا لإيداع الرصيد تلقائياً.'
+        : '2. After transfer, click Verify below or send your Transfer ID in the chat for instant crediting.',
+      '──────────────────',
+      t('wallet_underpay_notice', lang),
     ];
   } else if (method === 'binance') {
     methodTitle = 'Binance Pay';
     lines = [
-      `<b>🟡 شحن المحفظة عبر Binance Pay ($${amt.toFixed(2)} USDT)</b>`,
+      `<b>🟡 ${isAr ? 'شحن المحفظة عبر Binance Pay' : 'Top-Up Wallet via Binance Pay'} ($${amt.toFixed(2)} USDT)</b>`,
       '──────────────────',
       `• <b>Binance Pay ID:</b> <code>764476139</code>`,
-      `• <b>المبلغ المطلوب تحويله:</b> <code>${amt.toFixed(2)}</code> USDT`,
+      `• <b>${isAr ? 'المبلغ المطلوب تحويله:' : 'Amount to Transfer:'}</b> <code>${amt.toFixed(2)}</code> USDT`,
       ...bonusBlock,
       `<i>(${t('btn_copy_hint', lang)})</i>`,
       '──────────────────',
-      '1. حوّل المبلغ إلى معرّف بينانس أعلاه.',
-      '2. بعد التحويل، اضغط زر التأكيد بالأسفل وأرسل Order ID للمحفظة فورياً.',
+      isAr
+        ? '1. حوّل المبلغ إلى معرّف بينانس أعلاه.'
+        : '1. Transfer the amount to the Binance Pay ID above.',
+      isAr
+        ? '2. بعد التحويل، اضغط زر التأكيد بالأسفل وأرسل Order ID للمحفظة فورياً.'
+        : '2. After transfer, click Confirm below or send your Order ID for instant crediting.',
+      '──────────────────',
+      t('wallet_underpay_notice', lang),
     ];
   } else {
     methodTitle = 'Local Payment Support';
     lines = [
-      `<b>📱 شحن المحفظة بالدفع المحلي ($${amt.toFixed(2)} USDT)</b>`,
+      `<b>📱 ${isAr ? 'شحن المحفظة بالدفع المحلي' : 'Top-Up Wallet via Local Payment'} ($${amt.toFixed(2)} USDT)</b>`,
       '──────────────────',
       t('local_step', lang),
       '──────────────────',
-      'تواصل مباشرة مع خدمة العملاء @UPSTORE_HELP وسيتم تزويدك ببيانات التحويل وشحن محفظتك فوراً ⚡',
+      isAr
+        ? 'تواصل مباشرة مع خدمة العملاء @UPSTORE_HELP وسيتم تزويدك ببيانات التحويل وشحن محفظتك فوراً ⚡'
+        : 'Contact Support directly @UPSTORE_HELP to receive local payment details and instant crediting ⚡',
+      '──────────────────',
+      t('wallet_underpay_notice', lang),
     ];
   }
 
