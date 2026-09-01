@@ -86,6 +86,35 @@ if (durTest !== '18 Full Months' || warTest !== '18 Months Golden Warranty') {
   console.error('❌ Duration/Warranty localization failed for English!');
   process.exit(1);
 }
-console.log('✅ Localized duration and warranty helpers passed!');
+// 6. Test matchPersistentButton across Arabic, English, Spanish, etc.
+import { matchPersistentButton } from './storeI18n.mjs';
+
+const buttonTests = [
+  { input: '🛍️ المنتجات', expected: 'catalog' },
+  { input: '🛍️ Products', expected: 'catalog' },
+  { input: '💳 المحفظة والدفع', expected: 'payment_methods' },
+  { input: '💳 Wallet & Pay', expected: 'payment_methods' },
+  { input: '📦 طلباتي', expected: 'my_orders' },
+  { input: '📦 My Orders', expected: 'my_orders' },
+  { input: '🎁 المكافآت', expected: 'referral' },
+  { input: '🎁 Rewards', expected: 'referral' },
+  { input: '🏆 عن المتجر (منذ 2022)', expected: 'about_store' },
+  { input: '🏆 About Us (Est. 2022)', expected: 'about_store' },
+  { input: '🛡️ الضمان', expected: 'warranty_policy' },
+  { input: '🛡️ Warranty', expected: 'warranty_policy' },
+  { input: '🏠 الرئيسية', expected: 'main_menu' },
+  { input: '🏠 Home', expected: 'main_menu' },
+  { input: '🌐 Language / اللغة', expected: 'language_select' },
+  { input: '👨‍💻 الدعم الفني', expected: 'support' },
+];
+
+for (const bt of buttonTests) {
+  const res = matchPersistentButton(bt.input);
+  if (res !== bt.expected) {
+    console.error(`❌ matchPersistentButton failed for '${bt.input}': expected '${bt.expected}', got '${res}'`);
+    process.exit(1);
+  }
+}
+console.log(`✅ All ${buttonTests.length} persistent button matching tests passed!`);
 
 console.log('\n🎉 ALL I18N AND MULTI-LANGUAGE TESTS PASSED WITH 100% SUCCESS!\n');

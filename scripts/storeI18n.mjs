@@ -1301,3 +1301,38 @@ export function t(key, lang = DEFAULT_LANGUAGE, params = {}) {
   }
   return text;
 }
+
+export function matchPersistentButton(text) {
+  if (!text || typeof text !== 'string') return null;
+  const rawLower = text.trim().toLowerCase();
+  const clean = text.replace(/^[^\p{L}\p{N}]+/gu, '').trim().toLowerCase();
+
+  // 1. Check all languages in I18N_STRINGS
+  for (const lang of Object.keys(I18N_STRINGS)) {
+    const dict = I18N_STRINGS[lang];
+    if (!dict) continue;
+
+    if (dict.btn_catalog && (text.includes(dict.btn_catalog) || clean === dict.btn_catalog.toLowerCase() || rawLower.includes(dict.btn_catalog.toLowerCase()))) return 'catalog';
+    if (dict.btn_wallet && (text.includes(dict.btn_wallet) || clean === dict.btn_wallet.toLowerCase() || rawLower.includes(dict.btn_wallet.toLowerCase()))) return 'payment_methods';
+    if (dict.btn_orders && (text.includes(dict.btn_orders) || clean === dict.btn_orders.toLowerCase() || rawLower.includes(dict.btn_orders.toLowerCase()))) return 'my_orders';
+    if (dict.btn_referral && (text.includes(dict.btn_referral) || clean === dict.btn_referral.toLowerCase() || rawLower.includes(dict.btn_referral.toLowerCase()))) return 'referral';
+    if (dict.btn_about && (text.includes(dict.btn_about) || clean === dict.btn_about.toLowerCase() || rawLower.includes(dict.btn_about.toLowerCase()))) return 'about_store';
+    if (dict.btn_warranty && (text.includes(dict.btn_warranty) || clean === dict.btn_warranty.toLowerCase() || rawLower.includes(dict.btn_warranty.toLowerCase()))) return 'warranty_policy';
+    if (dict.btn_main_menu && (text.includes(dict.btn_main_menu) || clean === dict.btn_main_menu.toLowerCase() || rawLower.includes(dict.btn_main_menu.toLowerCase()))) return 'main_menu';
+    if (dict.btn_language && (text.includes(dict.btn_language) || rawLower.includes('language') || text.includes('اللغة') || text.includes('🌐'))) return 'language_select';
+    if (dict.btn_support && (text.includes(dict.btn_support) || clean === dict.btn_support.toLowerCase() || rawLower.includes(dict.btn_support.toLowerCase()))) return 'support';
+  }
+
+  // 2. Multilingual Fallback keywords
+  if (text.includes('المنتجات') || rawLower.includes('catalog') || rawLower.includes('products') || rawLower.includes('catálogo') || rawLower.includes('produits') || rawLower.includes('товары') || rawLower.includes('ürünler') || rawLower.includes('produkte')) return 'catalog';
+  if (text.includes('المحفظة') || rawLower.includes('wallet') || rawLower.includes('billetera') || rawLower.includes('portefeuille') || rawLower.includes('кошелек') || rawLower.includes('cüzdan') || rawLower.includes('guthaben')) return 'payment_methods';
+  if (text.includes('طلبات') || text.includes('طلباتي') || rawLower.includes('orders') || rawLower.includes('pedidos') || rawLower.includes('commandes') || rawLower.includes('заказы') || rawLower.includes('siparişler') || rawLower.includes('bestellungen')) return 'my_orders';
+  if (text.includes('المكافآت') || text.includes('المكافات') || text.includes('الأرباح') || rawLower.includes('rewards') || rawLower.includes('recompensas') || rawLower.includes('récompenses') || rawLower.includes('бонусы') || rawLower.includes('ödüller') || rawLower.includes('prämien')) return 'referral';
+  if (text.includes('عن المتجر') || text.includes('عن البوت') || text.includes('منذ 2022') || text.includes('2022') || rawLower.includes('about') || rawLower.includes('acerca') || rawLower.includes('propos') || rawLower.includes('hakkımızda') || rawLower.includes('über uns') || rawLower.includes('о нас')) return 'about_store';
+  if (text.includes('الضمان') || rawLower.includes('warranty') || rawLower.includes('garant') || rawLower.includes('гарант')) return 'warranty_policy';
+  if (text.includes('الرئيسية') || rawLower.includes('home') || rawLower.includes('inicio') || rawLower.includes('accueil') || rawLower.includes('главная') || rawLower.includes('ana menü') || rawLower.includes('startseite')) return 'main_menu';
+  if (text.includes('اللغة') || rawLower.includes('language') || rawLower.includes('idioma') || rawLower.includes('langue') || rawLower.includes('язык') || rawLower.includes('dil') || rawLower.includes('sprache')) return 'language_select';
+  if (text.includes('الدعم') || rawLower.includes('support') || rawLower.includes('soporte') || rawLower.includes('поддержк') || rawLower.includes('destek')) return 'support';
+
+  return null;
+}

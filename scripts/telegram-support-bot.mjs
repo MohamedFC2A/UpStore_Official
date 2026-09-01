@@ -26,6 +26,7 @@ import {
   getLocalizedDuration,
   getLocalizedWarranty,
   t,
+  matchPersistentButton,
 } from './storeI18n.mjs';
 import {
   notifyUserEntry,
@@ -2048,6 +2049,10 @@ async function handleUpdate(update) {
     await renderWarrantyPolicyScreen(chatId, null, null, businessConnectionId);
     return;
   }
+  if (btnAction === 'about_store') {
+    await renderAboutStoreScreen(chatId, null, null, businessConnectionId);
+    return;
+  }
   if (btnAction === 'language_select') {
     await renderLanguageSelection(chatId, null, null, businessConnectionId);
     return;
@@ -2433,8 +2438,9 @@ async function runLongPolling() {
 
   while (true) {
     try {
-      const res = await fetch(`${TELEGRAM_API}/getUpdates?offset=${offset}&timeout=25&allowed_updates=${encodeURIComponent(allowedUpdates)}`, {
+      const res = await fetch(`${TELEGRAM_API}/getUpdates?offset=${offset}&timeout=20&allowed_updates=${encodeURIComponent(allowedUpdates)}`, {
         headers: { 'Content-Type': 'application/json' },
+        signal: AbortSignal.timeout(35000),
       });
 
       if (res.status === 429) {
@@ -2459,8 +2465,11 @@ async function runLongPolling() {
         }
       }
     } catch (err) {
-      console.error('[Polling Exception]:', err.message);
-      await new Promise((r) => setTimeout(r, 2500));
+      // Ignore AbortError / transient timeouts
+      if (err.name !== 'TimeoutError' && err.name !== 'AbortError') {
+        console.error('[Polling Exception]:', err.message);
+      }
+      await new Promise((r) => setTimeout(r, 1000));
     }
   }
 }
