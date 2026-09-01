@@ -1940,14 +1940,16 @@ async function handleUpdate(update) {
       } catch (err) {}
 
       const binancePendingMsg = [
-        '⏳ <b>تم إرسال إشعار الدفع إلى الإدارة للمراجعة!</b>',
-        '──────────────────',
-        `📦 <b>المنتج:</b> ${product.name_ar}`,
-        `🆔 <b>رقم العملية:</b> <code>#${orderRef}</code>`,
-        `💎 <b>المبلغ:</b> <code>${product.our_price.toFixed(2)}$ USDT</code>`,
-        '──────────────────',
-        '⚡ تم إرسال الطلب إلى فريق المراجعة والدعم @UPSTORE_HELP للتأكيد الفوري.',
-        'بمجرد التحقق، سيصلك الحساب وكود السيريال (16 رقم) هنا فوراً!',
+        t('verification_in_progress_title', lang),
+        '━━━━━━━━━━━━━━━━━━━━━━',
+        `📦 <b>${t('order_product_label', lang)}</b> ${product.name_ar}`,
+        `🆔 <b>${t('order_ref_label', lang)}</b> <code>#${orderRef}</code>`,
+        `💎 <b>${t('product_price', lang)}:</b> <code>${product.our_price.toFixed(2)}$ USDT</code>`,
+        `⏱️ <b>${t('verification_eta_label', lang)}</b> <code>${t('verification_eta_value', lang)}</code>`,
+        '━━━━━━━━━━━━━━━━━━━━━━',
+        `🛡️ <b>${t('verification_status_label', lang)}</b> <i>${t('verification_pending_desc', lang)}</i>`,
+        '',
+        t('verification_guarantee_notice', lang),
       ].join('\n');
 
       const kbd = {
@@ -2098,13 +2100,15 @@ async function handleUpdate(update) {
         } catch (err) {}
 
         const pendingTopupMsg = [
-          '⏳ <b>تم إرسال طلب تأكيد الإيداع للإدارة!</b>',
-          '──────────────────',
-          `💵 <b>المبلغ المطلوب:</b> <code>$${amount.toFixed(2)} USDT</code>`,
-          `🆔 <b>رقم العملية:</b> <code>#${orderRef}</code>`,
-          '──────────────────',
-          '⚡ جاري فحص ومراجعة عملية التحويل وتأكيد الإيداع فوراً من قبل فريق الدعم @UPSTORE_HELP.',
-          'سيتم إضافة الرصيد إلى محفظتك تلقائياً وإشعارك هنا فور الاعتماد.',
+          t('verification_in_progress_title', lang),
+          '━━━━━━━━━━━━━━━━━━━━━━',
+          `💵 <b>${t('required_amount_label', lang)}</b> <code>$${amount.toFixed(2)} USDT</code>`,
+          `🆔 <b>${t('order_ref_label', lang)}</b> <code>#${orderRef}</code>`,
+          `⏱️ <b>${t('verification_eta_label', lang)}</b> <code>${t('verification_eta_value', lang)}</code>`,
+          '━━━━━━━━━━━━━━━━━━━━━━',
+          `🛡️ <b>${t('verification_status_label', lang)}</b> <i>${t('verification_pending_desc', lang)}</i>`,
+          '',
+          t('verification_guarantee_notice', lang),
         ].join('\n');
 
         const kbd = {
@@ -2217,11 +2221,14 @@ async function handleUpdate(update) {
     }
 
     const receiptReply = [
-      '✅ <b>تم استلام صورة الإيصال بنجاح!</b>',
-      '──────────────────',
-      `🆔 <b>رقم المرجع:</b> <code>#${reqId}</code>`,
-      '⚡ تم إرسال الإيصال مباشرة إلى فريق المراجعة والدعم @UPSTORE_HELP للتحقق الفوري.',
-      'سيتم شحن رصيد محفظتك تلقائياً وإشعارك هنا فور الاعتماد 💳✨',
+      t('receipt_received_title', lang),
+      '━━━━━━━━━━━━━━━━━━━━━━',
+      `🆔 <b>${t('order_ref_label', lang)}</b> <code>#${reqId}</code>`,
+      `⏱️ <b>${t('verification_eta_label', lang)}</b> <code>${t('verification_eta_value', lang)}</code>`,
+      '━━━━━━━━━━━━━━━━━━━━━━',
+      `⚡ ${t('verification_pending_desc', lang)}`,
+      '',
+      t('verification_guarantee_notice', lang),
     ].join('\n');
 
     const quotaNotice = `\n\n<blockquote><b>${t('media_quota_remaining_photo', lang)}</b> <code>${remaining} / ${MONTHLY_MEDIA_UPLOAD_LIMIT}</code> 📸</blockquote>`;
@@ -2275,11 +2282,14 @@ async function handleUpdate(update) {
     }
 
     const receiptReply = [
-      '✅ <b>تم استلام مستند التحويل بنجاح!</b>',
-      '──────────────────',
-      `🆔 <b>رقم المرجع:</b> <code>#${reqId}</code>`,
-      '⚡ تم إرسال المستند مباشرة إلى فريق المراجعة والدعم @UPSTORE_HELP للتحقق الفوري.',
-      'سيتم شحن رصيد محفظتك تلقائياً وإشعارك هنا فور الاعتماد 💳✨',
+      t('receipt_doc_title', lang),
+      '━━━━━━━━━━━━━━━━━━━━━━',
+      `🆔 <b>${t('order_ref_label', lang)}</b> <code>#${reqId}</code>`,
+      `⏱️ <b>${t('verification_eta_label', lang)}</b> <code>${t('verification_eta_value', lang)}</code>`,
+      '━━━━━━━━━━━━━━━━━━━━━━',
+      `⚡ ${t('verification_pending_desc', lang)}`,
+      '',
+      t('verification_guarantee_notice', lang),
     ].join('\n');
 
     const quotaNotice = `\n\n<blockquote><b>${t('media_quota_remaining_doc', lang)}</b> <code>${remaining} / ${MONTHLY_MEDIA_UPLOAD_LIMIT}</code> 📄</blockquote>`;
