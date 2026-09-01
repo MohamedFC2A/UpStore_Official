@@ -1,39 +1,58 @@
-import { getUserWallet, creditUserWallet, debitUserWallet, MIN_TOPUP_USD } from './storeWallet.mjs';
+import {
+  getUserWallet,
+  creditUserWallet,
+  debitUserWallet,
+  calculateTopupBonus,
+  TOPUP_DENOMINATIONS,
+  MIN_TOPUP_USD,
+} from './storeWallet.mjs';
 
 async function runWalletTests() {
-  console.log('🧪 Testing Store Wallet & Minimum Deposit Rules...\n');
+  console.log('🧪 Testing Store Wallet & Minimum Deposit Rules & Tiered Bonuses...\n');
+
+  // 1. Test calculateTopupBonus
+  console.log('1. Testing calculateTopupBonus tiers...');
+  if (calculateTopupBonus(5) !== 0) throw new Error('Bonus for $5 should be 0');
+  if (calculateTopupBonus(10) !== 0) throw new Error('Bonus for $10 should be 0');
+  if (calculateTopupBonus(15) !== 1.50) throw new Error('Bonus for $15 should be 1.50');
+  if (calculateTopupBonus(25) !== 3.00) throw new Error('Bonus for $25 should be 3.00');
+  if (calculateTopupBonus(50) !== 7.00) throw new Error('Bonus for $50 should be 7.00');
+  if (calculateTopupBonus(100) !== 15.00) throw new Error('Bonus for $100 should be 15.00');
+  if (calculateTopupBonus(200) !== 35.00) throw new Error('Bonus for $200 should be 35.00');
+  console.log('✅ All bonus tiers verified successfully!');
 
   const testChatId = `test_${Date.now()}_${Math.floor(Math.random() * 1000)}`;
 
-  // 1. Initial balance check
+  // 2. Initial balance check
   const w1 = await getUserWallet(testChatId);
-  console.log('1. Initial Wallet:', w1);
+  console.log('2. Initial Wallet:', w1);
   if (w1.balance !== 0) throw new Error('Initial balance should be 0');
 
-  // 2. Minimum Top-up rejection test
+  // 3. Minimum Top-up rejection test
   try {
     await creditUserWallet(testChatId, 3.50, 'TEST_UNDER_MIN');
     throw new Error('Allowed deposit under minimum $5.00!');
   } catch (err) {
-    console.log('2. ✅ Rejected under $5.00 top-up successfully:', err.message);
+    console.log('3. ✅ Rejected under $5.00 top-up successfully:', err.message);
   }
 
-  // 3. Valid Top-up test (>= $5)
-  const wCredit = await creditUserWallet(testChatId, 10.0, 'TEST_DEPOSIT');
-  console.log('3. ✅ Credited $10.00. New balance:', wCredit.balance);
-  if (wCredit.balance !== 10.0) throw new Error('Balance mismatch after credit');
+  // 4. Valid Top-up test with bonus (e.g. $15 -> $1.50 bonus, total credit $16.50)
+  const wCredit = await creditUserWallet(testChatId, 15.0, 'TOPUP_TEST');
+  console.log('4. ✅ Credited $15.00 deposit (+ $1.50 bonus). Total credited:', wCredit.totalCredited, 'New balance:', wCredit.balance);
+  if (wCredit.balance !== 16.50) throw new Error(`Balance mismatch after bonus credit: expected 16.50, got ${wCredit.balance}`);
+  if (wCredit.creditedBonus !== 1.50) throw new Error(`Bonus mismatch: expected 1.50, got ${wCredit.creditedBonus}`);
 
-  // 4. Overdraft debit rejection test
-  const overDebit = await debitUserWallet(testChatId, 15.0, 'TEST_OVERDRAFT');
-  console.log('4. ✅ Overdraft debit refused:', overDebit.success === false, 'Shortage:', overDebit.shortage);
+  // 5. Overdraft debit rejection test
+  const overDebit = await debitUserWallet(testChatId, 25.0, 'TEST_OVERDRAFT');
+  console.log('5. ✅ Overdraft debit refused:', overDebit.success === false, 'Shortage:', overDebit.shortage);
   if (overDebit.success) throw new Error('Overdraft debit should have failed');
 
-  // 5. Valid purchase debit test
-  const validDebit = await debitUserWallet(testChatId, 4.0, 'TEST_PURCHASE');
-  console.log('5. ✅ Valid purchase debited $4.00. Remaining balance:', validDebit.newBalance);
-  if (validDebit.newBalance !== 6.0) throw new Error('Balance mismatch after valid debit');
+  // 6. Valid purchase debit test
+  const validDebit = await debitUserWallet(testChatId, 4.99, 'TEST_PURCHASE');
+  console.log('6. ✅ Valid purchase debited $4.99. Remaining balance:', validDebit.newBalance);
+  if (Math.abs(validDebit.newBalance - 11.51) > 0.01) throw new Error(`Balance mismatch: expected 11.51, got ${validDebit.newBalance}`);
 
-  console.log('\n🎉 ALL WALLET LOGIC & $5 MINIMUM TOP-UP TESTS PASSED 100%!\n');
+  console.log('\n🎉 ALL WALLET LOGIC, $5 MINIMUM, & SMART TIERED BONUS TESTS PASSED 100%!\n');
 }
 
 runWalletTests().catch(err => {

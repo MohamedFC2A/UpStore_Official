@@ -19,6 +19,43 @@ export const MIN_TOPUP_USD = 5.0;
 export const MIN_TOPUP_EGP = 250;
 export const MIN_TOPUP_SAR = 20;
 
+/**
+ * Smart tiered recharge bonus:
+ * - $5 -> $0 bonus
+ * - $10 -> $0 bonus
+ * - $15 -> $1.50 bonus 🎁
+ * - $25 -> $3.00 bonus 🎁
+ * - $50 -> $7.00 bonus 🎁
+ * - $100 -> $15.00 bonus 🎁
+ * - $200 -> $35.00 bonus 🎁
+ */
+export function calculateTopupBonus(amount) {
+  const num = Math.max(0, Number(amount) || 0);
+  if (num < 15) return 0.0;
+  if (Math.abs(num - 15) < 0.01) return 1.50;
+  if (Math.abs(num - 25) < 0.01) return 3.00;
+  if (Math.abs(num - 50) < 0.01) return 7.00;
+  if (Math.abs(num - 100) < 0.01) return 15.00;
+  if (Math.abs(num - 200) < 0.01) return 35.00;
+
+  if (num >= 200) return Number((num * 0.175).toFixed(2));
+  if (num >= 100) return Number((num * 0.15).toFixed(2));
+  if (num >= 50) return Number((num * 0.14).toFixed(2));
+  if (num >= 25) return Number((num * 0.12).toFixed(2));
+  if (num >= 15) return Number((num * 0.10).toFixed(2));
+  return 0.0;
+}
+
+export const TOPUP_DENOMINATIONS = [
+  { amount: 5, bonus: 0, label_ar: '$5 USDT', label_en: '$5 USDT' },
+  { amount: 10, bonus: 0, label_ar: '$10 USDT', label_en: '$10 USDT' },
+  { amount: 15, bonus: 1.50, label_ar: '$15 USDT (+$1.50 هدية 🎁)', label_en: '$15 USDT (+$1.50 Bonus 🎁)' },
+  { amount: 25, bonus: 3.00, label_ar: '$25 USDT (+$3.00 هدية 🎁)', label_en: '$25 USDT (+$3.00 Bonus 🎁)' },
+  { amount: 50, bonus: 7.00, label_ar: '$50 USDT (+$7.00 هدية 🎁)', label_en: '$50 USDT (+$7.00 Bonus 🎁)' },
+  { amount: 100, bonus: 15.00, label_ar: '$100 USDT (+$15.00 هدية 🎁)', label_en: '$100 USDT (+$15.00 Bonus 🎁)' },
+  { amount: 200, bonus: 35.00, label_ar: '$200 USDT (+$35.00 هدية 🎁)', label_en: '$200 USDT (+$35.00 Bonus 🎁)' },
+];
+
 // In-memory wallet store: Map<chatId, { balance: number, totalRecharged: number, totalSpent: number, transactions: [] }>
 const wallets = new Map();
 
@@ -120,15 +157,22 @@ export async function creditUserWallet(chatId, amount, reason = 'TOPUP', meta = 
     throw new Error(`Minimum top-up amount is $${MIN_TOPUP_USD.toFixed(2)} USD (received $${numAmount.toFixed(2)})`);
   }
 
+  // Calculate smart bonus on top-up
+  const isTopup = reason.toUpperCase().includes('TOPUP') || reason.toUpperCase().includes('DEPOSIT');
+  const bonusAmount = isTopup ? calculateTopupBonus(numAmount) : 0;
+  const totalCredited = Number((numAmount + bonusAmount).toFixed(2));
+
   const wallet = await getUserWallet(idStr, supabaseClient);
-  wallet.balance = Number((wallet.balance + numAmount).toFixed(2));
+  wallet.balance = Number((wallet.balance + totalCredited).toFixed(2));
   wallet.totalRecharged = Number((wallet.totalRecharged + numAmount).toFixed(2));
   wallet.transactions.unshift({
     id: `TX-${Date.now()}-${Math.floor(1000 + Math.random() * 9000)}`,
     type: 'CREDIT',
-    amount: numAmount,
+    amount: totalCredited,
+    baseAmount: numAmount,
+    bonusAmount,
     reason,
-    meta,
+    meta: { ...meta, bonusAmount, baseAmount: numAmount },
     timestamp: new Date().toISOString(),
   });
   if (wallet.transactions.length > 50) wallet.transactions.pop();
@@ -154,7 +198,12 @@ export async function creditUserWallet(chatId, amount, reason = 'TOPUP', meta = 
     }
   }
 
-  return wallet;
+  return {
+    ...wallet,
+    creditedBase: numAmount,
+    creditedBonus: bonusAmount,
+    totalCredited,
+  };
 }
 
 /**

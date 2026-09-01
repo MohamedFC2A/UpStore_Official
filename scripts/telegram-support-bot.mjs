@@ -44,6 +44,8 @@ import {
   getUserWallet,
   creditUserWallet,
   debitUserWallet,
+  calculateTopupBonus,
+  TOPUP_DENOMINATIONS,
   MIN_TOPUP_USD,
   MIN_TOPUP_EGP,
   MIN_TOPUP_SAR,
@@ -1320,6 +1322,24 @@ async function renderPaymentMethodsScreen(chatId, messageId, callbackQueryId, bu
   const wallet = await getUserWallet(chatId, supabase);
   const bal = wallet.balance || 0;
 
+  const isAr = lang === 'ar';
+  const bonusHeader = isAr ? '🎁 <b>بونص الشحن الإضافي المتاح الآن:</b>' : '🎁 <b>Exclusive Top-Up Bonus Tiers:</b>';
+  const bonusTiers = isAr
+    ? [
+        '• شحن <b>$15</b> 👈 <b>+$1.50</b> هدية رصيد (إجمالي <b>$16.50</b>) 🎁',
+        '• شحن <b>$25</b> 👈 <b>+$3.00</b> هدية رصيد (إجمالي <b>$28.00</b>) 🎁',
+        '• شحن <b>$50</b> 👈 <b>+$7.00</b> هدية رصيد (إجمالي <b>$57.00</b>) 🎁',
+        '• شحن <b>$100</b> 👈 <b>+$15.00</b> هدية رصيد (إجمالي <b>$115.00</b>) 🎁',
+        '• شحن <b>$200</b> 👈 <b>+$35.00</b> هدية رصيد (إجمالي <b>$235.00</b>) 🎁',
+      ]
+    : [
+        '• Deposit <b>$15</b> 👈 <b>+$1.50</b> Bonus (Total <b>$16.50</b>) 🎁',
+        '• Deposit <b>$25</b> 👈 <b>+$3.00</b> Bonus (Total <b>$28.00</b>) 🎁',
+        '• Deposit <b>$50</b> 👈 <b>+$7.00</b> Bonus (Total <b>$57.00</b>) 🎁',
+        '• Deposit <b>$100</b> 👈 <b>+$15.00</b> Bonus (Total <b>$115.00</b>) 🎁',
+        '• Deposit <b>$200</b> 👈 <b>+$35.00</b> Bonus (Total <b>$235.00</b>) 🎁',
+      ];
+
   const text = [
     t('wallet_title', lang),
     '──────────────────',
@@ -1327,6 +1347,9 @@ async function renderPaymentMethodsScreen(chatId, messageId, callbackQueryId, bu
     `📊 <b>${t('total_recharged_label', lang) || 'إجمالي المشحون:'}</b> <code>$${(wallet.totalRecharged || 0).toFixed(2)} USDT</code> | <b>${t('total_spent_label', lang) || 'المشتريات:'}</b> <code>$${(wallet.totalSpent || 0).toFixed(2)} USDT</code>`,
     '──────────────────',
     t('wallet_min_deposit_notice', lang),
+    '──────────────────',
+    bonusHeader,
+    ...bonusTiers,
     '──────────────────',
     '• ⚡ <b>Bybit UID:</b> <code>47183921</code>',
     '• 🟡 <b>Binance Pay ID:</b> <code>764476139</code>',
@@ -1339,12 +1362,19 @@ async function renderPaymentMethodsScreen(chatId, messageId, callbackQueryId, bu
   const keyboard = {
     inline_keyboard: [
       [
-        { text: `⚡ ${t('btn_topup_amount', lang, { amount: '5.00' })}`, callback_data: 'topup_wallet_5.00' },
-        { text: `⚡ ${t('btn_topup_amount', lang, { amount: '10.00' })}`, callback_data: 'topup_wallet_10.00' },
+        { text: '⚡ $5 USDT', callback_data: 'topup_wallet_5.00' },
+        { text: '⚡ $10 USDT', callback_data: 'topup_wallet_10.00' },
       ],
       [
-        { text: `⚡ ${t('btn_topup_amount', lang, { amount: '20.00' })}`, callback_data: 'topup_wallet_20.00' },
-        { text: `⚡ ${t('btn_topup_amount', lang, { amount: '50.00' })}`, callback_data: 'topup_wallet_50.00' },
+        { text: isAr ? '🎁 $15 (+$1.50 هدية)' : '🎁 $15 (+$1.50 Bonus)', callback_data: 'topup_wallet_15.00' },
+        { text: isAr ? '🎁 $25 (+$3.00 هدية)' : '🎁 $25 (+$3.00 Bonus)', callback_data: 'topup_wallet_25.00' },
+      ],
+      [
+        { text: isAr ? '🎁 $50 (+$7.00 هدية)' : '🎁 $50 (+$7.00 Bonus)', callback_data: 'topup_wallet_50.00' },
+        { text: isAr ? '🎁 $100 (+$15.00 هدية)' : '🎁 $100 (+$15.00 Bonus)', callback_data: 'topup_wallet_100.00' },
+      ],
+      [
+        { text: isAr ? '🎁 $200 (+$35.00 هدية)' : '🎁 $200 (+$35.00 Bonus)', callback_data: 'topup_wallet_200.00' },
       ],
       [
         { text: `🛍️ ${t('btn_catalog', lang)}`, callback_data: 'catalog' },
@@ -1375,12 +1405,23 @@ async function renderWalletTopupScreen(chatId, defaultAmount = 5.0, returnProdId
   const lang = getUserLanguage(chatId);
   const wallet = await getUserWallet(chatId, supabase);
   const amt = Math.max(MIN_TOPUP_USD, Number(defaultAmount) || MIN_TOPUP_USD);
+  const bonus = calculateTopupBonus(amt);
+  const totalCredited = amt + bonus;
+  const isAr = lang === 'ar';
+
+  const bonusLines = bonus > 0
+    ? [
+        `🎁 <b>${isAr ? 'بونص إضافي هدية:' : 'Bonus Credit:'}</b> <code>+$${bonus.toFixed(2)} USDT</code>`,
+        `💎 <b>${isAr ? 'إجمالي ما سيضاف لمحفظتك:' : 'Total Wallet Credit:'}</b> <code>$${totalCredited.toFixed(2)} USDT</code>`,
+      ]
+    : [];
 
   const text = [
     t('wallet_title', lang),
     '──────────────────',
     `💰 <b>${t('wallet_current_balance', lang)}</b> <code>$${wallet.balance.toFixed(2)} USDT</code>`,
     `⚡ <b>${t('topup_package_label', lang) || 'باقة الشحن المختارة:'}</b> <code>$${amt.toFixed(2)} USDT</code>`,
+    ...bonusLines,
     '──────────────────',
     t('wallet_min_deposit_notice', lang),
     '──────────────────',
@@ -1421,6 +1462,9 @@ async function renderWalletTopupMethod(chatId, method, amount, returnProdId = nu
 
   const lang = getUserLanguage(chatId);
   const amt = Math.max(MIN_TOPUP_USD, Number(amount) || MIN_TOPUP_USD);
+  const bonus = calculateTopupBonus(amt);
+  const totalCredited = amt + bonus;
+  const isAr = lang === 'ar';
   const orderRef = `TOPUP-${Math.floor(100000 + Math.random() * 900000)}`;
 
   if (supabase) {
@@ -1439,13 +1483,22 @@ async function renderWalletTopupMethod(chatId, method, amount, returnProdId = nu
   let lines = [];
   let checkCallback = `check_topup_${method}_${amt}_${orderRef}_${returnProdId || 'none'}`;
 
+  const bonusBlock = bonus > 0
+    ? [
+        `🎁 <b>${isAr ? 'بونص إضافي فوري:' : 'Instant Bonus:'}</b> <code>+$${bonus.toFixed(2)} USDT</code>`,
+        `💎 <b>${isAr ? 'إجمالي الرصيد المضاف:' : 'Total Credited:'}</b> <code>$${totalCredited.toFixed(2)} USDT</code>`,
+        '──────────────────',
+      ]
+    : [];
+
   if (method === 'bybit') {
     methodTitle = 'Bybit Internal Transfer';
     lines = [
       `<b>⚡ شحن المحفظة عبر Bybit Pay ($${amt.toFixed(2)} USDT)</b>`,
       '──────────────────',
       `• <b>Bybit UID:</b> <code>47183921</code>`,
-      `• <b>المبلغ المطلوب:</b> <code>${amt.toFixed(2)}</code> USDT`,
+      `• <b>المبلغ المطلوب تحويله:</b> <code>${amt.toFixed(2)}</code> USDT`,
+      ...bonusBlock,
       `<i>(${t('btn_copy_hint', lang)})</i>`,
       '──────────────────',
       '1. حوّل المبلغ إلى معرف Bybit أعلاه عبر التحويل الداخلي (Internal Transfer).',
@@ -1457,7 +1510,8 @@ async function renderWalletTopupMethod(chatId, method, amount, returnProdId = nu
       `<b>🟡 شحن المحفظة عبر Binance Pay ($${amt.toFixed(2)} USDT)</b>`,
       '──────────────────',
       `• <b>Binance Pay ID:</b> <code>764476139</code>`,
-      `• <b>المبلغ المطلوب:</b> <code>${amt.toFixed(2)}</code> USDT`,
+      `• <b>المبلغ المطلوب تحويله:</b> <code>${amt.toFixed(2)}</code> USDT`,
+      ...bonusBlock,
       `<i>(${t('btn_copy_hint', lang)})</i>`,
       '──────────────────',
       '1. حوّل المبلغ إلى معرّف بينانس أعلاه.',

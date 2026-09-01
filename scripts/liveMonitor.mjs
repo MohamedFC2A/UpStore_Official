@@ -527,14 +527,24 @@ async function handleLiveBotUpdate(update) {
         );
 
         // 1. Notify the customer on @upstore_one_bot
+        const bonusMsg = creditedWallet.creditedBonus > 0
+          ? [
+              `💵 <b>المبلغ المشحون:</b> <code>+$${amount.toFixed(2)} USDT</code>`,
+              `🎁 <b>بونص إضافي هدية:</b> <code>+$${creditedWallet.creditedBonus.toFixed(2)} USDT</code>`,
+              `💎 <b>إجمالي المضاف للمحفظة:</b> <code>+$${creditedWallet.totalCredited.toFixed(2)} USDT</code>`,
+            ]
+          : [
+              `💵 <b>المبلغ المضاف:</b> <code>+$${amount.toFixed(2)} USDT</code>`,
+            ];
+
         const customerMsg = [
-          '🎉 <b>تم تأكيد عملية الدفع وشحن المحفظة بنجاح!</b>',
+          '🎉 <b>تم تأكيد عملية الدفع وشحن المحفظة بنجاح! 🤍</b>',
           '──────────────────',
-          `💵 <b>المبلغ المضاف:</b> <code>+$${amount.toFixed(2)} USDT</code>`,
+          ...bonusMsg,
           `💳 <b>رصيد محفظتك الجديد:</b> <code>$${creditedWallet.balance.toFixed(2)} USDT</code>`,
           `🆔 <b>رقم العملية:</b> <code>#${reqId}</code>`,
           '──────────────────',
-          '🛍️ يمكنك الآن تصفح المنتجات والشراء الفوري بضغطة زر واحدة من رصيدك!',
+          '🛍️ يمكنك الآن تصفح المنتجات والشراء الفوري بضغطة زر واحدة من رصيدك بسعر الجملة!',
         ].join('\n');
 
         await sendUpstoreBotMessage(targetChatId, customerMsg, {
@@ -545,7 +555,7 @@ async function handleLiveBotUpdate(update) {
         });
 
         // 2. Answer callback toast
-        await answerLiveCallbackQuery(cb.id, `✅ تم شحن $${amount.toFixed(2)} للعميل بنجاح!`, true);
+        await answerLiveCallbackQuery(cb.id, `✅ تم شحن $${creditedWallet.totalCredited || amount} للعميل بنجاح!`, true);
 
         // 3. Edit message in @upstorelive_bot
         const editedLiveText = [
@@ -553,6 +563,7 @@ async function handleLiveBotUpdate(update) {
           '━━━━━━━━━━━━━━━━━━━━━━',
           `👤 <b>العميل:</b> <code>${targetChatId}</code>`,
           `💵 <b>المبلغ المشحون:</b> <code>$${amount.toFixed(2)} USDT</code>`,
+          ...(creditedWallet.creditedBonus > 0 ? [`🎁 <b>البونص الإضافي:</b> <code>+$${creditedWallet.creditedBonus.toFixed(2)} USDT</code>`] : []),
           `💎 <b>رصيد العميل الحالي:</b> <code>$${creditedWallet.balance.toFixed(2)} USDT</code>`,
           `🆔 <b>رقم المرجع:</b> <code>#${reqId}</code>`,
           `👮‍♂️ <b>المسؤول المعتمد:</b> <b>${adminName}</b>`,
