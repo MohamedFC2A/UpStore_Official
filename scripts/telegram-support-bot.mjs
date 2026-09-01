@@ -2878,93 +2878,167 @@ async function handleUpdate(update) {
 async function initTelegramSeoAndCommands() {
   console.log('🔍 Initializing Telegram Bot SEO, Descriptions, and Menu Commands...');
   try {
-    // 1. Set Bot Name
-    await fetch(`${TELEGRAM_API}/setMyName`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        name: 'UpStore 🤍 ارخص متجر جملة واشتراكات AI',
-        language_code: 'ar'
-      })
-    }).catch(() => {});
+    // 1. Set Bot Names (Short, Catchy, Clean, Localized across 7 languages + default)
+    const botNames = {
+      ar: 'UpStore ⚡ متجر الاشتراكات',
+      en: 'UpStore ⚡ Subscriptions',
+      es: 'UpStore ⚡ Suscripciones',
+      fr: 'UpStore ⚡ Abonnements',
+      ru: 'UpStore ⚡ Подписки',
+      tr: 'UpStore ⚡ Abonelikler',
+      de: 'UpStore ⚡ Abonnements',
+      '': 'UpStore ⚡ Subscriptions',
+    };
 
-    await fetch(`${TELEGRAM_API}/setMyName`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        name: 'UpStore 🤍 Wholesale AI & Digital Store'
-      })
-    }).catch(() => {});
+    for (const [langCode, name] of Object.entries(botNames)) {
+      const payload = { name };
+      if (langCode) payload.language_code = langCode;
+      await fetch(`${TELEGRAM_API}/setMyName`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      }).catch(() => {});
+    }
 
-    // 2. Set Full Descriptions (shown in profile & start screen)
-    const arDesc = `🤍 متجر UpStore الرقمي بالجملة ⚡\n\nأرخص متجر لبيع المنتجات الرقمية والاشتراكات في العالم بسعر الجملة 🤝.\nمخصص لدعم التجار والمشاريع الناشئة والشباب للبدء في البيع والربح بأقل تكلفة ممكنة، مع ضمان استبدال رسمي 100% وتسليم فوري تلقائي ⚡.\n\n✨ متوفر لدينا بأرخص سعر جملة:\n• اشتراكات الذكاء الاصطناعي (ChatGPT Plus, Claude 3.7 / Opus 5, Gemini 3.1 Pro, Grok 3, Cursor Composer)\n• أدوات المطورين والبرمجة (Cursor Pro, GitHub Copilot, Replit, JetBrains)\n• برامج التصميم والإبداع (Canva Pro, Adobe Creative Cloud, Midjourney, Freepik)\n• الترفيه والأمان (Netflix 4K, Spotify, YouTube Premium, NordVPN)\n\n💳 دفع مباشر بدون عمولة: Bybit & Binance Pay ودفع محلي فوري.\n👨‍💻 دعم فني مباشر 24/7 عبر @UPSTORE_HELP 🤍`;
+    // 2. Set Short Descriptions (Shown in chat previews & search metadata - max 120 chars)
+    const shortDescriptions = {
+      ar: '⚡ أرخص اشتراكات ChatGPT Plus, Gemini ($0.25), Canva, Netflix بالجملة مع تسليم فوري وضمان 100% 🛡️',
+      en: '⚡ Wholesale ChatGPT Plus, Gemini ($0.25), Canva, Netflix & AI tools. Instant delivery & 100% warranty 🛡️',
+      es: '⚡ Suscripciones de ChatGPT Plus, Gemini ($0.25), Canva, Netflix al por mayor. Entrega instantánea y garantía 100% 🛡️',
+      fr: '⚡ Abonnements ChatGPT Plus, Gemini ($0.25), Canva, Netflix en gros. Livraison instantanée et garantie 100% 🛡️',
+      ru: '⚡ Оптовые подписки ChatGPT Plus, Gemini ($0.25), Canva, Netflix и ИИ. Мгновенная выдача и гарантия 100% 🛡️',
+      tr: '⚡ Toptan ChatGPT Plus, Gemini ($0.25), Canva, Netflix ve AI abonelikleri. Anında teslimat ve %100 garanti 🛡️',
+      de: '⚡ Großhandel für ChatGPT Plus, Gemini ($0.25), Canva, Netflix & KI-Tools. Sofortlieferung und 100% Garantie 🛡️',
+      '': '⚡ Wholesale ChatGPT Plus, Gemini ($0.25), Canva, Netflix & AI tools. Instant delivery & 100% warranty 🛡️',
+    };
 
-    const enDesc = `🤍 UpStore Wholesale Digital Store ⚡\n\nThe world's cheapest wholesale digital goods and AI subscriptions store 🤝.\nDesigned to empower resellers, agencies, and entrepreneurs to start their digital business with maximum profit margins, instant automated delivery, and 100% official replacement warranty ⚡.\n\n✨ Available at direct factory wholesale prices:\n• AI Subscriptions (ChatGPT Plus, Claude 3.7 / Opus 5, Gemini 3.1 Pro, Grok 3, Cursor Composer)\n• Developer Tools (Cursor Pro, GitHub Copilot, Replit, JetBrains)\n• Design & Media (Canva Pro, Adobe Creative Cloud, Midjourney, Freepik)\n• Entertainment & VPN (Netflix 4K, Spotify, YouTube Premium, NordVPN)\n\n💳 0% Fee Instant Crypto Payments: Bybit & Binance Pay.\n👨‍💻 24/7 Dedicated Human Support via @UPSTORE_HELP 🤍`;
+    for (const [langCode, shortDesc] of Object.entries(shortDescriptions)) {
+      const payload = { short_description: shortDesc };
+      if (langCode) payload.language_code = langCode;
+      await fetch(`${TELEGRAM_API}/setMyShortDescription`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      }).catch(() => {});
+    }
 
-    await fetch(`${TELEGRAM_API}/setMyDescription`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ description: arDesc, language_code: 'ar' })
-    }).catch(() => {});
+    // 3. Set Full Descriptions (Profiles & Start Screens with Top SEO Keywords)
+    const fullDescriptions = {
+      ar: `🤍 متجر UpStore الرقمي بالجملة ⚡\n\nأرخص متجر لبيع المنتجات الرقمية واشتراكات الذكاء الاصطناعي في العالم بأسعار الجملة المباشرة (لا يتجاوز $3.00) 🤝.\n\n🔥 عروض حصرية:\n• Google Gemini Pro / Advanced 18 شهر بـ $0.25 فقط!\n• ChatGPT Plus / o3-mini / GPT-4o بأسعار تبدأ من $1.49\n• Claude 3.7 Sonnet & Opus 5\n• Cursor AI Pro & GitHub Copilot & JetBrains\n• Canva Pro & CapCut Pro & Adobe Creative Cloud\n• Netflix 4K UHD & Spotify & YouTube Premium\n• NordVPN & Surfshark & ExpressVPN\n• تفعيل Windows 11 Pro و Office 365 أصلي دائم\n\n💳 دفع فوري بدون عمولة: Bybit & Binance Pay ودفع محلي.\n🛡️ ضمان استبدال رسمي 100% وتسليم فوري تلقائي ⚡\n👨‍💻 خدمة العملاء المباشرة 24/7 عبر @UPSTORE_HELP 🤍`,
+      en: `🤍 UpStore Wholesale Digital Store ⚡\n\nThe world's cheapest wholesale store for AI subscriptions & software licenses (All items under $3.00) 🤝.\n\n🔥 Exclusive Deals:\n• Google Gemini Pro / Advanced 18 Months for only $0.25!\n• ChatGPT Plus / o3-mini / GPT-4o starting from $1.49\n• Claude 3.7 Sonnet & Opus 5\n• Cursor AI Pro, GitHub Copilot & JetBrains\n• Canva Pro, CapCut Pro & Adobe Creative Cloud\n• Netflix 4K UHD, Spotify & YouTube Premium\n• NordVPN, Surfshark & ExpressVPN\n• Windows 11 Pro & Microsoft Office 365 Genuine Keys\n\n💳 0% Fee Instant Crypto Payments: Bybit & Binance Pay.\n🛡️ 100% Official Replacement Warranty & Instant Delivery ⚡\n👨‍💻 24/7 Dedicated Support via @UPSTORE_HELP 🤍`,
+      es: `🤍 UpStore Tienda Digital Mayorista ⚡\n\nLa tienda más económica del mundo en suscripciones de IA y productos digitales (Todo por menos de $3.00) 🤝.\n\n🔥 Ofertas Destacadas:\n• Google Gemini Pro 18 Meses por solo $0.25!\n• ChatGPT Plus, Claude 3.7, Cursor Pro, Canva Pro\n• Netflix 4K UHD, Spotify, YouTube Premium, NordVPN\n• Windows 11 Pro y Office 365\n\n💳 Pagos instantáneos con Bybit y Binance Pay.\n🛡️ Garantía oficial del 100% y entrega inmediata ⚡\n👨‍💻 Soporte 24/7 vía @UPSTORE_HELP 🤍`,
+      fr: `🤍 UpStore Boutique Digitale Grossiste ⚡\n\nLa boutique la moins chère du monde pour les abonnements IA et produits digitaux (Tous les produits à moins de 3.00 $) 🤝.\n\n🔥 Offres Exclusives :\n• Google Gemini Pro 18 Mois pour seulement 0.25 $ !\n• ChatGPT Plus, Claude 3.7, Cursor Pro, Canva Pro\n• Netflix 4K UHD, Spotify, YouTube Premium, NordVPN\n• Clés Windows 11 Pro et Office 365\n\n💳 Paiements instantanés avec Bybit et Binance Pay.\n🛡️ Garantie officielle 100% et livraison immédiate ⚡\n👨‍💻 Support 24/7 via @UPSTORE_HELP 🤍`,
+      ru: `🤍 Оптовый цифровой магазин UpStore ⚡\n\nСамый дешевый в мире магазин подписок ИИ и цифровых товаров (Все товары до $3.00) 🤝.\n\n🔥 Топ-предложения:\n• Google Gemini Pro 18 месяцев всего за $0.25!\n• ChatGPT Plus, Claude 3.7, Cursor Pro, Canva Pro\n• Netflix 4K UHD, Spotify, YouTube Premium, NordVPN\n• Ключи Windows 11 Pro и Office 365\n\n💳 Мгновенная оплата через Bybit и Binance Pay.\n🛡️ 100% официальная гарантия и моментальная выдача ⚡\n👨‍💻 Поддержка 24/7 через @UPSTORE_HELP 🤍`,
+      tr: `🤍 UpStore Toptan Dijital Mağazası ⚡\n\nYapay zeka ve dijital aboneliklerde dünyanın en ucuz toptan mağazası (Tüm ürünler $3.00 altında) 🤝.\n\n🔥 Özel Fırsatlar:\n• Google Gemini Pro 18 Aylık sadece $0.25!\n• ChatGPT Plus, Claude 3.7, Cursor Pro, Canva Pro\n• Netflix 4K UHD, Spotify, YouTube Premium, NordVPN\n• Windows 11 Pro ve Office 365\n\n💳 Bybit ve Binance Pay ile anında ödeme.\n🛡️ %100 resmi değişim garantisi ve anında teslimat ⚡\n👨‍💻 7/24 Canlı Destek: @UPSTORE_HELP 🤍`,
+      de: `🤍 UpStore Digitaler Großhandel ⚡\n\nDer weltweit günstigste Großhandel für KI-Abonnements & Software (Alle Produkte unter $3.00) 🤝.\n\n🔥 Exklusive Angebote:\n• Google Gemini Pro 18 Monate für nur $0.25!\n• ChatGPT Plus, Claude 3.7, Cursor Pro, Canva Pro\n• Netflix 4K UHD, Spotify, YouTube Premium, NordVPN\n• Windows 11 Pro und Office 365\n\n💳 Sofortzahlung mit Bybit und Binance Pay.\n🛡️ 100% offizielle Garantie und Sofortlieferung ⚡\n👨‍💻 24/7 Support über @UPSTORE_HELP 🤍`,
+      '': `🤍 UpStore Wholesale Digital Store ⚡\n\nThe world's cheapest wholesale store for AI subscriptions & software licenses (All items under $3.00) 🤝.\n\n🔥 Exclusive Deals:\n• Google Gemini Pro / Advanced 18 Months for only $0.25!\n• ChatGPT Plus / o3-mini / GPT-4o starting from $1.49\n• Claude 3.7 Sonnet & Opus 5\n• Cursor AI Pro, GitHub Copilot & JetBrains\n• Canva Pro, CapCut Pro & Adobe Creative Cloud\n• Netflix 4K UHD, Spotify & YouTube Premium\n• NordVPN, Surfshark & ExpressVPN\n• Windows 11 Pro & Microsoft Office 365 Genuine Keys\n\n💳 0% Fee Instant Crypto Payments: Bybit & Binance Pay.\n🛡️ 100% Official Replacement Warranty & Instant Delivery ⚡\n👨‍💻 24/7 Dedicated Support via @UPSTORE_HELP 🤍`,
+    };
 
-    await fetch(`${TELEGRAM_API}/setMyDescription`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ description: enDesc })
-    }).catch(() => {});
+    for (const [langCode, desc] of Object.entries(fullDescriptions)) {
+      const payload = { description: desc };
+      if (langCode) payload.language_code = langCode;
+      await fetch(`${TELEGRAM_API}/setMyDescription`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      }).catch(() => {});
+    }
 
-    // 3. Set Short Descriptions (shown in chat previews & search results - max 120 chars)
-    const arShort = `🤍 أرخص متجر جملة للمنتجات الرقمية واشتراكات الذكاء الاصطناعي في العالم ⚡ دعم التجار وضمان استبدال 100% 🤝`;
-    const enShort = `🤍 World's cheapest wholesale store for AI subscriptions & digital products ⚡ Instant delivery & 100% warranty 🤝`;
+    // 4. Set Bot Menu Commands for all 7 languages + default
+    const localizedCommands = {
+      ar: [
+        { command: 'start', description: 'فتح القائمة الرئيسية للمتجر 🤍' },
+        { command: 'catalog', description: 'تصفح المنتجات والأسعار بالجملة 🛍️' },
+        { command: 'wallet', description: 'شحن المحفظة وعرض الرصيد 💳' },
+        { command: 'orders', description: 'متابعة مشترياتي وطلباتي 📦' },
+        { command: 'about', description: 'عن متجر UpStore وتاريخنا 🤍' },
+        { command: 'warranty', description: 'سياسة الضمان والاستبدال الرسمي 🛡️' },
+        { command: 'support', description: 'التحدث مع الدعم الفني @UPSTORE_HELP 👨‍💻' },
+        { command: 'language', description: 'تغيير لغة البوت 🌐' },
+      ],
+      en: [
+        { command: 'start', description: 'Open UpStore main menu 🤍' },
+        { command: 'catalog', description: 'Browse wholesale catalog & prices 🛍️' },
+        { command: 'wallet', description: 'Top up wallet & check balance 💳' },
+        { command: 'orders', description: 'View my active orders & serials 📦' },
+        { command: 'about', description: 'About UpStore wholesale heritage 🤍' },
+        { command: 'warranty', description: '100% Official warranty policy 🛡️' },
+        { command: 'support', description: 'Contact human support @UPSTORE_HELP 👨‍💻' },
+        { command: 'language', description: 'Switch bot language 🌐' },
+      ],
+      es: [
+        { command: 'start', description: 'Abrir menú principal 🤍' },
+        { command: 'catalog', description: 'Catálogo de suscripciones 🛍️' },
+        { command: 'wallet', description: 'Mi billetera y saldo 💳' },
+        { command: 'orders', description: 'Mis pedidos activos 📦' },
+        { command: 'about', description: 'Acerca de UpStore 🤍' },
+        { command: 'warranty', description: 'Garantía oficial del 100% 🛡️' },
+        { command: 'support', description: 'Soporte humano @UPSTORE_HELP 👨‍💻' },
+        { command: 'language', description: 'Cambiar idioma 🌐' },
+      ],
+      fr: [
+        { command: 'start', description: 'Ouvrir le menu principal 🤍' },
+        { command: 'catalog', description: 'Catalogue des abonnements 🛍️' },
+        { command: 'wallet', description: 'Mon portefeuille et solde 💳' },
+        { command: 'orders', description: 'Mes commandes actives 📦' },
+        { command: 'about', description: 'À propos de UpStore 🤍' },
+        { command: 'warranty', description: 'Garantie officielle 100% 🛡️' },
+        { command: 'support', description: 'Support client @UPSTORE_HELP 👨‍💻' },
+        { command: 'language', description: 'Changer de langue 🌐' },
+      ],
+      ru: [
+        { command: 'start', description: 'Главное меню магазина 🤍' },
+        { command: 'catalog', description: 'Каталог подписок и цен 🛍️' },
+        { command: 'wallet', description: 'Кошелек и баланс 💳' },
+        { command: 'orders', description: 'Мои заказы и ключи 📦' },
+        { command: 'about', description: 'О магазине UpStore 🤍' },
+        { command: 'warranty', description: 'Официальная гарантия 100% 🛡️' },
+        { command: 'support', description: 'Поддержка @UPSTORE_HELP 👨‍💻' },
+        { command: 'language', description: 'Выбрать язык 🌐' },
+      ],
+      tr: [
+        { command: 'start', description: 'Ana menüyü aç 🤍' },
+        { command: 'catalog', description: 'Ürün kataloğu ve fiyatlar 🛍️' },
+        { command: 'wallet', description: 'Cüzdan ve bakiye 💳' },
+        { command: 'orders', description: 'Siparişlerim ve seri no 📦' },
+        { command: 'about', description: 'UpStore hakkında 🤍' },
+        { command: 'warranty', description: '%100 Resmi garanti 🛡️' },
+        { command: 'support', description: 'Canlı Destek @UPSTORE_HELP 👨‍💻' },
+        { command: 'language', description: 'Dili değiştir 🌐' },
+      ],
+      de: [
+        { command: 'start', description: 'Hauptmenü öffnen 🤍' },
+        { command: 'catalog', description: 'Großhandelskatalog & Preise 🛍️' },
+        { command: 'wallet', description: 'Guthaben & Wallet 💳' },
+        { command: 'orders', description: 'Meine Bestellungen 📦' },
+        { command: 'about', description: 'Über UpStore 🤍' },
+        { command: 'warranty', description: '100% Offizielle Garantie 🛡️' },
+        { command: 'support', description: 'Support @UPSTORE_HELP 👨‍💻' },
+        { command: 'language', description: 'Sprache ändern 🌐' },
+      ],
+      '': [
+        { command: 'start', description: 'Open UpStore main menu 🤍' },
+        { command: 'catalog', description: 'Browse wholesale catalog & prices 🛍️' },
+        { command: 'wallet', description: 'Top up wallet & check balance 💳' },
+        { command: 'orders', description: 'View my active orders & serials 📦' },
+        { command: 'about', description: 'About UpStore wholesale heritage 🤍' },
+        { command: 'warranty', description: '100% Official warranty policy 🛡️' },
+        { command: 'support', description: 'Contact human support @UPSTORE_HELP 👨‍💻' },
+        { command: 'language', description: 'Switch bot language 🌐' },
+      ],
+    };
 
-    await fetch(`${TELEGRAM_API}/setMyShortDescription`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ short_description: arShort, language_code: 'ar' })
-    }).catch(() => {});
+    for (const [langCode, commands] of Object.entries(localizedCommands)) {
+      const payload = { commands };
+      if (langCode) payload.language_code = langCode;
+      await fetch(`${TELEGRAM_API}/setMyCommands`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      }).catch(() => {});
+    }
 
-    await fetch(`${TELEGRAM_API}/setMyShortDescription`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ short_description: enShort })
-    }).catch(() => {});
-
-    // 4. Set Bot Commands
-    const arCommands = [
-      { command: 'start', description: 'فتح القائمة الرئيسية للمتجر 🤍' },
-      { command: 'catalog', description: 'تصفح المنتجات والأسعار بالجملة 🛍️' },
-      { command: 'wallet', description: 'شحن المحفظة وعرض الرصيد 💳' },
-      { command: 'orders', description: 'متابعة مشترياتي وطلباتي 📦' },
-      { command: 'about', description: 'عن متجر UpStore وتاريخنا 🤍' },
-      { command: 'warranty', description: 'سياسة الضمان والاستبدال الرسمي 🛡️' },
-      { command: 'support', description: 'التحدث مع الدعم الفني @UPSTORE_HELP 👨‍💻' },
-      { command: 'language', description: 'تغيير لغة البوت 🌐' }
-    ];
-
-    const enCommands = [
-      { command: 'start', description: 'Open UpStore main menu 🤍' },
-      { command: 'catalog', description: 'Browse wholesale catalog & prices 🛍️' },
-      { command: 'wallet', description: 'Top up wallet & check balance 💳' },
-      { command: 'orders', description: 'View my active orders & serials 📦' },
-      { command: 'about', description: 'About UpStore wholesale heritage 🤍' },
-      { command: 'warranty', description: '100% Official warranty policy 🛡️' },
-      { command: 'support', description: 'Contact human support @UPSTORE_HELP 👨‍💻' },
-      { command: 'language', description: 'Switch bot language 🌐' }
-    ];
-
-    await fetch(`${TELEGRAM_API}/setMyCommands`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ commands: arCommands, language_code: 'ar' })
-    }).catch(() => {});
-
-    await fetch(`${TELEGRAM_API}/setMyCommands`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ commands: enCommands })
-    }).catch(() => {});
-
-    console.log('✅ Telegram Bot SEO, Descriptions, and Menu Commands successfully set!');
+    console.log('✅ Telegram Bot SEO, Descriptions, Names, and Commands successfully set across all 7 languages!');
   } catch (err) {
     console.warn('[SEO Init Warning]:', err.message);
   }

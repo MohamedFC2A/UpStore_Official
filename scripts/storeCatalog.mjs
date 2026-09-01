@@ -1,1690 +1,4115 @@
 /**
  * storeCatalog.mjs — High-Performance Multilingual Wholesale Catalog Engine
- * Supports 35 Curated Products with Accurate Wholesale Pricing (+20% margin),
- * Real-world Subscription Durations, Precise Delivery Types, and Rich Multilingual Advantages.
+ * Supports 64 Curated Products with Wholesale Pricing (Max $3.00),
+ * Gemini Pro 18m at $0.25, Real-world Durations, Precise Delivery Types, and Rich Multilingual Advantages.
  */
 
 export const STORE_CATEGORIES = [
-  { id: 'ai', name_ar: 'الذكاء الاصطناعي (AI)', name_en: 'Artificial Intelligence (AI)', emoji: '🤖' },
-  { id: 'dev', name_ar: 'أدوات المطورين والبرمجة', name_en: 'Developer Tools', emoji: '💻' },
-  { id: 'design', name_ar: 'التصميم والمونتاج', name_en: 'Design & Creative', emoji: '🎨' },
-  { id: 'stream', name_ar: 'الترفيه والموسيقى', name_en: 'Streaming & Media', emoji: '🎬' },
-  { id: 'vpn', name_ar: 'الحماية والـ VPN', name_en: 'Security & VPN', emoji: '🔐' },
-  { id: 'prod', name_ar: 'الإنتاجية والأوفيس', name_en: 'Productivity & Office', emoji: '📚' },
+  {
+    "id": "ai",
+    "name_ar": "الذكاء الاصطناعي (AI)",
+    "name_en": "Artificial Intelligence (AI)",
+    "emoji": "🤖"
+  },
+  {
+    "id": "dev",
+    "name_ar": "أدوات المطورين والبرمجة",
+    "name_en": "Developer Tools",
+    "emoji": "💻"
+  },
+  {
+    "id": "design",
+    "name_ar": "التصميم والمونتاج",
+    "name_en": "Design & Creative",
+    "emoji": "🎨"
+  },
+  {
+    "id": "stream",
+    "name_ar": "الترفيه والموسيقى",
+    "name_en": "Streaming & Media",
+    "emoji": "🎬"
+  },
+  {
+    "id": "vpn",
+    "name_ar": "الحماية والـ VPN",
+    "name_en": "Security & VPN",
+    "emoji": "🔐"
+  },
+  {
+    "id": "prod",
+    "name_ar": "الإنتاجية والأوفيس",
+    "name_en": "Productivity & Office",
+    "emoji": "📚"
+  }
 ];
 
 export const STORE_BRANDS = [
-  // AI
-  { id: 'gemini', category_id: 'ai', name_ar: 'Google Gemini Advanced', name_en: 'Google Gemini Advanced', icon: '✦', desc: 'أحدث نماذج Gemini 3.1 Pro و Gemini 3.7 Flash مع 2TB سحابية' },
-  { id: 'chatgpt', category_id: 'ai', name_ar: 'ChatGPT (OpenAI Plus/Pro/Team)', name_en: 'ChatGPT Plus/Pro/Team', icon: '🟢', desc: 'نماذج OpenAI o3-mini و o1 Pro Mode و GPT-4o مع الصوت المباشر' },
-  { id: 'claude', category_id: 'ai', name_ar: 'Claude AI (Anthropic Pro/Team)', name_en: 'Claude AI Pro/Team', icon: '🟣', desc: 'نماذج Claude 3.7 Sonnet و Claude Opus 5 و Claude Fable 5 مع Hybrid Reasoning' },
-  { id: 'perplexity', category_id: 'ai', name_ar: 'Perplexity AI Pro', name_en: 'Perplexity AI Pro', icon: '🌌', desc: 'البحث الأكاديمي والذكي بنماذج Sonar Reasoning Pro و Claude 3.7 و Deep Research' },
-  { id: 'midjourney', category_id: 'ai', name_ar: 'Midjourney AI Imaging', name_en: 'Midjourney AI', icon: '🌟', desc: 'أعلى دقة لتوليد الصور والتصاميم الفنية بإصدارات v6.1 و Niji 6' },
-  { id: 'elevenlabs', category_id: 'ai', name_ar: 'ElevenLabs Voice & Video AI', name_en: 'ElevenLabs Voice & Video AI', icon: '🎙️', desc: 'توليد أصوات بشرية فائقة واستنساخ صوتي ودبلجة بالـ AI' },
-  { id: 'grok', category_id: 'ai', name_ar: 'Grok 3 / SuperGrok (xAI)', name_en: 'Grok 3 SuperGrok (xAI)', icon: '⚡', desc: 'أحدث نماذج Grok 3 مع Flux.1 وبيانات منصة X اللحظية' },
-  { id: 'runway', category_id: 'ai', name_ar: 'Runway Gen-3 Video AI', name_en: 'Runway Gen-3 Video', icon: '🎬', desc: 'صناعة ومونتاج الفيديو السينمائي بالذكاء الاصطناعي Gen-3 Alpha & Turbo' },
-
-  // DEV
-  { id: 'cursor', category_id: 'dev', name_ar: 'Cursor AI (Pro & Ultra)', name_en: 'Cursor AI Pro & Ultra', icon: '💻', desc: 'محرر الأكواد الذكي بنماذج Claude 3.7 و Gemini 3.1 Pro و Composer Agent' },
-  { id: 'copilot', category_id: 'dev', name_ar: 'GitHub Copilot & Student', name_en: 'GitHub Copilot & Student', icon: '🐙', desc: 'مساعد البرمجة الذكي داخل VS Code مع Copilot Chat' },
-  { id: 'v0dev', category_id: 'dev', name_ar: 'v0.dev / Bolt.new Pro', name_en: 'v0.dev / Bolt.new Pro', icon: '⚡', desc: 'بناء واجهات وتطبيقات Fullstack الويب بالذكاء الاصطناعي' },
-  { id: 'jetbrains', category_id: 'dev', name_ar: 'JetBrains All Products Pack', name_en: 'JetBrains All Products Pack', icon: '📦', desc: 'كل بيئات جيت برينز الـ 16 (IntelliJ, WebStorm, PyCharm)' },
-  { id: 'replit', category_id: 'dev', name_ar: 'Replit Core & Agent Pro', name_en: 'Replit Core & Agent', icon: '🔥', desc: 'بيئة تطوير سحابية وبناء مشاريع ذاتية عبر Replit Agent Pro' },
-
-  // DESIGN
-  { id: 'canva', category_id: 'design', name_ar: 'Canva Pro (Magic Studio)', name_en: 'Canva Pro Magic Studio', icon: '🎨', desc: '100M+ قالب وتصميم مع كافة أدوات Magic Studio والذكاء الاصطناعي' },
-  { id: 'capcut', category_id: 'design', name_ar: 'CapCut Pro (4K UHD)', name_en: 'CapCut Pro 4K UHD', icon: '✂️', desc: 'تصدير 4K بدون علامة مائية وفلاتر برو وترجمة تلقائية' },
-  { id: 'adobe', category_id: 'design', name_ar: 'Adobe Creative Cloud All Apps', name_en: 'Adobe Creative Cloud', icon: '🟥', desc: '20+ تطبيق أدوبي كاملة (Photoshop, Premiere, Firefly AI)' },
-  { id: 'figma', category_id: 'design', name_ar: 'Figma Professional', name_en: 'Figma Professional', icon: '🖌️', desc: 'تصميم واجهات وتجربة المستخدم للفرق مع Dev Mode' },
-  { id: 'freepik', category_id: 'design', name_ar: 'Freepik Premium', name_en: 'Freepik Premium', icon: '📸', desc: 'ملايين الصور وملفات PSD والفيكتور الحصرية وترخيص تجاري' },
-  { id: 'envato', category_id: 'design', name_ar: 'Envato Elements', name_en: 'Envato Elements', icon: '🎬', desc: 'تحميل غير محدود للقوالب والأكواد والموسيقى والفيديوهات' },
-
-  // STREAMING
-  { id: 'netflix', category_id: 'stream', name_ar: 'Netflix 4K UHD Ultra', name_en: 'Netflix 4K UHD Ultra', icon: '🎬', desc: 'أعلى جودة 4K Ultra HD مع صوت ثلاثي الأبعاد وبروفايل PIN' },
-  { id: 'spotify', category_id: 'stream', name_ar: 'Spotify Premium', name_en: 'Spotify Premium', icon: '🎵', desc: 'استماع بدون إعلانات وتحميل أوفلاين وتشغيل في الخلفية' },
-  { id: 'youtube', category_id: 'stream', name_ar: 'YouTube Premium + Music', name_en: 'YouTube Premium', icon: '▶️', desc: 'مشاهدة بدون إعلانات نهائياً وتشغيل بالخلفية وYouTube Music' },
-  { id: 'disney', category_id: 'stream', name_ar: 'Disney+ Premium', name_en: 'Disney+ Premium', icon: '⭐', desc: 'أفلام ومسلسلات ديزني ومارفل بدقة 4K مع الدبلجة العربية' },
-
-  // VPN
-  { id: 'nordvpn', category_id: 'vpn', name_ar: 'NordVPN Complete', name_en: 'NordVPN Complete', icon: '🛡️', desc: 'حماية فائقة وتشفير عسكري وتجاوز الحجب الجغرافي وفتح البث' },
-  { id: 'surfshark', category_id: 'vpn', name_ar: 'Surfshark One VPN', name_en: 'Surfshark One VPN', icon: '🦈', desc: 'أجهزة غير محدودة وسرعات فائقة وتخطي القيود الجغرافية' },
-  { id: 'expressvpn', category_id: 'vpn', name_ar: 'ExpressVPN Premium', name_en: 'ExpressVPN Premium', icon: '🚀', desc: 'أعلى سرعة وثبات عبر بروتوكول Lightway وخوادم في 105 دولة' },
-
-  // PRODUCTIVITY
-  { id: 'office365', category_id: 'prod', name_ar: 'Microsoft 365 / Office Pro', name_en: 'Microsoft 365 Office Pro', icon: '📎', desc: 'تطبيقات Word, Excel, PowerPoint مع 1TB سحابية على OneDrive' },
-  { id: 'notion', category_id: 'prod', name_ar: 'Notion Plus + AI Unlimited', name_en: 'Notion Plus with AI', icon: '📝', desc: 'مساحات عمل غير محدودة وأدوات الذكاء الاصطناعي لكتابة المحتوى' },
-  { id: 'tradingview', category_id: 'prod', name_ar: 'TradingView Premium', name_en: 'TradingView Premium', icon: '📈', desc: 'مؤشرات غير محدودة و25 مؤشر لكل رسم بياني وتنبيهات لحظية' },
-  { id: 'grammarly', category_id: 'prod', name_ar: 'Grammarly Premium', name_en: 'Grammarly Premium', icon: '✍️', desc: 'تصحيح لغوي متقدم وتحسين النبرة وإعادة الصياغة بالذكاء الاصطناعي' },
-  { id: 'duolingo', category_id: 'prod', name_ar: 'Duolingo Super (Max)', name_en: 'Duolingo Super (Max)', icon: '🦉', desc: 'قلوب غير محدودة وبدون إعلانات وميزات تدريب الذكاء الاصطناعي' },
-  { id: 'win11pro', category_id: 'prod', name_ar: 'Windows 11 Pro Retail Key', name_en: 'Windows 11 Pro Retail Key', icon: '🪟', desc: 'مفتاح ترخيص أصلي Retail دائم مدى الحياة لنظام ويندوز 11 برو' },
-  { id: 'win10pro', category_id: 'prod', name_ar: 'Windows 10 Pro Retail Key', name_en: 'Windows 10 Pro Retail Key', icon: '🪟', desc: 'مفتاح ترخيص أصلي Retail دائم مدى الحياة لنظام ويندوز 10 برو' },
+  {
+    "id": "gemini",
+    "category_id": "ai",
+    "name_ar": "Google Gemini Advanced",
+    "name_en": "Google Gemini Advanced",
+    "icon": "✦",
+    "desc": "أحدث نماذج Gemini 3.1 Pro و Gemini 3.7 Flash مع 2TB سحابية"
+  },
+  {
+    "id": "chatgpt",
+    "category_id": "ai",
+    "name_ar": "ChatGPT (OpenAI Plus/Pro/Team)",
+    "name_en": "ChatGPT Plus/Pro/Team",
+    "icon": "🟢",
+    "desc": "نماذج OpenAI o3-mini و o1 Pro Mode و GPT-4o مع الصوت المباشر"
+  },
+  {
+    "id": "claude",
+    "category_id": "ai",
+    "name_ar": "Claude AI (Anthropic Pro/Team)",
+    "name_en": "Claude AI Pro/Team",
+    "icon": "🟣",
+    "desc": "نماذج Claude 3.7 Sonnet و Claude Opus 5 و Claude Fable 5 مع Hybrid Reasoning"
+  },
+  {
+    "id": "perplexity",
+    "category_id": "ai",
+    "name_ar": "Perplexity AI Pro",
+    "name_en": "Perplexity AI Pro",
+    "icon": "🌌",
+    "desc": "البحث الأكاديمي والذكي بنماذج Sonar Reasoning Pro و Claude 3.7 و Deep Research"
+  },
+  {
+    "id": "midjourney",
+    "category_id": "ai",
+    "name_ar": "Midjourney AI Imaging",
+    "name_en": "Midjourney AI",
+    "icon": "🌟",
+    "desc": "أعلى دقة لتوليد الصور والتصاميم الفنية بإصدارات v6.1 و Niji 6"
+  },
+  {
+    "id": "elevenlabs",
+    "category_id": "ai",
+    "name_ar": "ElevenLabs Voice & Video AI",
+    "name_en": "ElevenLabs Voice & Video AI",
+    "icon": "🎙️",
+    "desc": "توليد أصوات بشرية فائقة واستنساخ صوتي ودبلجة بالـ AI"
+  },
+  {
+    "id": "grok",
+    "category_id": "ai",
+    "name_ar": "Grok 3 / SuperGrok (xAI)",
+    "name_en": "Grok 3 SuperGrok (xAI)",
+    "icon": "⚡",
+    "desc": "أحدث نماذج Grok 3 مع Flux.1 وبيانات منصة X اللحظية"
+  },
+  {
+    "id": "runway",
+    "category_id": "ai",
+    "name_ar": "Runway Gen-3 Video AI",
+    "name_en": "Runway Gen-3 Video",
+    "icon": "🎬",
+    "desc": "صناعة ومونتاج الفيديو السينمائي بالذكاء الاصطناعي Gen-3 Alpha & Turbo"
+  },
+  {
+    "id": "cursor",
+    "category_id": "dev",
+    "name_ar": "Cursor AI (Pro & Ultra)",
+    "name_en": "Cursor AI Pro & Ultra",
+    "icon": "💻",
+    "desc": "محرر الأكواد الذكي بنماذج Claude 3.7 و Gemini 3.1 Pro و Composer Agent"
+  },
+  {
+    "id": "copilot",
+    "category_id": "dev",
+    "name_ar": "GitHub Copilot & Student",
+    "name_en": "GitHub Copilot & Student",
+    "icon": "🐙",
+    "desc": "مساعد البرمجة الذكي داخل VS Code مع Copilot Chat"
+  },
+  {
+    "id": "v0dev",
+    "category_id": "dev",
+    "name_ar": "v0.dev / Bolt.new Pro",
+    "name_en": "v0.dev / Bolt.new Pro",
+    "icon": "⚡",
+    "desc": "بناء واجهات وتطبيقات Fullstack الويب بالذكاء الاصطناعي"
+  },
+  {
+    "id": "jetbrains",
+    "category_id": "dev",
+    "name_ar": "JetBrains All Products Pack",
+    "name_en": "JetBrains All Products Pack",
+    "icon": "📦",
+    "desc": "كل بيئات جيت برينز الـ 16 (IntelliJ, WebStorm, PyCharm)"
+  },
+  {
+    "id": "replit",
+    "category_id": "dev",
+    "name_ar": "Replit Core & Agent Pro",
+    "name_en": "Replit Core & Agent",
+    "icon": "🔥",
+    "desc": "بيئة تطوير سحابية وبناء مشاريع ذاتية عبر Replit Agent Pro"
+  },
+  {
+    "id": "canva",
+    "category_id": "design",
+    "name_ar": "Canva Pro (Magic Studio)",
+    "name_en": "Canva Pro Magic Studio",
+    "icon": "🎨",
+    "desc": "100M+ قالب وتصميم مع كافة أدوات Magic Studio والذكاء الاصطناعي"
+  },
+  {
+    "id": "capcut",
+    "category_id": "design",
+    "name_ar": "CapCut Pro (4K UHD)",
+    "name_en": "CapCut Pro 4K UHD",
+    "icon": "✂️",
+    "desc": "تصدير 4K بدون علامة مائية وفلاتر برو وترجمة تلقائية"
+  },
+  {
+    "id": "adobe",
+    "category_id": "design",
+    "name_ar": "Adobe Creative Cloud All Apps",
+    "name_en": "Adobe Creative Cloud",
+    "icon": "🟥",
+    "desc": "20+ تطبيق أدوبي كاملة (Photoshop, Premiere, Firefly AI)"
+  },
+  {
+    "id": "figma",
+    "category_id": "design",
+    "name_ar": "Figma Professional",
+    "name_en": "Figma Professional",
+    "icon": "🖌️",
+    "desc": "تصميم واجهات وتجربة المستخدم للفرق مع Dev Mode"
+  },
+  {
+    "id": "freepik",
+    "category_id": "design",
+    "name_ar": "Freepik Premium",
+    "name_en": "Freepik Premium",
+    "icon": "📸",
+    "desc": "ملايين الصور وملفات PSD والفيكتور الحصرية وترخيص تجاري"
+  },
+  {
+    "id": "envato",
+    "category_id": "design",
+    "name_ar": "Envato Elements",
+    "name_en": "Envato Elements",
+    "icon": "🎬",
+    "desc": "تحميل غير محدود للقوالب والأكواد والموسيقى والفيديوهات"
+  },
+  {
+    "id": "netflix",
+    "category_id": "stream",
+    "name_ar": "Netflix 4K UHD Ultra",
+    "name_en": "Netflix 4K UHD Ultra",
+    "icon": "🎬",
+    "desc": "أعلى جودة 4K Ultra HD مع صوت ثلاثي الأبعاد وبروفايل PIN"
+  },
+  {
+    "id": "spotify",
+    "category_id": "stream",
+    "name_ar": "Spotify Premium",
+    "name_en": "Spotify Premium",
+    "icon": "🎵",
+    "desc": "استماع بدون إعلانات وتحميل أوفلاين وتشغيل في الخلفية"
+  },
+  {
+    "id": "youtube",
+    "category_id": "stream",
+    "name_ar": "YouTube Premium + Music",
+    "name_en": "YouTube Premium",
+    "icon": "▶️",
+    "desc": "مشاهدة بدون إعلانات نهائياً وتشغيل بالخلفية وYouTube Music"
+  },
+  {
+    "id": "disney",
+    "category_id": "stream",
+    "name_ar": "Disney+ Premium",
+    "name_en": "Disney+ Premium",
+    "icon": "⭐",
+    "desc": "أفلام ومسلسلات ديزني ومارفل بدقة 4K مع الدبلجة العربية"
+  },
+  {
+    "id": "nordvpn",
+    "category_id": "vpn",
+    "name_ar": "NordVPN Complete",
+    "name_en": "NordVPN Complete",
+    "icon": "🛡️",
+    "desc": "حماية فائقة وتشفير عسكري وتجاوز الحجب الجغرافي وفتح البث"
+  },
+  {
+    "id": "surfshark",
+    "category_id": "vpn",
+    "name_ar": "Surfshark One VPN",
+    "name_en": "Surfshark One VPN",
+    "icon": "🦈",
+    "desc": "أجهزة غير محدودة وسرعات فائقة وتخطي القيود الجغرافية"
+  },
+  {
+    "id": "expressvpn",
+    "category_id": "vpn",
+    "name_ar": "ExpressVPN Premium",
+    "name_en": "ExpressVPN Premium",
+    "icon": "🚀",
+    "desc": "أعلى سرعة وثبات عبر بروتوكول Lightway وخوادم في 105 دولة"
+  },
+  {
+    "id": "office365",
+    "category_id": "prod",
+    "name_ar": "Microsoft 365 / Office Pro",
+    "name_en": "Microsoft 365 Office Pro",
+    "icon": "📎",
+    "desc": "تطبيقات Word, Excel, PowerPoint مع 1TB سحابية على OneDrive"
+  },
+  {
+    "id": "notion",
+    "category_id": "prod",
+    "name_ar": "Notion Plus + AI Unlimited",
+    "name_en": "Notion Plus with AI",
+    "icon": "📝",
+    "desc": "مساحات عمل غير محدودة وأدوات الذكاء الاصطناعي لكتابة المحتوى"
+  },
+  {
+    "id": "tradingview",
+    "category_id": "prod",
+    "name_ar": "TradingView Premium",
+    "name_en": "TradingView Premium",
+    "icon": "📈",
+    "desc": "مؤشرات غير محدودة و25 مؤشر لكل رسم بياني وتنبيهات لحظية"
+  },
+  {
+    "id": "grammarly",
+    "category_id": "prod",
+    "name_ar": "Grammarly Premium",
+    "name_en": "Grammarly Premium",
+    "icon": "✍️",
+    "desc": "تصحيح لغوي متقدم وتحسين النبرة وإعادة الصياغة بالذكاء الاصطناعي"
+  },
+  {
+    "id": "duolingo",
+    "category_id": "prod",
+    "name_ar": "Duolingo Super (Max)",
+    "name_en": "Duolingo Super (Max)",
+    "icon": "🦉",
+    "desc": "قلوب غير محدودة وبدون إعلانات وميزات تدريب الذكاء الاصطناعي"
+  },
+  {
+    "id": "win11pro",
+    "category_id": "prod",
+    "name_ar": "Windows 11 Pro Retail Key",
+    "name_en": "Windows 11 Pro Retail Key",
+    "icon": "🪟",
+    "desc": "مفتاح ترخيص أصلي Retail دائم مدى الحياة لنظام ويندوز 11 برو"
+  },
+  {
+    "id": "win10pro",
+    "category_id": "prod",
+    "name_ar": "Windows 10 Pro Retail Key",
+    "name_en": "Windows 10 Pro Retail Key",
+    "icon": "🪟",
+    "desc": "مفتاح ترخيص أصلي Retail دائم مدى الحياة لنظام ويندوز 10 برو"
+  }
 ];
 
 export const STORE_CATALOG = [
-  // ── 1. GOOGLE GEMINI ──
   {
-    id: 'gemini_1m_prod',
-    short_id: 'gemini_1m',
-    brand_id: 'gemini',
-    category_id: 'ai',
-    name: 'Gemini Advanced 1m',
-    name_ar: 'Google Gemini Advanced (شهر كامل)',
-    button_title: '✦ Gemini (شهر واحد) — $3.49 ⚡',
-    icon_symbol: '✦',
-    market_price: 19.99,
-    our_price: 3.49,
-    price_egp: 175,
-    price_sar: 13,
-    subscription_duration: 'شهر كامل (30 يوم)',
-    warranty_duration: 'شهر كامل ضمان استبدال',
-    delivery_type: 'personal_account',
-    advantages_ar: ['أحدث نماذج Gemini 3.1 Pro و Gemini 3.7 Flash', 'مساحة تخزين سحابية ضخمة 2TB على Google One', 'تكامل كامل مع Google Workspace والبحث المعمق Deep Research', 'ضمان استبدال فوري 100% طوال المدة'],
-    advantages_en: ['Latest Gemini 3.1 Pro & Gemini 3.7 Flash AI models', 'Massive 2TB Google One cloud storage included', 'Full Google Workspace & Deep Research integration', '100% official replacement warranty for the entire period'],
-    advantages_es: ['Modelos de IA más recientes: Gemini 3.1 Pro y 3.7 Flash', '2TB de almacenamiento en la nube en Google One incluido', 'Integración total con Google Workspace y Deep Research', 'Garantía oficial de reemplazo del 100%'],
-    advantages_fr: ['Derniers modèles d\'IA Gemini 3.1 Pro et 3.7 Flash', 'Stockage cloud massif de 2 To sur Google One inclus', 'Intégration complète Google Workspace et Deep Research', 'Garantie de remplacement officielle 100%'],
-    advantages_ru: ['Новейшие модели ИИ Gemini 3.1 Pro и 3.7 Flash', '2 ТБ облачного хранилища Google One в комплекте', 'Полная интеграция с Google Workspace и Deep Research', '100% официальная гарантия замены на весь срок'],
-    advantages_tr: ['En yeni Gemini 3.1 Pro ve 3.7 Flash yapay zeka modelleri', '2TB Google One bulut depolama alanı dahil', 'Tam Google Workspace ve Deep Research entegrasyonu', 'Tüm süre boyunca %100 resmi değişim garantisi'],
-    advantages_de: ['Neueste Gemini 3.1 Pro & 3.7 Flash KI-Modelle', '2TB Google One Cloud-Speicher inklusive', 'Vollständige Google Workspace & Deep Research Integration', '100% offizielle Ersatzgarantie für die gesamte Laufzeit'],
+    "id": "gemini_18m_prod",
+    "short_id": "gemini_18m",
+    "brand_id": "gemini",
+    "category_id": "ai",
+    "name": "Gemini Pro / Advanced 18m",
+    "name_ar": "Google Gemini Pro / Advanced (18 شهر كامل)",
+    "button_title": "✦ Gemini Pro (18 شهر) — $0.25 🔥",
+    "icon_symbol": "✦",
+    "market_price": 360,
+    "our_price": 0.25,
+    "price_egp": 15,
+    "price_sar": 1,
+    "subscription_duration": "18 شهر كامل (سنة ونصف)",
+    "warranty_duration": "18 شهر كامل ضمان استبدال رسمي",
+    "delivery_type": "personal_account",
+    "advantages_ar": [
+      "أحدث نماذج Gemini 3.1 Pro و Gemini 3.7 Flash",
+      "مساحة تخزين سحابية ضخمة 2TB على Google One لمدة 18 شهر",
+      "تكامل كامل مع Google Workspace والبحث المعمق Deep Research",
+      "ضمان استبدال رسمي 100% طوال 18 شهر كاملة"
+    ],
+    "advantages_en": [
+      "Latest Gemini 3.1 Pro & Gemini 3.7 Flash AI models",
+      "Massive 2TB Google One cloud storage for 18 full months",
+      "Full Google Workspace & Deep Research integration",
+      "100% official replacement warranty for 18 months"
+    ],
+    "advantages_es": [
+      "Modelos de IA más recientes: Gemini 3.1 Pro y 3.7 Flash",
+      "2TB de almacenamiento en la nube en Google One durante 18 meses",
+      "Integración total con Google Workspace y Deep Research",
+      "Garantía oficial de reemplazo del 100% por 18 meses"
+    ],
+    "advantages_fr": [
+      "Derniers modèles d'IA Gemini 3.1 Pro et 3.7 Flash",
+      "Stockage cloud massif de 2 To sur Google One pour 18 mois",
+      "Intégration complète Google Workspace et Deep Research",
+      "Garantie de remplacement officielle 100% pendant 18 mois"
+    ],
+    "advantages_ru": [
+      "Новейшие модели ИИ Gemini 3.1 Pro и 3.7 Flash",
+      "2 ТБ облачного хранилища Google One на 18 месяцев",
+      "Полная интеграция с Google Workspace и Deep Research",
+      "100% официальная гарантия замены на 18 месяцев"
+    ],
+    "advantages_tr": [
+      "En yeni Gemini 3.1 Pro ve 3.7 Flash yapay zeka modelleri",
+      "18 ay boyunca 2TB Google One bulut depolama alanı",
+      "Tam Google Workspace ve Deep Research entegrasyonu",
+      "18 ay boyunca %100 resmi değişim garantisi"
+    ],
+    "advantages_de": [
+      "Neueste Gemini 3.1 Pro & 3.7 Flash KI-Modelle",
+      "2TB Google One Cloud-Speicher für 18 Monate inklusive",
+      "Vollständige Google Workspace & Deep Research Integration",
+      "100% offizielle Ersatzgarantie für 18 Monate"
+    ]
   },
   {
-    id: 'gemini_3m_prod',
-    short_id: 'gemini_3m',
-    brand_id: 'gemini',
-    category_id: 'ai',
-    name: 'Gemini Advanced 3m',
-    name_ar: 'Google Gemini Advanced (3 شهور)',
-    button_title: '✦ Gemini (3 شهور) — $7.99 ⚡',
-    icon_symbol: '✦',
-    market_price: 59.99,
-    our_price: 7.99,
-    price_egp: 399,
-    price_sar: 30,
-    subscription_duration: '3 شهور كاملة',
-    warranty_duration: '3 شهور ضمان استبدال',
-    delivery_type: 'personal_account',
-    advantages_ar: ['أحدث نماذج Gemini 3.1 Pro المتقدمة للبرمجة والتفكير المعقد', 'مساحة تخزين 2TB Google One سحابية مشتركة', 'دعم كتابة الأكواد والتحليل البياني المتقدم', 'ضمان استبدال رسمي طوال 3 شهور'],
-    advantages_en: ['Advanced Gemini 3.1 Pro models for complex reasoning & code', '2TB Google One high-speed cloud storage', 'Advanced data analysis and automated workflow support', 'Full 3-month official replacement warranty'],
-    advantages_es: ['Modelos avanzados Gemini 3.1 Pro para razonamiento complejo', '2TB de almacenamiento en la nube de alta velocidad Google One', 'Análisis de datos avanzado y asistencia en programación', 'Garantía oficial de reemplazo por 3 meses'],
-    advantages_fr: ['Modèles avancés Gemini 3.1 Pro pour raisonnement complexe', '2 To de stockage cloud rapide Google One', 'Analyse de données avancée et support de code', 'Garantie de remplacement officielle de 3 mois'],
-    advantages_ru: ['Продвинутые модели Gemini 3.1 Pro для сложного кода и логики', '2 ТБ быстрого облачного хранилища Google One', 'Продвинутый анализ данных и программирование', 'Официальная гарантия замены на 3 месяца'],
-    advantages_tr: ['Karmaşık akıl yürütme ve kodlama için gelişmiş Gemini 3.1 Pro', '2TB Google One yüksek hızlı bulut depolama', 'Gelişmiş veri analizi ve otomatik kodlama desteği', '3 ay boyunca tam resmi değişim garantisi'],
-    advantages_de: ['Erweiterte Gemini 3.1 Pro Modelle für komplexe Logik & Code', '2TB Google One Highspeed-Cloud-Speicher', 'Fortschrittliche Datenanalyse und Programmierhilfe', '3 Monate volle offizielle Ersatzgarantie'],
+    "id": "gemini_1m_prod",
+    "short_id": "gemini_1m",
+    "brand_id": "gemini",
+    "category_id": "ai",
+    "name": "Gemini Advanced 1m",
+    "name_ar": "Google Gemini Advanced (شهر كامل)",
+    "button_title": "✦ Gemini (شهر واحد) — $0.25 ⚡",
+    "icon_symbol": "✦",
+    "market_price": 19.99,
+    "our_price": 0.25,
+    "price_egp": 13,
+    "price_sar": 1,
+    "subscription_duration": "شهر كامل (30 يوم)",
+    "warranty_duration": "شهر كامل ضمان استبدال",
+    "delivery_type": "personal_account",
+    "advantages_ar": [
+      "أحدث نماذج Gemini 3.1 Pro و Gemini 3.7 Flash",
+      "مساحة تخزين سحابية ضخمة 2TB على Google One",
+      "تكامل كامل مع Google Workspace والبحث المعمق Deep Research",
+      "ضمان استبدال فوري 100% طوال المدة"
+    ],
+    "advantages_en": [
+      "Latest Gemini 3.1 Pro & Gemini 3.7 Flash AI models",
+      "Massive 2TB Google One cloud storage included",
+      "Full Google Workspace & Deep Research integration",
+      "100% official replacement warranty for the entire period"
+    ],
+    "advantages_es": [
+      "Modelos de IA más recientes: Gemini 3.1 Pro y 3.7 Flash",
+      "2TB de almacenamiento en la nube en Google One incluido",
+      "Integración total con Google Workspace y Deep Research",
+      "Garantía oficial de reemplazo del 100%"
+    ],
+    "advantages_fr": [
+      "Derniers modèles d'IA Gemini 3.1 Pro et 3.7 Flash",
+      "Stockage cloud massif de 2 To sur Google One inclus",
+      "Intégration complète Google Workspace et Deep Research",
+      "Garantie de remplacement officielle 100%"
+    ],
+    "advantages_ru": [
+      "Новейшие модели ИИ Gemini 3.1 Pro и 3.7 Flash",
+      "2 ТБ облачного хранилища Google One в комплекте",
+      "Полная интеграция с Google Workspace и Deep Research",
+      "100% официальная гарантия замены на весь срок"
+    ],
+    "advantages_tr": [
+      "En yeni Gemini 3.1 Pro ve 3.7 Flash yapay zeka modelleri",
+      "2TB Google One bulut depolama alanı dahil",
+      "Tam Google Workspace ve Deep Research entegrasyonu",
+      "Tüm süre boyunca %100 resmi değişim garantisi"
+    ],
+    "advantages_de": [
+      "Neueste Gemini 3.1 Pro & 3.7 Flash KI-Modelle",
+      "2TB Google One Cloud-Speicher inklusive",
+      "Vollständige Google Workspace & Deep Research Integration",
+      "100% offizielle Ersatzgarantie für die gesamte Laufzeit"
+    ]
   },
   {
-    id: 'gemini_12m_prod',
-    short_id: 'gemini_12m',
-    brand_id: 'gemini',
-    category_id: 'ai',
-    name: 'Gemini Advanced 12m',
-    name_ar: 'Google Gemini Advanced (سنة كاملة)',
-    button_title: '✦ Gemini (سنة كاملة) — $24.99 ⚡',
-    icon_symbol: '✦',
-    market_price: 239.99,
-    our_price: 24.99,
-    price_egp: 1250,
-    price_sar: 94,
-    subscription_duration: 'سنة كاملة (12 شهر)',
-    warranty_duration: 'سنة كاملة ضمان استبدال',
-    delivery_type: 'personal_account',
-    advantages_ar: ['اشتراك سنوي كامل مدعوم بمنظومة Antigravity و AI Studio', '2 تيرابايت تخزين سحابي Google One أصلي خاص', 'أولوية قصوى عند إطلاق تحديثات نماذج Gemini الجديدة', 'ضمان استبدال سنوي شامل 100%'],
-    advantages_en: ['Full 1-year annual subscription powered by AI Studio ecosystem', '2TB dedicated Google One genuine cloud storage', 'Top priority access to newly released Gemini frontier models', '100% comprehensive annual replacement warranty'],
-    advantages_es: ['Suscripción anual completa de 1 año con ecosistema AI Studio', '2TB de almacenamiento dedicado en la nube Google One', 'Máxima prioridad para nuevos modelos de vanguardia de Gemini', 'Garantía anual completa de reemplazo del 100%'],
-    advantages_fr: ['Abonnement annuel complet d\'un an avec écosystème AI Studio', '2 To de stockage cloud Google One dédié', 'Accès prioritaire aux nouveaux modèles pionniers de Gemini', 'Garantie annuelle de remplacement intégrale 100%'],
-    advantages_ru: ['Годовая подписка на 1 год с доступом к AI Studio', '2 ТБ выделенного облака Google One навсегда на 1 год', 'Высший приоритет при выходе новых моделей Gemini', '100% комплексная годовая гарантия замены'],
-    advantages_tr: ['AI Studio ekosistemi destekli 1 yıllık tam abonelik', '2TB özel tahsisli Google One bulut depolama', 'Yeni çıkan öncü Gemini modellerine en yüksek öncelik', '1 yıl boyunca kapsamlı %100 resmi garanti'],
-    advantages_de: ['Vollständiges 1-Jahres-Abonnement mit AI Studio Ökosystem', '2TB dedizierter Google One Cloud-Speicher', 'Höchste Priorität für neue Gemini-Spitzenmodelle', '100% umfassende Jahres-Ersatzgarantie'],
-  },
-
-  // ── 2. CHATGPT & OPENAI ──
-  {
-    id: 'chatgpt_1m_prod',
-    short_id: 'chatgpt_1m',
-    brand_id: 'chatgpt',
-    category_id: 'ai',
-    name: 'ChatGPT Plus 1m',
-    name_ar: 'ChatGPT Plus (شهر كامل)',
-    button_title: '🟢 ChatGPT Plus (شهر واحد) — $4.99 ⚡',
-    icon_symbol: '🟢',
-    market_price: 20.00,
-    our_price: 4.99,
-    price_egp: 250,
-    price_sar: 19,
-    subscription_duration: 'شهر كامل (30 يوم)',
-    warranty_duration: 'شهر كامل ضمان استبدال',
-    delivery_type: 'private_account',
-    advantages_ar: ['نماذج GPT-4o و OpenAI o3-mini High و o1 Pro', 'توليد الصور بدقة فائقة عبر DALL-E 3', 'الوضع الصوتي المتقدم Advanced Voice Mode لحظياً', 'حساب خاص مفعل مع ضمان استبدال رسمي 100%'],
-    advantages_en: ['Latest GPT-4o, OpenAI o3-mini High & o1 Pro models', 'Ultra HD image generation powered by DALL-E 3', 'Real-time Advanced Voice Mode interaction', 'Dedicated private account with 100% replacement warranty'],
-    advantages_es: ['Modelos avanzados GPT-4o, OpenAI o3-mini y o1 Pro', 'Generación de imágenes Ultra HD con DALL-E 3', 'Modo de voz avanzado en tiempo real', 'Cuenta privada dedicada con 100% de garantía'],
-    advantages_fr: ['Modèles de pointe GPT-4o, OpenAI o3-mini et o1 Pro', 'Génération d\'images Ultra HD avec DALL-E 3', 'Mode vocal avancé en temps réel', 'Compte privé dédié avec garantie de remplacement à 100%'],
-    advantages_ru: ['Новейшие модели GPT-4o, OpenAI o3-mini и o1 Pro', 'Генерация изображений в Ultra HD через DALL-E 3', 'Продвинутый голосовой режим Advanced Voice Mode', 'Выделенный приватный аккаунт с 100% гарантией'],
-    advantages_tr: ['En gelişmiş GPT-4o, OpenAI o3-mini ve o1 Pro modelleri', 'DALL-E 3 ile Ultra HD görsel oluşturma', 'Gerçek zamanlı Gelişmiş Ses Modu (Advanced Voice Mode)', 'Tahsisli özel hesap ve %100 resmi değişim garantisi'],
-    advantages_de: ['Modernste GPT-4o, OpenAI o3-mini und o1 Pro Modelle', 'Ultra HD Bildgenerierung mit DALL-E 3', 'Echtzeit Advanced Voice Mode Sprachsteuerung', 'Dediziertes Privatkonto mit 100% Ersatzgarantie'],
-  },
-  {
-    id: 'chatgpt_3m_prod',
-    short_id: 'chatgpt_3m',
-    brand_id: 'chatgpt',
-    category_id: 'ai',
-    name: 'ChatGPT Plus 3m',
-    name_ar: 'ChatGPT Plus (3 شهور)',
-    button_title: '🟢 ChatGPT Plus (3 شهور) — $12.99 ⚡',
-    icon_symbol: '🟢',
-    market_price: 60.00,
-    our_price: 12.99,
-    price_egp: 650,
-    price_sar: 49,
-    subscription_duration: '3 شهور كاملة',
-    warranty_duration: '3 شهور ضمان استبدال',
-    delivery_type: 'private_account',
-    advantages_ar: ['استخدام غير محدود ومستقر لنماذج GPT-4o و o3-mini', 'أولوية قصوى والوصول أثناء أوقات الذروة العالمية', 'دعم تحليل البيانات والبرمجة التلقائية', 'ضمان استبدال فوري 100% طوال 3 شهور'],
-    advantages_en: ['Stable unlimited access to GPT-4o & o3-mini models', 'Maximum priority access during global peak hours', 'Advanced Python code execution & deep data analytics', '100% official replacement warranty for 3 months'],
-    advantages_es: ['Acceso ilimitado y estable a modelos GPT-4o y o3-mini', 'Máxima prioridad de acceso durante horas pico', 'Ejecución de código y análisis avanzado de datos', 'Garantía oficial de reemplazo por 3 meses'],
-    advantages_fr: ['Accès stable et illimité aux modèles GPT-4o et o3-mini', 'Priorité maximale d\'accès pendant les heures de pointe', 'Exécution de code et analyse approfondie de données', 'Garantie de remplacement officielle de 3 mois'],
-    advantages_ru: ['Стабильный доступ без ограничений к GPT-4o и o3-mini', 'Максимальный приоритет в часы пиковой нагрузки', 'Анализ данных и автоматическое исполнение кода', 'Официальная гарантия замены на 3 месяца'],
-    advantages_tr: ['GPT-4o ve o3-mini modellerine kesintisiz ve kararlı erişim', 'Küresel yoğun saatlerde en yüksek öncelik', 'Gelişmiş veri analitiği ve Python kod çalıştırma', '3 ay boyunca %100 resmi değişim garantisi'],
-    advantages_de: ['Stabiler unbegrenzter Zugriff auf GPT-4o & o3-mini Modelle', 'Höchste Priorität während weltweiter Stoßzeiten', 'Erweiterte Datenanalyse und Python-Codeausführung', '100% offizielle Ersatzgarantie für 3 Monate'],
+    "id": "gemini_3m_prod",
+    "short_id": "gemini_3m",
+    "brand_id": "gemini",
+    "category_id": "ai",
+    "name": "Gemini Advanced 3m",
+    "name_ar": "Google Gemini Advanced (3 شهور)",
+    "button_title": "✦ Gemini (3 شهور) — $0.50 ⚡",
+    "icon_symbol": "✦",
+    "market_price": 59.99,
+    "our_price": 0.5,
+    "price_egp": 25,
+    "price_sar": 2,
+    "subscription_duration": "3 شهور كاملة",
+    "warranty_duration": "3 شهور ضمان استبدال",
+    "delivery_type": "personal_account",
+    "advantages_ar": [
+      "أحدث نماذج Gemini 3.1 Pro المتقدمة للبرمجة والتفكير المعقد",
+      "مساحة تخزين 2TB Google One سحابية مشتركة",
+      "دعم كتابة الأكواد والتحليل البياني المتقدم",
+      "ضمان استبدال رسمي طوال 3 شهور"
+    ],
+    "advantages_en": [
+      "Advanced Gemini 3.1 Pro models for complex reasoning & code",
+      "2TB Google One high-speed cloud storage",
+      "Advanced data analysis and automated workflow support",
+      "Full 3-month official replacement warranty"
+    ],
+    "advantages_es": [
+      "Modelos avanzados Gemini 3.1 Pro para razonamiento complejo",
+      "2TB de almacenamiento en la nube de alta velocidad Google One",
+      "Análisis de datos avanzado y asistencia en programación",
+      "Garantía oficial de reemplazo por 3 meses"
+    ],
+    "advantages_fr": [
+      "Modèles avancés Gemini 3.1 Pro pour raisonnement complexe",
+      "2 To de stockage cloud rapide Google One",
+      "Analyse de données avancée et support de code",
+      "Garantie de remplacement officielle de 3 mois"
+    ],
+    "advantages_ru": [
+      "Продвинутые модели Gemini 3.1 Pro для сложного кода и логики",
+      "2 ТБ быстрого облачного хранилища Google One",
+      "Продвинутый анализ данных и программирование",
+      "Официальная гарантия замены на 3 месяца"
+    ],
+    "advantages_tr": [
+      "Karmaşık akıl yürütme ve kodlama için gelişmiş Gemini 3.1 Pro",
+      "2TB Google One yüksek hızlı bulut depolama",
+      "Gelişmiş veri analizi ve otomatik kodlama desteği",
+      "3 ay boyunca tam resmi değişim garantisi"
+    ],
+    "advantages_de": [
+      "Erweiterte Gemini 3.1 Pro Modelle für komplexe Logik & Code",
+      "2TB Google One Highspeed-Cloud-Speicher",
+      "Fortschrittliche Datenanalyse und Programmierhilfe",
+      "3 Monate volle offizielle Ersatzgarantie"
+    ]
   },
   {
-    id: 'chatgpt_12m_prod',
-    short_id: 'chatgpt_12m',
-    brand_id: 'chatgpt',
-    category_id: 'ai',
-    name: 'ChatGPT Plus 12m',
-    name_ar: 'ChatGPT Plus (سنة كاملة)',
-    button_title: '🟢 ChatGPT Plus (سنة كاملة) — $42.99 ⚡',
-    icon_symbol: '🟢',
-    market_price: 240.00,
-    our_price: 42.99,
-    price_egp: 2150,
-    price_sar: 161,
-    subscription_duration: 'سنة كاملة (12 شهر)',
-    warranty_duration: 'سنة كاملة ضمان استبدال',
-    delivery_type: 'private_account',
-    advantages_ar: ['اشتراك سنوي كامل ومستقر بدون انقطاع', 'إنشاء وإدارة GPTs المخصصة مع مشاركتها في الـ GPT Store', 'تحليل المستندات وتوليد التقارير والأكواد بدقة عالية', 'ضمان استبدال سنوي رسمي شامل 100%'],
-    advantages_en: ['Full 1-year uninterrupted annual subscription', 'Build, manage and monetize custom GPTs in the GPT Store', 'High precision document synthesis and full code generation', '100% comprehensive annual replacement warranty'],
-    advantages_es: ['Suscripción anual completa e ininterrumpida de 1 año', 'Crea y gestiona GPTs personalizados en la GPT Store', 'Análisis de documentos de alta precisión y generación de código', 'Garantía anual completa de reemplazo del 100%'],
-    advantages_fr: ['Abonnement annuel complet ininterrompu d\'un an', 'Créez et gérez des GPT personnalisés dans le GPT Store', 'Analyse de documents de haute précision et code complet', 'Garantie annuelle de remplacement intégrale 100%'],
-    advantages_ru: ['Годовая подписка на 12 месяцев без прерываний', 'Создание и управление своими GPT в магазине GPT Store', 'Глубокий анализ документов и генерация любого кода', '100% комплексная годовая гарантия замены'],
-    advantages_tr: ['1 yıl boyunca kesintisiz tam yıllık abonelik', 'GPT Store\'da özel GPT\'ler oluşturma ve yönetme', 'Yüksek hassasiyetli belge analizi ve tam kod üretimi', '1 yıl boyunca kapsamlı %100 resmi garanti'],
-    advantages_de: ['Vollständiges 1-Jahres-Abonnement ohne Unterbrechung', 'Erstellen und Verwalten von Custom GPTs im GPT Store', 'Hochpräzise Dokumentenanalyse und Code-Generierung', '100% umfassende Jahres-Ersatzgarantie'],
+    "id": "gemini_12m_prod",
+    "short_id": "gemini_12m",
+    "brand_id": "gemini",
+    "category_id": "ai",
+    "name": "Gemini Advanced 12m",
+    "name_ar": "Google Gemini Advanced (سنة كاملة)",
+    "button_title": "✦ Gemini (سنة كاملة) — $1.49 ⚡",
+    "icon_symbol": "✦",
+    "market_price": 239.99,
+    "our_price": 1.49,
+    "price_egp": 75,
+    "price_sar": 6,
+    "subscription_duration": "سنة كاملة (12 شهر)",
+    "warranty_duration": "سنة كاملة ضمان استبدال",
+    "delivery_type": "personal_account",
+    "advantages_ar": [
+      "اشتراك سنوي كامل مدعوم بمنظومة Antigravity و AI Studio",
+      "2 تيرابايت تخزين سحابي Google One أصلي خاص",
+      "أولوية قصوى عند إطلاق تحديثات نماذج Gemini الجديدة",
+      "ضمان استبدال سنوي شامل 100%"
+    ],
+    "advantages_en": [
+      "Full 1-year annual subscription powered by AI Studio ecosystem",
+      "2TB dedicated Google One genuine cloud storage",
+      "Top priority access to newly released Gemini frontier models",
+      "100% comprehensive annual replacement warranty"
+    ],
+    "advantages_es": [
+      "Suscripción anual completa de 1 año con ecosistema AI Studio",
+      "2TB de almacenamiento dedicado en la nube Google One",
+      "Máxima prioridad para nuevos modelos de vanguardia de Gemini",
+      "Garantía anual completa de reemplazo del 100%"
+    ],
+    "advantages_fr": [
+      "Abonnement annuel complet d'un an avec écosystème AI Studio",
+      "2 To de stockage cloud Google One dédié",
+      "Accès prioritaire aux nouveaux modèles pionniers de Gemini",
+      "Garantie annuelle de remplacement intégrale 100%"
+    ],
+    "advantages_ru": [
+      "Годовая подписка на 1 год с доступом к AI Studio",
+      "2 ТБ выделенного облака Google One навсегда на 1 год",
+      "Высший приоритет при выходе новых моделей Gemini",
+      "100% комплексная годовая гарантия замены"
+    ],
+    "advantages_tr": [
+      "AI Studio ekosistemi destekli 1 yıllık tam abonelik",
+      "2TB özel tahsisli Google One bulut depolama",
+      "Yeni çıkan öncü Gemini modellerine en yüksek öncelik",
+      "1 yıl boyunca kapsamlı %100 resmi garanti"
+    ],
+    "advantages_de": [
+      "Vollständiges 1-Jahres-Abonnement mit AI Studio Ökosystem",
+      "2TB dedizierter Google One Cloud-Speicher",
+      "Höchste Priorität für neue Gemini-Spitzenmodelle",
+      "100% umfassende Jahres-Ersatzgarantie"
+    ]
   },
   {
-    id: 'chatgpt_pro_1m_prod',
-    short_id: 'chatgpt_pro_1m',
-    brand_id: 'chatgpt',
-    category_id: 'ai',
-    name: 'ChatGPT Pro 1m (o1 Pro Mode)',
-    name_ar: 'ChatGPT Pro (o1 Pro Mode Unlimited)',
-    button_title: '🟢 ChatGPT Pro (o1 Pro Mode) — $39.99 ⚡',
-    icon_symbol: '🟢',
-    market_price: 200.00,
-    our_price: 39.99,
-    price_egp: 2000,
-    price_sar: 150,
-    subscription_duration: 'شهر كامل (30 يوم)',
-    warranty_duration: 'شهر كامل ضمان استبدال',
-    delivery_type: 'private_account',
-    advantages_ar: ['استخدام غير محدود لنموذج OpenAI o1 Pro Mode الخارق', 'قوة تفكير عميقة لحل أعقد المسائل الرياضية والبرمجية والأكاديمية', 'حساب رسمي مخصص Pro مع أعلى سرعة معالجة في العالم', 'ضمان استبدال رسمي 100%'],
-    advantages_en: ['Unlimited access to the flagship OpenAI o1 Pro Mode', 'Deep compute reasoning for world-class math, coding & research', 'Dedicated high-tier Pro account with maximum compute priority', '100% official replacement warranty for the full month'],
-    advantages_es: ['Acceso ilimitado al modelo insignia OpenAI o1 Pro Mode', 'Razonamiento profundo para matemáticas complejas y código', 'Cuenta Pro dedicada con la velocidad de procesamiento más alta', 'Garantía oficial de reemplazo del 100%'],
-    advantages_fr: ['Accès illimité au modèle phare OpenAI o1 Pro Mode', 'Raisonnement profond pour les mathématiques et le code complexe', 'Compte Pro dédié avec priorité de calcul maximale', 'Garantie de remplacement officielle 100%'],
-    advantages_ru: ['Безлимитный доступ к флагманской модели OpenAI o1 Pro Mode', 'Глубокое мышление для сложнейшей математики и архитектуры ПО', 'Выделенный Pro аккаунт с максимальной скоростью вычислений', '100% официальная гарантия замены на месяц'],
-    advantages_tr: ['OpenAI o1 Pro Mode amiral gemisi modeline sınırsız erişim', 'İleri düzey matematik, kodlama ve bilim için derin düşünme gücü', 'Dünyanın en yüksek işlem hızına sahip özel Pro hesabı', 'Tam 1 ay boyunca %100 resmi değişim garantisi'],
-    advantages_de: ['Unbegrenzter Zugriff auf das OpenAI o1 Pro Mode Spitzenmodell', 'Tiefes logisches Denken für anspruchsvollste Mathematik & Code', 'Dediziertes Pro-Konto mit höchster Rechenleistung weltweit', '100% offizielle Ersatzgarantie für den Monat'],
-  },
-
-  // ── 3. CLAUDE AI ──
-  {
-    id: 'claude_1m_prod',
-    short_id: 'claude_1m',
-    brand_id: 'claude',
-    category_id: 'ai',
-    name: 'Claude Pro 1m',
-    name_ar: 'Claude AI Pro (شهر كامل)',
-    button_title: '🟣 Claude Pro (شهر واحد) — $4.99 ⚡',
-    icon_symbol: '🟣',
-    market_price: 20.00,
-    our_price: 4.99,
-    price_egp: 250,
-    price_sar: 19,
-    subscription_duration: 'شهر كامل (30 يوم)',
-    warranty_duration: 'شهر كامل ضمان استبدال',
-    delivery_type: 'private_account',
-    advantages_ar: ['أحدث نماذج Claude 3.7 Sonnet و Claude Opus 5 و Claude Fable 5', 'ميزة التفكير الهجين Hybrid Reasoning ومحرر Artifacts المباشر', 'نافذة سياق ضخمة 200K Tokens لتحليل الكتب والملفات الضخمة', 'ضمان استبدال رسمي 100% طوال المدة'],
-    advantages_en: ['State-of-the-art Claude 3.7 Sonnet, Opus 5 & Fable 5 models', 'Hybrid Reasoning engine with interactive Artifacts live preview', 'Massive 200K token context window for large codebase analysis', '100% official replacement warranty for the entire period'],
-    advantages_es: ['Modelos Claude 3.7 Sonnet, Claude Opus 5 y Fable 5', 'Motor Hybrid Reasoning con vista previa interactiva de Artifacts', 'Ventana de contexto masiva de 200K tokens para análisis de código', 'Garantía oficial de reemplazo del 100%'],
-    advantages_fr: ['Modèles Claude 3.7 Sonnet, Opus 5 et Fable 5 de pointe', 'Moteur Hybrid Reasoning avec aperçu interactif Artifacts', 'Fenêtre de contexte de 200K tokens pour grands projets', 'Garantie de remplacement officielle 100%'],
-    advantages_ru: ['Флагманские модели Claude 3.7 Sonnet, Opus 5 и Fable 5', 'Гибридное мышление Hybrid Reasoning и интерактивные Artifacts', 'Огромное контекстное окно 200K токенов для сложного кода', '100% официальная гарантия замены на весь срок'],
-    advantages_tr: ['En yeni Claude 3.7 Sonnet, Opus 5 ve Fable 5 modelleri', 'Hibrit Düşünme (Hybrid Reasoning) ve canlı Artifacts editörü', 'Büyük kod tabanları için 200K token dev bağlam penceresi', 'Tüm süre boyunca %100 resmi değişim garantisi'],
-    advantages_de: ['Modernste Claude 3.7 Sonnet, Opus 5 & Fable 5 Modelle', 'Hybrid Reasoning Engine mit interaktiver Artifacts-Vorschau', 'Riesiges 200K Token Kontextfenster für große Codebasen', '100% offizielle Ersatzgarantie für die gesamte Laufzeit'],
-  },
-  {
-    id: 'claude_3m_prod',
-    short_id: 'claude_3m',
-    brand_id: 'claude',
-    category_id: 'ai',
-    name: 'Claude Pro 3m',
-    name_ar: 'Claude AI Pro (3 شهور)',
-    button_title: '🟣 Claude Pro (3 شهور) — $12.99 ⚡',
-    icon_symbol: '🟣',
-    market_price: 60.00,
-    our_price: 12.99,
-    price_egp: 650,
-    price_sar: 49,
-    subscription_duration: '3 شهور كاملة',
-    warranty_duration: '3 شهور ضمان استبدال',
-    delivery_type: 'private_account',
-    advantages_ar: ['استخدام غير محدود ومستقر لنماذج Claude 3.7 Sonnet', 'أعلى دقة في البرمجة وتصميم بنية المشاريع البرمجية', 'إنشاء مشاريع Projects ومشاركة المستندات مع الذكاء الاصطناعي', 'ضمان استبدال فوري 100% طوال 3 شهور'],
-    advantages_en: ['Stable unlimited usage of Claude 3.7 Sonnet reasoning', 'Industry leading coding precision & software system design', 'Create multi-document Projects with custom system prompts', '100% official replacement warranty for 3 months'],
-    advantages_es: ['Uso ilimitado y estable del razonamiento Claude 3.7 Sonnet', 'Precisión de código líder en la industria y arquitectura de software', 'Crea proyectos con múltiples documentos y prompts personalizados', 'Garantía oficial de reemplazo por 3 meses'],
-    advantages_fr: ['Utilisation stable et illimitée de Claude 3.7 Sonnet', 'Précision de code inégalée et conception logicielle avancée', 'Créez des Projets multi-documents avec prompts système dédiés', 'Garantie de remplacement officielle de 3 mois'],
-    advantages_ru: ['Стабильное использование возможностей Claude 3.7 Sonnet', 'Лидирующая точность в написании кода и архитектуре ПО', 'Создание проектов Projects с загрузкой десятков документов', 'Официальная гарантия замены на 3 месяца'],
-    advantages_tr: ['Claude 3.7 Sonnet mantık yürütme motoruna kararlı erişim', 'Yazılım mimarisi ve kodlamada sektör lideri doğruluk', 'Özel sistem komutlarıyla çok belgeli Projeler oluşturma', '3 ay boyunca %100 resmi değişim garantisi'],
-    advantages_de: ['Stabile unbegrenzte Nutzung der Claude 3.7 Sonnet Logik', 'Branchenführende Programmierpräzision & Software-Architektur', 'Erstellen von Projekten mit benutzerdefinierten System-Prompts', '100% offizielle Ersatzgarantie für 3 Monate'],
+    "id": "chatgpt_1m_prod",
+    "short_id": "chatgpt_1m",
+    "brand_id": "chatgpt",
+    "category_id": "ai",
+    "name": "ChatGPT Plus 1m",
+    "name_ar": "ChatGPT Plus (شهر كامل)",
+    "button_title": "🟢 ChatGPT Plus (شهر واحد) — $1.49 ⚡",
+    "icon_symbol": "🟢",
+    "market_price": 20,
+    "our_price": 1.49,
+    "price_egp": 75,
+    "price_sar": 6,
+    "subscription_duration": "شهر كامل (30 يوم)",
+    "warranty_duration": "شهر كامل ضمان استبدال",
+    "delivery_type": "private_account",
+    "advantages_ar": [
+      "نماذج GPT-4o و OpenAI o3-mini High و o1 Pro",
+      "توليد الصور بدقة فائقة عبر DALL-E 3",
+      "الوضع الصوتي المتقدم Advanced Voice Mode لحظياً",
+      "حساب خاص مفعل مع ضمان استبدال رسمي 100%"
+    ],
+    "advantages_en": [
+      "Latest GPT-4o, OpenAI o3-mini High & o1 Pro models",
+      "Ultra HD image generation powered by DALL-E 3",
+      "Real-time Advanced Voice Mode interaction",
+      "Dedicated private account with 100% replacement warranty"
+    ],
+    "advantages_es": [
+      "Modelos avanzados GPT-4o, OpenAI o3-mini y o1 Pro",
+      "Generación de imágenes Ultra HD con DALL-E 3",
+      "Modo de voz avanzado en tiempo real",
+      "Cuenta privada dedicada con 100% de garantía"
+    ],
+    "advantages_fr": [
+      "Modèles de pointe GPT-4o, OpenAI o3-mini et o1 Pro",
+      "Génération d'images Ultra HD avec DALL-E 3",
+      "Mode vocal avancé en temps réel",
+      "Compte privé dédié avec garantie de remplacement à 100%"
+    ],
+    "advantages_ru": [
+      "Новейшие модели GPT-4o, OpenAI o3-mini и o1 Pro",
+      "Генерация изображений в Ultra HD через DALL-E 3",
+      "Продвинутый голосовой режим Advanced Voice Mode",
+      "Выделенный приватный аккаунт с 100% гарантией"
+    ],
+    "advantages_tr": [
+      "En gelişmiş GPT-4o, OpenAI o3-mini ve o1 Pro modelleri",
+      "DALL-E 3 ile Ultra HD görsel oluşturma",
+      "Gerçek zamanlı Gelişmiş Ses Modu (Advanced Voice Mode)",
+      "Tahsisli özel hesap ve %100 resmi değişim garantisi"
+    ],
+    "advantages_de": [
+      "Modernste GPT-4o, OpenAI o3-mini und o1 Pro Modelle",
+      "Ultra HD Bildgenerierung mit DALL-E 3",
+      "Echtzeit Advanced Voice Mode Sprachsteuerung",
+      "Dediziertes Privatkonto mit 100% Ersatzgarantie"
+    ]
   },
   {
-    id: 'claude_12m_prod',
-    short_id: 'claude_12m',
-    brand_id: 'claude',
-    category_id: 'ai',
-    name: 'Claude Pro 12m',
-    name_ar: 'Claude AI Pro (سنة كاملة)',
-    button_title: '🟣 Claude Pro (سنة كاملة) — $44.99 ⚡',
-    icon_symbol: '🟣',
-    market_price: 240.00,
-    our_price: 44.99,
-    price_egp: 2250,
-    price_sar: 169,
-    subscription_duration: 'سنة كاملة (12 شهر)',
-    warranty_duration: 'سنة كاملة ضمان استبدال',
-    delivery_type: 'private_account',
-    advantages_ar: ['اشتراك سنوي كامل ومستقر بدون انقطاع', 'وصول غير محدود لجميع نماذج Anthropic المحدثة طوال العام', 'الخيار الأول عالمياً لكبار المطورين ومهندسي الذكاء الاصطناعي', 'ضمان استبدال سنوي رسمي 100%'],
-    advantages_en: ['Full 1-year uninterrupted annual subscription', 'Unlimited access to all updated Anthropic frontier models', 'The #1 choice worldwide for senior software engineers & AI leads', '100% comprehensive annual replacement warranty'],
-    advantages_es: ['Suscripción anual completa de 1 año sin interrupciones', 'Acceso ilimitado a todos los modelos vanguardistas de Anthropic', 'La opción preferida por ingenieros de software y líderes de IA', 'Garantía anual completa de reemplazo del 100%'],
-    advantages_fr: ['Abonnement annuel complet ininterrompu d\'un an', 'Accès illimité à tous les modèles pionniers d\'Anthropic', 'Le choix n°1 des ingénieurs logiciels et architectes IA', 'Garantie annuelle de remplacement intégrale 100%'],
-    advantages_ru: ['Годовая подписка на 12 месяцев без прерываний', 'Неограниченный доступ ко всем флагманским моделям Anthropic', 'Выбор номер 1 для старших разработчиков и архитекторов ИИ', '100% комплексная годовая гарантия замены'],
-    advantages_tr: ['1 yıl boyunca kesintisiz tam yıllık abonelik', 'Tüm güncel Anthropic öncü modellerine sınırsız erişim', 'Kıdemli yazılım mühendisleri ve yapay zeka liderlerinin 1 numaralı tercihi', '1 yıl boyunca kapsamlı %100 resmi garanti'],
-    advantages_de: ['Vollständiges 1-Jahres-Abonnement ohne Unterbrechung', 'Unbegrenzter Zugriff auf alle neuen Spitzenmodelle von Anthropic', 'Die weltweite Nummer 1 für Senior Software Engineers & KI-Leads', '100% umfassende Jahres-Ersatzgarantie'],
-  },
-
-  // ── 4. PERPLEXITY AI ──
-  {
-    id: 'perplexity_1m_prod',
-    short_id: 'perplexity_1m',
-    brand_id: 'perplexity',
-    category_id: 'ai',
-    name: 'Perplexity Pro 1m',
-    name_ar: 'Perplexity AI Pro (شهر كامل)',
-    button_title: '🌌 Perplexity Pro (شهر واحد) — $3.99 ⚡',
-    icon_symbol: '🌌',
-    market_price: 20.00,
-    our_price: 3.99,
-    price_egp: 200,
-    price_sar: 15,
-    subscription_duration: 'شهر كامل (30 يوم)',
-    warranty_duration: 'شهر كامل ضمان استبدال',
-    delivery_type: 'personal_account',
-    advantages_ar: ['أحدث نماذج البحث الذكي: Sonar Reasoning Pro و Claude 3.7 و GPT-4o', 'ميزة البحث الأكاديمي الشامل Deep Research وتحليل الملفات', 'أكثر من 300 استعلام Pro يومياً مع رفع مستندات بلا حدود', 'تفعيل على حسابك الشخصي مع ضمان استبدال رسمي 100%'],
-    advantages_en: ['Advanced search models: Sonar Reasoning Pro, Claude 3.7 & GPT-4o', 'Comprehensive Deep Research with instant citation verification', '300+ Pro queries daily with unlimited file & document uploads', 'Personal account activation with 100% replacement warranty'],
-    advantages_es: ['Modelos de búsqueda avanzada: Sonar Reasoning Pro, Claude 3.7 y GPT-4o', 'Deep Research integral con verificación instantánea de fuentes', 'Más de 300 consultas Pro al día y subida ilimitada de archivos', 'Activación en cuenta personal con garantía 100%'],
-    advantages_fr: ['Modèles de recherche : Sonar Reasoning Pro, Claude 3.7 et GPT-4o', 'Deep Research complet avec vérification instantanée des sources', '300+ requêtes Pro quotidiennes et téléchargement illimité de fichiers', 'Activation sur compte personnel avec garantie 100%'],
-    advantages_ru: ['Продвинутый поиск: Sonar Reasoning Pro, Claude 3.7 и GPT-4o', 'Глубокий исследовательский поиск Deep Research с цитатами', '300+ Pro запросов в день с неограниченной загрузкой файлов', 'Активация на личный аккаунт с 100% гарантией'],
-    advantages_tr: ['Gelişmiş arama modelleri: Sonar Reasoning Pro, Claude 3.7 ve GPT-4o', 'Anında kaynak doğrulamalı kapsamlı Deep Research modu', 'Günlük 300+ Pro sorgusu ve sınırsız dosya yükleme', 'Kişisel hesap aktivasyonu ve %100 değişim garantisi'],
-    advantages_de: ['Fortschrittliche Suchmodelle: Sonar Reasoning Pro, Claude 3.7 & GPT-4o', 'Umfassende Deep Research Suche mit Quellenangaben', '300+ Pro-Suchanfragen täglich und unbegrenzter Datei-Upload', 'Aktivierung auf persönlichem Konto mit 100% Garantie'],
-  },
-  {
-    id: 'perplexity_12m_prod',
-    short_id: 'perplexity_12m',
-    brand_id: 'perplexity',
-    category_id: 'ai',
-    name: 'Perplexity Pro 12m',
-    name_ar: 'Perplexity AI Pro (سنة كاملة)',
-    button_title: '🌌 Perplexity Pro (سنة كاملة) — $29.99 ⚡',
-    icon_symbol: '🌌',
-    market_price: 200.00,
-    our_price: 29.99,
-    price_egp: 1500,
-    price_sar: 112,
-    subscription_duration: 'سنة كاملة (12 شهر)',
-    warranty_duration: 'سنة كاملة ضمان استبدال',
-    delivery_type: 'personal_account',
-    advantages_ar: ['اشتراك سنوي كامل للأبحاث الأكاديمية والتحليل العميق', 'استعلامات Pro غير محدودة طوال عام كامل', 'توليد صور احترافية مدمجة عبر Playground v3 و FLUX.1', 'ضمان استبدال سنوي رسمي 100%'],
-    advantages_en: ['Full 1-year annual plan for academic research & intelligence', 'Unlimited Pro queries and continuous Deep Research access', 'Built-in image generation powered by Playground v3 & FLUX.1', '100% comprehensive annual replacement warranty'],
-    advantages_es: ['Plan anual de 1 año para investigación académica y análisis', 'Consultas Pro ilimitadas y acceso continuo a Deep Research', 'Generación de imágenes integrada con Playground v3 y FLUX.1', 'Garantía anual completa de reemplazo del 100%'],
-    advantages_fr: ['Plan annuel d\'un an pour la recherche universitaire et l\'analyse', 'Requêtes Pro illimitées et accès permanent à Deep Research', 'Génération d\'images intégrée avec Playground v3 et FLUX.1', 'Garantie annuelle de remplacement intégrale 100%'],
-    advantages_ru: ['Годовой план на 12 месяцев для академических исследований', 'Безлимитные Pro запросы и постоянный доступ к Deep Research', 'Встроенная генерация изображений через Playground v3 и FLUX.1', '100% комплексная годовая гарантия замены'],
-    advantages_tr: ['Akademik araştırmalar ve analiz için 1 yıllık tam plan', '1 yıl boyunca sınırsız Pro sorgusu ve Deep Research erişimi', 'Playground v3 ve FLUX.1 ile entegre görsel üretimi', '1 yıl boyunca kapsamlı %100 resmi garanti'],
-    advantages_de: ['Vollständiges 1-Jahres-Abonnement für Forschung und Analyse', 'Unbegrenzte Pro-Suchanfragen & kontinuierlicher Deep Research Zugriff', 'Integrierte Bildgenerierung mit Playground v3 & FLUX.1', '100% umfassende Jahres-Ersatzgarantie'],
-  },
-
-  // ── 5. MIDJOURNEY ──
-  {
-    id: 'midjourney_basic_1m_prod',
-    short_id: 'midjourney_basic_1m',
-    brand_id: 'midjourney',
-    category_id: 'ai',
-    name: 'Midjourney Basic 1m',
-    name_ar: 'Midjourney AI Basic (شهر كامل)',
-    button_title: '🌟 Midjourney Basic — $3.99 ⚡',
-    icon_symbol: '🌟',
-    market_price: 10.00,
-    our_price: 3.99,
-    price_egp: 200,
-    price_sar: 15,
-    subscription_duration: 'شهر كامل (30 يوم)',
-    warranty_duration: 'شهر كامل ضمان استبدال',
-    delivery_type: 'private_account',
-    advantages_ar: ['أعلى دقة لتوليد الصور والتصاميم الفنية بإصدارات v6.1 و Niji 6', '3.3 ساعات توليد سريع Fast GPU Hours شهرياً', 'ترخيص تجاري كامل لبيع واستخدام كافة الصور المولدة', 'ضمان استبدال رسمي 100% طوال الشهر'],
-    advantages_en: ['Ultra HD image generation powered by v6.1 & Niji 6', '3.3 Fast GPU Hours monthly for instant rendering', 'Full commercial usage rights to sell all generated artwork', '100% official replacement warranty for the full month'],
-    advantages_es: ['Generación de imágenes Ultra HD con v6.1 y Niji 6', '3.3 Horas GPU rápidas al mes para renderizado instantáneo', 'Derechos comerciales completos para vender todas tus creaciones', 'Garantía oficial de reemplazo del 100%'],
-    advantages_fr: ['Génération d\'images Ultra HD avec v6.1 et Niji 6', '3.3 heures GPU rapides par mois pour rendu instantané', 'Droits commerciaux complets pour vendre toutes vos créations', 'Garantie de remplacement officielle 100%'],
-    advantages_ru: ['Генерация изображений в Ultra HD на версиях v6.1 и Niji 6', '3.3 быстрых GPU часов в месяц для мгновенного рендера', 'Полные коммерческие права на продажу всех созданных работ', '100% официальная гарантия замены на месяц'],
-    advantages_tr: ['v6.1 ve Niji 6 ile Ultra HD sanatsal görsel üretimi', 'Anında işleme için aylık 3.3 Hızlı GPU Saati', 'Üretilen tüm görseller için tam ticari satış hakkı', 'Tam 1 ay boyunca %100 resmi değişim garantisi'],
-    advantages_de: ['Ultra HD Bildgenerierung mit Versionen v6.1 und Niji 6', '3.3 schnelle GPU-Stunden monatlich für sofortiges Rendering', 'Vollständige kommerzielle Rechte zum Verkauf aller Bilder', '100% offizielle Ersatzgarantie für den Monat'],
+    "id": "chatgpt_3m_prod",
+    "short_id": "chatgpt_3m",
+    "brand_id": "chatgpt",
+    "category_id": "ai",
+    "name": "ChatGPT Plus 3m",
+    "name_ar": "ChatGPT Plus (3 شهور)",
+    "button_title": "🟢 ChatGPT Plus (3 شهور) — $2.49 ⚡",
+    "icon_symbol": "🟢",
+    "market_price": 60,
+    "our_price": 2.49,
+    "price_egp": 125,
+    "price_sar": 9,
+    "subscription_duration": "3 شهور كاملة",
+    "warranty_duration": "3 شهور ضمان استبدال",
+    "delivery_type": "private_account",
+    "advantages_ar": [
+      "استخدام غير محدود ومستقر لنماذج GPT-4o و o3-mini",
+      "أولوية قصوى والوصول أثناء أوقات الذروة العالمية",
+      "دعم تحليل البيانات والبرمجة التلقائية",
+      "ضمان استبدال فوري 100% طوال 3 شهور"
+    ],
+    "advantages_en": [
+      "Stable unlimited access to GPT-4o & o3-mini models",
+      "Maximum priority access during global peak hours",
+      "Advanced Python code execution & deep data analytics",
+      "100% official replacement warranty for 3 months"
+    ],
+    "advantages_es": [
+      "Acceso ilimitado y estable a modelos GPT-4o y o3-mini",
+      "Máxima prioridad de acceso durante horas pico",
+      "Ejecución de código y análisis avanzado de datos",
+      "Garantía oficial de reemplazo por 3 meses"
+    ],
+    "advantages_fr": [
+      "Accès stable et illimité aux modèles GPT-4o et o3-mini",
+      "Priorité maximale d'accès pendant les heures de pointe",
+      "Exécution de code et analyse approfondie de données",
+      "Garantie de remplacement officielle de 3 mois"
+    ],
+    "advantages_ru": [
+      "Стабильный доступ без ограничений к GPT-4o и o3-mini",
+      "Максимальный приоритет в часы пиковой нагрузки",
+      "Анализ данных и автоматическое исполнение кода",
+      "Официальная гарантия замены на 3 месяца"
+    ],
+    "advantages_tr": [
+      "GPT-4o ve o3-mini modellerine kesintisiz ve kararlı erişim",
+      "Küresel yoğun saatlerde en yüksek öncelik",
+      "Gelişmiş veri analitiği ve Python kod çalıştırma",
+      "3 ay boyunca %100 resmi değişim garantisi"
+    ],
+    "advantages_de": [
+      "Stabiler unbegrenzter Zugriff auf GPT-4o & o3-mini Modelle",
+      "Höchste Priorität während weltweiter Stoßzeiten",
+      "Erweiterte Datenanalyse und Python-Codeausführung",
+      "100% offizielle Ersatzgarantie für 3 Monate"
+    ]
   },
   {
-    id: 'midjourney_std_1m_prod',
-    short_id: 'midjourney_std_1m',
-    brand_id: 'midjourney',
-    category_id: 'ai',
-    name: 'Midjourney Standard 1m',
-    name_ar: 'Midjourney AI Standard (شهر كامل)',
-    button_title: '🌟 Midjourney Standard — $9.99 ⚡',
-    icon_symbol: '🌟',
-    market_price: 30.00,
-    our_price: 9.99,
-    price_egp: 500,
-    price_sar: 37,
-    subscription_duration: 'شهر كامل (30 يوم)',
-    warranty_duration: 'شهر كامل ضمان استبدال',
-    delivery_type: 'private_account',
-    advantages_ar: ['15 ساعة توليد سريع Fast GPU Hours شهرياً', 'توليد صور غير محدود في وضع الاسترخاء Relax Mode', 'ترخيص تجاري رسمي لاستخدام وبيع كافة الأعمال', 'ضمان استبدال رسمي 100%'],
-    advantages_en: ['15 Fast GPU Hours monthly + unlimited Relax Mode generation', 'Unlimited background rendering with zero wait limits', 'Full commercial usage rights for all digital outputs', '100% official replacement warranty for the full month'],
-    advantages_es: ['15 horas GPU rápidas al mes + generación ilimitada en modo Relax', 'Renderizado ilimitado en segundo plano sin límites de espera', 'Derechos comerciales completos para todas tus creaciones', 'Garantía oficial de reemplazo del 100%'],
-    advantages_fr: ['15 heures GPU rapides par mois + mode Relax illimité', 'Rendu illimité en arrière-plan sans aucune restriction', 'Droits commerciaux complets pour toutes vos sorties numériques', 'Garantie de remplacement officielle 100%'],
-    advantages_ru: ['15 быстрых GPU часов в месяц + безлимитный Relax режим', 'Неограниченная генерация в фоновом режиме', 'Полные коммерческие права на продажу цифровых артов', '100% официальная гарантия замены на месяц'],
-    advantages_tr: ['Aylık 15 Hızlı GPU Saati + sınırsız Relax Modu görsel üretimi', 'Bekleme sınırı olmaksızın sınırsız arka plan işleme', 'Tüm dijital çıktılar için eksiksiz ticari kullanım hakkı', 'Tam 1 ay boyunca %100 resmi değişim garantisi'],
-    advantages_de: ['15 schnelle GPU-Stunden monatlich + unbegrenzter Relax-Modus', 'Unbegrenztes Rendern im Hintergrund ohne Wartebeschränkungen', 'Vollständige kommerzielle Rechte für alle generierten Bilder', '100% offizielle Ersatzgarantie für den Monat'],
+    "id": "chatgpt_12m_prod",
+    "short_id": "chatgpt_12m",
+    "brand_id": "chatgpt",
+    "category_id": "ai",
+    "name": "ChatGPT Plus 12m",
+    "name_ar": "ChatGPT Plus (سنة كاملة)",
+    "button_title": "🟢 ChatGPT Plus (سنة كاملة) — $2.99 ⚡",
+    "icon_symbol": "🟢",
+    "market_price": 240,
+    "our_price": 2.99,
+    "price_egp": 150,
+    "price_sar": 11,
+    "subscription_duration": "سنة كاملة (12 شهر)",
+    "warranty_duration": "سنة كاملة ضمان استبدال",
+    "delivery_type": "private_account",
+    "advantages_ar": [
+      "اشتراك سنوي كامل ومستقر بدون انقطاع",
+      "إنشاء وإدارة GPTs المخصصة مع مشاركتها في الـ GPT Store",
+      "تحليل المستندات وتوليد التقارير والأكواد بدقة عالية",
+      "ضمان استبدال سنوي رسمي شامل 100%"
+    ],
+    "advantages_en": [
+      "Full 1-year uninterrupted annual subscription",
+      "Build, manage and monetize custom GPTs in the GPT Store",
+      "High precision document synthesis and full code generation",
+      "100% comprehensive annual replacement warranty"
+    ],
+    "advantages_es": [
+      "Suscripción anual completa e ininterrumpida de 1 año",
+      "Crea y gestiona GPTs personalizados en la GPT Store",
+      "Análisis de documentos de alta precisión y generación de código",
+      "Garantía anual completa de reemplazo del 100%"
+    ],
+    "advantages_fr": [
+      "Abonnement annuel complet ininterrompu d'un an",
+      "Créez et gérez des GPT personnalisés dans le GPT Store",
+      "Analyse de documents de haute précision et code complet",
+      "Garantie annuelle de remplacement intégrale 100%"
+    ],
+    "advantages_ru": [
+      "Годовая подписка на 12 месяцев без прерываний",
+      "Создание и управление своими GPT в магазине GPT Store",
+      "Глубокий анализ документов и генерация любого кода",
+      "100% комплексная годовая гарантия замены"
+    ],
+    "advantages_tr": [
+      "1 yıl boyunca kesintisiz tam yıllık abonelik",
+      "GPT Store'da özel GPT'ler oluşturma ve yönetme",
+      "Yüksek hassasiyetli belge analizi ve tam kod üretimi",
+      "1 yıl boyunca kapsamlı %100 resmi garanti"
+    ],
+    "advantages_de": [
+      "Vollständiges 1-Jahres-Abonnement ohne Unterbrechung",
+      "Erstellen und Verwalten von Custom GPTs im GPT Store",
+      "Hochpräzise Dokumentenanalyse und Code-Generierung",
+      "100% umfassende Jahres-Ersatzgarantie"
+    ]
   },
   {
-    id: 'midjourney_12m_prod',
-    short_id: 'midjourney_12m',
-    brand_id: 'midjourney',
-    category_id: 'ai',
-    name: 'Midjourney AI 12m',
-    name_ar: 'Midjourney AI Standard (سنة كاملة)',
-    button_title: '🌟 Midjourney (سنة كاملة) — $79.99 ⚡',
-    icon_symbol: '🌟',
-    market_price: 360.00,
-    our_price: 79.99,
-    price_egp: 4000,
-    price_sar: 300,
-    subscription_duration: 'سنة كاملة (12 شهر)',
-    warranty_duration: 'سنة كاملة ضمان استبدال',
-    delivery_type: 'private_account',
-    advantages_ar: ['اشتراك سنوي كامل للاستوديوهات والمصممين المحترفين', '180 ساعة توليد سريع Fast GPU Hours طوال العام', 'توليد غير محدود في وضع Relax Mode طوال 12 شهراً', 'ضمان استبدال سنوي شامل 100%'],
-    advantages_en: ['Full 1-year annual plan for professional design studios & creators', '180 Fast GPU Hours annually + continuous unlimited Relax Mode', 'Complete commercial licensing for enterprise asset production', '100% comprehensive annual replacement warranty'],
-    advantages_es: ['Plan anual de 1 año para estudios de diseño y creadores', '180 horas GPU rápidas al año + modo Relax ilimitado continuo', 'Licencia comercial completa para producción digital empresarial', 'Garantía anual completa de reemplazo del 100%'],
-    advantages_fr: ['Plan annuel d\'un an pour studios de design et créateurs', '180 heures GPU rapides par an + mode Relax illimité continu', 'Licence commerciale complète pour production professionnelle', 'Garantie annuelle de remplacement intégrale 100%'],
-    advantages_ru: ['Годовой план на 12 месяцев для студий дизайна и креаторов', '180 быстрых GPU часов в год + безлимитный Relax режим', 'Полная коммерческая лицензия для коммерческих проектов', '100% комплексная годовая гарантия замены'],
-    advantages_tr: ['Tasarım stüdyoları ve profesyoneller için 1 yıllık tam plan', 'Yıllık 180 Hızlı GPU Saati + sürekli sınırsız Relax Modu', 'Kurumsal dijital üretim için eksiksiz ticari lisans', '1 yıl boyunca kapsamlı %100 resmi garanti'],
-    advantages_de: ['Vollständiger 1-Jahres-Plan für Designstudios und Profis', '180 schnelle GPU-Stunden jährlich + unbegrenzter Relax-Modus', 'Vollständige kommerzielle Lizenz für professionelle Produktionen', '100% umfassende Jahres-Ersatzgarantie'],
-  },
-
-  // ── 6. ELEVENLABS ──
-  {
-    id: 'elevenlabs_starter_1m_prod',
-    short_id: 'elevenlabs_starter_1m',
-    brand_id: 'elevenlabs',
-    category_id: 'ai',
-    name: 'ElevenLabs Starter 1m',
-    name_ar: 'ElevenLabs AI Starter (شهر كامل)',
-    button_title: '🎙️ ElevenLabs Starter — $2.99 ⚡',
-    icon_symbol: '🎙️',
-    market_price: 5.00,
-    our_price: 2.99,
-    price_egp: 150,
-    price_sar: 11,
-    subscription_duration: 'شهر كامل (30 يوم)',
-    warranty_duration: 'شهر كامل ضمان استبدال',
-    delivery_type: 'api_token',
-    advantages_ar: ['30,000 حرف شهرياً لتوليد أصوات بشرية فائقة الواقعية', 'استنساخ ما يصل إلى 10 أصوات مخصصة Instant Voice Cloning', 'ترخيص تجاري كامل لاستخدام الأصوات في اليوتيوب والإعلانات', 'مفتاح API رسمي وضمان استبدال 100%'],
-    advantages_en: ['30,000 character credits monthly for hyper-realistic speech', 'Instant Voice Cloning support for up to 10 unique custom voices', 'Full commercial license for YouTube, ads & podcasts', 'Official API Key access with 100% replacement warranty'],
-    advantages_es: ['30,000 caracteres al mes para voces humanas hiperrealistas', 'Clonación instantánea de hasta 10 voces personalizadas', 'Licencia comercial completa para YouTube, anuncios y podcasts', 'Acceso con clave API oficial y 100% de garantía'],
-    advantages_fr: ['30 000 caractères par mois pour voix humaines ultra-réalistes', 'Clonage instantané jusqu\'à 10 voix personnalisées uniques', 'Licence commerciale complète pour YouTube, pubs et podcasts', 'Clé API officielle avec garantie de remplacement 100%'],
-    advantages_ru: ['30 000 символов в месяц для гиперреалистичного синтеза речи', 'Мгновенное клонирование до 10 уникальных пользовательских голосов', 'Полная коммерческая лицензия для YouTube, рекламы и подкастов', 'Официальный API ключ со 100% гарантией замены'],
-    advantages_tr: ['Gerçekçi konuşma sentezi için aylık 30.000 karakter kredisi', '10 adede kadar özel ses için anında ses klonlama (Voice Cloning)', 'YouTube, reklamlar ve podcast\'ler için eksiksiz ticari lisans', 'Resmi API anahtarı erişimi ve %100 değişim garantisi'],
-    advantages_de: ['30.000 Zeichen monatlich für hyperrealistische Sprachausgabe', 'Instant Voice Cloning für bis zu 10 individuelle Stimmen', 'Vollständige kommerzielle Lizenz für YouTube, Werbung & Podcasts', 'Offizieller API-Schlüssel mit 100% Ersatzgarantie'],
-  },
-  {
-    id: 'elevenlabs_creator_1m_prod',
-    short_id: 'elevenlabs_creator_1m',
-    brand_id: 'elevenlabs',
-    category_id: 'ai',
-    name: 'ElevenLabs Creator 1m',
-    name_ar: 'ElevenLabs AI Creator (شهر كامل)',
-    button_title: '🎙️ ElevenLabs Creator — $8.99 ⚡',
-    icon_symbol: '🎙️',
-    market_price: 22.00,
-    our_price: 8.99,
-    price_egp: 450,
-    price_sar: 34,
-    subscription_duration: 'شهر كامل (30 يوم)',
-    warranty_duration: 'شهر كامل ضمان استبدال',
-    delivery_type: 'api_token',
-    advantages_ar: ['100,000 حرف شهرياً مع دعم استنساخ الأصوات الاحترافي Professional Cloning', 'دبلجة الفيديوهات وترجمتها تلقائياً بدقة استوديو سينمائية', 'أعلى جودة صوتية بدون فقدان ووصول كامل لـ API', 'ضمان استبدال رسمي 100% طوال المدة'],
-    advantages_en: ['100,000 characters monthly + Professional Voice Cloning engine', 'Studio-quality automatic video dubbing and AI voice translation', 'Highest audio fidelity lossless output + full API key access', '100% official replacement warranty for the entire period'],
-    advantages_es: ['100,000 caracteres al mes + motor Professional Voice Cloning', 'Doblaje automático de video con calidad de estudio y traducción', 'Máxima fidelidad de audio sin pérdidas + clave API completa', 'Garantía oficial de reemplazo del 100%'],
-    advantages_fr: ['100 000 caractères par mois + moteur Professional Voice Cloning', 'Doublage vidéo automatique de qualité studio et traduction IA', 'Fidélité audio maximale sans perte + accès API complet', 'Garantie de remplacement officielle 100%'],
-    advantages_ru: ['100 000 символов в месяц + профессиональное клонирование голоса', 'Студийный автоматический дубляж и перевод видео с ИИ', 'Максимальное качество звука без сжатия + полный API ключ', '100% официальная гарантия замены на весь срок'],
-    advantages_tr: ['Aylık 100.000 karakter + Profesyonel Ses Klonlama motoru', 'Stüdyo kalitesinde otomatik video dublajı ve yapay zeka çevirisi', 'En yüksek kayıpsız ses kalitesi ve tam API anahtarı erişimi', 'Tüm süre boyunca %100 resmi değişim garantisi'],
-    advantages_de: ['100.000 Zeichen monatlich + Professional Voice Cloning Engine', 'Studio-Video-Dubbing und KI-Übersetzung in Spitzenqualität', 'Höchste verlustfreie Audioqualität + voller API-Schlüssel-Zugriff', '100% offizielle Ersatzgarantie für die gesamte Laufzeit'],
-  },
-
-  // ── 7. GROK 3 (xAI) ──
-  {
-    id: 'grok_1m_prod',
-    short_id: 'grok_1m',
-    brand_id: 'grok',
-    category_id: 'ai',
-    name: 'Grok 3 SuperGrok 1m',
-    name_ar: 'Grok 3 / SuperGrok (شهر كامل)',
-    button_title: '⚡ Grok 3 SuperGrok — $5.99 ⚡',
-    icon_symbol: '⚡',
-    market_price: 16.00,
-    our_price: 5.99,
-    price_egp: 300,
-    price_sar: 22,
-    subscription_duration: 'شهر كامل (30 يوم)',
-    warranty_duration: 'شهر كامل ضمان استبدال',
-    delivery_type: 'private_account',
-    advantages_ar: ['أحدث نماذج Grok 3 التفكيرية من xAI بدون أي رقابة أو قيود', 'تكامل مباشر مع بيانات منصة X اللحظية والأخبار العاجلة', 'توليد صور فائقة السرعة بنموذج FLUX.1 المدمج', 'ضمان استبدال رسمي 100%'],
-    advantages_en: ['Latest Grok 3 flagship reasoning model from xAI', 'Real-time live search connected directly to platform X data', 'High-speed image generation powered by built-in FLUX.1', '100% official replacement warranty for the full month'],
-    advantages_es: ['Modelo insignia de razonamiento Grok 3 de xAI', 'Búsqueda en tiempo real conectada a datos de la plataforma X', 'Generación rápida de imágenes con el modelo integrado FLUX.1', 'Garantía oficial de reemplazo del 100%'],
-    advantages_fr: ['Modèle de raisonnement phare Grok 3 de xAI', 'Recherche en temps réel connectée aux données de la plateforme X', 'Génération rapide d\'images avec le moteur intégré FLUX.1', 'Garantie de remplacement officielle 100%'],
-    advantages_ru: ['Флагманская модель мышления Grok 3 от xAI', 'Поиск в реальном времени с подключением к данным платформы X', 'Скоростная генерация картинок на встроенной модели FLUX.1', '100% официальная гарантия замены на месяц'],
-    advantages_tr: ['xAI\'ın en yeni Grok 3 akıl yürütme amiral gemisi modeli', 'X platformu verilerine doğrudan bağlı gerçek zamanlı arama', 'Entegre FLUX.1 ile yüksek hızlı görsel üretimi', 'Tam 1 ay boyunca %100 resmi değişim garantisi'],
-    advantages_de: ['Neuestes Grok 3 Spitzen-Logikmodell von xAI', 'Echtzeitsuche direkt an die Daten der Plattform X angebunden', 'Schnelle Bildgenerierung mit integriertem FLUX.1', '100% offizielle Ersatzgarantie für den Monat'],
-  },
-
-  // ── 8. RUNWAY GEN-3 ──
-  {
-    id: 'runway_1m_prod',
-    short_id: 'runway_1m',
-    brand_id: 'runway',
-    category_id: 'ai',
-    name: 'Runway Gen-3 Alpha 1m',
-    name_ar: 'Runway Gen-3 Video AI (شهر كامل)',
-    button_title: '🎬 Runway Gen-3 Video — $8.99 ⚡',
-    icon_symbol: '🎬',
-    market_price: 28.00,
-    our_price: 8.99,
-    price_egp: 450,
-    price_sar: 34,
-    subscription_duration: 'شهر كامل (30 يوم)',
-    warranty_duration: 'شهر كامل ضمان استبدال',
-    delivery_type: 'private_account',
-    advantages_ar: ['أحدث نماذج صناعة الفيديو السينمائي Gen-3 Alpha & Turbo', '625 رصيد توليد فيديو شهرياً مع تصدير بدقة 4K بدون علامة مائية', 'أدوات التحكم الحركي Motion Brush والتحكم بالكاميرا الإخراجية', 'ضمان استبدال رسمي 100%'],
-    advantages_en: ['State-of-the-art cinematic video generation with Gen-3 Alpha & Turbo', '625 video credits monthly with 4K watermark-free export', 'Advanced Motion Brush, camera control and frame-to-video tools', '100% official replacement warranty for the full month'],
-    advantages_es: ['Generación de video cinemático con Gen-3 Alpha y Turbo', '625 créditos al mes con exportación 4K sin marca de agua', 'Herramientas avanzadas Motion Brush y control de cámara', 'Garantía oficial de reemplazo del 100%'],
-    advantages_fr: ['Génération vidéo cinématographique avec Gen-3 Alpha et Turbo', '625 crédits vidéo par mois avec export 4K sans filigrane', 'Outils avancés Motion Brush et contrôle de caméra de réalisation', 'Garantie de remplacement officielle 100%'],
-    advantages_ru: ['Генерация кинематографичного видео на Gen-3 Alpha и Turbo', '625 кредитов в месяц с экспортом в 4K без водяных знаков', 'Инструменты Motion Brush и полный контроль движения камеры', '100% официальная гарантия замены на месяц'],
-    advantages_tr: ['Gen-3 Alpha ve Turbo ile sinematik video üretimi', 'Filigransız 4K dışa aktarmayla aylık 625 video kredisi', 'Gelişmiş Motion Brush ve yönetmen kamera kontrol araçları', 'Tam 1 ay boyunca %100 resmi değişim garantisi'],
-    advantages_de: ['Filmerische Videogenerierung mit Gen-3 Alpha & Turbo', '625 Videoguthaben monatlich mit 4K-Export ohne Wasserzeichen', 'Erweiterte Motion Brush und professionelle Kamerasteuerung', '100% offizielle Ersatzgarantie für den Monat'],
-  },
-
-  // ── 9. CURSOR AI ──
-  {
-    id: 'cursor_1m_prod',
-    short_id: 'cursor_1m',
-    brand_id: 'cursor',
-    category_id: 'dev',
-    name: 'Cursor AI Pro 1m',
-    name_ar: 'Cursor AI Pro (شهر كامل)',
-    button_title: '💻 Cursor Pro (شهر واحد) — $4.99 ⚡',
-    icon_symbol: '💻',
-    market_price: 20.00,
-    our_price: 4.99,
-    price_egp: 250,
-    price_sar: 19,
-    subscription_duration: 'شهر كامل (30 يوم)',
-    warranty_duration: 'شهر كامل ضمان استبدال',
-    delivery_type: 'personal_account',
-    advantages_ar: ['محرر الأكواد الذكي الرائد بنماذج Claude 3.7 و Gemini 3.1 Pro و GPT-4o', 'وكيل التطوير التلقائي Composer Agent لتعديل عدة ملفات برمجية معاً', '500 طلب سريع Fast Premium Requests شهرياً واستعلامات غير محدودة', 'تفعيل على حسابك الشخصي أو حساب جاهز بضمان رسمي 100%'],
-    advantages_en: ['Premier AI code editor powered by Claude 3.7, Gemini 3.1 Pro & GPT-4o', 'Multi-file codebase Composer Agent for automated engineering', '500 Fast Premium Requests monthly + unlimited standard queries', 'Personal account activation with 100% replacement warranty'],
-    advantages_es: ['Editor de código IA líder con Claude 3.7, Gemini 3.1 Pro y GPT-4o', 'Composer Agent para editar múltiples archivos simultáneamente', '500 solicitudes Fast Premium al mes + consultas ilimitadas', 'Activación en cuenta personal con garantía oficial 100%'],
-    advantages_fr: ['Éditeur de code IA de référence avec Claude 3.7, Gemini 3.1 Pro et GPT-4o', 'Composer Agent pour modifier plusieurs fichiers simultanément', '500 requêtes Fast Premium par mois + requêtes illimitées', 'Activation sur compte personnel avec garantie 100%'],
-    advantages_ru: ['Топовый AI редактор кода на Claude 3.7, Gemini 3.1 Pro и GPT-4o', 'Composer Agent для синхронного редактирования многих файлов', '500 быстрых Fast Premium запросов в месяц + безлимитные стандартные', 'Активация на личный аккаунт с 100% гарантией'],
-    advantages_tr: ['Claude 3.7, Gemini 3.1 Pro ve GPT-4o destekli lider AI kod editörü', 'Çoklu dosya düzenleme için Composer Agent otomatik geliştirici', 'Aylık 500 Hızlı Premium istek + sınırsız standart sorgu', 'Kişisel hesap aktivasyonu ve %100 resmi garanti'],
-    advantages_de: ['Führender KI-Code-Editor mit Claude 3.7, Gemini 3.1 Pro & GPT-4o', 'Composer Agent für gleichzeitige Mehrdatei-Entwicklung', '500 schnelle Fast Premium Anfragen monatlich + unbegrenzte Standardanfragen', 'Aktivierung auf persönlichem Konto mit 100% Garantie'],
+    "id": "chatgpt_pro_1m_prod",
+    "short_id": "chatgpt_pro_1m",
+    "brand_id": "chatgpt",
+    "category_id": "ai",
+    "name": "ChatGPT Pro 1m (o1 Pro Mode)",
+    "name_ar": "ChatGPT Pro (o1 Pro Mode Unlimited)",
+    "button_title": "🟢 ChatGPT Pro (o1 Pro Mode) — $2.99 ⚡",
+    "icon_symbol": "🟢",
+    "market_price": 200,
+    "our_price": 2.99,
+    "price_egp": 150,
+    "price_sar": 11,
+    "subscription_duration": "شهر كامل (30 يوم)",
+    "warranty_duration": "شهر كامل ضمان استبدال",
+    "delivery_type": "private_account",
+    "advantages_ar": [
+      "استخدام غير محدود لنموذج OpenAI o1 Pro Mode الخارق",
+      "قوة تفكير عميقة لحل أعقد المسائل الرياضية والبرمجية والأكاديمية",
+      "حساب رسمي مخصص Pro مع أعلى سرعة معالجة في العالم",
+      "ضمان استبدال رسمي 100%"
+    ],
+    "advantages_en": [
+      "Unlimited access to the flagship OpenAI o1 Pro Mode",
+      "Deep compute reasoning for world-class math, coding & research",
+      "Dedicated high-tier Pro account with maximum compute priority",
+      "100% official replacement warranty for the full month"
+    ],
+    "advantages_es": [
+      "Acceso ilimitado al modelo insignia OpenAI o1 Pro Mode",
+      "Razonamiento profundo para matemáticas complejas y código",
+      "Cuenta Pro dedicada con la velocidad de procesamiento más alta",
+      "Garantía oficial de reemplazo del 100%"
+    ],
+    "advantages_fr": [
+      "Accès illimité au modèle phare OpenAI o1 Pro Mode",
+      "Raisonnement profond pour les mathématiques et le code complexe",
+      "Compte Pro dédié avec priorité de calcul maximale",
+      "Garantie de remplacement officielle 100%"
+    ],
+    "advantages_ru": [
+      "Безлимитный доступ к флагманской модели OpenAI o1 Pro Mode",
+      "Глубокое мышление для сложнейшей математики и архитектуры ПО",
+      "Выделенный Pro аккаунт с максимальной скоростью вычислений",
+      "100% официальная гарантия замены на месяц"
+    ],
+    "advantages_tr": [
+      "OpenAI o1 Pro Mode amiral gemisi modeline sınırsız erişim",
+      "İleri düzey matematik, kodlama ve bilim için derin düşünme gücü",
+      "Dünyanın en yüksek işlem hızına sahip özel Pro hesabı",
+      "Tam 1 ay boyunca %100 resmi değişim garantisi"
+    ],
+    "advantages_de": [
+      "Unbegrenzter Zugriff auf das OpenAI o1 Pro Mode Spitzenmodell",
+      "Tiefes logisches Denken für anspruchsvollste Mathematik & Code",
+      "Dediziertes Pro-Konto mit höchster Rechenleistung weltweit",
+      "100% offizielle Ersatzgarantie für den Monat"
+    ]
   },
   {
-    id: 'cursor_12m_prod',
-    short_id: 'cursor_12m',
-    brand_id: 'cursor',
-    category_id: 'dev',
-    name: 'Cursor AI Pro 12m',
-    name_ar: 'Cursor AI Pro (سنة كاملة)',
-    button_title: '💻 Cursor Pro (سنة كاملة) — $44.99 ⚡',
-    icon_symbol: '💻',
-    market_price: 192.00,
-    our_price: 44.99,
-    price_egp: 2250,
-    price_sar: 169,
-    subscription_duration: 'سنة كاملة (12 شهر)',
-    warranty_duration: 'سنة كاملة ضمان استبدال',
-    delivery_type: 'personal_account',
-    advantages_ar: ['اشتراك سنوي كامل للمبرمجين وشركات البرمجة المستقلة', '6,000 طلب سريع Fast Premium Requests طوال العام', 'التحكم الكامل في مشاريع الويب والتطبيقات عبر Composer Agent', 'ضمان استبدال سنوي رسمي 100%'],
-    advantages_en: ['Full 1-year annual plan for professional software engineers', '6,000 Fast Premium Requests annually + continuous agent access', 'Autonomous multi-file architecture refactoring with Composer', '100% comprehensive annual replacement warranty'],
-    advantages_es: ['Plan anual de 1 año para desarrolladores e ingenieros de software', '6,000 solicitudes Fast Premium al año + acceso continuo a agentes', 'Refactorización autónoma de arquitectura con Composer', 'Garantía anual completa de reemplazo del 100%'],
-    advantages_fr: ['Plan annuel d\'un an pour développeurs et ingénieurs logiciels', '6 000 requêtes Fast Premium par an + accès permanent aux agents', 'Refactorisation autonome d\'architecture avec Composer', 'Garantie annuelle de remplacement intégrale 100%'],
-    advantages_ru: ['Годовой план на 12 месяцев для профессиональных разработчиков', '6 000 быстрых Fast Premium запросов в год + доступ к Composer', 'Автономный рефакторинг архитектуры кодовой базы', '100% комплексная годовая гарантия замены'],
-    advantages_tr: ['Yazılım mühendisleri ve ajanslar için 1 yıllık tam plan', 'Yıllık 6.000 Hızlı Premium istek + sürekli Composer erişimi', 'Composer ile otonom çoklu dosya mimari yeniden yapılandırma', '1 yıl boyunca kapsamlı %100 resmi garanti'],
-    advantages_de: ['Vollständiges 1-Jahres-Abonnement für Software-Entwickler', '6.000 Fast Premium Anfragen jährlich + ständiger Agenten-Zugriff', 'Autonomes Multi-File Refactoring mit Composer', '100% umfassende Jahres-Ersatzgarantie'],
-  },
-
-  // ── 10. GITHUB COPILOT ──
-  {
-    id: 'copilot_1m_prod',
-    short_id: 'copilot_1m',
-    brand_id: 'copilot',
-    category_id: 'dev',
-    name: 'GitHub Copilot 1m',
-    name_ar: 'GitHub Copilot (شهر كامل)',
-    button_title: '🐙 GitHub Copilot (شهر واحد) — $3.49 ⚡',
-    icon_symbol: '🐙',
-    market_price: 10.00,
-    our_price: 3.49,
-    price_egp: 175,
-    price_sar: 13,
-    subscription_duration: 'شهر كامل (30 يوم)',
-    warranty_duration: 'شهر كامل ضمان استبدال',
-    delivery_type: 'personal_account',
-    advantages_ar: ['الإكمال التلقائي للأكواد داخل VS Code و JetBrains و Neovim', 'مساعد Copilot Chat الذكي لشرح الأكواد واكتشاف الثغرات البرمجية', 'تفعيل على حساب GitHub الشخصي بدون كلمة مرور', 'ضمان استبدال فوري 100% طوال الشهر'],
-    advantages_en: ['Real-time code autocompletion in VS Code, JetBrains & Neovim', 'Intelligent Copilot Chat for bug fixing & unit test generation', 'Direct activation on your personal GitHub Account without password', '100% official replacement warranty for the full month'],
-    advantages_es: ['Autocompletado de código en tiempo real en VS Code y JetBrains', 'Copilot Chat inteligente para corregir errores y generar pruebas', 'Activación directa en tu cuenta de GitHub sin contraseña', 'Garantía oficial de reemplazo del 100%'],
-    advantages_fr: ['Autocomplétion de code en temps réel sur VS Code et JetBrains', 'Copilot Chat intelligent pour débogage et génération de tests', 'Activation directe sur votre compte GitHub sans mot de passe', 'Garantie de remplacement officielle 100%'],
-    advantages_ru: ['Автодополнение кода в реальном времени в VS Code и JetBrains', 'Умный Copilot Chat для исправления багов и написания тестов', 'Прямая активация на ваш личный GitHub аккаунт без пароля', '100% официальная гарантия замены на месяц'],
-    advantages_tr: ['VS Code, JetBrains ve Neovim\'de anında kod tamamlama', 'Hata ayıklama ve birim testi için akıllı Copilot Chat asistanı', 'Şifre olmadan kişisel GitHub hesabınıza doğrudan aktivasyon', 'Tam 1 ay boyunca %100 resmi değişim garantisi'],
-    advantages_de: ['Echtzeit-Code-Autovervollständigung in VS Code & JetBrains', 'Intelligenter Copilot Chat für Debugging und Unit-Tests', 'Direkte Aktivierung auf persönlichem GitHub-Konto ohne Passwort', '100% offizielle Ersatzgarantie für den Monat'],
-  },
-  {
-    id: 'copilot_12m_prod',
-    short_id: 'copilot_12m',
-    brand_id: 'copilot',
-    category_id: 'dev',
-    name: 'GitHub Copilot 12m',
-    name_ar: 'GitHub Copilot (سنة كاملة)',
-    button_title: '🐙 GitHub Copilot (سنة كاملة) — $24.99 ⚡',
-    icon_symbol: '🐙',
-    market_price: 100.00,
-    our_price: 24.99,
-    price_egp: 1250,
-    price_sar: 94,
-    subscription_duration: 'سنة كاملة (12 شهر)',
-    warranty_duration: 'سنة كاملة ضمان استبدال',
-    delivery_type: 'personal_account',
-    advantages_ar: ['ترخيص رسمي سنوي مخصص على حسابك أو حساب جاهز', 'مساعدة برمجية متواصلة على مدار عام كامل', 'ضمان استبدال سنوي شامل 100%'],
-    advantages_en: ['Full 1-year official subscription on your personal account', 'Uninterrupted AI pair programming for 12 continuous months', '100% comprehensive annual replacement warranty'],
-    advantages_es: ['Suscripción oficial de 1 año en tu cuenta personal de GitHub', 'Programación en pareja con IA ininterrumpida durante 12 meses', 'Garantía anual completa de reemplazo del 100%'],
-    advantages_fr: ['Abonnement officiel d\'un an sur votre compte personnel GitHub', 'Pair programming IA ininterrompu pendant 12 mois consécutifs', 'Garantie annuelle de remplacement intégrale 100%'],
-    advantages_ru: ['Официальная годовая подписка на ваш личный аккаунт GitHub', 'Непрерывное парное программирование с ИИ на 12 месяцев', '100% комплексная годовая гарантия замены'],
-    advantages_tr: ['Kişisel GitHub hesabınızda 1 yıllık tam resmi abonelik', '12 ay boyunca kesintisiz yapay zeka ile eşli programlama', '1 yıl boyunca kapsamlı %100 resmi garanti'],
-    advantages_de: ['Vollständiges 1-Jahres-Abonnement auf persönlichem GitHub-Konto', 'Unterbrechungsfreies KI-Pair-Programming für 12 Monate', '100% umfassende Jahres-Ersatzgarantie'],
-  },
-
-  // ── 11. V0.DEV / BOLT.NEW ──
-  {
-    id: 'v0dev_1m_prod',
-    short_id: 'v0dev_1m',
-    brand_id: 'v0dev',
-    category_id: 'dev',
-    name: 'v0.dev Pro 1m',
-    name_ar: 'v0.dev / Bolt.new Pro (شهر كامل)',
-    button_title: '⚡ v0.dev Pro (شهر واحد) — $5.99 ⚡',
-    icon_symbol: '⚡',
-    market_price: 20.00,
-    our_price: 5.99,
-    price_egp: 300,
-    price_sar: 22,
-    subscription_duration: 'شهر كامل (30 يوم)',
-    warranty_duration: 'شهر كامل ضمان استبدال',
-    delivery_type: 'api_token',
-    advantages_ar: ['بناء وتصميم واجهات وتطبيقات React و Next.js و Tailwind فورياً بالـ AI', '5,000 نقطة توليد شهرياً مع تصدير الأكواد بضغطة زر', 'نشر وتجربة التطبيقات السحابية فورياً', 'ضمان استبدال رسمي 100%'],
-    advantages_en: ['Instant AI generation of React, Next.js & Tailwind UI components', '5,000 generation credits monthly with 1-click code export', 'Deploy & preview fullstack web applications instantly', '100% official replacement warranty for the full month'],
-    advantages_es: ['Generación instantánea de componentes UI en React, Next.js y Tailwind', '5,000 créditos al mes con exportación de código en un clic', 'Despliegue y vista previa de aplicaciones web al instante', 'Garantía oficial de reemplazo del 100%'],
-    advantages_fr: ['Génération instantanée de composants React, Next.js et Tailwind', '5 000 crédits par mois avec export de code en un clic', 'Déploiement et aperçu d\'applications web fullstack instantanés', 'Garantie de remplacement officielle 100%'],
-    advantages_ru: ['Мгновенная генерация интерфейсов на React, Next.js и Tailwind UI', '5 000 кредитов генерации в месяц с экспортом кода в 1 клик', 'Мгновенный деплой и тестирование веб-приложений', '100% официальная гарантия замены на месяц'],
-    advantages_tr: ['React, Next.js ve Tailwind ile anında AI UI bileşeni üretimi', 'Tek tıkla kod dışa aktarmayla aylık 5.000 üretim kredisi', 'Fullstack web uygulamalarını anında yayınlama ve önizleme', 'Tam 1 ay boyunca %100 resmi değişim garantisi'],
-    advantages_de: ['Sofortige KI-Generierung von React, Next.js & Tailwind UI-Komponenten', '5.000 Credits monatlich mit 1-Klick-Code-Export', 'Fullstack-Web-Apps sofort bereitstellen und testen', '100% offizielle Ersatzgarantie für den Monat'],
-  },
-
-  // ── 12. JETBRAINS ALL PRODUCTS ──
-  {
-    id: 'jetbrains_12m_prod',
-    short_id: 'jetbrains_12m',
-    brand_id: 'jetbrains',
-    category_id: 'dev',
-    name: 'JetBrains All Products 12m',
-    name_ar: 'JetBrains All Products Pack (سنة كاملة)',
-    button_title: '📦 JetBrains Pack (سنة كاملة) — $14.99 ⚡',
-    icon_symbol: '📦',
-    market_price: 289.00,
-    our_price: 14.99,
-    price_egp: 750,
-    price_sar: 56,
-    subscription_duration: 'سنة كاملة (12 شهر)',
-    warranty_duration: 'سنة كاملة ضمان استبدال',
-    delivery_type: 'license_key',
-    advantages_ar: ['يشمل جميع بيئات JetBrains الـ 16 (IntelliJ IDEA Ultimate, WebStorm, PyCharm Pro, PhpStorm, CLion, Rider)', 'ترخيص رسمي مفعل ومستقر طوال عام كامل', 'توفير يتجاوز 95% عن السعر الرسمي', 'ضمان استبدال سنوي رسمي 100%'],
-    advantages_en: ['Official license key covering all 16 JetBrains IDEs (IntelliJ, WebStorm, PyCharm, Rider)', 'Full 1-year official license with continuous updates', 'Over 95% savings compared to standard retail pricing', '100% official replacement warranty for the entire year'],
-    advantages_es: ['Clave oficial que incluye los 16 IDEs de JetBrains (IntelliJ, PyCharm, WebStorm, Rider)', 'Licencia anual completa y estable con todas las actualizaciones', 'Más del 95% de ahorro frente al precio oficial', 'Garantía oficial de reemplazo del 100% durante todo el año'],
-    advantages_fr: ['Clé officielle couvrant les 16 IDE JetBrains (IntelliJ, WebStorm, PyCharm, Rider)', 'Licence annuelle officielle stable avec mises à jour', 'Plus de 95% d\'économie par rapport au prix officiel', 'Garantie de remplacement officielle 100% sur 1 an'],
-    advantages_ru: ['Официальный лицензионный ключ на все 16 IDE JetBrains (IntelliJ, WebStorm, PyCharm, Rider)', 'Полноценная годовая лицензия с поддержкой обновлений', 'Экономия более 95% от официальной цены подписки', '100% официальная годовая гарантия замены'],
-    advantages_tr: ['Tüm 16 JetBrains IDE\'sini kapsayan resmi lisans anahtarı (IntelliJ, WebStorm, PyCharm, Rider)', 'Güncellemeleri destekleyen tam 1 yıllık resmi lisans', 'Resmi fiyata göre %95\'in üzerinde tasarruf', '1 yıl boyunca %100 resmi değişim garantisi'],
-    advantages_de: ['Offizieller Lizenzschlüssel für alle 16 JetBrains IDEs (IntelliJ, WebStorm, PyCharm, Rider)', 'Vollständige 1-Jahres-Lizenz mit Updates', 'Über 95% Ersparnis gegenüber dem offiziellen Preis', '100% offizielle Ersatzgarantie für das gesamte Jahr'],
-  },
-
-  // ── 13. REPLIT CORE & AGENT ──
-  {
-    id: 'replit_1m_prod',
-    short_id: 'replit_1m',
-    brand_id: 'replit',
-    category_id: 'dev',
-    name: 'Replit Core & Agent 1m',
-    name_ar: 'Replit Core + Agent Pro (شهر كامل)',
-    button_title: '🔥 Replit Core & Agent — $6.99 ⚡',
-    icon_symbol: '🔥',
-    market_price: 25.00,
-    our_price: 6.99,
-    price_egp: 350,
-    price_sar: 26,
-    subscription_duration: 'شهر كامل (30 يوم)',
-    warranty_duration: 'شهر كامل ضمان استبدال',
-    delivery_type: 'personal_account',
-    advantages_ar: ['بيئة تطوير سحابية متكاملة وسيرفرات سريعة دائماً اونلاين Always-On', 'وكيل Replit Agent Pro لبناء وتطوير ونشر التطبيقات والمواقع ذاتياً', 'قواعد بيانات مدمجة ونشر فوري للنطاقات المخصصة', 'ضمان استبدال رسمي 100%'],
-    advantages_en: ['High-speed cloud development environment with Always-On Repls', 'Replit Agent Pro for autonomous end-to-end fullstack development', 'Integrated serverless databases & instant custom domain hosting', '100% official replacement warranty for the full month'],
-    advantages_es: ['Entorno de desarrollo en la nube de alta velocidad con Repls Always-On', 'Replit Agent Pro para desarrollo autónomo de aplicaciones', 'Bases de datos integradas y alojamiento en dominios personalizados', 'Garantía oficial de reemplazo del 100%'],
-    advantages_fr: ['Environnement de développement cloud rapide avec Repls Always-On', 'Replit Agent Pro pour le développement fullstack autonome', 'Bases de données intégrées et hébergement instantané de domaines', 'Garantie de remplacement officielle 100%'],
-    advantages_ru: ['Сверхбыстрая облачная среда разработки с серверами Always-On', 'Replit Agent Pro для автономного создания и деплоя приложений', 'Встроенные базы данных и хостинг на собственных доменах', '100% официальная гарантия замены на месяц'],
-    advantages_tr: ['Always-On Repls özellikli yüksek hızlı bulut geliştirme ortamı', 'Otonom uçtan uca yazılım geliştirme için Replit Agent Pro', 'Entegre veritabanları ve anında özel alan adı barındırma', 'Tam 1 ay boyunca %100 resmi değişim garantisi'],
-    advantages_de: ['Highspeed-Cloud-Entwicklungsumgebung mit Always-On Repls', 'Replit Agent Pro für autonome Fullstack-Softwareentwicklung', 'Integrierte Datenbanken und sofortiges Custom-Domain-Hosting', '100% offizielle Ersatzgarantie für den Monat'],
-  },
-
-  // ── 14. CANVA PRO ──
-  {
-    id: 'canva_12m_prod',
-    short_id: 'canva_12m',
-    brand_id: 'canva',
-    category_id: 'design',
-    name: 'Canva Pro 1 Year',
-    name_ar: 'Canva Pro (سنة كاملة)',
-    button_title: '🎨 Canva Pro (سنة كاملة) — $2.99 ⚡',
-    icon_symbol: '🎨',
-    market_price: 119.99,
-    our_price: 2.99,
-    price_egp: 150,
-    price_sar: 11,
-    subscription_duration: 'سنة كاملة (12 شهر)',
-    warranty_duration: 'سنة كاملة ضمان استبدال',
-    delivery_type: 'personal_account',
-    advantages_ar: ['تفعيل مباشر على إيميلك الشخصي بدون مشاركة كلمة المرور', 'وصول غير محدود لأكثر من 100 مليون صورة وقالب وفيديو احترافي', 'كافة ميزات الذكاء الاصطناعي Magic Studio ومزيل الخلفيات بضغطة زر', 'ضمان استبدال سنوي رسمي 100%'],
-    advantages_en: ['Direct activation on your personal email without password sharing', 'Unlimited access to 100M+ premium templates, photos and graphics', 'Full Magic Studio AI tools suite & instant 1-click background remover', '100% comprehensive annual replacement warranty'],
-    advantages_es: ['Activación directa en tu correo personal sin compartir contraseña', 'Acceso ilimitado a más de 100 millones de plantillas y recursos premium', 'Suite completa de IA Magic Studio y borrador de fondos en 1 clic', 'Garantía anual completa de reemplazo del 100%'],
-    advantages_fr: ['Activation directe sur votre e-mail personnel sans mot de passe', 'Accès illimité à 100M+ de modèles, photos et graphiques premium', 'Suite IA Magic Studio complète et suppression d\'arrière-plan en 1 clic', 'Garantie annuelle de remplacement intégrale 100%'],
-    advantages_ru: ['Прямая активация на личную почту без передачи пароля', 'Безлимитный доступ к 100M+ премиум шаблонам, фото и шрифтам', 'Все функции ИИ Magic Studio и удаление фона в один клик', '100% комплексная годовая гарантия замены'],
-    advantages_tr: ['Şifre paylaşımı olmadan kişisel e-postanıza doğrudan aktivasyon', '100M+ premium şablon, fotoğraf ve grafiğe sınırsız erişim', 'Eksiksiz Magic Studio yapay zeka araçları ve tek tıkla arka plan silme', '1 yıl boyunca kapsamlı %100 resmi garanti'],
-    advantages_de: ['Direkte Aktivierung auf persönlicher E-Mail ohne Passwort-Weitergabe', 'Unbegrenzter Zugriff auf 100M+ Premium-Vorlagen, Fotos und Grafiken', 'Vollständige Magic Studio KI-Suite & 1-Klick-Hintergrundentferner', '100% umfassende Jahres-Ersatzgarantie'],
+    "id": "claude_1m_prod",
+    "short_id": "claude_1m",
+    "brand_id": "claude",
+    "category_id": "ai",
+    "name": "Claude Pro 1m",
+    "name_ar": "Claude AI Pro (شهر كامل)",
+    "button_title": "🟣 Claude Pro (شهر واحد) — $1.49 ⚡",
+    "icon_symbol": "🟣",
+    "market_price": 20,
+    "our_price": 1.49,
+    "price_egp": 75,
+    "price_sar": 6,
+    "subscription_duration": "شهر كامل (30 يوم)",
+    "warranty_duration": "شهر كامل ضمان استبدال",
+    "delivery_type": "private_account",
+    "advantages_ar": [
+      "أحدث نماذج Claude 3.7 Sonnet و Claude Opus 5 و Claude Fable 5",
+      "ميزة التفكير الهجين Hybrid Reasoning ومحرر Artifacts المباشر",
+      "نافذة سياق ضخمة 200K Tokens لتحليل الكتب والملفات الضخمة",
+      "ضمان استبدال رسمي 100% طوال المدة"
+    ],
+    "advantages_en": [
+      "State-of-the-art Claude 3.7 Sonnet, Opus 5 & Fable 5 models",
+      "Hybrid Reasoning engine with interactive Artifacts live preview",
+      "Massive 200K token context window for large codebase analysis",
+      "100% official replacement warranty for the entire period"
+    ],
+    "advantages_es": [
+      "Modelos Claude 3.7 Sonnet, Claude Opus 5 y Fable 5",
+      "Motor Hybrid Reasoning con vista previa interactiva de Artifacts",
+      "Ventana de contexto masiva de 200K tokens para análisis de código",
+      "Garantía oficial de reemplazo del 100%"
+    ],
+    "advantages_fr": [
+      "Modèles Claude 3.7 Sonnet, Opus 5 et Fable 5 de pointe",
+      "Moteur Hybrid Reasoning avec aperçu interactif Artifacts",
+      "Fenêtre de contexte de 200K tokens pour grands projets",
+      "Garantie de remplacement officielle 100%"
+    ],
+    "advantages_ru": [
+      "Флагманские модели Claude 3.7 Sonnet, Opus 5 и Fable 5",
+      "Гибридное мышление Hybrid Reasoning и интерактивные Artifacts",
+      "Огромное контекстное окно 200K токенов для сложного кода",
+      "100% официальная гарантия замены на весь срок"
+    ],
+    "advantages_tr": [
+      "En yeni Claude 3.7 Sonnet, Opus 5 ve Fable 5 modelleri",
+      "Hibrit Düşünme (Hybrid Reasoning) ve canlı Artifacts editörü",
+      "Büyük kod tabanları için 200K token dev bağlam penceresi",
+      "Tüm süre boyunca %100 resmi değişim garantisi"
+    ],
+    "advantages_de": [
+      "Modernste Claude 3.7 Sonnet, Opus 5 & Fable 5 Modelle",
+      "Hybrid Reasoning Engine mit interaktiver Artifacts-Vorschau",
+      "Riesiges 200K Token Kontextfenster für große Codebasen",
+      "100% offizielle Ersatzgarantie für die gesamte Laufzeit"
+    ]
   },
   {
-    id: 'canva_life_prod',
-    short_id: 'canva_life',
-    brand_id: 'canva',
-    category_id: 'design',
-    name: 'Canva Pro Lifetime VIP',
-    name_ar: 'Canva Pro (دائم مدى الحياة)',
-    button_title: '🎨 Canva Pro (مدى الحياة) — $5.99 ⚡',
-    icon_symbol: '🎨',
-    market_price: 299.99,
-    our_price: 5.99,
-    price_egp: 300,
-    price_sar: 22,
-    subscription_duration: 'تفعيل دائم مدى الحياة',
-    warranty_duration: 'ضمان دائم مدى الحياة',
-    delivery_type: 'personal_account',
-    advantages_ar: ['تفعيل دائم مدى الحياة VIP على حسابك الشخصي', 'مساحة تخزين سحابية ضخمة لتصاميمك وملفاتك', 'تصدير بجودة فوتوغرافية فائقة SVG و PNG شفاف و PDF طباعة', 'ضمان استبدال دائم ومدى الحياة 100%'],
-    advantages_en: ['Permanent lifetime VIP activation on your personal account', 'Massive cloud storage for all your brand assets and designs', 'Ultra-high quality vector SVG, transparent PNG & print PDF export', '100% lifetime official replacement warranty'],
-    advantages_es: ['Activación VIP permanente de por vida en tu cuenta personal', 'Almacenamiento masivo en la nube para todos tus diseños y marcas', 'Exportación en alta calidad vectorial SVG, PNG transparente y PDF', 'Garantía oficial de reemplazo de por vida del 100%'],
-    advantages_fr: ['Activation VIP permanente à vie sur votre compte personnel', 'Stockage cloud massif pour tous vos designs et ressources de marque', 'Export haute résolution SVG vectoriel, PNG transparent et PDF d\'impression', 'Garantie de remplacement officielle à vie 100%'],
-    advantages_ru: ['Пожизненная VIP активация навсегда на ваш личный аккаунт', 'Огромное облачное хранилище для всех ваших проектов и файлов', 'Экспорт в максимальном качестве: векторный SVG, прозрачный PNG, PDF', '100% пожизненная официальная гарантия замены'],
-    advantages_tr: ['Kişisel hesabınızda kalıcı ömür boyu VIP aktivasyon', 'Tüm tasarımlarınız ve marka varlıklarınız için dev bulut depolama', 'Ultra yüksek kaliteli vektörel SVG, şeffaf PNG ve baskı PDF çıktısı', 'Ömür boyu %100 resmi değişim garantisi'],
-    advantages_de: ['Dauerhafte lebenslange VIP-Aktivierung auf persönlichem Konto', 'Riesiger Cloud-Speicher für alle Designs und Marken-Assets', 'Export in höchster Qualität: Vektor-SVG, transparentes PNG & Druck-PDF', '100% lebenslange offizielle Ersatzgarantie'],
-  },
-
-  // ── 15. CAPCUT PRO ──
-  {
-    id: 'capcut_1m_prod',
-    short_id: 'capcut_1m',
-    brand_id: 'capcut',
-    category_id: 'design',
-    name: 'CapCut Pro 1m',
-    name_ar: 'CapCut Pro (شهر كامل)',
-    button_title: '✂️ CapCut Pro (شهر واحد) — $3.49 ⚡',
-    icon_symbol: '✂️',
-    market_price: 9.99,
-    our_price: 3.49,
-    price_egp: 175,
-    price_sar: 13,
-    subscription_duration: 'شهر كامل (30 يوم)',
-    warranty_duration: 'شهر كامل ضمان استبدال',
-    delivery_type: 'personal_account',
-    advantages_ar: ['تصدير فيديوهات بدقة 4K UHD وبمعدل 60 إطار في الثانية بدون علامة مائية', 'الترجمة التلقائية Auto Captions باللغة العربية وأكثر من 20 لغة بدقة 100%', 'مكتبة فلاتر ومؤثرات وانتقالات Pro الحصرية لصناع المحتوى', 'ضمان استبدال رسمي 100% طوال الشهر'],
-    advantages_en: ['4K UHD 60fps video export without any watermarks', 'Accurate Auto Captions in Arabic, English and 20+ languages', 'Full access to exclusive Pro effects, transitions & voice changers', '100% official replacement warranty for the full month'],
-    advantages_es: ['Exportación de video 4K UHD a 60fps sin marcas de agua', 'Subtítulos automáticos precisos en español, árabe y 20+ idiomas', 'Acceso a efectos, transiciones y filtros Pro exclusivos', 'Garantía oficial de reemplazo del 100%'],
-    advantages_fr: ['Export vidéo 4K UHD 60fps sans aucun filigrane', 'Sous-titres automatiques ultra-précis en français et 20+ langues', 'Accès complet aux effets, transitions et filtres Pro exclusifs', 'Garantie de remplacement officielle 100%'],
-    advantages_ru: ['Экспорт видео в 4K UHD 60fps без водяных знаков', 'Автоматические субтитры Auto Captions на русском и 20+ языках', 'Полная библиотека эксклюзивных Pro эффектов, переходов и фильтров', '100% официальная гарантия замены на месяц'],
-    advantages_tr: ['Filigransız 4K UHD 60fps yüksek kaliteli video dışa aktarma', 'Türkçe, Arapça ve 20+ dilde %100 doğru Otomatik Altyazı (Auto Captions)', 'İçerik üreticileri için özel Pro filtre, efekt ve geçiş kitaplığı', 'Tam 1 ay boyunca %100 resmi değişim garantisi'],
-    advantages_de: ['4K UHD 60fps Video-Export ohne Wasserzeichen', 'Präzise automatische Untertitel in Deutsch und 20+ Sprachen', 'Voller Zugriff auf exklusive Pro-Effekte, Übergänge & Filter', '100% offizielle Ersatzgarantie für den Monat'],
-  },
-  {
-    id: 'capcut_12m_prod',
-    short_id: 'capcut_12m',
-    brand_id: 'capcut',
-    category_id: 'design',
-    name: 'CapCut Pro 12m',
-    name_ar: 'CapCut Pro (سنة كاملة)',
-    button_title: '✂️ CapCut Pro (سنة كاملة) — $19.99 ⚡',
-    icon_symbol: '✂️',
-    market_price: 99.99,
-    our_price: 19.99,
-    price_egp: 1000,
-    price_sar: 75,
-    subscription_duration: 'سنة كاملة (12 شهر)',
-    warranty_duration: 'سنة كاملة ضمان استبدال',
-    delivery_type: 'personal_account',
-    advantages_ar: ['اشتراك سنوي كامل لصناع محتوى تيك توك ويوتيوب وانستغرام ريلز', 'مساحة تخزين سحابية ضخمة 100GB لمزامنة المشاريع بين الموبايل والكمبيوتر', 'إزالة الخلفية الذكية بالـ AI وتحسين جودة الصوت التلقائي', 'ضمان استبدال سنوي رسمي 100%'],
-    advantages_en: ['Full 1-year annual plan for TikTok, YouTube & Reels creators', '100GB cloud storage to sync projects seamlessly between PC & phone', 'AI smart background cutout and automatic vocal isolation', '100% comprehensive annual replacement warranty'],
-    advantages_es: ['Plan anual de 1 año para creadores de TikTok, YouTube y Reels', '100GB de almacenamiento en la nube para sincronizar PC y móvil', 'Recorte inteligente de fondos con IA y mejora de audio', 'Garantía anual completa de reemplazo del 100%'],
-    advantages_fr: ['Plan annuel d\'un an pour créateurs TikTok, YouTube et Reels', '100 Go de stockage cloud pour synchroniser projets PC et mobile', 'Détourage d\'arrière-plan IA et isolation vocale automatique', 'Garantie annuelle de remplacement intégrale 100%'],
-    advantages_ru: ['Годовой план на 12 месяцев для авторов TikTok, YouTube и Reels', '100 ГБ облака для синхронизации проектов между ПК и телефоном', 'Умное удаление фона с ИИ и улучшение качества звука', '100% комплексная годовая гарантия замены'],
-    advantages_tr: ['TikTok, YouTube ve Reels üreticileri için 1 yıllık tam plan', 'PC ve mobil arasında projeleri senkronize etmek için 100GB bulut alanı', 'Yapay zeka ile akıllı arka plan silme ve otomatik ses iyileştirme', '1 yıl boyunca kapsamlı %100 resmi garanti'],
-    advantages_de: ['Vollständiges 1-Jahres-Abonnement für Content Creator', '100GB Cloud-Speicher zur Projektsynchronisation zwischen PC & Handy', 'Intelligente KI-Hintergrundentfernung und automatische Sprachverbesserung', '100% umfassende Jahres-Ersatzgarantie'],
-  },
-
-  // ── 16. ADOBE CREATIVE CLOUD ──
-  {
-    id: 'adobe_1m_prod',
-    short_id: 'adobe_1m',
-    brand_id: 'adobe',
-    category_id: 'design',
-    name: 'Adobe Creative Cloud 1m',
-    name_ar: 'Adobe Creative Cloud All Apps (شهر كامل)',
-    button_title: '🟥 Adobe All Apps (شهر واحد) — $8.99 ⚡',
-    icon_symbol: '🟥',
-    market_price: 59.99,
-    our_price: 8.99,
-    price_egp: 450,
-    price_sar: 34,
-    subscription_duration: 'شهر كامل (30 يوم)',
-    warranty_duration: 'شهر كامل ضمان استبدال',
-    delivery_type: 'personal_account',
-    advantages_ar: ['أكثر من 20 تطبيق أصلي كامل (Photoshop, Illustrator, Premiere Pro, After Effects, Lightroom)', 'كافة ميزات الذكاء الاصطناعي التوليدي Adobe Firefly مدمجة برصيد نقاط أصلي', 'تفعيل على إيميلك الشخصي ومزامنة سحابية 100GB على Adobe Cloud', 'ضمان استبدال رسمي 100% طوال الشهر'],
-    advantages_en: ['Full suite of 20+ genuine desktop apps (Photoshop, Illustrator, Premiere, After Effects)', 'Integrated Adobe Firefly Generative AI credits and features', 'Direct activation on your personal email + 100GB Creative Cloud storage', '100% official replacement warranty for the entire month'],
-    advantages_es: ['Suite completa de más de 20 apps originales de Adobe', 'Créditos y funciones de IA generativa Adobe Firefly incluidos', 'Activación en correo personal + 100GB de almacenamiento en la nube', 'Garantía oficial de reemplazo del 100%'],
-    advantages_fr: ['Suite complète de 20+ applications authentiques Adobe', 'Crédits et outils d\'IA générative Adobe Firefly intégrés', 'Activation sur e-mail personnel + 100 Go de stockage cloud Adobe', 'Garantie de remplacement officielle 100%'],
-    advantages_ru: ['Полный пакет 20+ официальных приложений Adobe', 'Интегрированные генеративные функции ИИ Adobe Firefly', 'Активация на личную почту + 100 ГБ облака Adobe Creative Cloud', '100% официальная гарантия замены на месяц'],
-    advantages_tr: ['20+ orijinal masaüstü uygulamasının tamamı (Photoshop, Illustrator, Premiere Pro)', 'Entegre Adobe Firefly Üretken Yapay Zeka kredileri ve araçları', 'Kişisel e-postanıza doğrudan aktivasyon + 100GB Adobe bulut depolama', 'Tam 1 ay boyunca %100 resmi değişim garantisi'],
-    advantages_de: ['Vollständiges Paket aus 20+ Original-Adobe-Desktop-Apps', 'Integrierte generative Adobe Firefly KI-Funktionen und Credits', 'Direkte Aktivierung auf persönlicher E-Mail + 100GB Cloud-Speicher', '100% offizielle Ersatzgarantie für den Monat'],
+    "id": "claude_3m_prod",
+    "short_id": "claude_3m",
+    "brand_id": "claude",
+    "category_id": "ai",
+    "name": "Claude Pro 3m",
+    "name_ar": "Claude AI Pro (3 شهور)",
+    "button_title": "🟣 Claude Pro (3 شهور) — $2.49 ⚡",
+    "icon_symbol": "🟣",
+    "market_price": 60,
+    "our_price": 2.49,
+    "price_egp": 125,
+    "price_sar": 9,
+    "subscription_duration": "3 شهور كاملة",
+    "warranty_duration": "3 شهور ضمان استبدال",
+    "delivery_type": "private_account",
+    "advantages_ar": [
+      "استخدام غير محدود ومستقر لنماذج Claude 3.7 Sonnet",
+      "أعلى دقة في البرمجة وتصميم بنية المشاريع البرمجية",
+      "إنشاء مشاريع Projects ومشاركة المستندات مع الذكاء الاصطناعي",
+      "ضمان استبدال فوري 100% طوال 3 شهور"
+    ],
+    "advantages_en": [
+      "Stable unlimited usage of Claude 3.7 Sonnet reasoning",
+      "Industry leading coding precision & software system design",
+      "Create multi-document Projects with custom system prompts",
+      "100% official replacement warranty for 3 months"
+    ],
+    "advantages_es": [
+      "Uso ilimitado y estable del razonamiento Claude 3.7 Sonnet",
+      "Precisión de código líder en la industria y arquitectura de software",
+      "Crea proyectos con múltiples documentos y prompts personalizados",
+      "Garantía oficial de reemplazo por 3 meses"
+    ],
+    "advantages_fr": [
+      "Utilisation stable et illimitée de Claude 3.7 Sonnet",
+      "Précision de code inégalée et conception logicielle avancée",
+      "Créez des Projets multi-documents avec prompts système dédiés",
+      "Garantie de remplacement officielle de 3 mois"
+    ],
+    "advantages_ru": [
+      "Стабильное использование возможностей Claude 3.7 Sonnet",
+      "Лидирующая точность в написании кода и архитектуре ПО",
+      "Создание проектов Projects с загрузкой десятков документов",
+      "Официальная гарантия замены на 3 месяца"
+    ],
+    "advantages_tr": [
+      "Claude 3.7 Sonnet mantık yürütme motoruna kararlı erişim",
+      "Yazılım mimarisi ve kodlamada sektör lideri doğruluk",
+      "Özel sistem komutlarıyla çok belgeli Projeler oluşturma",
+      "3 ay boyunca %100 resmi değişim garantisi"
+    ],
+    "advantages_de": [
+      "Stabile unbegrenzte Nutzung der Claude 3.7 Sonnet Logik",
+      "Branchenführende Programmierpräzision & Software-Architektur",
+      "Erstellen von Projekten mit benutzerdefinierten System-Prompts",
+      "100% offizielle Ersatzgarantie für 3 Monate"
+    ]
   },
   {
-    id: 'adobe_12m_prod',
-    short_id: 'adobe_12m',
-    brand_id: 'adobe',
-    category_id: 'design',
-    name: 'Adobe Creative Cloud 12m',
-    name_ar: 'Adobe Creative Cloud All Apps (سنة كاملة)',
-    button_title: '🟥 Adobe All Apps (سنة كاملة) — $69.99 ⚡',
-    icon_symbol: '🟥',
-    market_price: 659.99,
-    our_price: 69.99,
-    price_egp: 3500,
-    price_sar: 262,
-    subscription_duration: 'سنة كاملة (12 شهر)',
-    warranty_duration: 'سنة كاملة ضمان استبدال',
-    delivery_type: 'personal_account',
-    advantages_ar: ['اشتراك سنوي رسمي كامل للأفراد والشركات والمصممين المحترفين', 'يقبل كافة التحديثات الدورية الرسمية من تطبيق Adobe Creative Cloud', 'توفير يتجاوز 90% عن السعر الرسمي مع دعم Adobe Fonts و Stock', 'ضمان استبدال سنوي رسمي شامل 100%'],
-    advantages_en: ['Full 1-year official annual plan for professionals & agencies', 'Direct updates through genuine Adobe Creative Cloud Desktop App', 'Over 90% savings vs official retail price with Adobe Fonts access', '100% comprehensive annual replacement warranty'],
-    advantages_es: ['Plan anual oficial de 1 año para profesionales y agencias', 'Actualizaciones directas desde la app oficial de Creative Cloud', 'Más del 90% de ahorro frente al precio oficial con Adobe Fonts', 'Garantía anual completa de reemplazo del 100%'],
-    advantages_fr: ['Plan annuel officiel d\'un an pour professionnels et agences', 'Mises à jour directes depuis l\'application officielle Creative Cloud', 'Plus de 90% d\'économie avec accès complet à Adobe Fonts', 'Garantie annuelle de remplacement intégrale 100%'],
-    advantages_ru: ['Официальный годовой план на 12 месяцев для профессионалов и студий', 'Прямые обновления через официальное приложение Creative Cloud', 'Экономия более 90% от официальной цены с доступом к Adobe Fonts', '100% комплексная годовая гарантия замены'],
-    advantages_tr: ['Profesyoneller ve ajanslar için 1 yıllık tam resmi plan', 'Orijinal Adobe Creative Cloud Desktop uygulaması üzerinden doğrudan güncellemeler', 'Adobe Fonts erişimi ile resmi fiyata göre %90\'ın üzerinde tasarruf', '1 yıl boyunca kapsamlı %100 resmi garanti'],
-    advantages_de: ['Offizielles 1-Jahres-Abonnement für Profis und Agenturen', 'Direkte Updates über die originale Adobe Creative Cloud Desktop App', 'Über 90% Ersparnis mit vollem Zugriff auf Adobe Fonts', '100% umfassende Jahres-Ersatzgarantie'],
-  },
-
-  // ── 17. FIGMA PROFESSIONAL ──
-  {
-    id: 'figma_1m_prod',
-    short_id: 'figma_1m',
-    brand_id: 'figma',
-    category_id: 'design',
-    name: 'Figma Professional 1m',
-    name_ar: 'Figma Professional (شهر كامل)',
-    button_title: '🖌️ Figma Pro (شهر واحد) — $4.99 ⚡',
-    icon_symbol: '🖌️',
-    market_price: 15.00,
-    our_price: 4.99,
-    price_egp: 250,
-    price_sar: 19,
-    subscription_duration: 'شهر كامل (30 يوم)',
-    warranty_duration: 'شهر كامل ضمان استبدال',
-    delivery_type: 'personal_account',
-    advantages_ar: ['مشاريع ومساحات عمل غير محدودة لفريق التصميم والبرمجة', 'تفعيل وضع المطورين Dev Mode الكامل لفحص المقاسات واستخراج الأكواد', 'تاريخ محفوظات غير محدود للملفات والتصميمات', 'ضمان استبدال رسمي 100%'],
-    advantages_en: ['Unlimited projects and team workspaces for UI/UX designers', 'Full Dev Mode activation for inspect, CSS/Swift code & specs export', 'Unlimited version history for all design canvas files', '100% official replacement warranty for the full month'],
-    advantages_es: ['Proyectos y espacios de trabajo ilimitados para equipos de diseño UI/UX', 'Activación completa de Dev Mode para inspección y exportación de código', 'Historial de versiones ilimitado para todos tus archivos', 'Garantía oficial de reemplazo del 100%'],
-    advantages_fr: ['Projets et espaces de travail illimités pour équipes UI/UX', 'Activation complète de Dev Mode pour inspecter et exporter le code', 'Historique des versions illimité pour tous vos fichiers', 'Garantie de remplacement officielle 100%'],
-    advantages_ru: ['Неограниченные проекты и рабочие пространства для команд UI/UX', 'Полный доступ к Dev Mode для инспекции и экспорта кода CSS/Swift', 'Безлимитная история версий для всех файлов', '100% официальная гарантия замены на месяц'],
-    advantages_tr: ['UI/UX tasarım ekipleri için sınırsız proje ve çalışma alanı', 'Kod dışa aktarma ve ölçüm için eksiksiz Dev Mode aktivasyonu', 'Tüm tasarım dosyaları için sınırsız sürüm geçmişi', 'Tam 1 ay boyunca %100 resmi değişim garantisi'],
-    advantages_de: ['Unbegrenzte Projekte und Arbeitsbereiche für UI/UX-Teams', 'Vollständige Dev Mode-Aktivierung für Code-Export und Inspektion', 'Unbegrenzte Versionshistorie für alle Designdateien', '100% offizielle Ersatzgarantie für den Monat'],
-  },
-
-  // ── 18. FREEPIK PREMIUM ──
-  {
-    id: 'freepik_1m_prod',
-    short_id: 'freepik_1m',
-    brand_id: 'freepik',
-    category_id: 'design',
-    name: 'Freepik Premium 1m',
-    name_ar: 'Freepik Premium (شهر كامل)',
-    button_title: '📸 Freepik Premium (شهر) — $3.99 ⚡',
-    icon_symbol: '📸',
-    market_price: 15.00,
-    our_price: 3.99,
-    price_egp: 200,
-    price_sar: 15,
-    subscription_duration: 'شهر كامل (30 يوم)',
-    warranty_duration: 'شهر كامل ضمان استبدال',
-    delivery_type: 'personal_account',
-    advantages_ar: ['تحميل يومي حتى 100 ملف ومصدر بدقة فائقة بدون أي حدود', 'ملايين ملفات الفيكتور والـ PSD والقوالب والصور الحصرية بترخيص تجاري', 'استخدام أدوات Freepik AI لتوليد وتعديل الصور المتقدمة', 'ضمان استبدال رسمي 100%'],
-    advantages_en: ['Download up to 100 high-resolution premium assets daily', 'Millions of vectors, PSD mockups, templates & commercial license assets', 'Access to integrated Freepik AI generative tools suite', '100% official replacement warranty for the full month'],
-    advantages_es: ['Descarga hasta 100 recursos premium diarios en alta resolución', 'Millones de vectores, PSDs, plantillas y licencia comercial incluida', 'Acceso a herramientas de IA generativa de Freepik', 'Garantía oficial de reemplazo del 100%'],
-    advantages_fr: ['Téléchargez jusqu\'à 100 ressources premium par jour en haute résolution', 'Millions de vecteurs, PSD, maquettes et licence commerciale', 'Accès complet aux outils d\'IA générative de Freepik', 'Garantie de remplacement officielle 100%'],
-    advantages_ru: ['Скачивание до 100 премиум файлов в день в максимальном разрешении', 'Миллионы векторов, PSD мокапов и шаблонов с коммерческой лицензией', 'Доступ ко всем генеративным инструментам Freepik AI', '100% официальная гарантия замены на месяц'],
-    advantages_tr: ['Günlük 100 adede kadar yüksek çözünürlüklü premium kaynak indirme', 'Ticari lisanslı milyonlarca vektör, PSD mockup ve şablon', 'Freepik AI üretken yapay zeka araçlarına tam erişim', 'Tam 1 ay boyunca %100 resmi değişim garantisi'],
-    advantages_de: ['Täglich bis zu 100 hochauflösende Premium-Assets herunterladen', 'Millionen Vektoren, PSD-Mockups, Vorlagen & kommerzielle Lizenz', 'Zugriff auf die Freepik KI-Suite für generative Bildbearbeitung', '100% offizielle Ersatzgarantie für den Monat'],
+    "id": "claude_12m_prod",
+    "short_id": "claude_12m",
+    "brand_id": "claude",
+    "category_id": "ai",
+    "name": "Claude Pro 12m",
+    "name_ar": "Claude AI Pro (سنة كاملة)",
+    "button_title": "🟣 Claude Pro (سنة كاملة) — $2.99 ⚡",
+    "icon_symbol": "🟣",
+    "market_price": 240,
+    "our_price": 2.99,
+    "price_egp": 150,
+    "price_sar": 11,
+    "subscription_duration": "سنة كاملة (12 شهر)",
+    "warranty_duration": "سنة كاملة ضمان استبدال",
+    "delivery_type": "private_account",
+    "advantages_ar": [
+      "اشتراك سنوي كامل ومستقر بدون انقطاع",
+      "وصول غير محدود لجميع نماذج Anthropic المحدثة طوال العام",
+      "الخيار الأول عالمياً لكبار المطورين ومهندسي الذكاء الاصطناعي",
+      "ضمان استبدال سنوي رسمي 100%"
+    ],
+    "advantages_en": [
+      "Full 1-year uninterrupted annual subscription",
+      "Unlimited access to all updated Anthropic frontier models",
+      "The #1 choice worldwide for senior software engineers & AI leads",
+      "100% comprehensive annual replacement warranty"
+    ],
+    "advantages_es": [
+      "Suscripción anual completa de 1 año sin interrupciones",
+      "Acceso ilimitado a todos los modelos vanguardistas de Anthropic",
+      "La opción preferida por ingenieros de software y líderes de IA",
+      "Garantía anual completa de reemplazo del 100%"
+    ],
+    "advantages_fr": [
+      "Abonnement annuel complet ininterrompu d'un an",
+      "Accès illimité à tous les modèles pionniers d'Anthropic",
+      "Le choix n°1 des ingénieurs logiciels et architectes IA",
+      "Garantie annuelle de remplacement intégrale 100%"
+    ],
+    "advantages_ru": [
+      "Годовая подписка на 12 месяцев без прерываний",
+      "Неограниченный доступ ко всем флагманским моделям Anthropic",
+      "Выбор номер 1 для старших разработчиков и архитекторов ИИ",
+      "100% комплексная годовая гарантия замены"
+    ],
+    "advantages_tr": [
+      "1 yıl boyunca kesintisiz tam yıllık abonelik",
+      "Tüm güncel Anthropic öncü modellerine sınırsız erişim",
+      "Kıdemli yazılım mühendisleri ve yapay zeka liderlerinin 1 numaralı tercihi",
+      "1 yıl boyunca kapsamlı %100 resmi garanti"
+    ],
+    "advantages_de": [
+      "Vollständiges 1-Jahres-Abonnement ohne Unterbrechung",
+      "Unbegrenzter Zugriff auf alle neuen Spitzenmodelle von Anthropic",
+      "Die weltweite Nummer 1 für Senior Software Engineers & KI-Leads",
+      "100% umfassende Jahres-Ersatzgarantie"
+    ]
   },
   {
-    id: 'freepik_12m_prod',
-    short_id: 'freepik_12m',
-    brand_id: 'freepik',
-    category_id: 'design',
-    name: 'Freepik Premium 12m',
-    name_ar: 'Freepik Premium (سنة كاملة)',
-    button_title: '📸 Freepik Premium (سنة) — $24.99 ⚡',
-    icon_symbol: '📸',
-    market_price: 144.00,
-    our_price: 24.99,
-    price_egp: 1250,
-    price_sar: 94,
-    subscription_duration: 'سنة كاملة (12 شهر)',
-    warranty_duration: 'سنة كاملة ضمان استبدال',
-    delivery_type: 'personal_account',
-    advantages_ar: ['اشتراك سنوي كامل لوكالات الدعاية والإعلان والمصممين', 'تحميل غير محدود للملفات والخطوط والموك اب طوال عام كامل', 'توفير يتجاوز 85% عن السعر الرسمي مع ترخيص تجاري مدى الحياة', 'ضمان استبدال سنوي رسمي 100%'],
-    advantages_en: ['Full 1-year annual subscription for marketing agencies & designers', 'Uncapped premium vector, font, and mockup downloads for 12 months', 'Over 85% savings with lifetime commercial clearance on all downloads', '100% comprehensive annual replacement warranty'],
-    advantages_es: ['Suscripción anual de 1 año para agencias de publicidad y diseñadores', 'Descargas premium de vectores, fuentes y mockups durante 12 meses', 'Más del 85% de ahorro con licencia comercial permanente', 'Garantía anual completa de reemplazo del 100%'],
-    advantages_fr: ['Abonnement annuel d\'un an pour agences créatives et designers', 'Téléchargements premium de vecteurs, polices et maquettes sur 12 mois', 'Plus de 85% d\'économie avec licence commerciale à vie', 'Garantie annuelle de remplacement intégrale 100%'],
-    advantages_ru: ['Годовая подписка на 12 месяцев для рекламных агентств и дизайнеров', 'Скачивание премиум векторов, шрифтов и мокапов целый год', 'Экономия более 85% с пожизненной коммерческой лицензией на скачанное', '100% комплексная годовая гарантия замены'],
-    advantages_tr: ['Reklam ajansları ve tasarımcılar için 1 yıllık tam abonelik', '12 ay boyunca kesintisiz premium vektör, yazı tipi ve mockup indirme', 'İndirilen tüm varlıklarda kalıcı ticari lisans ile %85 tasarruf', '1 yıl boyunca kapsamlı %100 resmi garanti'],
-    advantages_de: ['Vollständiges 1-Jahres-Abonnement für Agenturen und Designer', 'Unbegrenzte Premium-Vektoren, Schriftarten und Mockups für 12 Monate', 'Über 85% Ersparnis mit lebenslanger kommerzieller Nutzung', '100% umfassende Jahres-Ersatzgarantie'],
-  },
-
-  // ── 19. ENVATO ELEMENTS ──
-  {
-    id: 'envato_1m_prod',
-    short_id: 'envato_1m',
-    brand_id: 'envato',
-    category_id: 'design',
-    name: 'Envato Elements 1m',
-    name_ar: 'Envato Elements (شهر كامل)',
-    button_title: '🎬 Envato Elements (شهر) — $5.99 ⚡',
-    icon_symbol: '🎬',
-    market_price: 33.00,
-    our_price: 5.99,
-    price_egp: 300,
-    price_sar: 22,
-    subscription_duration: 'شهر كامل (30 يوم)',
-    warranty_duration: 'شهر كامل ضمان استبدال',
-    delivery_type: 'personal_account',
-    advantages_ar: ['تحميل غير محدود للقوالب الجاهزة (WordPress, Shopify, After Effects, Premiere Pro)', 'ملايين المؤثرات الصوتية والموسيقى التصويرية الخالية من حقوق الملكية', 'ترخيص تجاري رسمي لكافة المشاريع والعملاء', 'ضمان استبدال رسمي 100%'],
-    advantages_en: ['Unlimited downloads of WordPress, Shopify, After Effects & video templates', 'Millions of royalty-free stock music tracks, sound FX, fonts & 3D assets', 'Official commercial license valid for all client and commercial projects', '100% official replacement warranty for the full month'],
-    advantages_es: ['Descargas ilimitadas de plantillas para WordPress, Shopify y Premiere', 'Millones de pistas de música sin copyright, efectos de sonido y fuentes', 'Licencia comercial oficial válida para todos los proyectos de clientes', 'Garantía oficial de reemplazo del 100%'],
-    advantages_fr: ['Téléchargements illimités de templates WordPress, Shopify et vidéos', 'Millions de pistes audio libres de droits, effets sonores et polices', 'Licence commerciale officielle pour tous vos projets clients', 'Garantie de remplacement officielle 100%'],
-    advantages_ru: ['Безлимитное скачивание шаблонов WordPress, Shopify, After Effects и видео', 'Миллионы треков без роялти, звуковых эффектов, шрифтов и 3D моделей', 'Официальная коммерческая лицензия для всех коммерческих проектов', '100% официальная гарантия замены на месяц'],
-    advantages_tr: ['WordPress, Shopify, After Effects ve video şablonlarını sınırsız indirme', 'Telif haksız milyonlarca müzik parçası, ses efekti ve 3D varlık', 'Tüm müşteri ve ticari projeler için resmi ticari lisans', 'Tam 1 ay boyunca %100 resmi değişim garantisi'],
-    advantages_de: ['Unbegrenzte Downloads von WordPress-, Shopify- und Video-Vorlagen', 'Millionen lizenzfreie Musiktitel, Soundeffekte, Fonts & 3D-Assets', 'Offizielle kommerzielle Lizenz für alle Kundenprojekte', '100% offizielle Ersatzgarantie für den Monat'],
-  },
-
-  // ── 20. NETFLIX 4K UHD ──
-  {
-    id: 'netflix_1m_prod',
-    short_id: 'netflix_1m',
-    brand_id: 'netflix',
-    category_id: 'stream',
-    name: 'Netflix 4K UHD 1m',
-    name_ar: 'Netflix 4K UHD (شهر كامل)',
-    button_title: '🎬 Netflix 4K (شهر واحد) — $2.99 ⚡',
-    icon_symbol: '🎬',
-    market_price: 19.99,
-    our_price: 2.99,
-    price_egp: 150,
-    price_sar: 11,
-    subscription_duration: 'شهر كامل (30 يوم)',
-    warranty_duration: 'شهر كامل ضمان استبدال',
-    delivery_type: 'private_account',
-    advantages_ar: ['أعلى جودة مشاهدة 4K Ultra HD مع دعم HDR و Dolby Atmos', 'بروفايل خاص بك محمي برمز PIN مستقل وبدون انقطاع', 'حساب رسمي مستقر يعمل على جميع الشاشات والهواتف والكمبيوتر', 'ضمان استبدال رسمي 100% طوال المدة'],
-    advantages_en: ['Highest streaming quality: 4K Ultra HD with HDR & Dolby Atmos', 'Dedicated private profile protected by a custom PIN code', 'Official stable account compatible with Smart TVs, phones & PCs', '100% official replacement warranty for the entire period'],
-    advantages_es: ['Máxima calidad 4K Ultra HD con soporte HDR y Dolby Atmos', 'Perfil privado protegido con código PIN independiente y sin cortes', 'Cuenta oficial estable para Smart TVs, teléfonos y ordenadores', 'Garantía oficial de reemplazo del 100%'],
-    advantages_fr: ['Qualité 4K Ultra HD maximale avec support HDR et Dolby Atmos', 'Profil privé dédié protégé par code PIN sans interruption', 'Compte officiel stable compatible Smart TV, mobiles et PC', 'Garantie de remplacement officielle 100%'],
-    advantages_ru: ['Максимальное качество 4K Ultra HD с HDR и Dolby Atmos', 'Выделенный личный профиль с защитой собственным PIN-кодом', 'Стабильный официальный аккаунт для Smart TV, смартфонов и ПК', '100% официальная гарантия замены на весь срок'],
-    advantages_tr: ['En yüksek 4K Ultra HD yayın kalitesi, HDR ve Dolby Atmos desteği', 'Özel PIN kodu ile korunan bağımsız ve kesintisiz profil', 'Smart TV, telefon ve PC uyumlu resmi ve kararlı hesap', 'Tüm süre boyunca %100 resmi değişim garantisi'],
-    advantages_de: ['Höchste 4K Ultra HD Streaming-Qualität mit HDR & Dolby Atmos', 'Dediziertes Profil geschützt durch eigenen PIN-Code ohne Unterbrechung', 'Stabiles offizielles Konto für Smart TVs, Smartphones & PCs', '100% offizielle Ersatzgarantie für die gesamte Laufzeit'],
+    "id": "perplexity_1m_prod",
+    "short_id": "perplexity_1m",
+    "brand_id": "perplexity",
+    "category_id": "ai",
+    "name": "Perplexity Pro 1m",
+    "name_ar": "Perplexity AI Pro (شهر كامل)",
+    "button_title": "🌌 Perplexity Pro (شهر واحد) — $0.89 ⚡",
+    "icon_symbol": "🌌",
+    "market_price": 20,
+    "our_price": 0.89,
+    "price_egp": 45,
+    "price_sar": 3,
+    "subscription_duration": "شهر كامل (30 يوم)",
+    "warranty_duration": "شهر كامل ضمان استبدال",
+    "delivery_type": "personal_account",
+    "advantages_ar": [
+      "أحدث نماذج البحث الذكي: Sonar Reasoning Pro و Claude 3.7 و GPT-4o",
+      "ميزة البحث الأكاديمي الشامل Deep Research وتحليل الملفات",
+      "أكثر من 300 استعلام Pro يومياً مع رفع مستندات بلا حدود",
+      "تفعيل على حسابك الشخصي مع ضمان استبدال رسمي 100%"
+    ],
+    "advantages_en": [
+      "Advanced search models: Sonar Reasoning Pro, Claude 3.7 & GPT-4o",
+      "Comprehensive Deep Research with instant citation verification",
+      "300+ Pro queries daily with unlimited file & document uploads",
+      "Personal account activation with 100% replacement warranty"
+    ],
+    "advantages_es": [
+      "Modelos de búsqueda avanzada: Sonar Reasoning Pro, Claude 3.7 y GPT-4o",
+      "Deep Research integral con verificación instantánea de fuentes",
+      "Más de 300 consultas Pro al día y subida ilimitada de archivos",
+      "Activación en cuenta personal con garantía 100%"
+    ],
+    "advantages_fr": [
+      "Modèles de recherche : Sonar Reasoning Pro, Claude 3.7 et GPT-4o",
+      "Deep Research complet avec vérification instantanée des sources",
+      "300+ requêtes Pro quotidiennes et téléchargement illimité de fichiers",
+      "Activation sur compte personnel avec garantie 100%"
+    ],
+    "advantages_ru": [
+      "Продвинутый поиск: Sonar Reasoning Pro, Claude 3.7 и GPT-4o",
+      "Глубокий исследовательский поиск Deep Research с цитатами",
+      "300+ Pro запросов в день с неограниченной загрузкой файлов",
+      "Активация на личный аккаунт с 100% гарантией"
+    ],
+    "advantages_tr": [
+      "Gelişmiş arama modelleri: Sonar Reasoning Pro, Claude 3.7 ve GPT-4o",
+      "Anında kaynak doğrulamalı kapsamlı Deep Research modu",
+      "Günlük 300+ Pro sorgusu ve sınırsız dosya yükleme",
+      "Kişisel hesap aktivasyonu ve %100 değişim garantisi"
+    ],
+    "advantages_de": [
+      "Fortschrittliche Suchmodelle: Sonar Reasoning Pro, Claude 3.7 & GPT-4o",
+      "Umfassende Deep Research Suche mit Quellenangaben",
+      "300+ Pro-Suchanfragen täglich und unbegrenzter Datei-Upload",
+      "Aktivierung auf persönlichem Konto mit 100% Garantie"
+    ]
   },
   {
-    id: 'netflix_3m_prod',
-    short_id: 'netflix_3m',
-    brand_id: 'netflix',
-    category_id: 'stream',
-    name: 'Netflix 4K UHD 3m',
-    name_ar: 'Netflix 4K UHD (3 شهور)',
-    button_title: '🎬 Netflix 4K (3 شهور) — $7.99 ⚡',
-    icon_symbol: '🎬',
-    market_price: 59.99,
-    our_price: 7.99,
-    price_egp: 399,
-    price_sar: 30,
-    subscription_duration: '3 شهور كاملة',
-    warranty_duration: '3 شهور ضمان استبدال',
-    delivery_type: 'private_account',
-    advantages_ar: ['مشاهدة مستمرة بدقة 4K Ultra HD لمدة 3 شهور بدون أي توقف', 'بروفايل خاص بك محمي برقم سري PIN مع حفظ قائمة المشاهدة', 'دعم الترجمة والدبلجة العربية الكاملة لجميع الأفلام والمسلسلات', 'ضمان استبدال فوري 100% طوال 3 شهور'],
-    advantages_en: ['Uninterrupted 4K Ultra HD streaming for 3 full months', 'Dedicated private profile with PIN lock & personal watchlist saved', 'Complete multilingual subtitles and multi-audio support', '100% official replacement warranty for 3 months'],
-    advantages_es: ['Streaming ininterrumpido en 4K Ultra HD durante 3 meses completos', 'Perfil privado con bloqueo PIN y lista de seguimiento personalizada', 'Subtítulos y doblaje en español y múltiples idiomas', 'Garantía oficial de reemplazo por 3 meses'],
-    advantages_fr: ['Streaming 4K Ultra HD ininterrompu pendant 3 mois complets', 'Profil privé avec code PIN et liste de favoris personnelle conservée', 'Sous-titres et doublages multilingues complets', 'Garantie de remplacement officielle de 3 mois'],
-    advantages_ru: ['Бесперебойный просмотр в 4K Ultra HD на 3 месяца', 'Выделенный профиль с PIN-кодом и сохранением истории просмотров', 'Полная поддержка субтитров и русской озвучки', 'Официальная гарантия замены на 3 месяца'],
-    advantages_tr: ['3 ay boyunca kesintisiz 4K Ultra HD yayın deneyimi', 'PIN kilitli özel profil ve kayıtlı kişisel izleme listesi', 'Tüm içeriklerde Türkçe dublaj ve altyazı desteği', '3 ay boyunca %100 resmi değişim garantisi'],
-    advantages_de: ['Unterbrechungsfreies 4K Ultra HD Streaming für 3 volle Monate', 'Dediziertes Profil mit PIN-Sperre & gespeicherter Merkliste', 'Vollständige deutsche Tonspuren und Untertitel', '100% offizielle Ersatzgarantie für 3 Monate'],
+    "id": "perplexity_12m_prod",
+    "short_id": "perplexity_12m",
+    "brand_id": "perplexity",
+    "category_id": "ai",
+    "name": "Perplexity Pro 12m",
+    "name_ar": "Perplexity AI Pro (سنة كاملة)",
+    "button_title": "🌌 Perplexity Pro (سنة كاملة) — $2.49 ⚡",
+    "icon_symbol": "🌌",
+    "market_price": 200,
+    "our_price": 2.49,
+    "price_egp": 125,
+    "price_sar": 9,
+    "subscription_duration": "سنة كاملة (12 شهر)",
+    "warranty_duration": "سنة كاملة ضمان استبدال",
+    "delivery_type": "personal_account",
+    "advantages_ar": [
+      "اشتراك سنوي كامل للأبحاث الأكاديمية والتحليل العميق",
+      "استعلامات Pro غير محدودة طوال عام كامل",
+      "توليد صور احترافية مدمجة عبر Playground v3 و FLUX.1",
+      "ضمان استبدال سنوي رسمي 100%"
+    ],
+    "advantages_en": [
+      "Full 1-year annual plan for academic research & intelligence",
+      "Unlimited Pro queries and continuous Deep Research access",
+      "Built-in image generation powered by Playground v3 & FLUX.1",
+      "100% comprehensive annual replacement warranty"
+    ],
+    "advantages_es": [
+      "Plan anual de 1 año para investigación académica y análisis",
+      "Consultas Pro ilimitadas y acceso continuo a Deep Research",
+      "Generación de imágenes integrada con Playground v3 y FLUX.1",
+      "Garantía anual completa de reemplazo del 100%"
+    ],
+    "advantages_fr": [
+      "Plan annuel d'un an pour la recherche universitaire et l'analyse",
+      "Requêtes Pro illimitées et accès permanent à Deep Research",
+      "Génération d'images intégrée avec Playground v3 et FLUX.1",
+      "Garantie annuelle de remplacement intégrale 100%"
+    ],
+    "advantages_ru": [
+      "Годовой план на 12 месяцев для академических исследований",
+      "Безлимитные Pro запросы и постоянный доступ к Deep Research",
+      "Встроенная генерация изображений через Playground v3 и FLUX.1",
+      "100% комплексная годовая гарантия замены"
+    ],
+    "advantages_tr": [
+      "Akademik araştırmalar ve analiz için 1 yıllık tam plan",
+      "1 yıl boyunca sınırsız Pro sorgusu ve Deep Research erişimi",
+      "Playground v3 ve FLUX.1 ile entegre görsel üretimi",
+      "1 yıl boyunca kapsamlı %100 resmi garanti"
+    ],
+    "advantages_de": [
+      "Vollständiges 1-Jahres-Abonnement für Forschung und Analyse",
+      "Unbegrenzte Pro-Suchanfragen & kontinuierlicher Deep Research Zugriff",
+      "Integrierte Bildgenerierung mit Playground v3 & FLUX.1",
+      "100% umfassende Jahres-Ersatzgarantie"
+    ]
   },
   {
-    id: 'netflix_6m_prod',
-    short_id: 'netflix_6m',
-    brand_id: 'netflix',
-    category_id: 'stream',
-    name: 'Netflix 4K UHD 6m',
-    name_ar: 'Netflix 4K UHD (6 شهور)',
-    button_title: '🎬 Netflix 4K (6 شهور) — $14.99 ⚡',
-    icon_symbol: '🎬',
-    market_price: 119.99,
-    our_price: 14.99,
-    price_egp: 750,
-    price_sar: 56,
-    subscription_duration: '6 شهور كاملة',
-    warranty_duration: '6 شهور ضمان استبدال',
-    delivery_type: 'private_account',
-    advantages_ar: ['باقة 6 شهور موفرة جداً بجودة 4K Ultra HD الأصلية', 'بروفايل خاص مشفر PIN يعمل بسلاسة واستقرار تام', 'توفير أكثر من 85% عن الاشتراك الرسمي مع ضمان كامل', 'ضمان استبدال رسمي 100% طوال 6 شهور'],
-    advantages_en: ['High-value 6-month genuine 4K Ultra HD premium subscription', 'Dedicated encrypted PIN profile operating with rock-solid stability', 'Over 85% savings compared to standard pricing with full coverage', '100% official replacement warranty for 6 months'],
-    advantages_es: ['Suscripción premium de 6 meses en 4K Ultra HD con gran ahorro', 'Perfil privado con PIN que funciona con total estabilidad', 'Más del 85% de ahorro frente al precio oficial', 'Garantía oficial de reemplazo por 6 meses'],
-    advantages_fr: ['Abonnement premium 6 mois en 4K Ultra HD très économique', 'Profil privé verrouillé par PIN avec stabilité absolue', 'Plus de 85% d\'économie avec couverture garantie complète', 'Garantie de remplacement officielle de 6 mois'],
-    advantages_ru: ['Выгодный премиум план на 6 месяцев в качестве 4K Ultra HD', 'Выделенный профиль с PIN-кодом и максимальной стабильностью', 'Экономия более 85% от официальной цены с полной гарантией', 'Официальная гарантия замены на 6 месяцев'],
-    advantages_tr: ['Yüksek tasarruflu 6 aylık orijinal 4K Ultra HD abonelik', 'Tam kararlılıkla çalışan şifreli özel PIN profili', 'Resmi fiyata göre %85\'in üzerinde tasarruf ve tam garanti', '6 ay boyunca %100 resmi değişim garantisi'],
-    advantages_de: ['Sehr sparsames 6-Monate-Abonnement in echter 4K Ultra HD Qualität', 'Dediziertes, PIN-geschütztes Profil mit maximaler Stabilität', 'Über 85% Ersparnis gegenüber dem offiziellen Preis', '100% offizielle Ersatzgarantie für 6 Monate'],
+    "id": "midjourney_basic_1m_prod",
+    "short_id": "midjourney_basic_1m",
+    "brand_id": "midjourney",
+    "category_id": "ai",
+    "name": "Midjourney Basic 1m",
+    "name_ar": "Midjourney AI Basic (شهر كامل)",
+    "button_title": "🌟 Midjourney Basic — $1.19 ⚡",
+    "icon_symbol": "🌟",
+    "market_price": 10,
+    "our_price": 1.19,
+    "price_egp": 60,
+    "price_sar": 4,
+    "subscription_duration": "شهر كامل (30 يوم)",
+    "warranty_duration": "شهر كامل ضمان استبدال",
+    "delivery_type": "private_account",
+    "advantages_ar": [
+      "أعلى دقة لتوليد الصور والتصاميم الفنية بإصدارات v6.1 و Niji 6",
+      "3.3 ساعات توليد سريع Fast GPU Hours شهرياً",
+      "ترخيص تجاري كامل لبيع واستخدام كافة الصور المولدة",
+      "ضمان استبدال رسمي 100% طوال الشهر"
+    ],
+    "advantages_en": [
+      "Ultra HD image generation powered by v6.1 & Niji 6",
+      "3.3 Fast GPU Hours monthly for instant rendering",
+      "Full commercial usage rights to sell all generated artwork",
+      "100% official replacement warranty for the full month"
+    ],
+    "advantages_es": [
+      "Generación de imágenes Ultra HD con v6.1 y Niji 6",
+      "3.3 Horas GPU rápidas al mes para renderizado instantáneo",
+      "Derechos comerciales completos para vender todas tus creaciones",
+      "Garantía oficial de reemplazo del 100%"
+    ],
+    "advantages_fr": [
+      "Génération d'images Ultra HD avec v6.1 et Niji 6",
+      "3.3 heures GPU rapides par mois pour rendu instantané",
+      "Droits commerciaux complets pour vendre toutes vos créations",
+      "Garantie de remplacement officielle 100%"
+    ],
+    "advantages_ru": [
+      "Генерация изображений в Ultra HD на версиях v6.1 и Niji 6",
+      "3.3 быстрых GPU часов в месяц для мгновенного рендера",
+      "Полные коммерческие права на продажу всех созданных работ",
+      "100% официальная гарантия замены на месяц"
+    ],
+    "advantages_tr": [
+      "v6.1 ve Niji 6 ile Ultra HD sanatsal görsel üretimi",
+      "Anında işleme için aylık 3.3 Hızlı GPU Saati",
+      "Üretilen tüm görseller için tam ticari satış hakkı",
+      "Tam 1 ay boyunca %100 resmi değişim garantisi"
+    ],
+    "advantages_de": [
+      "Ultra HD Bildgenerierung mit Versionen v6.1 und Niji 6",
+      "3.3 schnelle GPU-Stunden monatlich für sofortiges Rendering",
+      "Vollständige kommerzielle Rechte zum Verkauf aller Bilder",
+      "100% offizielle Ersatzgarantie für den Monat"
+    ]
   },
   {
-    id: 'netflix_12m_prod',
-    short_id: 'netflix_12m',
-    brand_id: 'netflix',
-    category_id: 'stream',
-    name: 'Netflix 4K UHD 12m',
-    name_ar: 'Netflix 4K UHD (سنة كاملة)',
-    button_title: '🎬 Netflix 4K (سنة كاملة) — $26.99 ⚡',
-    icon_symbol: '🎬',
-    market_price: 239.99,
-    our_price: 26.99,
-    price_egp: 1350,
-    price_sar: 101,
-    subscription_duration: 'سنة كاملة (12 شهر)',
-    warranty_duration: 'سنة كاملة ضمان استبدال',
-    delivery_type: 'private_account',
-    advantages_ar: ['اشتراك سنوي كامل لمشاهدة جميع الأفلام والمسلسلات الحصرية بدقة 4K', 'بروفايل خاص دائم طوال العام محمي برمز PIN', 'توفير هائل يتجاوز 90% عن سعر الاشتراك السنوي الرسمي', 'ضمان استبدال سنوي رسمي شامل 100%'],
-    advantages_en: ['Full 1-year annual plan for unlimited 4K Ultra HD movies & series', 'Permanent private profile protected by PIN lock all year round', 'Massive 90%+ savings vs official annual pricing with zero hassle', '100% comprehensive annual replacement warranty'],
-    advantages_es: ['Plan anual de 1 año para películas y series ilimitadas en 4K Ultra HD', 'Perfil privado permanente protegido con PIN durante todo el año', 'Ahorro masivo superior al 90% frente al precio anual oficial', 'Garantía anual completa de reemplazo del 100%'],
-    advantages_fr: ['Plan annuel d\'un an pour films et séries illimités en 4K Ultra HD', 'Profil privé permanent protégé par code PIN toute l\'année', 'Économie massive de plus de 90% par rapport au prix officiel', 'Garantie annuelle de remplacement intégrale 100%'],
-    advantages_ru: ['Годовой план на 12 месяцев для фильмов и сериалов в 4K Ultra HD', 'Постоянный личный профиль с защитой PIN-кодом круглый год', 'Огромная экономия более 90% от официальной годовой цены', '100% комплексная годовая гарантия замены'],
-    advantages_tr: ['Sınırsız 4K Ultra HD film ve diziler için 1 yıllık tam plan', 'Yıl boyunca PIN kilidiyle korunan kalıcı özel profil', 'Resmi yıllık fiyata göre %90\'ın üzerinde devasa tasarruf', '1 yıl boyunca kapsamlı %100 resmi garanti'],
-    advantages_de: ['Vollständiges 1-Jahres-Abonnement für 4K Ultra HD Filme & Serien', 'Dauerhaftes privates Profil mit PIN-Sperre das ganze Jahr über', 'Über 90% Ersparnis gegenüber dem offiziellen Jahrespreis', '100% umfassende Jahres-Ersatzgarantie'],
-  },
-
-  // ── 21. SPOTIFY PREMIUM ──
-  {
-    id: 'spotify_1m_prod',
-    short_id: 'spotify_1m',
-    brand_id: 'spotify',
-    category_id: 'stream',
-    name: 'Spotify Premium 1m',
-    name_ar: 'Spotify Premium (شهر كامل)',
-    button_title: '🎵 Spotify (شهر واحد) — $1.99 ⚡',
-    icon_symbol: '🎵',
-    market_price: 10.99,
-    our_price: 1.99,
-    price_egp: 100,
-    price_sar: 8,
-    subscription_duration: 'شهر كامل (30 يوم)',
-    warranty_duration: 'شهر كامل ضمان استبدال',
-    delivery_type: 'personal_account',
-    advantages_ar: ['تفعيل مباشر على حسابك الشخصي مع الاحتفاظ بكافة قوائم التشغيل', 'استماع غير محدود بدون إعلانات وبأعلى جودة صوت 320kbps', 'إمكانية تحميل الأغاني والاستماع بدون إنترنت (Offline Mode)', 'ضمان استبدال رسمي 100% طوال المدة'],
-    advantages_en: ['Direct activation on your personal account preserving all playlists', 'Ad-free high fidelity streaming at maximum 320kbps audio bitrate', 'Offline download support on mobile, tablet, and desktop', '100% official replacement warranty for the entire period'],
-    advantages_es: ['Activación en tu cuenta personal conservando todas tus listas de reproducción', 'Música sin anuncios en máxima calidad de audio 320kbps', 'Descargas para escuchar sin conexión a internet', 'Garantía oficial de reemplazo del 100%'],
-    advantages_fr: ['Activation sur votre compte personnel en conservant vos playlists', 'Écoute sans publicité en qualité audio maximale 320kbps', 'Téléchargement hors-ligne sur tous vos appareils', 'Garantie de remplacement officielle 100%'],
-    advantages_ru: ['Прямая активация на личный аккаунт с сохранением всех плейлистов', 'Прослушивание без рекламы в максимальном качестве 320 кбит/с', 'Скачивание музыки для прослушивания офлайн', '100% официальная гарантия замены на весь срок'],
-    advantages_tr: ['Tüm çalma listeleriniz korunarak kişisel hesabınıza aktivasyon', 'En yüksek 320kbps ses kalitesinde reklamsız müzik dinleme', 'Çevrimdışı (Offline) dinleme için müzik indirme desteği', 'Tüm süre boyunca %100 resmi değişim garantisi'],
-    advantages_de: ['Direkte Aktivierung auf persönlichem Konto unter Beibehaltung aller Playlists', 'Werbefreies Musik-Streaming in höchster 320kbps Audioqualität', 'Offline-Download auf allen Geräten', '100% offizielle Ersatzgarantie für die gesamte Laufzeit'],
-  },
-  {
-    id: 'spotify_3m_prod',
-    short_id: 'spotify_3m',
-    brand_id: 'spotify',
-    category_id: 'stream',
-    name: 'Spotify Premium 3m',
-    name_ar: 'Spotify Premium (3 شهور)',
-    button_title: '🎵 Spotify (3 شهور) — $4.99 ⚡',
-    icon_symbol: '🎵',
-    market_price: 32.99,
-    our_price: 4.99,
-    price_egp: 250,
-    price_sar: 19,
-    subscription_duration: '3 شهور كاملة',
-    warranty_duration: '3 شهور ضمان استبدال',
-    delivery_type: 'personal_account',
-    advantages_ar: ['3 شهور استماع متواصل بدون إعلانات وبأعلى نقاء صوتي', 'تخطي غير محدود للأغاني وتشغيل أي تراك تريده', 'تفعيل رسمي على حسابك أو حساب جاهز مع ضمان كامل', 'ضمان استبدال فوري 100% طوال 3 شهور'],
-    advantages_en: ['3 months of uninterrupted ad-free high fidelity streaming', 'Unlimited skips and on-demand playback for all tracks', 'Official activation with full warranty protection', '100% official replacement warranty for 3 months'],
-    advantages_es: ['3 meses de música ininterrumpida sin anuncios en máxima calidad', 'Saltos de canciones ilimitados y reproducción bajo demanda', 'Activación oficial con cobertura y garantía total', 'Garantía oficial de reemplazo por 3 meses'],
-    advantages_fr: ['3 mois de streaming musical ininterrompu sans publicité', 'Sauts de pistes illimités et lecture à la demande', 'Activation officielle avec couverture garantie intégrale', 'Garantie de remplacement officielle de 3 mois'],
-    advantages_ru: ['3 месяца непрерывной музыки без рекламы в максимальном качестве', 'Безлимитный пропуск треков и воспроизведение по запросу', 'Официальная активация с полной гарантией', 'Официальная гарантия замены на 3 месяца'],
-    advantages_tr: ['3 ay boyunca en yüksek kalitede kesintisiz reklamsız müzik', 'Sınırsız şarkı atlama ve istediğin parçayı anında çalma', 'Tam garanti korumasıyla resmi aktivasyon', '3 ay boyunca %100 resmi değişim garantisi'],
-    advantages_de: ['3 Monate unterbrechungsfreies werbefreies Streaming in Spitzenqualität', 'Unbegrenztes Überspringen von Titeln & On-Demand-Wiedergabe', 'Offizielle Aktivierung mit vollem Garantieschutz', '100% offizielle Ersatzgarantie für 3 Monate'],
+    "id": "midjourney_std_1m_prod",
+    "short_id": "midjourney_std_1m",
+    "brand_id": "midjourney",
+    "category_id": "ai",
+    "name": "Midjourney Standard 1m",
+    "name_ar": "Midjourney AI Standard (شهر كامل)",
+    "button_title": "🌟 Midjourney Standard — $1.99 ⚡",
+    "icon_symbol": "🌟",
+    "market_price": 30,
+    "our_price": 1.99,
+    "price_egp": 100,
+    "price_sar": 7,
+    "subscription_duration": "شهر كامل (30 يوم)",
+    "warranty_duration": "شهر كامل ضمان استبدال",
+    "delivery_type": "private_account",
+    "advantages_ar": [
+      "15 ساعة توليد سريع Fast GPU Hours شهرياً",
+      "توليد صور غير محدود في وضع الاسترخاء Relax Mode",
+      "ترخيص تجاري رسمي لاستخدام وبيع كافة الأعمال",
+      "ضمان استبدال رسمي 100%"
+    ],
+    "advantages_en": [
+      "15 Fast GPU Hours monthly + unlimited Relax Mode generation",
+      "Unlimited background rendering with zero wait limits",
+      "Full commercial usage rights for all digital outputs",
+      "100% official replacement warranty for the full month"
+    ],
+    "advantages_es": [
+      "15 horas GPU rápidas al mes + generación ilimitada en modo Relax",
+      "Renderizado ilimitado en segundo plano sin límites de espera",
+      "Derechos comerciales completos para todas tus creaciones",
+      "Garantía oficial de reemplazo del 100%"
+    ],
+    "advantages_fr": [
+      "15 heures GPU rapides par mois + mode Relax illimité",
+      "Rendu illimité en arrière-plan sans aucune restriction",
+      "Droits commerciaux complets pour toutes vos sorties numériques",
+      "Garantie de remplacement officielle 100%"
+    ],
+    "advantages_ru": [
+      "15 быстрых GPU часов в месяц + безлимитный Relax режим",
+      "Неограниченная генерация в фоновом режиме",
+      "Полные коммерческие права на продажу цифровых артов",
+      "100% официальная гарантия замены на месяц"
+    ],
+    "advantages_tr": [
+      "Aylık 15 Hızlı GPU Saati + sınırsız Relax Modu görsel üretimi",
+      "Bekleme sınırı olmaksızın sınırsız arka plan işleme",
+      "Tüm dijital çıktılar için eksiksiz ticari kullanım hakkı",
+      "Tam 1 ay boyunca %100 resmi değişim garantisi"
+    ],
+    "advantages_de": [
+      "15 schnelle GPU-Stunden monatlich + unbegrenzter Relax-Modus",
+      "Unbegrenztes Rendern im Hintergrund ohne Wartebeschränkungen",
+      "Vollständige kommerzielle Rechte für alle generierten Bilder",
+      "100% offizielle Ersatzgarantie für den Monat"
+    ]
   },
   {
-    id: 'spotify_6m_prod',
-    short_id: 'spotify_6m',
-    brand_id: 'spotify',
-    category_id: 'stream',
-    name: 'Spotify Premium 6m',
-    name_ar: 'Spotify Premium (6 شهور)',
-    button_title: '🎵 Spotify (6 شهور) — $8.99 ⚡',
-    icon_symbol: '🎵',
-    market_price: 65.99,
-    our_price: 8.99,
-    price_egp: 450,
-    price_sar: 34,
-    subscription_duration: '6 شهور كاملة',
-    warranty_duration: '6 شهور ضمان استبدال',
-    delivery_type: 'personal_account',
-    advantages_ar: ['باقة 6 شهور موفرة جداً بجودة Extreme Audio 320kbps', 'تحميل ملايين الأغاني والبودكاست للاستماع في السفر وبدون نت', 'توفير يتجاوز 85% عن السعر الرسمي مع استقرار تام', 'ضمان استبدال رسمي 100% طوال 6 شهور'],
-    advantages_en: ['High-value 6-month plan with Extreme Audio 320kbps bitrate', 'Download millions of songs and podcasts for travel & offline use', 'Over 85% savings compared to standard subscription price', '100% official replacement warranty for 6 months'],
-    advantages_es: ['Plan de 6 meses muy económico con calidad Extreme Audio 320kbps', 'Descarga millones de canciones y podcasts para escuchar sin internet', 'Más del 85% de ahorro frente al precio oficial', 'Garantía oficial de reemplazo por 6 meses'],
-    advantages_fr: ['Plan 6 mois très économique avec qualité Extreme Audio 320kbps', 'Téléchargez des millions de titres et podcasts pour écoute hors-ligne', 'Plus de 85% d\'économie par rapport au prix officiel', 'Garantie de remplacement officielle de 6 mois'],
-    advantages_ru: ['Выгодный план на 6 месяцев с качеством Extreme Audio 320 кбит/с', 'Скачивание миллионов треков и подкастов для поездок офлайн', 'Экономия более 85% от официальной цены подписки', 'Официальная гарантия замены на 6 месяцев'],
-    advantages_tr: ['Extreme Audio 320kbps ses kalitesiyle 6 aylık avantajlı paket', 'Seyahat ve internetsiz dinleme için milyonlarca şarkı ve podcast indirme', 'Resmi fiyata göre %85\'in üzerinde tasarruf ve tam kararlılık', '6 ay boyunca %100 resmi değişim garantisi'],
-    advantages_de: ['Sehr sparsamer 6-Monate-Plan mit Extreme Audio 320kbps Qualität', 'Millionen Songs & Podcasts herunterladen für Offline-Nutzung', 'Über 85% Ersparnis gegenüber dem Standardpreis', '100% offizielle Ersatzgarantie für 6 Monate'],
+    "id": "midjourney_12m_prod",
+    "short_id": "midjourney_12m",
+    "brand_id": "midjourney",
+    "category_id": "ai",
+    "name": "Midjourney AI 12m",
+    "name_ar": "Midjourney AI Standard (سنة كاملة)",
+    "button_title": "🌟 Midjourney (سنة كاملة) — $2.99 ⚡",
+    "icon_symbol": "🌟",
+    "market_price": 360,
+    "our_price": 2.99,
+    "price_egp": 150,
+    "price_sar": 11,
+    "subscription_duration": "سنة كاملة (12 شهر)",
+    "warranty_duration": "سنة كاملة ضمان استبدال",
+    "delivery_type": "private_account",
+    "advantages_ar": [
+      "اشتراك سنوي كامل للاستوديوهات والمصممين المحترفين",
+      "180 ساعة توليد سريع Fast GPU Hours طوال العام",
+      "توليد غير محدود في وضع Relax Mode طوال 12 شهراً",
+      "ضمان استبدال سنوي شامل 100%"
+    ],
+    "advantages_en": [
+      "Full 1-year annual plan for professional design studios & creators",
+      "180 Fast GPU Hours annually + continuous unlimited Relax Mode",
+      "Complete commercial licensing for enterprise asset production",
+      "100% comprehensive annual replacement warranty"
+    ],
+    "advantages_es": [
+      "Plan anual de 1 año para estudios de diseño y creadores",
+      "180 horas GPU rápidas al año + modo Relax ilimitado continuo",
+      "Licencia comercial completa para producción digital empresarial",
+      "Garantía anual completa de reemplazo del 100%"
+    ],
+    "advantages_fr": [
+      "Plan annuel d'un an pour studios de design et créateurs",
+      "180 heures GPU rapides par an + mode Relax illimité continu",
+      "Licence commerciale complète pour production professionnelle",
+      "Garantie annuelle de remplacement intégrale 100%"
+    ],
+    "advantages_ru": [
+      "Годовой план на 12 месяцев для студий дизайна и креаторов",
+      "180 быстрых GPU часов в год + безлимитный Relax режим",
+      "Полная коммерческая лицензия для коммерческих проектов",
+      "100% комплексная годовая гарантия замены"
+    ],
+    "advantages_tr": [
+      "Tasarım stüdyoları ve profesyoneller için 1 yıllık tam plan",
+      "Yıllık 180 Hızlı GPU Saati + sürekli sınırsız Relax Modu",
+      "Kurumsal dijital üretim için eksiksiz ticari lisans",
+      "1 yıl boyunca kapsamlı %100 resmi garanti"
+    ],
+    "advantages_de": [
+      "Vollständiger 1-Jahres-Plan für Designstudios und Profis",
+      "180 schnelle GPU-Stunden jährlich + unbegrenzter Relax-Modus",
+      "Vollständige kommerzielle Lizenz für professionelle Produktionen",
+      "100% umfassende Jahres-Ersatzgarantie"
+    ]
   },
   {
-    id: 'spotify_12m_prod',
-    short_id: 'spotify_12m',
-    brand_id: 'spotify',
-    category_id: 'stream',
-    name: 'Spotify Premium 12m',
-    name_ar: 'Spotify Premium (سنة كاملة)',
-    button_title: '🎵 Spotify (سنة كاملة) — $14.99 ⚡',
-    icon_symbol: '🎵',
-    market_price: 131.99,
-    our_price: 14.99,
-    price_egp: 750,
-    price_sar: 56,
-    subscription_duration: 'سنة كاملة (12 شهر)',
-    warranty_duration: 'سنة كاملة ضمان استبدال',
-    delivery_type: 'personal_account',
-    advantages_ar: ['اشتراك سنوي كامل ومستقر طوال 12 شهراً بدون أي انقطاع', 'تفعيل على حسابك الشخصي مع الاحتفاظ بجميع أغانيك وقوائمك', 'توفير هائل يتجاوز 88% عن السعر السنوي الرسمي', 'ضمان استبدال سنوي رسمي شامل 100%'],
-    advantages_en: ['Full 1-year uninterrupted annual subscription for 12 months', 'Direct personal account activation preserving all your playlists', 'Massive 88%+ savings vs standard annual retail subscription', '100% comprehensive annual replacement warranty'],
-    advantages_es: ['Suscripción anual completa e ininterrumpida de 1 año', 'Activación en tu cuenta personal conservando todas tus canciones', 'Ahorro masivo superior al 88% frente al precio anual oficial', 'Garantía anual completa de reemplazo del 100%'],
-    advantages_fr: ['Abonnement annuel complet ininterrompu d\'un an sur 12 mois', 'Activation sur compte personnel en conservant toutes vos playlists', 'Économie massive de plus de 88% par rapport au prix officiel', 'Garantie annuelle de remplacement intégrale 100%'],
-    advantages_ru: ['Годовая подписка на 12 месяцев без прерываний', 'Прямая активация на личный аккаунт с сохранением всех треков', 'Огромная экономия более 88% от официальной годовой цены', '100% комплексная годовая гарантия замены'],
-    advantages_tr: ['12 ay boyunca kesintisiz tam 1 yıllık abonelik', 'Tüm şarkılarınız ve listeleriniz korunarak kişisel hesabınıza aktivasyon', 'Resmi yıllık fiyata göre %88\'in üzerinde devasa tasarruf', '1 yıl boyunca kapsamlı %100 resmi garanti'],
-    advantages_de: ['Vollständiges 1-Jahres-Abonnement ohne Unterbrechung für 12 Monate', 'Aktivierung auf persönlichem Konto unter Beibehaltung aller Playlists', 'Über 88% Ersparnis gegenüber dem regulären Jahrespreis', '100% umfassende Jahres-Ersatzgarantie'],
-  },
-
-  // ── 22. YOUTUBE PREMIUM ──
-  {
-    id: 'youtube_1m_prod',
-    short_id: 'youtube_1m',
-    brand_id: 'youtube',
-    category_id: 'stream',
-    name: 'YouTube Premium 1m',
-    name_ar: 'YouTube Premium (شهر كامل)',
-    button_title: '▶️ YouTube Premium (شهر) — $1.99 ⚡',
-    icon_symbol: '▶️',
-    market_price: 13.99,
-    our_price: 1.99,
-    price_egp: 100,
-    price_sar: 8,
-    subscription_duration: 'شهر كامل (30 يوم)',
-    warranty_duration: 'شهر كامل ضمان استبدال',
-    delivery_type: 'personal_account',
-    advantages_ar: ['تفعيل رسمي على إيميلك الشخصي (Google Account) بدون كلمة مرور', 'مشاهدة خالية تماماً من الإعلانات على جميع أجهزتك وشاشتك الذكية', 'تشغيل في الخلفية مع قفل الشاشة واشتراك YouTube Music Premium كامل', 'ضمان استبدال رسمي 100% طوال المدة'],
-    advantages_en: ['Official activation on your personal Google Account without password', 'Completely ad-free video playback across all devices and Smart TVs', 'Background & lock-screen playback plus full YouTube Music Premium', '100% official replacement warranty for the entire period'],
-    advantages_es: ['Activación oficial en tu cuenta de Google sin compartir contraseña', 'Reproducción de video 100% sin anuncios en todos tus dispositivos', 'Reproducción en segundo plano e incluye YouTube Music Premium', 'Garantía oficial de reemplazo del 100%'],
-    advantages_fr: ['Activation officielle sur votre compte Google sans mot de passe', 'Lecture vidéo 100% sans publicité sur tous vos écrans et Smart TV', 'Lecture en arrière-plan et YouTube Music Premium inclus', 'Garantie de remplacement officielle 100%'],
-    advantages_ru: ['Официальная активация на личный Google аккаунт без пароля', 'Просмотр видео без рекламы на всех устройствах и Smart TV', 'Фоновое воспроизведение с выключенным экраном и YouTube Music Premium', '100% официальная гарантия замены на весь срок'],
-    advantages_tr: ['Şifre olmadan kişisel Google hesabınıza resmi aktivasyon', 'Tüm cihazlarda ve Smart TV\'lerde reklamsız video deneyimi', 'Arka planda oynatma ve eksiksiz YouTube Music Premium dahil', 'Tüm süre boyunca %100 resmi değişim garantisi'],
-    advantages_de: ['Offizielle Aktivierung auf persönlichem Google-Konto ohne Passwort', 'Vollständig werbefreies Video-Streaming auf allen Geräten & Smart TVs', 'Hintergrundwiedergabe bei gesperrtem Bildschirm + YouTube Music Premium', '100% offizielle Ersatzgarantie für die gesamte Laufzeit'],
-  },
-  {
-    id: 'youtube_3m_prod',
-    short_id: 'youtube_3m',
-    brand_id: 'youtube',
-    category_id: 'stream',
-    name: 'YouTube Premium 3m',
-    name_ar: 'YouTube Premium (3 شهور)',
-    button_title: '▶️ YouTube Premium (3 شهور) — $4.99 ⚡',
-    icon_symbol: '▶️',
-    market_price: 41.99,
-    our_price: 4.99,
-    price_egp: 250,
-    price_sar: 19,
-    subscription_duration: '3 شهور كاملة',
-    warranty_duration: '3 شهور ضمان استبدال',
-    delivery_type: 'personal_account',
-    advantages_ar: ['3 شهور مشاهدة متواصلة بدون أي إعلانات مزعجة نهائياً', 'تحميل الفيديوهات والأغاني لمشاهدتها بدون اتصال بالإنترنت', 'تفعيل رسمي وآمن 100% على حساب جوجل الخاص بك', 'ضمان استبدال فوري 100% طوال 3 شهور'],
-    advantages_en: ['3 months of uninterrupted ad-free video streaming', 'Offline video and music downloads on mobile and tablet devices', '100% safe & official activation on your personal Google account', '100% official replacement warranty for 3 months'],
-    advantages_es: ['3 meses de videos sin anuncios molestos e interrupciones', 'Descarga videos y música para verlos sin conexión a internet', 'Activación 100% segura y oficial en tu cuenta de Google', 'Garantía oficial de reemplazo por 3 meses'],
-    advantages_fr: ['3 mois de streaming vidéo sans aucune publicité gênante', 'Téléchargement de vidéos et musiques pour visionnage hors-ligne', 'Activation 100% sûre et officielle sur votre compte Google', 'Garantie de remplacement officielle de 3 mois'],
-    advantages_ru: ['3 месяца непрерывного просмотра без назойливой рекламы', 'Скачивание видео и музыки для просмотра без интернета', '100% безопасная и официальная активация на ваш Google аккаунт', 'Официальная гарантия замены на 3 месяца'],
-    advantages_tr: ['3 ay boyunca kesintisiz ve can sıkıcı reklamlardan uzak video keyfi', 'İnternetsiz izlemek için video ve müzik indirme desteği', 'Kişisel Google hesabınızda %100 güvenli ve resmi aktivasyon', '3 ay boyunca %100 resmi değişim garantisi'],
-    advantages_de: ['3 Monate werbefreies Video-Streaming ohne Unterbrechungen', 'Video- und Musik-Downloads für die Offline-Nutzung', '100% sichere und offizielle Aktivierung auf Google-Konto', '100% offizielle Ersatzgarantie für 3 Monate'],
+    "id": "elevenlabs_starter_1m_prod",
+    "short_id": "elevenlabs_starter_1m",
+    "brand_id": "elevenlabs",
+    "category_id": "ai",
+    "name": "ElevenLabs Starter 1m",
+    "name_ar": "ElevenLabs AI Starter (شهر كامل)",
+    "button_title": "🎙️ ElevenLabs Starter — $0.79 ⚡",
+    "icon_symbol": "🎙️",
+    "market_price": 5,
+    "our_price": 0.79,
+    "price_egp": 40,
+    "price_sar": 3,
+    "subscription_duration": "شهر كامل (30 يوم)",
+    "warranty_duration": "شهر كامل ضمان استبدال",
+    "delivery_type": "api_token",
+    "advantages_ar": [
+      "30,000 حرف شهرياً لتوليد أصوات بشرية فائقة الواقعية",
+      "استنساخ ما يصل إلى 10 أصوات مخصصة Instant Voice Cloning",
+      "ترخيص تجاري كامل لاستخدام الأصوات في اليوتيوب والإعلانات",
+      "مفتاح API رسمي وضمان استبدال 100%"
+    ],
+    "advantages_en": [
+      "30,000 character credits monthly for hyper-realistic speech",
+      "Instant Voice Cloning support for up to 10 unique custom voices",
+      "Full commercial license for YouTube, ads & podcasts",
+      "Official API Key access with 100% replacement warranty"
+    ],
+    "advantages_es": [
+      "30,000 caracteres al mes para voces humanas hiperrealistas",
+      "Clonación instantánea de hasta 10 voces personalizadas",
+      "Licencia comercial completa para YouTube, anuncios y podcasts",
+      "Acceso con clave API oficial y 100% de garantía"
+    ],
+    "advantages_fr": [
+      "30 000 caractères par mois pour voix humaines ultra-réalistes",
+      "Clonage instantané jusqu'à 10 voix personnalisées uniques",
+      "Licence commerciale complète pour YouTube, pubs et podcasts",
+      "Clé API officielle avec garantie de remplacement 100%"
+    ],
+    "advantages_ru": [
+      "30 000 символов в месяц для гиперреалистичного синтеза речи",
+      "Мгновенное клонирование до 10 уникальных пользовательских голосов",
+      "Полная коммерческая лицензия для YouTube, рекламы и подкастов",
+      "Официальный API ключ со 100% гарантией замены"
+    ],
+    "advantages_tr": [
+      "Gerçekçi konuşma sentezi için aylık 30.000 karakter kredisi",
+      "10 adede kadar özel ses için anında ses klonlama (Voice Cloning)",
+      "YouTube, reklamlar ve podcast'ler için eksiksiz ticari lisans",
+      "Resmi API anahtarı erişimi ve %100 değişim garantisi"
+    ],
+    "advantages_de": [
+      "30.000 Zeichen monatlich für hyperrealistische Sprachausgabe",
+      "Instant Voice Cloning für bis zu 10 individuelle Stimmen",
+      "Vollständige kommerzielle Lizenz für YouTube, Werbung & Podcasts",
+      "Offizieller API-Schlüssel mit 100% Ersatzgarantie"
+    ]
   },
   {
-    id: 'youtube_6m_prod',
-    short_id: 'youtube_6m',
-    brand_id: 'youtube',
-    category_id: 'stream',
-    name: 'YouTube Premium 6m',
-    name_ar: 'YouTube Premium (6 شهور)',
-    button_title: '▶️ YouTube Premium (6 شهور) — $8.99 ⚡',
-    icon_symbol: '▶️',
-    market_price: 83.99,
-    our_price: 8.99,
-    price_egp: 450,
-    price_sar: 34,
-    subscription_duration: '6 شهور كاملة',
-    warranty_duration: '6 شهور ضمان استبدال',
-    delivery_type: 'personal_account',
-    advantages_ar: ['باقة 6 شهور موفرة جداً بدون إعلانات مع YouTube Music', 'تشغيل الصوت في الخلفية أثناء تصفح التطبيقات الأخرى وأثناء إغلاق الشاشة', 'توفير يتجاوز 88% عن السعر الرسمي مع استقرار تام', 'ضمان استبدال رسمي 100% طوال 6 شهور'],
-    advantages_en: ['High-value 6-month ad-free plan including YouTube Music Premium', 'Background audio playback while using other apps or with screen off', 'Over 88% savings compared to standard retail pricing', '100% official replacement warranty for 6 months'],
-    advantages_es: ['Plan de 6 meses muy económico sin anuncios e incluye YouTube Music', 'Reproducción en segundo plano con la pantalla apagada', 'Más del 88% de ahorro frente al precio oficial', 'Garantía oficial de reemplazo por 6 meses'],
-    advantages_fr: ['Plan 6 mois sans publicité incluant YouTube Music Premium', 'Lecture audio en arrière-plan avec écran verrouillé', 'Plus de 88% d\'économie par rapport au prix officiel', 'Garantie de remplacement officielle de 6 mois'],
-    advantages_ru: ['Выгодный план на 6 месяцев без рекламы с YouTube Music', 'Фоновое воспроизведение при заблокированном экране', 'Экономия более 88% от официальной цены подписки', 'Официальная гарантия замены на 6 месяцев'],
-    advantages_tr: ['YouTube Music Premium dahil 6 aylık avantajlı reklamsız paket', 'Ekran kapalıyken ve diğer uygulamaları kullanırken arka planda oynatma', 'Resmi fiyata göre %88\'in üzerinde tasarruf ve tam kararlılık', '6 ay boyunca %100 resmi değişim garantisi'],
-    advantages_de: ['Sehr sparsamer 6-Monate-Plan inklusive YouTube Music Premium', 'Hintergrundwiedergabe bei gesperrtem Bildschirm oder App-Wechsel', 'Über 88% Ersparnis gegenüber dem regulären Preis', '100% offizielle Ersatzgarantie für 6 Monate'],
+    "id": "elevenlabs_creator_1m_prod",
+    "short_id": "elevenlabs_creator_1m",
+    "brand_id": "elevenlabs",
+    "category_id": "ai",
+    "name": "ElevenLabs Creator 1m",
+    "name_ar": "ElevenLabs AI Creator (شهر كامل)",
+    "button_title": "🎙️ ElevenLabs Creator — $1.99 ⚡",
+    "icon_symbol": "🎙️",
+    "market_price": 22,
+    "our_price": 1.99,
+    "price_egp": 100,
+    "price_sar": 7,
+    "subscription_duration": "شهر كامل (30 يوم)",
+    "warranty_duration": "شهر كامل ضمان استبدال",
+    "delivery_type": "api_token",
+    "advantages_ar": [
+      "100,000 حرف شهرياً مع دعم استنساخ الأصوات الاحترافي Professional Cloning",
+      "دبلجة الفيديوهات وترجمتها تلقائياً بدقة استوديو سينمائية",
+      "أعلى جودة صوتية بدون فقدان ووصول كامل لـ API",
+      "ضمان استبدال رسمي 100% طوال المدة"
+    ],
+    "advantages_en": [
+      "100,000 characters monthly + Professional Voice Cloning engine",
+      "Studio-quality automatic video dubbing and AI voice translation",
+      "Highest audio fidelity lossless output + full API key access",
+      "100% official replacement warranty for the entire period"
+    ],
+    "advantages_es": [
+      "100,000 caracteres al mes + motor Professional Voice Cloning",
+      "Doblaje automático de video con calidad de estudio y traducción",
+      "Máxima fidelidad de audio sin pérdidas + clave API completa",
+      "Garantía oficial de reemplazo del 100%"
+    ],
+    "advantages_fr": [
+      "100 000 caractères par mois + moteur Professional Voice Cloning",
+      "Doublage vidéo automatique de qualité studio et traduction IA",
+      "Fidélité audio maximale sans perte + accès API complet",
+      "Garantie de remplacement officielle 100%"
+    ],
+    "advantages_ru": [
+      "100 000 символов в месяц + профессиональное клонирование голоса",
+      "Студийный автоматический дубляж и перевод видео с ИИ",
+      "Максимальное качество звука без сжатия + полный API ключ",
+      "100% официальная гарантия замены на весь срок"
+    ],
+    "advantages_tr": [
+      "Aylık 100.000 karakter + Profesyonel Ses Klonlama motoru",
+      "Stüdyo kalitesinde otomatik video dublajı ve yapay zeka çevirisi",
+      "En yüksek kayıpsız ses kalitesi ve tam API anahtarı erişimi",
+      "Tüm süre boyunca %100 resmi değişim garantisi"
+    ],
+    "advantages_de": [
+      "100.000 Zeichen monatlich + Professional Voice Cloning Engine",
+      "Studio-Video-Dubbing und KI-Übersetzung in Spitzenqualität",
+      "Höchste verlustfreie Audioqualität + voller API-Schlüssel-Zugriff",
+      "100% offizielle Ersatzgarantie für die gesamte Laufzeit"
+    ]
   },
   {
-    id: 'youtube_12m_prod',
-    short_id: 'youtube_12m',
-    brand_id: 'youtube',
-    category_id: 'stream',
-    name: 'YouTube Premium 12m',
-    name_ar: 'YouTube Premium (سنة كاملة)',
-    button_title: '▶️ YouTube Premium (سنة) — $15.99 ⚡',
-    icon_symbol: '▶️',
-    market_price: 167.99,
-    our_price: 15.99,
-    price_egp: 800,
-    price_sar: 60,
-    subscription_duration: 'سنة كاملة (12 شهر)',
-    warranty_duration: 'سنة كاملة ضمان استبدال',
-    delivery_type: 'personal_account',
-    advantages_ar: ['اشتراك سنوي كامل ومستقر طوال 12 شهراً بدون أي إعلانات', 'تفعيل على إيميلك الشخصي مباشرة مع الاحتفاظ باشتراكات القنوات والمفضلة', 'توفير هائل يتجاوز 90% عن السعر الرسمي', 'ضمان استبدال سنوي رسمي شامل 100%'],
-    advantages_en: ['Full 1-year annual ad-free subscription for 12 uninterrupted months', 'Direct activation on your personal email preserving all your subscriptions', 'Over 90% savings vs official annual retail pricing', '100% comprehensive annual replacement warranty'],
-    advantages_es: ['Suscripción anual completa e ininterrumpida de 1 año sin anuncios', 'Activación en tu correo personal conservando todas tus suscripciones', 'Ahorro masivo superior al 90% frente al precio anual oficial', 'Garantía anual completa de reemplazo del 100%'],
-    advantages_fr: ['Abonnement annuel complet ininterrompu d\'un an sans publicité', 'Activation directe sur e-mail personnel en conservant vos chaînes', 'Économie massive de plus de 90% par rapport au prix officiel', 'Garantie annuelle de remplacement intégrale 100%'],
-    advantages_ru: ['Годовая подписка на 12 месяцев без рекламы без прерываний', 'Прямая активация на личную почту с сохранением всех подписок', 'Огромная экономия более 90% от официальной годовой цены', '100% комплексная годовая гарантия замены'],
-    advantages_tr: ['12 ay boyunca kesintisiz tam 1 yıllık reklamsız abonelik', 'Tüm kanal abonelikleriniz korunarak kişisel e-postanıza aktivasyon', 'Resmi fiyata göre %90\'ın üzerinde devasa tasarruf', '1 yıl boyunca kapsamlı %100 resmi garanti'],
-    advantages_de: ['Vollständiges 1-Jahres-Abonnement ohne Werbung für 12 Monate', 'Direkte Aktivierung auf persönlicher E-Mail mit allen Kanal-Abos', 'Über 90% Ersparnis gegenüber dem offiziellen Jahrespreis', '100% umfassende Jahres-Ersatzgarantie'],
-  },
-
-  // ── 23. DISNEY+ ──
-  {
-    id: 'disney_1m_prod',
-    short_id: 'disney_1m',
-    brand_id: 'disney',
-    category_id: 'stream',
-    name: 'Disney+ Premium 1m',
-    name_ar: 'Disney+ Premium (شهر كامل)',
-    button_title: '⭐ Disney+ (شهر واحد) — $2.49 ⚡',
-    icon_symbol: '⭐',
-    market_price: 13.99,
-    our_price: 2.49,
-    price_egp: 125,
-    price_sar: 9,
-    subscription_duration: 'شهر كامل (30 يوم)',
-    warranty_duration: 'شهر كامل ضمان استبدال',
-    delivery_type: 'private_account',
-    advantages_ar: ['أفلام ومسلسلات Disney و Pixar و Marvel و Star Wars بدقة 4K UHD', 'دعم الدبلجة والترجمة العربية وصوت IMAX Enhanced السينمائي', 'بروفايل خاص مشفر برمز PIN مع ضمان استبدال فوري', 'ضمان استبدال رسمي 100%'],
-    advantages_en: ['Disney, Pixar, Marvel, Star Wars & National Geographic in 4K UHD', 'IMAX Enhanced cinematic audio with full multilingual audio & subtitles', 'Dedicated PIN-protected private profile with instant replacement warranty', '100% official replacement warranty for the full month'],
-    advantages_es: ['Películas y series de Disney, Pixar, Marvel y Star Wars en 4K UHD', 'Audio cinematográfico IMAX Enhanced y subtítulos completos', 'Perfil privado protegido con PIN y garantía de reemplazo', 'Garantía oficial de reemplazo del 100%'],
-    advantages_fr: ['Films et séries Disney, Pixar, Marvel et Star Wars en 4K UHD', 'Son cinéma IMAX Enhanced avec doublages et sous-titres complets', 'Profil privé verrouillé par PIN avec garantie de remplacement', 'Garantie de remplacement officielle 100%'],
-    advantages_ru: ['Фильмы и сериалы Disney, Pixar, Marvel и Star Wars в 4K UHD', 'Кинематографичный звук IMAX Enhanced с полным переводом', 'Выделенный профиль с PIN-кодом и гарантией замены', '100% официальная гарантия замены на месяц'],
-    advantages_tr: ['4K UHD kalitesinde Disney, Pixar, Marvel ve Star Wars içerikleri', 'IMAX Enhanced sinematik ses ve tam dublaj/altyazı desteği', 'PIN korumalı özel profil ve anında değişim garantisi', 'Tam 1 ay boyunca %100 resmi değişim garantisi'],
-    advantages_de: ['Disney, Pixar, Marvel, Star Wars & Nat Geo in 4K UHD', 'IMAX Enhanced Kinosound mit vollständiger Synchronisation', 'Dediziertes PIN-geschütztes Profil mit Ersatzgarantie', '100% offizielle Ersatzgarantie für den Monat'],
-  },
-  {
-    id: 'disney_12m_prod',
-    short_id: 'disney_12m',
-    brand_id: 'disney',
-    category_id: 'stream',
-    name: 'Disney+ Premium 12m',
-    name_ar: 'Disney+ Premium (سنة كاملة)',
-    button_title: '⭐ Disney+ (سنة كاملة) — $19.99 ⚡',
-    icon_symbol: '⭐',
-    market_price: 139.99,
-    our_price: 19.99,
-    price_egp: 1000,
-    price_sar: 75,
-    subscription_duration: 'سنة كاملة (12 شهر)',
-    warranty_duration: 'سنة كاملة ضمان استبدال',
-    delivery_type: 'private_account',
-    advantages_ar: ['اشتراك سنوي كامل لمشاهدة جميع عوالم ديزني ومارفل وناشيونال جيوغرافيك', 'بروفايل خاص دائم ومستقر طوال 12 شهراً', 'توفير يتجاوز 85% عن السعر الرسمي مع دعم فني مستمر', 'ضمان استبدال سنوي شامل 100%'],
-    advantages_en: ['Full 1-year annual subscription for all Disney, Marvel & Star Wars universes', 'Permanent private profile operating with total stability for 12 months', 'Over 85% savings vs official annual retail subscription', '100% comprehensive annual replacement warranty'],
-    advantages_es: ['Suscripción anual de 1 año para todos los universos de Disney y Marvel', 'Perfil privado permanente con total estabilidad durante 12 meses', 'Más del 85% de ahorro frente al precio anual oficial', 'Garantía anual completa de reemplazo del 100%'],
-    advantages_fr: ['Abonnement annuel d\'un an pour tous les univers Disney et Marvel', 'Profil privé permanent d\'une stabilité totale pendant 12 mois', 'Plus de 85% d\'économie par rapport au prix officiel', 'Garantie annuelle de remplacement intégrale 100%'],
-    advantages_ru: ['Годовая подписка на 12 месяцев на все вселенные Disney и Marvel', 'Постоянный личный профиль со стабильной работой целый год', 'Экономия более 85% от официальной годовой цены', '100% комплексная годовая гарантия замены'],
-    advantages_tr: ['Tüm Disney, Marvel ve Star Wars evrenleri için 1 yıllık tam abonelik', '12 ay boyunca tam kararlılıkla çalışan kalıcı özel profil', 'Resmi yıllık fiyata göre %85\'in üzerinde tasarruf', '1 yıl boyunca kapsamlı %100 resmi garanti'],
-    advantages_de: ['Vollständiges 1-Jahres-Abonnement für alle Disney & Marvel Universen', 'Dauerhaftes privates Profil mit maximaler Stabilität für 12 Monate', 'Über 85% Ersparnis gegenüber dem regulären Jahrespreis', '100% umfassende Jahres-Ersatzgarantie'],
-  },
-
-  // ── 24. NORDVPN ──
-  {
-    id: 'nordvpn_12m_prod',
-    short_id: 'nordvpn_12m',
-    brand_id: 'nordvpn',
-    category_id: 'vpn',
-    name: 'NordVPN Complete 12m',
-    name_ar: 'NordVPN Complete (سنة كاملة)',
-    button_title: '🛡️ NordVPN (سنة كاملة) — $5.99 ⚡',
-    icon_symbol: '🛡️',
-    market_price: 68.00,
-    our_price: 5.99,
-    price_egp: 300,
-    price_sar: 22,
-    subscription_duration: 'سنة كاملة (12 شهر)',
-    warranty_duration: 'سنة كاملة ضمان استبدال',
-    delivery_type: 'vpn_credentials',
-    advantages_ar: ['خوادم فائقة السرعة مع تشفير عسكري بروتوكول NordLynx / WireGuard', 'تجاوز الحجب الجغرافي وفتح خدمات البث العالمية (Netflix, Hulu, BBC iPlayer)', 'حماية من التهديدات Threat Protection وحظر الإعلانات والبرمجيات الخبيثة', 'ضمان استبدال سنوي رسمي 100%'],
-    advantages_en: ['Ultra-fast dedicated servers powered by military-grade NordLynx protocol', 'Bypass geo-restrictions and stream global media at maximum speed', 'Threat Protection suite with ad-blocker & malware defense', '100% comprehensive annual replacement warranty'],
-    advantages_es: ['Servidores ultrarrápidos con protocolo militar NordLynx / WireGuard', 'Desbloqueo geográfico y streaming global a máxima velocidad', 'Protección contra amenazas con bloqueador de anuncios y malware', 'Garantía anual completa de reemplazo del 100%'],
-    advantages_fr: ['Serveurs ultra-rapides avec protocole militaire NordLynx', 'Déblocage géographique et streaming mondial à pleine vitesse', 'Protection anti-menaces avec bloqueur de pubs et de malwares', 'Garantie annuelle de remplacement intégrale 100%'],
-    advantages_ru: ['Сверхскоростные серверы с военным шифрованием NordLynx', 'Обход любых блокировок и просмотр мирового стриминга на полной скорости', 'Защита от угроз Threat Protection с блокировкой рекламы и вирусов', '100% комплексная годовая гарантия замены'],
-    advantages_tr: ['Askeri düzeyde NordLynx protokolüyle ultra hızlı sunucular', 'Coğrafi engelleri aşma ve maksimum hızda küresel yayın izleme', 'Reklam ve kötü amaçlı yazılım engelleyicili Tehdit Koruması', '1 yıl boyunca kapsamlı %100 resmi garanti'],
-    advantages_de: ['Ultraschnelle Server mit militärischem NordLynx-Protokoll', 'Geoblocking umgehen & weltweites Streaming mit voller Bandbreite', 'Bedrohungsschutz-Suite mit Werbe- & Malware-Blocker', '100% umfassende Jahres-Ersatzgarantie'],
+    "id": "grok_1m_prod",
+    "short_id": "grok_1m",
+    "brand_id": "grok",
+    "category_id": "ai",
+    "name": "Grok 3 SuperGrok 1m",
+    "name_ar": "Grok 3 / SuperGrok (شهر كامل)",
+    "button_title": "⚡ Grok 3 SuperGrok — $1.49 ⚡",
+    "icon_symbol": "⚡",
+    "market_price": 16,
+    "our_price": 1.49,
+    "price_egp": 75,
+    "price_sar": 6,
+    "subscription_duration": "شهر كامل (30 يوم)",
+    "warranty_duration": "شهر كامل ضمان استبدال",
+    "delivery_type": "private_account",
+    "advantages_ar": [
+      "أحدث نماذج Grok 3 التفكيرية من xAI بدون أي رقابة أو قيود",
+      "تكامل مباشر مع بيانات منصة X اللحظية والأخبار العاجلة",
+      "توليد صور فائقة السرعة بنموذج FLUX.1 المدمج",
+      "ضمان استبدال رسمي 100%"
+    ],
+    "advantages_en": [
+      "Latest Grok 3 flagship reasoning model from xAI",
+      "Real-time live search connected directly to platform X data",
+      "High-speed image generation powered by built-in FLUX.1",
+      "100% official replacement warranty for the full month"
+    ],
+    "advantages_es": [
+      "Modelo insignia de razonamiento Grok 3 de xAI",
+      "Búsqueda en tiempo real conectada a datos de la plataforma X",
+      "Generación rápida de imágenes con el modelo integrado FLUX.1",
+      "Garantía oficial de reemplazo del 100%"
+    ],
+    "advantages_fr": [
+      "Modèle de raisonnement phare Grok 3 de xAI",
+      "Recherche en temps réel connectée aux données de la plateforme X",
+      "Génération rapide d'images avec le moteur intégré FLUX.1",
+      "Garantie de remplacement officielle 100%"
+    ],
+    "advantages_ru": [
+      "Флагманская модель мышления Grok 3 от xAI",
+      "Поиск в реальном времени с подключением к данным платформы X",
+      "Скоростная генерация картинок на встроенной модели FLUX.1",
+      "100% официальная гарантия замены на месяц"
+    ],
+    "advantages_tr": [
+      "xAI'ın en yeni Grok 3 akıl yürütme amiral gemisi modeli",
+      "X platformu verilerine doğrudan bağlı gerçek zamanlı arama",
+      "Entegre FLUX.1 ile yüksek hızlı görsel üretimi",
+      "Tam 1 ay boyunca %100 resmi değişim garantisi"
+    ],
+    "advantages_de": [
+      "Neuestes Grok 3 Spitzen-Logikmodell von xAI",
+      "Echtzeitsuche direkt an die Daten der Plattform X angebunden",
+      "Schnelle Bildgenerierung mit integriertem FLUX.1",
+      "100% offizielle Ersatzgarantie für den Monat"
+    ]
   },
   {
-    id: 'nordvpn_24m_prod',
-    short_id: 'nordvpn_24m',
-    brand_id: 'nordvpn',
-    category_id: 'vpn',
-    name: 'NordVPN Complete 2 Years',
-    name_ar: 'NordVPN Complete (سنتين كاملتين)',
-    button_title: '🛡️ NordVPN (سنتين) — $9.99 ⚡',
-    icon_symbol: '🛡️',
-    market_price: 119.00,
-    our_price: 9.99,
-    price_egp: 500,
-    price_sar: 37,
-    subscription_duration: 'سنتين كاملتين (24 شهر)',
-    warranty_duration: 'سنتين ضمان استبدال كامل',
-    delivery_type: 'vpn_credentials',
-    advantages_ar: ['حماية قصوى وتشفير عسكري لمدة 24 شهراً متواصلة', 'أكثر من 6,400 خادم في 111 دولة مع سياسة صارمة لعدم الاحتفاظ بالسجلات', 'توفير يتجاوز 90% مع ضمان استبدال رسمي طوال السنتين', 'ضمان استبدال شامل لمدة سنتين 100%'],
-    advantages_en: ['24 months of continuous military-grade encryption and privacy', '6,400+ servers across 111 countries with strict audited No-Logs policy', 'Over 90% savings with official replacement coverage for 2 full years', '100% full 2-year replacement warranty'],
-    advantages_es: ['24 meses de privacidad y cifrado militar continuo', 'Más de 6,400 servidores en 111 países con política de cero registros', 'Más del 90% de ahorro con garantía oficial por 2 años', 'Garantía completa de reemplazo por 2 años del 100%'],
-    advantages_fr: ['24 mois de confidentialité et de chiffrement militaire continu', 'Plus de 6 400 serveurs dans 111 pays avec politique No-Logs stricte', 'Plus de 90% d\'économie avec garantie officielle sur 2 ans complets', 'Garantie de remplacement intégrale de 2 ans 100%'],
-    advantages_ru: ['24 месяца непрерывного военного шифрования и приватности', 'Более 6 400 серверов в 111 странах со строгой политикой без логов', 'Экономия более 90% с официальной гарантией на 2 года', '100% полная гарантия замены на 2 года'],
-    advantages_tr: ['24 ay boyunca kesintisiz askeri düzeyde şifreleme ve gizlilik', '111 ülkede 6.400+ sunucu ve katı sıfır kayıt (No-Logs) politikası', 'Tam 2 yıl boyunca resmi garanti ile %90\'ın üzerinde tasarruf', '2 yıl boyunca eksiksiz %100 değişim garantisi'],
-    advantages_de: ['24 Monate kontinuierliche militärische Verschlüsselung & Privatsphäre', 'Über 6.400 Server in 111 Ländern mit strenger No-Logs-Richtlinie', 'Über 90% Ersparnis mit vollem Ersatzschutz für 2 Jahre', '100% volle 2-Jahres-Ersatzgarantie'],
-  },
-
-  // ── 25. SURFSHARK ──
-  {
-    id: 'surfshark_12m_prod',
-    short_id: 'surfshark_12m',
-    brand_id: 'surfshark',
-    category_id: 'vpn',
-    name: 'Surfshark One VPN 12m',
-    name_ar: 'Surfshark One VPN (سنة كاملة)',
-    button_title: '🦈 Surfshark (سنة كاملة) — $6.99 ⚡',
-    icon_symbol: '🦈',
-    market_price: 59.88,
-    our_price: 6.99,
-    price_egp: 350,
-    price_sar: 26,
-    subscription_duration: 'سنة كاملة (12 شهر)',
-    warranty_duration: 'سنة كاملة ضمان استبدال',
-    delivery_type: 'vpn_credentials',
-    advantages_ar: ['اتصال غير محدود لجميع أجهزتك Unlimited Devices في نفس الوقت', 'بروتوكول WireGuard فائق السرعة وخوادم 100% تعمل بذاكرة RAM فقط', 'ميزة CleanWeb لحجب الإعلانات والتتبع وبرامج التجسس', 'ضمان استبدال سنوي رسمي 100%'],
-    advantages_en: ['Unlimited simultaneous device connections on a single account', 'Blazing fast WireGuard protocol with 100% RAM-only servers', 'CleanWeb ad-blocker, anti-tracking & spyware defense suite', '100% comprehensive annual replacement warranty'],
-    advantages_es: ['Conexiones simultáneas ilimitadas en todos tus dispositivos', 'Protocolo WireGuard ultrarrápido con servidores 100% solo RAM', 'Bloqueador de anuncios CleanWeb y defensa anti-rastreo', 'Garantía anual completa de reemplazo del 100%'],
-    advantages_fr: ['Connexions simultanées illimitées sur tous vos appareils', 'Protocole WireGuard ultra-rapide avec serveurs 100% RAM', 'Bloqueur de publicités CleanWeb et protection anti-traçage', 'Garantie annuelle de remplacement intégrale 100%'],
-    advantages_ru: ['Безлимитное количество устройств одновременно на одном аккаунте', 'Сверхбыстрый протокол WireGuard с серверами на 100% RAM', 'CleanWeb блокировщик рекламы, трекеров и вредоносных сайтов', '100% комплексная годовая гарантия замены'],
-    advantages_tr: ['Tek hesapta aynı anda sınırsız cihaz bağlantısı (Unlimited Devices)', 'Tamamı RAM tabanlı sunucularla ışık hızında WireGuard protokolü', 'CleanWeb reklam engelleyici ve casus yazılım koruması', '1 yıl boyunca kapsamlı %100 resmi garanti'],
-    advantages_de: ['Unbegrenzte gleichzeitige Geräteverbindungen mit einem Konto', 'Blitzschnelles WireGuard-Protokoll mit 100% RAM-Only-Servern', 'CleanWeb Werbeblocker, Tracking-Schutz & Spyware-Abwehr', '100% umfassende Jahres-Ersatzgarantie'],
-  },
-  {
-    id: 'surfshark_24m_prod',
-    short_id: 'surfshark_24m',
-    brand_id: 'surfshark',
-    category_id: 'vpn',
-    name: 'Surfshark One VPN 2 Years',
-    name_ar: 'Surfshark One VPN (سنتين كاملتين)',
-    button_title: '🦈 Surfshark (سنتين) — $11.99 ⚡',
-    icon_symbol: '🦈',
-    market_price: 119.76,
-    our_price: 11.99,
-    price_egp: 600,
-    price_sar: 45,
-    subscription_duration: 'سنتين كاملتين (24 شهر)',
-    warranty_duration: 'سنتين ضمان استبدال كامل',
-    delivery_type: 'vpn_credentials',
-    advantages_ar: ['حماية شاملة لك ولعائلتك لمدة سنتين على كافة الأجهزة', 'أكثر من 3,200 خادم فائق السرعة في 100 دولة', 'توفير يتجاوز 90% عن السعر الرسمي مع استقرار تام', 'ضمان استبدال رسمي كامل لمدة سنتين 100%'],
-    advantages_en: ['Complete 24-month privacy suite for you and all family devices', '3,200+ high-speed servers across 100 countries worldwide', 'Over 90% savings compared to standard retail pricing', '100% full 2-year replacement warranty'],
-    advantages_es: ['Protección integral de 24 meses para todos los dispositivos familiares', 'Más de 3,200 servidores de alta velocidad en 100 países', 'Más del 90% de ahorro frente al precio oficial', 'Garantía completa de reemplazo por 2 años del 100%'],
-    advantages_fr: ['Protection complète de 24 mois pour tous les appareils de la famille', 'Plus de 3 200 serveurs haute vitesse dans 100 pays', 'Plus de 90% d\'économie par rapport au prix officiel', 'Garantie de remplacement intégrale de 2 ans 100%'],
-    advantages_ru: ['Комплексная защита на 24 месяца для всех устройств семьи', 'Более 3 200 скоростных серверов в 100 странах мира', 'Экономия более 90% от официальной розничной цены', '100% полная гарантия замены на 2 года'],
-    advantages_tr: ['Siz ve tüm ailenizin cihazları için 24 aylık kapsamlı güvenlik', 'Dünya genelinde 100 ülkede 3.200\'den fazla yüksek hızlı sunucu', 'Resmi fiyata göre %90\'ın üzerinde devasa tasarruf', '2 yıl boyunca eksiksiz %100 değişim garantisi'],
-    advantages_de: ['Komplette 24-Monate-Sicherheitssuite für alle Familiengeräte', 'Über 3.200 Highspeed-Server in 100 Ländern weltweit', 'Über 90% Ersparnis gegenüber dem Standardpreis', '100% volle 2-Jahres-Ersatzgarantie'],
-  },
-
-  // ── 26. EXPRESSVPN ──
-  {
-    id: 'expressvpn_12m_prod',
-    short_id: 'expressvpn_12m',
-    brand_id: 'expressvpn',
-    category_id: 'vpn',
-    name: 'ExpressVPN Premium 12m',
-    name_ar: 'ExpressVPN Premium (سنة كاملة)',
-    button_title: '🚀 ExpressVPN (سنة كاملة) — $12.99 ⚡',
-    icon_symbol: '🚀',
-    market_price: 99.95,
-    our_price: 12.99,
-    price_egp: 650,
-    price_sar: 49,
-    subscription_duration: 'سنة كاملة (12 شهر)',
-    warranty_duration: 'سنة كاملة ضمان استبدال',
-    delivery_type: 'vpn_credentials',
-    advantages_ar: ['أعلى سرعة استجابة واستقرار عبر بروتوكول Lightway الحصري', 'خوادم فائقة السرعة في 105 دولة حول العالم بدون أي قيود', 'تجاوز أقوى أنظمة الحجب وتشفير كامل للبيانات', 'ضمان استبدال سنوي رسمي 100%'],
-    advantages_en: ['Industry-leading speed & reliability via proprietary Lightway protocol', 'Ultra-fast servers in 105 countries worldwide with zero throttling', 'Bypasses the toughest geo-firewalls with military grade encryption', '100% comprehensive annual replacement warranty'],
-    advantages_es: ['Velocidad y estabilidad líderes con el protocolo exclusivo Lightway', 'Servidores ultrarrápidos en 105 países sin límites de ancho de banda', 'Supera los bloqueos más estrictos con cifrado de grado militar', 'Garantía anual completa de reemplazo del 100%'],
-    advantages_fr: ['Vitesse et fiabilité de référence via le protocole exclusif Lightway', 'Serveurs ultra-rapides dans 105 pays sans aucun bridage', 'Contourne les restrictions les plus strictes avec chiffrement militaire', 'Garantie annuelle de remplacement intégrale 100%'],
-    advantages_ru: ['Лидирующая скорость и стабильность на протоколе Lightway', 'Сверхскоростные серверы в 105 странах без ограничения трафика', 'Обход самых жестких блокировок с военным шифрованием', '100% комплексная годовая гарантия замены'],
-    advantages_tr: ['Özel Lightway protokolüyle sektör lideri hız ve kararlılık', 'Dünya genelinde 105 ülkede hız kısıtlamasız ultra hızlı sunucular', 'Askeri düzeyde şifrelemeyle en katı engelleri aşma gücü', '1 yıl boyunca kapsamlı %100 resmi garanti'],
-    advantages_de: ['Branchenführende Geschwindigkeit & Stabilität mit Lightway-Protokoll', 'Ultraschnelle Server in 105 Ländern ohne Bandbreitenbegrenzung', 'Umgeht strengste Blockaden mit militärischer Verschlüsselung', '100% umfassende Jahres-Ersatzgarantie'],
-  },
-
-  // ── 27. MICROSOFT 365 ──
-  {
-    id: 'office365_12m_prod',
-    short_id: 'office365_12m',
-    brand_id: 'office365',
-    category_id: 'prod',
-    name: 'Microsoft 365 Pro 12m',
-    name_ar: 'Microsoft 365 / Office Pro (سنة كاملة)',
-    button_title: '📎 Office 365 (سنة كاملة) — $4.99 ⚡',
-    icon_symbol: '📎',
-    market_price: 69.99,
-    our_price: 4.99,
-    price_egp: 250,
-    price_sar: 19,
-    subscription_duration: 'سنة كاملة (12 شهر)',
-    warranty_duration: 'سنة كاملة ضمان استبدال',
-    delivery_type: 'license_key',
-    advantages_ar: ['أحدث تطبيقات Office الكاملة للكمبيوتر والموبايل (Word, Excel, PowerPoint, Outlook)', 'مساحة تخزين سحابية ضخمة 1TB (1000 جيجابايت) على OneDrive الخاص بك', 'تفعيل رسمي أصلي يقبل التحديثات المباشرة من Microsoft', 'ضمان استبدال سنوي رسمي 100%'],
-    advantages_en: ['Full genuine desktop & mobile Office apps (Word, Excel, PowerPoint, Outlook)', 'Massive 1TB (1,000 GB) secure personal cloud storage on OneDrive', 'Official genuine activation supporting direct updates from Microsoft', '100% comprehensive annual replacement warranty'],
-    advantages_es: ['Suite completa de apps de Office para PC y móvil (Word, Excel, PowerPoint)', '1TB (1,000 GB) de almacenamiento seguro en la nube OneDrive', 'Activación oficial que recibe actualizaciones directas de Microsoft', 'Garantía anual completa de reemplazo del 100%'],
-    advantages_fr: ['Applications Office authentiques complètes (Word, Excel, PowerPoint)', '1 To (1 000 Go) de stockage cloud sécurisé sur OneDrive', 'Activation officielle avec mises à jour directes de Microsoft', 'Garantie annuelle de remplacement intégrale 100%'],
-    advantages_ru: ['Полный пакет официальных приложений Office (Word, Excel, PowerPoint)', '1 ТБ (1 000 ГБ) защищенного облачного хранилища OneDrive', 'Официальная активация с поддержкой прямых обновлений Microsoft', '100% комплексная годовая гарантия замены'],
-    advantages_tr: ['Eksiksiz orijinal Office uygulamaları (Word, Excel, PowerPoint, Outlook)', 'OneDrive üzerinde 1TB (1.000 GB) güvenli kişisel bulut depolama', 'Microsoft\'tan doğrudan güncellemeleri alan resmi orijinal aktivasyon', '1 yıl boyunca kapsamlı %100 resmi garanti'],
-    advantages_de: ['Vollständige Original-Office-Apps (Word, Excel, PowerPoint, Outlook)', '1TB (1.000 GB) sicherer persönlicher Cloud-Speicher auf OneDrive', 'Offizielle Aktivierung mit direkten Microsoft-Updates', '100% umfassende Jahres-Ersatzgarantie'],
+    "id": "runway_1m_prod",
+    "short_id": "runway_1m",
+    "brand_id": "runway",
+    "category_id": "ai",
+    "name": "Runway Gen-3 Alpha 1m",
+    "name_ar": "Runway Gen-3 Video AI (شهر كامل)",
+    "button_title": "🎬 Runway Gen-3 Video — $1.99 ⚡",
+    "icon_symbol": "🎬",
+    "market_price": 28,
+    "our_price": 1.99,
+    "price_egp": 100,
+    "price_sar": 7,
+    "subscription_duration": "شهر كامل (30 يوم)",
+    "warranty_duration": "شهر كامل ضمان استبدال",
+    "delivery_type": "private_account",
+    "advantages_ar": [
+      "أحدث نماذج صناعة الفيديو السينمائي Gen-3 Alpha & Turbo",
+      "625 رصيد توليد فيديو شهرياً مع تصدير بدقة 4K بدون علامة مائية",
+      "أدوات التحكم الحركي Motion Brush والتحكم بالكاميرا الإخراجية",
+      "ضمان استبدال رسمي 100%"
+    ],
+    "advantages_en": [
+      "State-of-the-art cinematic video generation with Gen-3 Alpha & Turbo",
+      "625 video credits monthly with 4K watermark-free export",
+      "Advanced Motion Brush, camera control and frame-to-video tools",
+      "100% official replacement warranty for the full month"
+    ],
+    "advantages_es": [
+      "Generación de video cinemático con Gen-3 Alpha y Turbo",
+      "625 créditos al mes con exportación 4K sin marca de agua",
+      "Herramientas avanzadas Motion Brush y control de cámara",
+      "Garantía oficial de reemplazo del 100%"
+    ],
+    "advantages_fr": [
+      "Génération vidéo cinématographique avec Gen-3 Alpha et Turbo",
+      "625 crédits vidéo par mois avec export 4K sans filigrane",
+      "Outils avancés Motion Brush et contrôle de caméra de réalisation",
+      "Garantie de remplacement officielle 100%"
+    ],
+    "advantages_ru": [
+      "Генерация кинематографичного видео на Gen-3 Alpha и Turbo",
+      "625 кредитов в месяц с экспортом в 4K без водяных знаков",
+      "Инструменты Motion Brush и полный контроль движения камеры",
+      "100% официальная гарантия замены на месяц"
+    ],
+    "advantages_tr": [
+      "Gen-3 Alpha ve Turbo ile sinematik video üretimi",
+      "Filigransız 4K dışa aktarmayla aylık 625 video kredisi",
+      "Gelişmiş Motion Brush ve yönetmen kamera kontrol araçları",
+      "Tam 1 ay boyunca %100 resmi değişim garantisi"
+    ],
+    "advantages_de": [
+      "Filmerische Videogenerierung mit Gen-3 Alpha & Turbo",
+      "625 Videoguthaben monatlich mit 4K-Export ohne Wasserzeichen",
+      "Erweiterte Motion Brush und professionelle Kamerasteuerung",
+      "100% offizielle Ersatzgarantie für den Monat"
+    ]
   },
   {
-    id: 'office365_life_prod',
-    short_id: 'office365_life',
-    brand_id: 'office365',
-    category_id: 'prod',
-    name: 'Microsoft Office 2024 Pro Lifetime',
-    name_ar: 'Microsoft Office 2024 Pro (دائم مدى الحياة)',
-    button_title: '📎 Office 2024 Pro (مدى الحياة) — $7.99 ⚡',
-    icon_symbol: '📎',
-    market_price: 249.99,
-    our_price: 7.99,
-    price_egp: 400,
-    price_sar: 30,
-    subscription_duration: 'تفعيل دائم مدى الحياة',
-    warranty_duration: 'ضمان دائم مدى الحياة',
-    delivery_type: 'license_key',
-    advantages_ar: ['مفتاح ترخيص رقمي أصلي Retail دائم مدى الحياة لنظام Windows أو Mac', 'تثبيت وتفعيل رسمي مباشر من موقع Microsoft الرسمي setup.office.com', 'ترخيص دائم لا ينتهي ولا يتطلب أي اشتراكات شهرية أو سنوية', 'ضمان تفعيل رسمي مدى الحياة 100%'],
-    advantages_en: ['Genuine Microsoft Retail digital license key for lifetime validity', 'Direct online installation & activation from official setup.office.com', 'Permanent non-expiring license with zero recurring subscription fees', '100% lifetime official activation guarantee'],
-    advantages_es: ['Clave de licencia digital Retail original de Microsoft de por vida', 'Descarga y activación directa desde el sitio oficial setup.office.com', 'Licencia permanente sin pagos recurrentes ni cuotas mensuales', 'Garantía oficial de activación de por vida del 100%'],
-    advantages_fr: ['Clé numérique Microsoft Retail authentique valable à vie', 'Téléchargement et activation directe sur setup.office.com officiel', 'Licence permanente sans aucun abonnement récurrent', 'Garantie d\'activation officielle à vie 100%'],
-    advantages_ru: ['Официальный лицензионный ключ Microsoft Retail навсегда (Lifetime)', 'Установка и активация напрямую с официального сайта setup.office.com', 'Пожизненная лицензия без абонентской платы и продлений', '100% пожизненная официальная гарантия активации'],
-    advantages_tr: ['Ömür boyu geçerli orijinal Microsoft Retail dijital lisans anahtarı', 'Resmi setup.office.com üzerinden doğrudan kurulum ve aktivasyon', 'Yinelenen abonelik ücreti olmayan kalıcı lisans', 'Ömür boyu %100 resmi aktivasyon garantisi'],
-    advantages_de: ['Originaler digitaler Microsoft Retail-Lizenzschlüssel auf Lebenszeit', 'Direkte Installation & Aktivierung über offizielles setup.office.com', 'Dauerhafte Lizenz ohne wiederkehrende Abogebühren', '100% lebenslange offizielle Aktivierungsgarantie'],
+    "id": "cursor_1m_prod",
+    "short_id": "cursor_1m",
+    "brand_id": "cursor",
+    "category_id": "dev",
+    "name": "Cursor AI Pro 1m",
+    "name_ar": "Cursor AI Pro (شهر كامل)",
+    "button_title": "💻 Cursor Pro (شهر واحد) — $1.29 ⚡",
+    "icon_symbol": "💻",
+    "market_price": 20,
+    "our_price": 1.29,
+    "price_egp": 65,
+    "price_sar": 5,
+    "subscription_duration": "شهر كامل (30 يوم)",
+    "warranty_duration": "شهر كامل ضمان استبدال",
+    "delivery_type": "personal_account",
+    "advantages_ar": [
+      "محرر الأكواد الذكي الرائد بنماذج Claude 3.7 و Gemini 3.1 Pro و GPT-4o",
+      "وكيل التطوير التلقائي Composer Agent لتعديل عدة ملفات برمجية معاً",
+      "500 طلب سريع Fast Premium Requests شهرياً واستعلامات غير محدودة",
+      "تفعيل على حسابك الشخصي أو حساب جاهز بضمان رسمي 100%"
+    ],
+    "advantages_en": [
+      "Premier AI code editor powered by Claude 3.7, Gemini 3.1 Pro & GPT-4o",
+      "Multi-file codebase Composer Agent for automated engineering",
+      "500 Fast Premium Requests monthly + unlimited standard queries",
+      "Personal account activation with 100% replacement warranty"
+    ],
+    "advantages_es": [
+      "Editor de código IA líder con Claude 3.7, Gemini 3.1 Pro y GPT-4o",
+      "Composer Agent para editar múltiples archivos simultáneamente",
+      "500 solicitudes Fast Premium al mes + consultas ilimitadas",
+      "Activación en cuenta personal con garantía oficial 100%"
+    ],
+    "advantages_fr": [
+      "Éditeur de code IA de référence avec Claude 3.7, Gemini 3.1 Pro et GPT-4o",
+      "Composer Agent pour modifier plusieurs fichiers simultanément",
+      "500 requêtes Fast Premium par mois + requêtes illimitées",
+      "Activation sur compte personnel avec garantie 100%"
+    ],
+    "advantages_ru": [
+      "Топовый AI редактор кода на Claude 3.7, Gemini 3.1 Pro и GPT-4o",
+      "Composer Agent для синхронного редактирования многих файлов",
+      "500 быстрых Fast Premium запросов в месяц + безлимитные стандартные",
+      "Активация на личный аккаунт с 100% гарантией"
+    ],
+    "advantages_tr": [
+      "Claude 3.7, Gemini 3.1 Pro ve GPT-4o destekli lider AI kod editörü",
+      "Çoklu dosya düzenleme için Composer Agent otomatik geliştirici",
+      "Aylık 500 Hızlı Premium istek + sınırsız standart sorgu",
+      "Kişisel hesap aktivasyonu ve %100 resmi garanti"
+    ],
+    "advantages_de": [
+      "Führender KI-Code-Editor mit Claude 3.7, Gemini 3.1 Pro & GPT-4o",
+      "Composer Agent für gleichzeitige Mehrdatei-Entwicklung",
+      "500 schnelle Fast Premium Anfragen monatlich + unbegrenzte Standardanfragen",
+      "Aktivierung auf persönlichem Konto mit 100% Garantie"
+    ]
   },
-
-  // ── 28. NOTION PLUS + AI ──
   {
-    id: 'notion_12m_prod',
-    short_id: 'notion_12m',
-    brand_id: 'notion',
-    category_id: 'prod',
-    name: 'Notion Plus + AI 12m',
-    name_ar: 'Notion Plus + Unlimited AI (سنة كاملة)',
-    button_title: '📝 Notion Plus + AI (سنة) — $9.99 ⚡',
-    icon_symbol: '📝',
-    market_price: 120.00,
-    our_price: 9.99,
-    price_egp: 500,
-    price_sar: 37,
-    subscription_duration: 'سنة كاملة (12 شهر)',
-    warranty_duration: 'سنة كاملة ضمان استبدال',
-    delivery_type: 'personal_account',
-    advantages_ar: ['مساحات عمل وصفحات وقواعد بيانات غير محدودة لإدارة المشاريع', 'استخدام غير محدود لأدوات الذكاء الاصطناعي Notion AI للكتابة والتلخيص والترجمة', 'رفع ملفات بلا حدود ودعوة أعضاء الفريق للتعاون المباشر', 'ضمان استبدال سنوي رسمي 100%'],
-    advantages_en: ['Unlimited blocks, pages and project management databases', 'Uncapped Notion AI usage for content writing, summarization & search', 'Unlimited file uploads and collaborative team workspace sharing', '100% comprehensive annual replacement warranty'],
-    advantages_es: ['Bloques, páginas y bases de datos ilimitadas para gestión de proyectos', 'Uso ilimitado de Notion AI para redacción, resúmenes y traducción', 'Subida ilimitada de archivos y colaboración en equipo', 'Garantía anual completa de reemplazo del 100%'],
-    advantages_fr: ['Pages, blocs et bases de données illimités pour gestion de projet', 'Utilisation illimitée de Notion AI pour rédaction et résumés', 'Téléchargement illimité de fichiers et collaboration d\'équipe', 'Garantie annuelle de remplacement intégrale 100%'],
-    advantages_ru: ['Неограниченные блоки, страницы и базы данных для управления проектами', 'Безлимитный Notion AI для написания текстов, саммари и поиска', 'Неограниченная загрузка файлов и командная работа', '100% комплексная годовая гарантия замены'],
-    advantages_tr: ['Proje yönetimi için sınırsız blok, sayfa ve veritabanı', 'Yazma, özetleme ve arama için sınırsız Notion AI kullanımı', 'Sınırsız dosya yükleme ve ekip çalışma alanı paylaşımı', '1 yıl boyunca kapsamlı %100 resmi garanti'],
-    advantages_de: ['Unbegrenzte Blöcke, Seiten und Projektmanagement-Datenbanken', 'Unbegrenzte Notion KI-Nutzung für Textgenerierung & Zusammenfassung', 'Unbegrenzter Datei-Upload und Team-Zusammenarbeit', '100% umfassende Jahres-Ersatzgarantie'],
+    "id": "cursor_12m_prod",
+    "short_id": "cursor_12m",
+    "brand_id": "cursor",
+    "category_id": "dev",
+    "name": "Cursor AI Pro 12m",
+    "name_ar": "Cursor AI Pro (سنة كاملة)",
+    "button_title": "💻 Cursor Pro (سنة كاملة) — $2.89 ⚡",
+    "icon_symbol": "💻",
+    "market_price": 192,
+    "our_price": 2.89,
+    "price_egp": 145,
+    "price_sar": 11,
+    "subscription_duration": "سنة كاملة (12 شهر)",
+    "warranty_duration": "سنة كاملة ضمان استبدال",
+    "delivery_type": "personal_account",
+    "advantages_ar": [
+      "اشتراك سنوي كامل للمبرمجين وشركات البرمجة المستقلة",
+      "6,000 طلب سريع Fast Premium Requests طوال العام",
+      "التحكم الكامل في مشاريع الويب والتطبيقات عبر Composer Agent",
+      "ضمان استبدال سنوي رسمي 100%"
+    ],
+    "advantages_en": [
+      "Full 1-year annual plan for professional software engineers",
+      "6,000 Fast Premium Requests annually + continuous agent access",
+      "Autonomous multi-file architecture refactoring with Composer",
+      "100% comprehensive annual replacement warranty"
+    ],
+    "advantages_es": [
+      "Plan anual de 1 año para desarrolladores e ingenieros de software",
+      "6,000 solicitudes Fast Premium al año + acceso continuo a agentes",
+      "Refactorización autónoma de arquitectura con Composer",
+      "Garantía anual completa de reemplazo del 100%"
+    ],
+    "advantages_fr": [
+      "Plan annuel d'un an pour développeurs et ingénieurs logiciels",
+      "6 000 requêtes Fast Premium par an + accès permanent aux agents",
+      "Refactorisation autonome d'architecture avec Composer",
+      "Garantie annuelle de remplacement intégrale 100%"
+    ],
+    "advantages_ru": [
+      "Годовой план на 12 месяцев для профессиональных разработчиков",
+      "6 000 быстрых Fast Premium запросов в год + доступ к Composer",
+      "Автономный рефакторинг архитектуры кодовой базы",
+      "100% комплексная годовая гарантия замены"
+    ],
+    "advantages_tr": [
+      "Yazılım mühendisleri ve ajanslar için 1 yıllık tam plan",
+      "Yıllık 6.000 Hızlı Premium istek + sürekli Composer erişimi",
+      "Composer ile otonom çoklu dosya mimari yeniden yapılandırma",
+      "1 yıl boyunca kapsamlı %100 resmi garanti"
+    ],
+    "advantages_de": [
+      "Vollständiges 1-Jahres-Abonnement für Software-Entwickler",
+      "6.000 Fast Premium Anfragen jährlich + ständiger Agenten-Zugriff",
+      "Autonomes Multi-File Refactoring mit Composer",
+      "100% umfassende Jahres-Ersatzgarantie"
+    ]
   },
-
-  // ── 29. TRADINGVIEW ──
   {
-    id: 'tradingview_1m_prod',
-    short_id: 'tradingview_1m',
-    brand_id: 'tradingview',
-    category_id: 'prod',
-    name: 'TradingView Premium 1m',
-    name_ar: 'TradingView Premium (شهر كامل)',
-    button_title: '📈 TradingView Premium — $6.99 ⚡',
-    icon_symbol: '📈',
-    market_price: 59.95,
-    our_price: 6.99,
-    price_egp: 350,
-    price_sar: 26,
-    subscription_duration: 'شهر كامل (30 يوم)',
-    warranty_duration: 'شهر كامل ضمان استبدال',
-    delivery_type: 'private_account',
-    advantages_ar: ['25 مؤشر فني لكل رسم بياني و8 رسوم بيانية في شاشة واحدة', 'تنبيهات أسعار لحظية غير محدودة وبيانات السوق من الدرجة الثانية (Level 2)', 'فواصل زمنية بالثواني وأشرطة بيانات تاريخية مضاعفة', 'ضمان استبدال رسمي 100%'],
-    advantages_en: ['25 technical indicators per chart + 8 charts in a single layout', 'Unlimited real-time price alerts and Level 2 market data feeds', 'Second-based intervals and 20,000 historical bars data', '100% official replacement warranty for the full month'],
-    advantages_es: ['25 indicadores técnicos por gráfico y 8 gráficos en una sola pantalla', 'Alertas de precios ilimitadas en tiempo real y datos Level 2', 'Intervalos basados en segundos y barras históricas ampliadas', 'Garantía oficial de reemplazo del 100%'],
-    advantages_fr: ['25 indicateurs techniques par graphique et 8 graphiques par vue', 'Alertes de prix en temps réel illimitées et données Level 2', 'Intervalles en secondes et historique de barres étendu', 'Garantie de remplacement officielle 100%'],
-    advantages_ru: ['25 индикаторов на график и до 8 графиков в одном окне', 'Безлимитные алерты цен в реальном времени и данные Level 2', 'Секундные интервалы и 20 000 исторических баров', '100% официальная гарантия замены на месяц'],
-    advantages_tr: ['Grafik başına 25 teknik gösterge ve tek ekranda 8 grafik', 'Sınırsız gerçek zamanlı fiyat alarmları ve Level 2 piyasa verileri', 'Saniye bazlı zaman dilimleri ve 20.000 geçmiş çubuk verisi', 'Tam 1 ay boyunca %100 resmi değişim garantisi'],
-    advantages_de: ['25 technische Indikatoren pro Chart & 8 Charts in einem Layout', 'Unbegrenzte Echtzeit-Preisalarme und Level-2-Marktdaten', 'Sekunden-Intervalle und 20.000 historische Balken', '100% offizielle Ersatzgarantie für den Monat'],
+    "id": "copilot_1m_prod",
+    "short_id": "copilot_1m",
+    "brand_id": "copilot",
+    "category_id": "dev",
+    "name": "GitHub Copilot 1m",
+    "name_ar": "GitHub Copilot (شهر كامل)",
+    "button_title": "🐙 GitHub Copilot (شهر واحد) — $0.89 ⚡",
+    "icon_symbol": "🐙",
+    "market_price": 10,
+    "our_price": 0.89,
+    "price_egp": 45,
+    "price_sar": 3,
+    "subscription_duration": "شهر كامل (30 يوم)",
+    "warranty_duration": "شهر كامل ضمان استبدال",
+    "delivery_type": "personal_account",
+    "advantages_ar": [
+      "الإكمال التلقائي للأكواد داخل VS Code و JetBrains و Neovim",
+      "مساعد Copilot Chat الذكي لشرح الأكواد واكتشاف الثغرات البرمجية",
+      "تفعيل على حساب GitHub الشخصي بدون كلمة مرور",
+      "ضمان استبدال فوري 100% طوال الشهر"
+    ],
+    "advantages_en": [
+      "Real-time code autocompletion in VS Code, JetBrains & Neovim",
+      "Intelligent Copilot Chat for bug fixing & unit test generation",
+      "Direct activation on your personal GitHub Account without password",
+      "100% official replacement warranty for the full month"
+    ],
+    "advantages_es": [
+      "Autocompletado de código en tiempo real en VS Code y JetBrains",
+      "Copilot Chat inteligente para corregir errores y generar pruebas",
+      "Activación directa en tu cuenta de GitHub sin contraseña",
+      "Garantía oficial de reemplazo del 100%"
+    ],
+    "advantages_fr": [
+      "Autocomplétion de code en temps réel sur VS Code et JetBrains",
+      "Copilot Chat intelligent pour débogage et génération de tests",
+      "Activation directe sur votre compte GitHub sans mot de passe",
+      "Garantie de remplacement officielle 100%"
+    ],
+    "advantages_ru": [
+      "Автодополнение кода в реальном времени в VS Code и JetBrains",
+      "Умный Copilot Chat для исправления багов и написания тестов",
+      "Прямая активация на ваш личный GitHub аккаунт без пароля",
+      "100% официальная гарантия замены на месяц"
+    ],
+    "advantages_tr": [
+      "VS Code, JetBrains ve Neovim'de anında kod tamamlama",
+      "Hata ayıklama ve birim testi için akıllı Copilot Chat asistanı",
+      "Şifre olmadan kişisel GitHub hesabınıza doğrudan aktivasyon",
+      "Tam 1 ay boyunca %100 resmi değişim garantisi"
+    ],
+    "advantages_de": [
+      "Echtzeit-Code-Autovervollständigung in VS Code & JetBrains",
+      "Intelligenter Copilot Chat für Debugging und Unit-Tests",
+      "Direkte Aktivierung auf persönlichem GitHub-Konto ohne Passwort",
+      "100% offizielle Ersatzgarantie für den Monat"
+    ]
   },
-
-  // ── 30. GRAMMARLY PREMIUM ──
   {
-    id: 'grammarly_12m_prod',
-    short_id: 'grammarly_12m',
-    brand_id: 'grammarly',
-    category_id: 'prod',
-    name: 'Grammarly Premium 12m',
-    name_ar: 'Grammarly Premium (سنة كاملة)',
-    button_title: '✍️ Grammarly (سنة كاملة) — $7.99 ⚡',
-    icon_symbol: '✍️',
-    market_price: 144.00,
-    our_price: 7.99,
-    price_egp: 400,
-    price_sar: 30,
-    subscription_duration: 'سنة كاملة (12 شهر)',
-    warranty_duration: 'سنة كاملة ضمان استبدال',
-    delivery_type: 'personal_account',
-    advantages_ar: ['تصحيح القواعد المتقدم وإعادة صياغة الجمل الاحترافية بالذكاء الاصطناعي', 'كاشف السرقات الأدبية Plagiarism Checker مع مقارنة بمليارات المقالات', 'تحسين نبرة الصوت والمفردات اللغوية للأبحاث والإيميلات الرسمية', 'ضمان استبدال سنوي رسمي 100%'],
-    advantages_en: ['Advanced grammar correction and AI-powered full sentence rewrites', 'Built-in plagiarism detector comparing billions of web pages', 'Tone adjustment and vocabulary enhancement for academic writing', '100% comprehensive annual replacement warranty'],
-    advantages_es: ['Corrección gramatical avanzada y reescritura de oraciones con IA', 'Detector de plagio integrado que compara miles de millones de páginas', 'Ajuste de tono y mejora de vocabulario para textos profesionales', 'Garantía anual completa de reemplazo del 100%'],
-    advantages_fr: ['Correction grammaticale avancée et réécriture de phrases par IA', 'Détecteur de plagiat intégré analysant des milliards de pages web', 'Ajustement du ton et enrichissement du vocabulaire professionnel', 'Garantie annuelle de remplacement intégrale 100%'],
-    advantages_ru: ['Продвинутая грамматика и перефразирование предложений с ИИ', 'Встроенный антиплагиат с проверкой по миллиардам веб-страниц', 'Настройка тональности и обогащение лексики для научных статей', '100% комплексная годовая гарантия замены'],
-    advantages_tr: ['Yapay zeka ile gelişmiş dilbilgisi düzeltme ve cümle yeniden yazma', 'Milyarlarca web sayfasıyla karşılaştıran entegre İntihal Kontrolü', 'Akademik ve kurumsal yazılar için ton ayarlama ve kelime geliştirme', '1 yıl boyunca kapsamlı %100 resmi garanti'],
-    advantages_de: ['Erweiterte Grammatikkorrektur und KI-Satzumformulierungen', 'Integrierter Plagiatsprüfer mit Abgleich von Milliarden Webseiten', 'Tonanpassung und Wortschatzerweiterung für akademische Texte', '100% umfassende Jahres-Ersatzgarantie'],
+    "id": "copilot_12m_prod",
+    "short_id": "copilot_12m",
+    "brand_id": "copilot",
+    "category_id": "dev",
+    "name": "GitHub Copilot 12m",
+    "name_ar": "GitHub Copilot (سنة كاملة)",
+    "button_title": "🐙 GitHub Copilot (سنة كاملة) — $2.29 ⚡",
+    "icon_symbol": "🐙",
+    "market_price": 100,
+    "our_price": 2.29,
+    "price_egp": 115,
+    "price_sar": 9,
+    "subscription_duration": "سنة كاملة (12 شهر)",
+    "warranty_duration": "سنة كاملة ضمان استبدال",
+    "delivery_type": "personal_account",
+    "advantages_ar": [
+      "ترخيص رسمي سنوي مخصص على حسابك أو حساب جاهز",
+      "مساعدة برمجية متواصلة على مدار عام كامل",
+      "ضمان استبدال سنوي شامل 100%"
+    ],
+    "advantages_en": [
+      "Full 1-year official subscription on your personal account",
+      "Uninterrupted AI pair programming for 12 continuous months",
+      "100% comprehensive annual replacement warranty"
+    ],
+    "advantages_es": [
+      "Suscripción oficial de 1 año en tu cuenta personal de GitHub",
+      "Programación en pareja con IA ininterrumpida durante 12 meses",
+      "Garantía anual completa de reemplazo del 100%"
+    ],
+    "advantages_fr": [
+      "Abonnement officiel d'un an sur votre compte personnel GitHub",
+      "Pair programming IA ininterrompu pendant 12 mois consécutifs",
+      "Garantie annuelle de remplacement intégrale 100%"
+    ],
+    "advantages_ru": [
+      "Официальная годовая подписка на ваш личный аккаунт GitHub",
+      "Непрерывное парное программирование с ИИ на 12 месяцев",
+      "100% комплексная годовая гарантия замены"
+    ],
+    "advantages_tr": [
+      "Kişisel GitHub hesabınızda 1 yıllık tam resmi abonelik",
+      "12 ay boyunca kesintisiz yapay zeka ile eşli programlama",
+      "1 yıl boyunca kapsamlı %100 resmi garanti"
+    ],
+    "advantages_de": [
+      "Vollständiges 1-Jahres-Abonnement auf persönlichem GitHub-Konto",
+      "Unterbrechungsfreies KI-Pair-Programming für 12 Monate",
+      "100% umfassende Jahres-Ersatzgarantie"
+    ]
   },
-
-  // ── 31. DUOLINGO SUPER ──
   {
-    id: 'duolingo_12m_prod',
-    short_id: 'duolingo_12m',
-    brand_id: 'duolingo',
-    category_id: 'prod',
-    name: 'Duolingo Super 12m',
-    name_ar: 'Duolingo Super (سنة كاملة)',
-    button_title: '🦉 Duolingo Super (سنة كاملة) — $5.99 ⚡',
-    icon_symbol: '🦉',
-    market_price: 83.99,
-    our_price: 5.99,
-    price_egp: 300,
-    price_sar: 22,
-    subscription_duration: 'سنة كاملة (12 شهر)',
-    warranty_duration: 'سنة كاملة ضمان استبدال',
-    delivery_type: 'personal_account',
-    advantages_ar: ['قلوب غير محدودة Unlimited Hearts للتعلم بدون توقف', 'خالٍ تماماً من أي إعلانات مع إمكانية مراجعة الأخطاء المخصصة', 'تفعيل على حسابك الشخصي مع حفظ كافة تقدمك ونقاطك', 'ضمان استبدال سنوي رسمي 100%'],
-    advantages_en: ['Unlimited Hearts for non-stop language learning without penalties', 'Completely ad-free experience with personalized mistakes review', 'Direct activation on your personal account preserving all streaks & XP', '100% comprehensive annual replacement warranty'],
-    advantages_es: ['Vidas ilimitadas para aprender idiomas sin pausas ni límites', 'Experiencia 100% sin anuncios con repaso personalizado de errores', 'Activación en tu cuenta personal conservando tu racha y progreso', 'Garantía anual completa de reemplazo del 100%'],
-    advantages_fr: ['Vies illimitées pour un apprentissage des langues sans interruption', 'Expérience 100% sans publicité avec révision des erreurs ciblée', 'Activation sur compte personnel en conservant vos séries et XP', 'Garantie annuelle de remplacement intégrale 100%'],
-    advantages_ru: ['Бесконечные жизни для непрерывного изучения любых языков', 'Полное отсутствие рекламы с персонализированной работой над ошибками', 'Активация на личный аккаунт с сохранением ударного режима и очков XP', '100% комплексная годовая гарантия замены'],
-    advantages_tr: ['Kesintisiz dil öğrenimi için sınırsız can (Unlimited Hearts)', 'Kişiselleştirilmiş hata incelemesi ile tamamen reklamsız deneyim', 'Tüm seriniz ve XP puanlarınız korunarak kişisel hesaba aktivasyon', '1 yıl boyunca kapsamlı %100 resmi garanti'],
-    advantages_de: ['Unbegrenzte Herzen für pausenloses Sprachenlernen', 'Vollständig werbefrei mit personalisierter Fehleranalyse', 'Aktivierung auf persönlichem Konto mit Erhalt aller Streaks & XP', '100% umfassende Jahres-Ersatzgarantie'],
+    "id": "v0dev_1m_prod",
+    "short_id": "v0dev_1m",
+    "brand_id": "v0dev",
+    "category_id": "dev",
+    "name": "v0.dev Pro 1m",
+    "name_ar": "v0.dev / Bolt.new Pro (شهر كامل)",
+    "button_title": "⚡ v0.dev Pro (شهر واحد) — $1.49 ⚡",
+    "icon_symbol": "⚡",
+    "market_price": 20,
+    "our_price": 1.49,
+    "price_egp": 75,
+    "price_sar": 6,
+    "subscription_duration": "شهر كامل (30 يوم)",
+    "warranty_duration": "شهر كامل ضمان استبدال",
+    "delivery_type": "api_token",
+    "advantages_ar": [
+      "بناء وتصميم واجهات وتطبيقات React و Next.js و Tailwind فورياً بالـ AI",
+      "5,000 نقطة توليد شهرياً مع تصدير الأكواد بضغطة زر",
+      "نشر وتجربة التطبيقات السحابية فورياً",
+      "ضمان استبدال رسمي 100%"
+    ],
+    "advantages_en": [
+      "Instant AI generation of React, Next.js & Tailwind UI components",
+      "5,000 generation credits monthly with 1-click code export",
+      "Deploy & preview fullstack web applications instantly",
+      "100% official replacement warranty for the full month"
+    ],
+    "advantages_es": [
+      "Generación instantánea de componentes UI en React, Next.js y Tailwind",
+      "5,000 créditos al mes con exportación de código en un clic",
+      "Despliegue y vista previa de aplicaciones web al instante",
+      "Garantía oficial de reemplazo del 100%"
+    ],
+    "advantages_fr": [
+      "Génération instantanée de composants React, Next.js et Tailwind",
+      "5 000 crédits par mois avec export de code en un clic",
+      "Déploiement et aperçu d'applications web fullstack instantanés",
+      "Garantie de remplacement officielle 100%"
+    ],
+    "advantages_ru": [
+      "Мгновенная генерация интерфейсов на React, Next.js и Tailwind UI",
+      "5 000 кредитов генерации в месяц с экспортом кода в 1 клик",
+      "Мгновенный деплой и тестирование веб-приложений",
+      "100% официальная гарантия замены на месяц"
+    ],
+    "advantages_tr": [
+      "React, Next.js ve Tailwind ile anında AI UI bileşeni üretimi",
+      "Tek tıkla kod dışa aktarmayla aylık 5.000 üretim kredisi",
+      "Fullstack web uygulamalarını anında yayınlama ve önizleme",
+      "Tam 1 ay boyunca %100 resmi değişim garantisi"
+    ],
+    "advantages_de": [
+      "Sofortige KI-Generierung von React, Next.js & Tailwind UI-Komponenten",
+      "5.000 Credits monatlich mit 1-Klick-Code-Export",
+      "Fullstack-Web-Apps sofort bereitstellen und testen",
+      "100% offizielle Ersatzgarantie für den Monat"
+    ]
   },
-
-  // ── 32. WINDOWS 11 PRO ──
   {
-    id: 'win11pro_life_prod',
-    short_id: 'win11pro_life',
-    brand_id: 'win11pro',
-    category_id: 'prod',
-    name: 'Windows 11 Pro Retail Key',
-    name_ar: 'Windows 11 Pro Retail Key (دائم مدى الحياة)',
-    button_title: '🪟 Windows 11 Pro Key — $4.49 ⚡',
-    icon_symbol: '🪟',
-    market_price: 199.99,
-    our_price: 4.49,
-    price_egp: 225,
-    price_sar: 17,
-    subscription_duration: 'تفعيل دائم مدى الحياة',
-    warranty_duration: 'ضمان أصلي مدى الحياة',
-    delivery_type: 'license_key',
-    advantages_ar: ['مفتاح ترخيص أصلي Retail دائم مدى الحياة لنظام Windows 11 Pro', 'تفعيل رسمي فوري من سيرفرات Microsoft الرسمية (يقبل التحديثات وإعادة التثبيت)', 'دعم تشفير BitLocker وميزة Remote Desktop وميزات الأمان المتقدمة', 'ضمان تفعيل رسمي فوري 100%'],
-    advantages_en: ['Official genuine Microsoft Retail digital license key for lifetime', 'Direct online activation on Microsoft servers supporting reinstallations', 'Full support for BitLocker encryption, Remote Desktop & Hyper-V', '100% lifetime official activation guarantee'],
-    advantages_es: ['Clave digital Retail original de Microsoft permanente de por vida', 'Activación directa en línea en servidores oficiales de Microsoft', 'Soporte completo para cifrado BitLocker y Escritorio Remoto', 'Garantía oficial de activación de por vida del 100%'],
-    advantages_fr: ['Clé numérique Microsoft Retail authentique permanente à vie', 'Activation directe en ligne sur les serveurs officiels de Microsoft', 'Support complet du chiffrement BitLocker et Bureau à distance', 'Garantie d\'activation officielle à vie 100%'],
-    advantages_ru: ['Официальный цифровой ключ Microsoft Retail навсегда (Lifetime)', 'Прямая онлайн-активация на серверах Microsoft с поддержкой переустановок', 'Полная поддержка шифрования BitLocker и удаленного рабочего стола', '100% пожизненная официальная гарантия активации'],
-    advantages_tr: ['Ömür boyu geçerli orijinal Microsoft Retail dijital lisans anahtarı', 'Yeniden yüklemeleri destekleyen Microsoft sunucularında doğrudan aktivasyon', 'BitLocker şifreleme ve Uzak Masaüstü (Remote Desktop) tam desteği', 'Ömür boyu %100 resmi aktivasyon garantisi'],
-    advantages_de: ['Originaler digitaler Microsoft Retail-Lizenzschlüssel für die Lebensdauer', 'Direkte Online-Aktivierung auf Microsoft-Servern mit Neuinstallations-Support', 'Volle Unterstützung für BitLocker-Verschlüsselung & Remotedesktop', '100% lebenslange offizielle Aktivierungsgarantie'],
+    "id": "jetbrains_12m_prod",
+    "short_id": "jetbrains_12m",
+    "brand_id": "jetbrains",
+    "category_id": "dev",
+    "name": "JetBrains All Products 12m",
+    "name_ar": "JetBrains All Products Pack (سنة كاملة)",
+    "button_title": "📦 JetBrains Pack (سنة كاملة) — $2.49 ⚡",
+    "icon_symbol": "📦",
+    "market_price": 289,
+    "our_price": 2.49,
+    "price_egp": 125,
+    "price_sar": 9,
+    "subscription_duration": "سنة كاملة (12 شهر)",
+    "warranty_duration": "سنة كاملة ضمان استبدال",
+    "delivery_type": "license_key",
+    "advantages_ar": [
+      "يشمل جميع بيئات JetBrains الـ 16 (IntelliJ IDEA Ultimate, WebStorm, PyCharm Pro, PhpStorm, CLion, Rider)",
+      "ترخيص رسمي مفعل ومستقر طوال عام كامل",
+      "توفير يتجاوز 95% عن السعر الرسمي",
+      "ضمان استبدال سنوي رسمي 100%"
+    ],
+    "advantages_en": [
+      "Official license key covering all 16 JetBrains IDEs (IntelliJ, WebStorm, PyCharm, Rider)",
+      "Full 1-year official license with continuous updates",
+      "Over 95% savings compared to standard retail pricing",
+      "100% official replacement warranty for the entire year"
+    ],
+    "advantages_es": [
+      "Clave oficial que incluye los 16 IDEs de JetBrains (IntelliJ, PyCharm, WebStorm, Rider)",
+      "Licencia anual completa y estable con todas las actualizaciones",
+      "Más del 95% de ahorro frente al precio oficial",
+      "Garantía oficial de reemplazo del 100% durante todo el año"
+    ],
+    "advantages_fr": [
+      "Clé officielle couvrant les 16 IDE JetBrains (IntelliJ, WebStorm, PyCharm, Rider)",
+      "Licence annuelle officielle stable avec mises à jour",
+      "Plus de 95% d'économie par rapport au prix officiel",
+      "Garantie de remplacement officielle 100% sur 1 an"
+    ],
+    "advantages_ru": [
+      "Официальный лицензионный ключ на все 16 IDE JetBrains (IntelliJ, WebStorm, PyCharm, Rider)",
+      "Полноценная годовая лицензия с поддержкой обновлений",
+      "Экономия более 95% от официальной цены подписки",
+      "100% официальная годовая гарантия замены"
+    ],
+    "advantages_tr": [
+      "Tüm 16 JetBrains IDE'sini kapsayan resmi lisans anahtarı (IntelliJ, WebStorm, PyCharm, Rider)",
+      "Güncellemeleri destekleyen tam 1 yıllık resmi lisans",
+      "Resmi fiyata göre %95'in üzerinde tasarruf",
+      "1 yıl boyunca %100 resmi değişim garantisi"
+    ],
+    "advantages_de": [
+      "Offizieller Lizenzschlüssel für alle 16 JetBrains IDEs (IntelliJ, WebStorm, PyCharm, Rider)",
+      "Vollständige 1-Jahres-Lizenz mit Updates",
+      "Über 95% Ersparnis gegenüber dem offiziellen Preis",
+      "100% offizielle Ersatzgarantie für das gesamte Jahr"
+    ]
   },
-
-  // ── 33. WINDOWS 10 PRO ──
   {
-    id: 'win10pro_life_prod',
-    short_id: 'win10pro_life',
-    brand_id: 'win10pro',
-    category_id: 'prod',
-    name: 'Windows 10 Pro Retail Key',
-    name_ar: 'Windows 10 Pro Retail Key (دائم مدى الحياة)',
-    button_title: '🪟 Windows 10 Pro Key — $3.99 ⚡',
-    icon_symbol: '🪟',
-    market_price: 199.99,
-    our_price: 3.99,
-    price_egp: 200,
-    price_sar: 15,
-    subscription_duration: 'تفعيل دائم مدى الحياة',
-    warranty_duration: 'ضمان أصلي مدى الحياة',
-    delivery_type: 'license_key',
-    advantages_ar: ['مفتاح ترخيص أصلي Retail دائم مدى الحياة لنظام Windows 10 Pro', 'يقبل الترقية المجانية المباشرة إلى Windows 11 Pro بضغطة زر', 'يقبل التحديثات وإعادة التثبيت على نفس الجهاز', 'ضمان تفعيل رسمي فوري 100%'],
-    advantages_en: ['Official genuine Microsoft Retail digital license key for lifetime', 'Eligible for direct free 1-click upgrade to Windows 11 Pro', 'Supports all official Windows updates & clean reinstallations', '100% lifetime official activation guarantee'],
-    advantages_es: ['Clave digital Retail original de Microsoft permanente de por vida', 'Permite actualización gratuita directa a Windows 11 Pro en 1 clic', 'Soporta actualizaciones oficiales y reinstalaciones limpias', 'Garantía oficial de activación de por vida del 100%'],
-    advantages_fr: ['Clé numérique Microsoft Retail authentique permanente à vie', 'Éligible à la mise à niveau gratuite directe vers Windows 11 Pro', 'Supporte toutes les mises à jour et réinstallations propres', 'Garantie d\'activation officielle à vie 100%'],
-    advantages_ru: ['Официальный цифровой ключ Microsoft Retail навсегда (Lifetime)', 'Поддержка прямого бесплатного обновления до Windows 11 Pro в 1 клик', 'Поддержка всех обновлений Windows и чистых переустановок', '100% пожизненная официальная гарантия активации'],
-    advantages_tr: ['Ömür boyu geçerli orijinal Microsoft Retail dijital lisans anahtarı', 'Tek tıkla Windows 11 Pro\'ya doğrudan ücretsiz yükseltme desteği', 'Tüm resmi Windows güncellemelerini ve yeniden yüklemeleri destekler', 'Ömür boyu %100 resmi aktivasyon garantisi'],
-    advantages_de: ['Originaler digitaler Microsoft Retail-Lizenzschlüssel für die Lebensdauer', 'Berechtigt zum direkten kostenlosen 1-Klick-Upgrade auf Windows 11 Pro', 'Unterstützt alle offiziellen Windows-Updates & Neuinstallationen', '100% lebenslange offizielle Aktivierungsgarantie'],
+    "id": "replit_1m_prod",
+    "short_id": "replit_1m",
+    "brand_id": "replit",
+    "category_id": "dev",
+    "name": "Replit Core & Agent 1m",
+    "name_ar": "Replit Core + Agent Pro (شهر كامل)",
+    "button_title": "🔥 Replit Core & Agent — $1.69 ⚡",
+    "icon_symbol": "🔥",
+    "market_price": 25,
+    "our_price": 1.69,
+    "price_egp": 85,
+    "price_sar": 6,
+    "subscription_duration": "شهر كامل (30 يوم)",
+    "warranty_duration": "شهر كامل ضمان استبدال",
+    "delivery_type": "personal_account",
+    "advantages_ar": [
+      "بيئة تطوير سحابية متكاملة وسيرفرات سريعة دائماً اونلاين Always-On",
+      "وكيل Replit Agent Pro لبناء وتطوير ونشر التطبيقات والمواقع ذاتياً",
+      "قواعد بيانات مدمجة ونشر فوري للنطاقات المخصصة",
+      "ضمان استبدال رسمي 100%"
+    ],
+    "advantages_en": [
+      "High-speed cloud development environment with Always-On Repls",
+      "Replit Agent Pro for autonomous end-to-end fullstack development",
+      "Integrated serverless databases & instant custom domain hosting",
+      "100% official replacement warranty for the full month"
+    ],
+    "advantages_es": [
+      "Entorno de desarrollo en la nube de alta velocidad con Repls Always-On",
+      "Replit Agent Pro para desarrollo autónomo de aplicaciones",
+      "Bases de datos integradas y alojamiento en dominios personalizados",
+      "Garantía oficial de reemplazo del 100%"
+    ],
+    "advantages_fr": [
+      "Environnement de développement cloud rapide avec Repls Always-On",
+      "Replit Agent Pro pour le développement fullstack autonome",
+      "Bases de données intégrées et hébergement instantané de domaines",
+      "Garantie de remplacement officielle 100%"
+    ],
+    "advantages_ru": [
+      "Сверхбыстрая облачная среда разработки с серверами Always-On",
+      "Replit Agent Pro для автономного создания и деплоя приложений",
+      "Встроенные базы данных и хостинг на собственных доменах",
+      "100% официальная гарантия замены на месяц"
+    ],
+    "advantages_tr": [
+      "Always-On Repls özellikli yüksek hızlı bulut geliştirme ortamı",
+      "Otonom uçtan uca yazılım geliştirme için Replit Agent Pro",
+      "Entegre veritabanları ve anında özel alan adı barındırma",
+      "Tam 1 ay boyunca %100 resmi değişim garantisi"
+    ],
+    "advantages_de": [
+      "Highspeed-Cloud-Entwicklungsumgebung mit Always-On Repls",
+      "Replit Agent Pro für autonome Fullstack-Softwareentwicklung",
+      "Integrierte Datenbanken und sofortiges Custom-Domain-Hosting",
+      "100% offizielle Ersatzgarantie für den Monat"
+    ]
   },
+  {
+    "id": "canva_12m_prod",
+    "short_id": "canva_12m",
+    "brand_id": "canva",
+    "category_id": "design",
+    "name": "Canva Pro 1 Year",
+    "name_ar": "Canva Pro (سنة كاملة)",
+    "button_title": "🎨 Canva Pro (سنة كاملة) — $0.99 ⚡",
+    "icon_symbol": "🎨",
+    "market_price": 119.99,
+    "our_price": 0.99,
+    "price_egp": 50,
+    "price_sar": 4,
+    "subscription_duration": "سنة كاملة (12 شهر)",
+    "warranty_duration": "سنة كاملة ضمان استبدال",
+    "delivery_type": "personal_account",
+    "advantages_ar": [
+      "تفعيل مباشر على إيميلك الشخصي بدون مشاركة كلمة المرور",
+      "وصول غير محدود لأكثر من 100 مليون صورة وقالب وفيديو احترافي",
+      "كافة ميزات الذكاء الاصطناعي Magic Studio ومزيل الخلفيات بضغطة زر",
+      "ضمان استبدال سنوي رسمي 100%"
+    ],
+    "advantages_en": [
+      "Direct activation on your personal email without password sharing",
+      "Unlimited access to 100M+ premium templates, photos and graphics",
+      "Full Magic Studio AI tools suite & instant 1-click background remover",
+      "100% comprehensive annual replacement warranty"
+    ],
+    "advantages_es": [
+      "Activación directa en tu correo personal sin compartir contraseña",
+      "Acceso ilimitado a más de 100 millones de plantillas y recursos premium",
+      "Suite completa de IA Magic Studio y borrador de fondos en 1 clic",
+      "Garantía anual completa de reemplazo del 100%"
+    ],
+    "advantages_fr": [
+      "Activation directe sur votre e-mail personnel sans mot de passe",
+      "Accès illimité à 100M+ de modèles, photos et graphiques premium",
+      "Suite IA Magic Studio complète et suppression d'arrière-plan en 1 clic",
+      "Garantie annuelle de remplacement intégrale 100%"
+    ],
+    "advantages_ru": [
+      "Прямая активация на личную почту без передачи пароля",
+      "Безлимитный доступ к 100M+ премиум шаблонам, фото и шрифтам",
+      "Все функции ИИ Magic Studio и удаление фона в один клик",
+      "100% комплексная годовая гарантия замены"
+    ],
+    "advantages_tr": [
+      "Şifre paylaşımı olmadan kişisel e-postanıza doğrudan aktivasyon",
+      "100M+ premium şablon, fotoğraf ve grafiğe sınırsız erişim",
+      "Eksiksiz Magic Studio yapay zeka araçları ve tek tıkla arka plan silme",
+      "1 yıl boyunca kapsamlı %100 resmi garanti"
+    ],
+    "advantages_de": [
+      "Direkte Aktivierung auf persönlicher E-Mail ohne Passwort-Weitergabe",
+      "Unbegrenzter Zugriff auf 100M+ Premium-Vorlagen, Fotos und Grafiken",
+      "Vollständige Magic Studio KI-Suite & 1-Klick-Hintergrundentferner",
+      "100% umfassende Jahres-Ersatzgarantie"
+    ]
+  },
+  {
+    "id": "canva_life_prod",
+    "short_id": "canva_life",
+    "brand_id": "canva",
+    "category_id": "design",
+    "name": "Canva Pro Lifetime VIP",
+    "name_ar": "Canva Pro (دائم مدى الحياة)",
+    "button_title": "🎨 Canva Pro (مدى الحياة) — $1.99 ⚡",
+    "icon_symbol": "🎨",
+    "market_price": 299.99,
+    "our_price": 1.99,
+    "price_egp": 100,
+    "price_sar": 7,
+    "subscription_duration": "تفعيل دائم مدى الحياة",
+    "warranty_duration": "ضمان دائم مدى الحياة",
+    "delivery_type": "personal_account",
+    "advantages_ar": [
+      "تفعيل دائم مدى الحياة VIP على حسابك الشخصي",
+      "مساحة تخزين سحابية ضخمة لتصاميمك وملفاتك",
+      "تصدير بجودة فوتوغرافية فائقة SVG و PNG شفاف و PDF طباعة",
+      "ضمان استبدال دائم ومدى الحياة 100%"
+    ],
+    "advantages_en": [
+      "Permanent lifetime VIP activation on your personal account",
+      "Massive cloud storage for all your brand assets and designs",
+      "Ultra-high quality vector SVG, transparent PNG & print PDF export",
+      "100% lifetime official replacement warranty"
+    ],
+    "advantages_es": [
+      "Activación VIP permanente de por vida en tu cuenta personal",
+      "Almacenamiento masivo en la nube para todos tus diseños y marcas",
+      "Exportación en alta calidad vectorial SVG, PNG transparente y PDF",
+      "Garantía oficial de reemplazo de por vida del 100%"
+    ],
+    "advantages_fr": [
+      "Activation VIP permanente à vie sur votre compte personnel",
+      "Stockage cloud massif pour tous vos designs et ressources de marque",
+      "Export haute résolution SVG vectoriel, PNG transparent et PDF d'impression",
+      "Garantie de remplacement officielle à vie 100%"
+    ],
+    "advantages_ru": [
+      "Пожизненная VIP активация навсегда на ваш личный аккаунт",
+      "Огромное облачное хранилище для всех ваших проектов и файлов",
+      "Экспорт в максимальном качестве: векторный SVG, прозрачный PNG, PDF",
+      "100% пожизненная официальная гарантия замены"
+    ],
+    "advantages_tr": [
+      "Kişisel hesabınızda kalıcı ömür boyu VIP aktivasyon",
+      "Tüm tasarımlarınız ve marka varlıklarınız için dev bulut depolama",
+      "Ultra yüksek kaliteli vektörel SVG, şeffaf PNG ve baskı PDF çıktısı",
+      "Ömür boyu %100 resmi değişim garantisi"
+    ],
+    "advantages_de": [
+      "Dauerhafte lebenslange VIP-Aktivierung auf persönlichem Konto",
+      "Riesiger Cloud-Speicher für alle Designs und Marken-Assets",
+      "Export in höchster Qualität: Vektor-SVG, transparentes PNG & Druck-PDF",
+      "100% lebenslange offizielle Ersatzgarantie"
+    ]
+  },
+  {
+    "id": "capcut_1m_prod",
+    "short_id": "capcut_1m",
+    "brand_id": "capcut",
+    "category_id": "design",
+    "name": "CapCut Pro 1m",
+    "name_ar": "CapCut Pro (شهر كامل)",
+    "button_title": "✂️ CapCut Pro (شهر واحد) — $0.99 ⚡",
+    "icon_symbol": "✂️",
+    "market_price": 9.99,
+    "our_price": 0.99,
+    "price_egp": 50,
+    "price_sar": 4,
+    "subscription_duration": "شهر كامل (30 يوم)",
+    "warranty_duration": "شهر كامل ضمان استبدال",
+    "delivery_type": "personal_account",
+    "advantages_ar": [
+      "تصدير فيديوهات بدقة 4K UHD وبمعدل 60 إطار في الثانية بدون علامة مائية",
+      "الترجمة التلقائية Auto Captions باللغة العربية وأكثر من 20 لغة بدقة 100%",
+      "مكتبة فلاتر ومؤثرات وانتقالات Pro الحصرية لصناع المحتوى",
+      "ضمان استبدال رسمي 100% طوال الشهر"
+    ],
+    "advantages_en": [
+      "4K UHD 60fps video export without any watermarks",
+      "Accurate Auto Captions in Arabic, English and 20+ languages",
+      "Full access to exclusive Pro effects, transitions & voice changers",
+      "100% official replacement warranty for the full month"
+    ],
+    "advantages_es": [
+      "Exportación de video 4K UHD a 60fps sin marcas de agua",
+      "Subtítulos automáticos precisos en español, árabe y 20+ idiomas",
+      "Acceso a efectos, transiciones y filtros Pro exclusivos",
+      "Garantía oficial de reemplazo del 100%"
+    ],
+    "advantages_fr": [
+      "Export vidéo 4K UHD 60fps sans aucun filigrane",
+      "Sous-titres automatiques ultra-précis en français et 20+ langues",
+      "Accès complet aux effets, transitions et filtres Pro exclusifs",
+      "Garantie de remplacement officielle 100%"
+    ],
+    "advantages_ru": [
+      "Экспорт видео в 4K UHD 60fps без водяных знаков",
+      "Автоматические субтитры Auto Captions на русском и 20+ языках",
+      "Полная библиотека эксклюзивных Pro эффектов, переходов и фильтров",
+      "100% официальная гарантия замены на месяц"
+    ],
+    "advantages_tr": [
+      "Filigransız 4K UHD 60fps yüksek kaliteli video dışa aktarma",
+      "Türkçe, Arapça ve 20+ dilde %100 doğru Otomatik Altyazı (Auto Captions)",
+      "İçerik üreticileri için özel Pro filtre, efekt ve geçiş kitaplığı",
+      "Tam 1 ay boyunca %100 resmi değişim garantisi"
+    ],
+    "advantages_de": [
+      "4K UHD 60fps Video-Export ohne Wasserzeichen",
+      "Präzise automatische Untertitel in Deutsch und 20+ Sprachen",
+      "Voller Zugriff auf exklusive Pro-Effekte, Übergänge & Filter",
+      "100% offizielle Ersatzgarantie für den Monat"
+    ]
+  },
+  {
+    "id": "capcut_12m_prod",
+    "short_id": "capcut_12m",
+    "brand_id": "capcut",
+    "category_id": "design",
+    "name": "CapCut Pro 12m",
+    "name_ar": "CapCut Pro (سنة كاملة)",
+    "button_title": "✂️ CapCut Pro (سنة كاملة) — $2.49 ⚡",
+    "icon_symbol": "✂️",
+    "market_price": 99.99,
+    "our_price": 2.49,
+    "price_egp": 125,
+    "price_sar": 9,
+    "subscription_duration": "سنة كاملة (12 شهر)",
+    "warranty_duration": "سنة كاملة ضمان استبدال",
+    "delivery_type": "personal_account",
+    "advantages_ar": [
+      "اشتراك سنوي كامل لصناع محتوى تيك توك ويوتيوب وانستغرام ريلز",
+      "مساحة تخزين سحابية ضخمة 100GB لمزامنة المشاريع بين الموبايل والكمبيوتر",
+      "إزالة الخلفية الذكية بالـ AI وتحسين جودة الصوت التلقائي",
+      "ضمان استبدال سنوي رسمي 100%"
+    ],
+    "advantages_en": [
+      "Full 1-year annual plan for TikTok, YouTube & Reels creators",
+      "100GB cloud storage to sync projects seamlessly between PC & phone",
+      "AI smart background cutout and automatic vocal isolation",
+      "100% comprehensive annual replacement warranty"
+    ],
+    "advantages_es": [
+      "Plan anual de 1 año para creadores de TikTok, YouTube y Reels",
+      "100GB de almacenamiento en la nube para sincronizar PC y móvil",
+      "Recorte inteligente de fondos con IA y mejora de audio",
+      "Garantía anual completa de reemplazo del 100%"
+    ],
+    "advantages_fr": [
+      "Plan annuel d'un an pour créateurs TikTok, YouTube et Reels",
+      "100 Go de stockage cloud pour synchroniser projets PC et mobile",
+      "Détourage d'arrière-plan IA et isolation vocale automatique",
+      "Garantie annuelle de remplacement intégrale 100%"
+    ],
+    "advantages_ru": [
+      "Годовой план на 12 месяцев для авторов TikTok, YouTube и Reels",
+      "100 ГБ облака для синхронизации проектов между ПК и телефоном",
+      "Умное удаление фона с ИИ и улучшение качества звука",
+      "100% комплексная годовая гарантия замены"
+    ],
+    "advantages_tr": [
+      "TikTok, YouTube ve Reels üreticileri için 1 yıllık tam plan",
+      "PC ve mobil arasında projeleri senkronize etmek için 100GB bulut alanı",
+      "Yapay zeka ile akıllı arka plan silme ve otomatik ses iyileştirme",
+      "1 yıl boyunca kapsamlı %100 resmi garanti"
+    ],
+    "advantages_de": [
+      "Vollständiges 1-Jahres-Abonnement für Content Creator",
+      "100GB Cloud-Speicher zur Projektsynchronisation zwischen PC & Handy",
+      "Intelligente KI-Hintergrundentfernung und automatische Sprachverbesserung",
+      "100% umfassende Jahres-Ersatzgarantie"
+    ]
+  },
+  {
+    "id": "adobe_1m_prod",
+    "short_id": "adobe_1m",
+    "brand_id": "adobe",
+    "category_id": "design",
+    "name": "Adobe Creative Cloud 1m",
+    "name_ar": "Adobe Creative Cloud All Apps (شهر كامل)",
+    "button_title": "🟥 Adobe All Apps (شهر واحد) — $1.89 ⚡",
+    "icon_symbol": "🟥",
+    "market_price": 59.99,
+    "our_price": 1.89,
+    "price_egp": 95,
+    "price_sar": 7,
+    "subscription_duration": "شهر كامل (30 يوم)",
+    "warranty_duration": "شهر كامل ضمان استبدال",
+    "delivery_type": "personal_account",
+    "advantages_ar": [
+      "أكثر من 20 تطبيق أصلي كامل (Photoshop, Illustrator, Premiere Pro, After Effects, Lightroom)",
+      "كافة ميزات الذكاء الاصطناعي التوليدي Adobe Firefly مدمجة برصيد نقاط أصلي",
+      "تفعيل على إيميلك الشخصي ومزامنة سحابية 100GB على Adobe Cloud",
+      "ضمان استبدال رسمي 100% طوال الشهر"
+    ],
+    "advantages_en": [
+      "Full suite of 20+ genuine desktop apps (Photoshop, Illustrator, Premiere, After Effects)",
+      "Integrated Adobe Firefly Generative AI credits and features",
+      "Direct activation on your personal email + 100GB Creative Cloud storage",
+      "100% official replacement warranty for the entire month"
+    ],
+    "advantages_es": [
+      "Suite completa de más de 20 apps originales de Adobe",
+      "Créditos y funciones de IA generativa Adobe Firefly incluidos",
+      "Activación en correo personal + 100GB de almacenamiento en la nube",
+      "Garantía oficial de reemplazo del 100%"
+    ],
+    "advantages_fr": [
+      "Suite complète de 20+ applications authentiques Adobe",
+      "Crédits et outils d'IA générative Adobe Firefly intégrés",
+      "Activation sur e-mail personnel + 100 Go de stockage cloud Adobe",
+      "Garantie de remplacement officielle 100%"
+    ],
+    "advantages_ru": [
+      "Полный пакет 20+ официальных приложений Adobe",
+      "Интегрированные генеративные функции ИИ Adobe Firefly",
+      "Активация на личную почту + 100 ГБ облака Adobe Creative Cloud",
+      "100% официальная гарантия замены на месяц"
+    ],
+    "advantages_tr": [
+      "20+ orijinal masaüstü uygulamasının tamamı (Photoshop, Illustrator, Premiere Pro)",
+      "Entegre Adobe Firefly Üretken Yapay Zeka kredileri ve araçları",
+      "Kişisel e-postanıza doğrudan aktivasyon + 100GB Adobe bulut depolama",
+      "Tam 1 ay boyunca %100 resmi değişim garantisi"
+    ],
+    "advantages_de": [
+      "Vollständiges Paket aus 20+ Original-Adobe-Desktop-Apps",
+      "Integrierte generative Adobe Firefly KI-Funktionen und Credits",
+      "Direkte Aktivierung auf persönlicher E-Mail + 100GB Cloud-Speicher",
+      "100% offizielle Ersatzgarantie für den Monat"
+    ]
+  },
+  {
+    "id": "adobe_12m_prod",
+    "short_id": "adobe_12m",
+    "brand_id": "adobe",
+    "category_id": "design",
+    "name": "Adobe Creative Cloud 12m",
+    "name_ar": "Adobe Creative Cloud All Apps (سنة كاملة)",
+    "button_title": "🟥 Adobe All Apps (سنة كاملة) — $2.99 ⚡",
+    "icon_symbol": "🟥",
+    "market_price": 659.99,
+    "our_price": 2.99,
+    "price_egp": 150,
+    "price_sar": 11,
+    "subscription_duration": "سنة كاملة (12 شهر)",
+    "warranty_duration": "سنة كاملة ضمان استبدال",
+    "delivery_type": "personal_account",
+    "advantages_ar": [
+      "اشتراك سنوي رسمي كامل للأفراد والشركات والمصممين المحترفين",
+      "يقبل كافة التحديثات الدورية الرسمية من تطبيق Adobe Creative Cloud",
+      "توفير يتجاوز 90% عن السعر الرسمي مع دعم Adobe Fonts و Stock",
+      "ضمان استبدال سنوي رسمي شامل 100%"
+    ],
+    "advantages_en": [
+      "Full 1-year official annual plan for professionals & agencies",
+      "Direct updates through genuine Adobe Creative Cloud Desktop App",
+      "Over 90% savings vs official retail price with Adobe Fonts access",
+      "100% comprehensive annual replacement warranty"
+    ],
+    "advantages_es": [
+      "Plan anual oficial de 1 año para profesionales y agencias",
+      "Actualizaciones directas desde la app oficial de Creative Cloud",
+      "Más del 90% de ahorro frente al precio oficial con Adobe Fonts",
+      "Garantía anual completa de reemplazo del 100%"
+    ],
+    "advantages_fr": [
+      "Plan annuel officiel d'un an pour professionnels et agences",
+      "Mises à jour directes depuis l'application officielle Creative Cloud",
+      "Plus de 90% d'économie avec accès complet à Adobe Fonts",
+      "Garantie annuelle de remplacement intégrale 100%"
+    ],
+    "advantages_ru": [
+      "Официальный годовой план на 12 месяцев для профессионалов и студий",
+      "Прямые обновления через официальное приложение Creative Cloud",
+      "Экономия более 90% от официальной цены с доступом к Adobe Fonts",
+      "100% комплексная годовая гарантия замены"
+    ],
+    "advantages_tr": [
+      "Profesyoneller ve ajanslar için 1 yıllık tam resmi plan",
+      "Orijinal Adobe Creative Cloud Desktop uygulaması üzerinden doğrudan güncellemeler",
+      "Adobe Fonts erişimi ile resmi fiyata göre %90'ın üzerinde tasarruf",
+      "1 yıl boyunca kapsamlı %100 resmi garanti"
+    ],
+    "advantages_de": [
+      "Offizielles 1-Jahres-Abonnement für Profis und Agenturen",
+      "Direkte Updates über die originale Adobe Creative Cloud Desktop App",
+      "Über 90% Ersparnis mit vollem Zugriff auf Adobe Fonts",
+      "100% umfassende Jahres-Ersatzgarantie"
+    ]
+  },
+  {
+    "id": "figma_1m_prod",
+    "short_id": "figma_1m",
+    "brand_id": "figma",
+    "category_id": "design",
+    "name": "Figma Professional 1m",
+    "name_ar": "Figma Professional (شهر كامل)",
+    "button_title": "🖌️ Figma Pro (شهر واحد) — $1.49 ⚡",
+    "icon_symbol": "🖌️",
+    "market_price": 15,
+    "our_price": 1.49,
+    "price_egp": 75,
+    "price_sar": 6,
+    "subscription_duration": "شهر كامل (30 يوم)",
+    "warranty_duration": "شهر كامل ضمان استبدال",
+    "delivery_type": "personal_account",
+    "advantages_ar": [
+      "مشاريع ومساحات عمل غير محدودة لفريق التصميم والبرمجة",
+      "تفعيل وضع المطورين Dev Mode الكامل لفحص المقاسات واستخراج الأكواد",
+      "تاريخ محفوظات غير محدود للملفات والتصميمات",
+      "ضمان استبدال رسمي 100%"
+    ],
+    "advantages_en": [
+      "Unlimited projects and team workspaces for UI/UX designers",
+      "Full Dev Mode activation for inspect, CSS/Swift code & specs export",
+      "Unlimited version history for all design canvas files",
+      "100% official replacement warranty for the full month"
+    ],
+    "advantages_es": [
+      "Proyectos y espacios de trabajo ilimitados para equipos de diseño UI/UX",
+      "Activación completa de Dev Mode para inspección y exportación de código",
+      "Historial de versiones ilimitado para todos tus archivos",
+      "Garantía oficial de reemplazo del 100%"
+    ],
+    "advantages_fr": [
+      "Projets et espaces de travail illimités pour équipes UI/UX",
+      "Activation complète de Dev Mode pour inspecter et exporter le code",
+      "Historique des versions illimité pour tous vos fichiers",
+      "Garantie de remplacement officielle 100%"
+    ],
+    "advantages_ru": [
+      "Неограниченные проекты и рабочие пространства для команд UI/UX",
+      "Полный доступ к Dev Mode для инспекции и экспорта кода CSS/Swift",
+      "Безлимитная история версий для всех файлов",
+      "100% официальная гарантия замены на месяц"
+    ],
+    "advantages_tr": [
+      "UI/UX tasarım ekipleri için sınırsız proje ve çalışma alanı",
+      "Kod dışa aktarma ve ölçüm için eksiksiz Dev Mode aktivasyonu",
+      "Tüm tasarım dosyaları için sınırsız sürüm geçmişi",
+      "Tam 1 ay boyunca %100 resmi değişim garantisi"
+    ],
+    "advantages_de": [
+      "Unbegrenzte Projekte und Arbeitsbereiche für UI/UX-Teams",
+      "Vollständige Dev Mode-Aktivierung für Code-Export und Inspektion",
+      "Unbegrenzte Versionshistorie für alle Designdateien",
+      "100% offizielle Ersatzgarantie für den Monat"
+    ]
+  },
+  {
+    "id": "freepik_1m_prod",
+    "short_id": "freepik_1m",
+    "brand_id": "freepik",
+    "category_id": "design",
+    "name": "Freepik Premium 1m",
+    "name_ar": "Freepik Premium (شهر كامل)",
+    "button_title": "📸 Freepik Premium (شهر) — $0.89 ⚡",
+    "icon_symbol": "📸",
+    "market_price": 15,
+    "our_price": 0.89,
+    "price_egp": 45,
+    "price_sar": 3,
+    "subscription_duration": "شهر كامل (30 يوم)",
+    "warranty_duration": "شهر كامل ضمان استبدال",
+    "delivery_type": "personal_account",
+    "advantages_ar": [
+      "تحميل يومي حتى 100 ملف ومصدر بدقة فائقة بدون أي حدود",
+      "ملايين ملفات الفيكتور والـ PSD والقوالب والصور الحصرية بترخيص تجاري",
+      "استخدام أدوات Freepik AI لتوليد وتعديل الصور المتقدمة",
+      "ضمان استبدال رسمي 100%"
+    ],
+    "advantages_en": [
+      "Download up to 100 high-resolution premium assets daily",
+      "Millions of vectors, PSD mockups, templates & commercial license assets",
+      "Access to integrated Freepik AI generative tools suite",
+      "100% official replacement warranty for the full month"
+    ],
+    "advantages_es": [
+      "Descarga hasta 100 recursos premium diarios en alta resolución",
+      "Millones de vectores, PSDs, plantillas y licencia comercial incluida",
+      "Acceso a herramientas de IA generativa de Freepik",
+      "Garantía oficial de reemplazo del 100%"
+    ],
+    "advantages_fr": [
+      "Téléchargez jusqu'à 100 ressources premium par jour en haute résolution",
+      "Millions de vecteurs, PSD, maquettes et licence commerciale",
+      "Accès complet aux outils d'IA générative de Freepik",
+      "Garantie de remplacement officielle 100%"
+    ],
+    "advantages_ru": [
+      "Скачивание до 100 премиум файлов в день в максимальном разрешении",
+      "Миллионы векторов, PSD мокапов и шаблонов с коммерческой лицензией",
+      "Доступ ко всем генеративным инструментам Freepik AI",
+      "100% официальная гарантия замены на месяц"
+    ],
+    "advantages_tr": [
+      "Günlük 100 adede kadar yüksek çözünürlüklü premium kaynak indirme",
+      "Ticari lisanslı milyonlarca vektör, PSD mockup ve şablon",
+      "Freepik AI üretken yapay zeka araçlarına tam erişim",
+      "Tam 1 ay boyunca %100 resmi değişim garantisi"
+    ],
+    "advantages_de": [
+      "Täglich bis zu 100 hochauflösende Premium-Assets herunterladen",
+      "Millionen Vektoren, PSD-Mockups, Vorlagen & kommerzielle Lizenz",
+      "Zugriff auf die Freepik KI-Suite für generative Bildbearbeitung",
+      "100% offizielle Ersatzgarantie für den Monat"
+    ]
+  },
+  {
+    "id": "freepik_12m_prod",
+    "short_id": "freepik_12m",
+    "brand_id": "freepik",
+    "category_id": "design",
+    "name": "Freepik Premium 12m",
+    "name_ar": "Freepik Premium (سنة كاملة)",
+    "button_title": "📸 Freepik Premium (سنة) — $2.49 ⚡",
+    "icon_symbol": "📸",
+    "market_price": 144,
+    "our_price": 2.49,
+    "price_egp": 125,
+    "price_sar": 9,
+    "subscription_duration": "سنة كاملة (12 شهر)",
+    "warranty_duration": "سنة كاملة ضمان استبدال",
+    "delivery_type": "personal_account",
+    "advantages_ar": [
+      "اشتراك سنوي كامل لوكالات الدعاية والإعلان والمصممين",
+      "تحميل غير محدود للملفات والخطوط والموك اب طوال عام كامل",
+      "توفير يتجاوز 85% عن السعر الرسمي مع ترخيص تجاري مدى الحياة",
+      "ضمان استبدال سنوي رسمي 100%"
+    ],
+    "advantages_en": [
+      "Full 1-year annual subscription for marketing agencies & designers",
+      "Uncapped premium vector, font, and mockup downloads for 12 months",
+      "Over 85% savings with lifetime commercial clearance on all downloads",
+      "100% comprehensive annual replacement warranty"
+    ],
+    "advantages_es": [
+      "Suscripción anual de 1 año para agencias de publicidad y diseñadores",
+      "Descargas premium de vectores, fuentes y mockups durante 12 meses",
+      "Más del 85% de ahorro con licencia comercial permanente",
+      "Garantía anual completa de reemplazo del 100%"
+    ],
+    "advantages_fr": [
+      "Abonnement annuel d'un an pour agences créatives et designers",
+      "Téléchargements premium de vecteurs, polices et maquettes sur 12 mois",
+      "Plus de 85% d'économie avec licence commerciale à vie",
+      "Garantie annuelle de remplacement intégrale 100%"
+    ],
+    "advantages_ru": [
+      "Годовая подписка на 12 месяцев для рекламных агентств и дизайнеров",
+      "Скачивание премиум векторов, шрифтов и мокапов целый год",
+      "Экономия более 85% с пожизненной коммерческой лицензией на скачанное",
+      "100% комплексная годовая гарантия замены"
+    ],
+    "advantages_tr": [
+      "Reklam ajansları ve tasarımcılar için 1 yıllık tam abonelik",
+      "12 ay boyunca kesintisiz premium vektör, yazı tipi ve mockup indirme",
+      "İndirilen tüm varlıklarda kalıcı ticari lisans ile %85 tasarruf",
+      "1 yıl boyunca kapsamlı %100 resmi garanti"
+    ],
+    "advantages_de": [
+      "Vollständiges 1-Jahres-Abonnement für Agenturen und Designer",
+      "Unbegrenzte Premium-Vektoren, Schriftarten und Mockups für 12 Monate",
+      "Über 85% Ersparnis mit lebenslanger kommerzieller Nutzung",
+      "100% umfassende Jahres-Ersatzgarantie"
+    ]
+  },
+  {
+    "id": "envato_1m_prod",
+    "short_id": "envato_1m",
+    "brand_id": "envato",
+    "category_id": "design",
+    "name": "Envato Elements 1m",
+    "name_ar": "Envato Elements (شهر كامل)",
+    "button_title": "🎬 Envato Elements (شهر) — $1.49 ⚡",
+    "icon_symbol": "🎬",
+    "market_price": 33,
+    "our_price": 1.49,
+    "price_egp": 75,
+    "price_sar": 6,
+    "subscription_duration": "شهر كامل (30 يوم)",
+    "warranty_duration": "شهر كامل ضمان استبدال",
+    "delivery_type": "personal_account",
+    "advantages_ar": [
+      "تحميل غير محدود للقوالب الجاهزة (WordPress, Shopify, After Effects, Premiere Pro)",
+      "ملايين المؤثرات الصوتية والموسيقى التصويرية الخالية من حقوق الملكية",
+      "ترخيص تجاري رسمي لكافة المشاريع والعملاء",
+      "ضمان استبدال رسمي 100%"
+    ],
+    "advantages_en": [
+      "Unlimited downloads of WordPress, Shopify, After Effects & video templates",
+      "Millions of royalty-free stock music tracks, sound FX, fonts & 3D assets",
+      "Official commercial license valid for all client and commercial projects",
+      "100% official replacement warranty for the full month"
+    ],
+    "advantages_es": [
+      "Descargas ilimitadas de plantillas para WordPress, Shopify y Premiere",
+      "Millones de pistas de música sin copyright, efectos de sonido y fuentes",
+      "Licencia comercial oficial válida para todos los proyectos de clientes",
+      "Garantía oficial de reemplazo del 100%"
+    ],
+    "advantages_fr": [
+      "Téléchargements illimités de templates WordPress, Shopify et vidéos",
+      "Millions de pistes audio libres de droits, effets sonores et polices",
+      "Licence commerciale officielle pour tous vos projets clients",
+      "Garantie de remplacement officielle 100%"
+    ],
+    "advantages_ru": [
+      "Безлимитное скачивание шаблонов WordPress, Shopify, After Effects и видео",
+      "Миллионы треков без роялти, звуковых эффектов, шрифтов и 3D моделей",
+      "Официальная коммерческая лицензия для всех коммерческих проектов",
+      "100% официальная гарантия замены на месяц"
+    ],
+    "advantages_tr": [
+      "WordPress, Shopify, After Effects ve video şablonlarını sınırsız indirme",
+      "Telif haksız milyonlarca müzik parçası, ses efekti ve 3D varlık",
+      "Tüm müşteri ve ticari projeler için resmi ticari lisans",
+      "Tam 1 ay boyunca %100 resmi değişim garantisi"
+    ],
+    "advantages_de": [
+      "Unbegrenzte Downloads von WordPress-, Shopify- und Video-Vorlagen",
+      "Millionen lizenzfreie Musiktitel, Soundeffekte, Fonts & 3D-Assets",
+      "Offizielle kommerzielle Lizenz für alle Kundenprojekte",
+      "100% offizielle Ersatzgarantie für den Monat"
+    ]
+  },
+  {
+    "id": "netflix_1m_prod",
+    "short_id": "netflix_1m",
+    "brand_id": "netflix",
+    "category_id": "stream",
+    "name": "Netflix 4K UHD 1m",
+    "name_ar": "Netflix 4K UHD (شهر كامل)",
+    "button_title": "🎬 Netflix 4K (شهر واحد) — $0.99 ⚡",
+    "icon_symbol": "🎬",
+    "market_price": 19.99,
+    "our_price": 0.99,
+    "price_egp": 50,
+    "price_sar": 4,
+    "subscription_duration": "شهر كامل (30 يوم)",
+    "warranty_duration": "شهر كامل ضمان استبدال",
+    "delivery_type": "private_account",
+    "advantages_ar": [
+      "أعلى جودة مشاهدة 4K Ultra HD مع دعم HDR و Dolby Atmos",
+      "بروفايل خاص بك محمي برمز PIN مستقل وبدون انقطاع",
+      "حساب رسمي مستقر يعمل على جميع الشاشات والهواتف والكمبيوتر",
+      "ضمان استبدال رسمي 100% طوال المدة"
+    ],
+    "advantages_en": [
+      "Highest streaming quality: 4K Ultra HD with HDR & Dolby Atmos",
+      "Dedicated private profile protected by a custom PIN code",
+      "Official stable account compatible with Smart TVs, phones & PCs",
+      "100% official replacement warranty for the entire period"
+    ],
+    "advantages_es": [
+      "Máxima calidad 4K Ultra HD con soporte HDR y Dolby Atmos",
+      "Perfil privado protegido con código PIN independiente y sin cortes",
+      "Cuenta oficial estable para Smart TVs, teléfonos y ordenadores",
+      "Garantía oficial de reemplazo del 100%"
+    ],
+    "advantages_fr": [
+      "Qualité 4K Ultra HD maximale avec support HDR et Dolby Atmos",
+      "Profil privé dédié protégé par code PIN sans interruption",
+      "Compte officiel stable compatible Smart TV, mobiles et PC",
+      "Garantie de remplacement officielle 100%"
+    ],
+    "advantages_ru": [
+      "Максимальное качество 4K Ultra HD с HDR и Dolby Atmos",
+      "Выделенный личный профиль с защитой собственным PIN-кодом",
+      "Стабильный официальный аккаунт для Smart TV, смартфонов и ПК",
+      "100% официальная гарантия замены на весь срок"
+    ],
+    "advantages_tr": [
+      "En yüksek 4K Ultra HD yayın kalitesi, HDR ve Dolby Atmos desteği",
+      "Özel PIN kodu ile korunan bağımsız ve kesintisiz profil",
+      "Smart TV, telefon ve PC uyumlu resmi ve kararlı hesap",
+      "Tüm süre boyunca %100 resmi değişim garantisi"
+    ],
+    "advantages_de": [
+      "Höchste 4K Ultra HD Streaming-Qualität mit HDR & Dolby Atmos",
+      "Dediziertes Profil geschützt durch eigenen PIN-Code ohne Unterbrechung",
+      "Stabiles offizielles Konto für Smart TVs, Smartphones & PCs",
+      "100% offizielle Ersatzgarantie für die gesamte Laufzeit"
+    ]
+  },
+  {
+    "id": "netflix_3m_prod",
+    "short_id": "netflix_3m",
+    "brand_id": "netflix",
+    "category_id": "stream",
+    "name": "Netflix 4K UHD 3m",
+    "name_ar": "Netflix 4K UHD (3 شهور)",
+    "button_title": "🎬 Netflix 4K (3 شهور) — $1.89 ⚡",
+    "icon_symbol": "🎬",
+    "market_price": 59.99,
+    "our_price": 1.89,
+    "price_egp": 95,
+    "price_sar": 7,
+    "subscription_duration": "3 شهور كاملة",
+    "warranty_duration": "3 شهور ضمان استبدال",
+    "delivery_type": "private_account",
+    "advantages_ar": [
+      "مشاهدة مستمرة بدقة 4K Ultra HD لمدة 3 شهور بدون أي توقف",
+      "بروفايل خاص بك محمي برقم سري PIN مع حفظ قائمة المشاهدة",
+      "دعم الترجمة والدبلجة العربية الكاملة لجميع الأفلام والمسلسلات",
+      "ضمان استبدال فوري 100% طوال 3 شهور"
+    ],
+    "advantages_en": [
+      "Uninterrupted 4K Ultra HD streaming for 3 full months",
+      "Dedicated private profile with PIN lock & personal watchlist saved",
+      "Complete multilingual subtitles and multi-audio support",
+      "100% official replacement warranty for 3 months"
+    ],
+    "advantages_es": [
+      "Streaming ininterrumpido en 4K Ultra HD durante 3 meses completos",
+      "Perfil privado con bloqueo PIN y lista de seguimiento personalizada",
+      "Subtítulos y doblaje en español y múltiples idiomas",
+      "Garantía oficial de reemplazo por 3 meses"
+    ],
+    "advantages_fr": [
+      "Streaming 4K Ultra HD ininterrompu pendant 3 mois complets",
+      "Profil privé avec code PIN et liste de favoris personnelle conservée",
+      "Sous-titres et doublages multilingues complets",
+      "Garantie de remplacement officielle de 3 mois"
+    ],
+    "advantages_ru": [
+      "Бесперебойный просмотр в 4K Ultra HD на 3 месяца",
+      "Выделенный профиль с PIN-кодом и сохранением истории просмотров",
+      "Полная поддержка субтитров и русской озвучки",
+      "Официальная гарантия замены на 3 месяца"
+    ],
+    "advantages_tr": [
+      "3 ay boyunca kesintisiz 4K Ultra HD yayın deneyimi",
+      "PIN kilitli özel profil ve kayıtlı kişisel izleme listesi",
+      "Tüm içeriklerde Türkçe dublaj ve altyazı desteği",
+      "3 ay boyunca %100 resmi değişim garantisi"
+    ],
+    "advantages_de": [
+      "Unterbrechungsfreies 4K Ultra HD Streaming für 3 volle Monate",
+      "Dediziertes Profil mit PIN-Sperre & gespeicherter Merkliste",
+      "Vollständige deutsche Tonspuren und Untertitel",
+      "100% offizielle Ersatzgarantie für 3 Monate"
+    ]
+  },
+  {
+    "id": "netflix_6m_prod",
+    "short_id": "netflix_6m",
+    "brand_id": "netflix",
+    "category_id": "stream",
+    "name": "Netflix 4K UHD 6m",
+    "name_ar": "Netflix 4K UHD (6 شهور)",
+    "button_title": "🎬 Netflix 4K (6 شهور) — $2.49 ⚡",
+    "icon_symbol": "🎬",
+    "market_price": 119.99,
+    "our_price": 2.49,
+    "price_egp": 125,
+    "price_sar": 9,
+    "subscription_duration": "6 شهور كاملة",
+    "warranty_duration": "6 شهور ضمان استبدال",
+    "delivery_type": "private_account",
+    "advantages_ar": [
+      "باقة 6 شهور موفرة جداً بجودة 4K Ultra HD الأصلية",
+      "بروفايل خاص مشفر PIN يعمل بسلاسة واستقرار تام",
+      "توفير أكثر من 85% عن الاشتراك الرسمي مع ضمان كامل",
+      "ضمان استبدال رسمي 100% طوال 6 شهور"
+    ],
+    "advantages_en": [
+      "High-value 6-month genuine 4K Ultra HD premium subscription",
+      "Dedicated encrypted PIN profile operating with rock-solid stability",
+      "Over 85% savings compared to standard pricing with full coverage",
+      "100% official replacement warranty for 6 months"
+    ],
+    "advantages_es": [
+      "Suscripción premium de 6 meses en 4K Ultra HD con gran ahorro",
+      "Perfil privado con PIN que funciona con total estabilidad",
+      "Más del 85% de ahorro frente al precio oficial",
+      "Garantía oficial de reemplazo por 6 meses"
+    ],
+    "advantages_fr": [
+      "Abonnement premium 6 mois en 4K Ultra HD très économique",
+      "Profil privé verrouillé par PIN avec stabilité absolue",
+      "Plus de 85% d'économie avec couverture garantie complète",
+      "Garantie de remplacement officielle de 6 mois"
+    ],
+    "advantages_ru": [
+      "Выгодный премиум план на 6 месяцев в качестве 4K Ultra HD",
+      "Выделенный профиль с PIN-кодом и максимальной стабильностью",
+      "Экономия более 85% от официальной цены с полной гарантией",
+      "Официальная гарантия замены на 6 месяцев"
+    ],
+    "advantages_tr": [
+      "Yüksek tasarruflu 6 aylık orijinal 4K Ultra HD abonelik",
+      "Tam kararlılıkla çalışan şifreli özel PIN profili",
+      "Resmi fiyata göre %85'in üzerinde tasarruf ve tam garanti",
+      "6 ay boyunca %100 resmi değişim garantisi"
+    ],
+    "advantages_de": [
+      "Sehr sparsames 6-Monate-Abonnement in echter 4K Ultra HD Qualität",
+      "Dediziertes, PIN-geschütztes Profil mit maximaler Stabilität",
+      "Über 85% Ersparnis gegenüber dem offiziellen Preis",
+      "100% offizielle Ersatzgarantie für 6 Monate"
+    ]
+  },
+  {
+    "id": "netflix_12m_prod",
+    "short_id": "netflix_12m",
+    "brand_id": "netflix",
+    "category_id": "stream",
+    "name": "Netflix 4K UHD 12m",
+    "name_ar": "Netflix 4K UHD (سنة كاملة)",
+    "button_title": "🎬 Netflix 4K (سنة كاملة) — $2.99 ⚡",
+    "icon_symbol": "🎬",
+    "market_price": 239.99,
+    "our_price": 2.99,
+    "price_egp": 150,
+    "price_sar": 11,
+    "subscription_duration": "سنة كاملة (12 شهر)",
+    "warranty_duration": "سنة كاملة ضمان استبدال",
+    "delivery_type": "private_account",
+    "advantages_ar": [
+      "اشتراك سنوي كامل لمشاهدة جميع الأفلام والمسلسلات الحصرية بدقة 4K",
+      "بروفايل خاص دائم طوال العام محمي برمز PIN",
+      "توفير هائل يتجاوز 90% عن سعر الاشتراك السنوي الرسمي",
+      "ضمان استبدال سنوي رسمي شامل 100%"
+    ],
+    "advantages_en": [
+      "Full 1-year annual plan for unlimited 4K Ultra HD movies & series",
+      "Permanent private profile protected by PIN lock all year round",
+      "Massive 90%+ savings vs official annual pricing with zero hassle",
+      "100% comprehensive annual replacement warranty"
+    ],
+    "advantages_es": [
+      "Plan anual de 1 año para películas y series ilimitadas en 4K Ultra HD",
+      "Perfil privado permanente protegido con PIN durante todo el año",
+      "Ahorro masivo superior al 90% frente al precio anual oficial",
+      "Garantía anual completa de reemplazo del 100%"
+    ],
+    "advantages_fr": [
+      "Plan annuel d'un an pour films et séries illimités en 4K Ultra HD",
+      "Profil privé permanent protégé par code PIN toute l'année",
+      "Économie massive de plus de 90% par rapport au prix officiel",
+      "Garantie annuelle de remplacement intégrale 100%"
+    ],
+    "advantages_ru": [
+      "Годовой план на 12 месяцев для фильмов и сериалов в 4K Ultra HD",
+      "Постоянный личный профиль с защитой PIN-кодом круглый год",
+      "Огромная экономия более 90% от официальной годовой цены",
+      "100% комплексная годовая гарантия замены"
+    ],
+    "advantages_tr": [
+      "Sınırsız 4K Ultra HD film ve diziler için 1 yıllık tam plan",
+      "Yıl boyunca PIN kilidiyle korunan kalıcı özel profil",
+      "Resmi yıllık fiyata göre %90'ın üzerinde devasa tasarruf",
+      "1 yıl boyunca kapsamlı %100 resmi garanti"
+    ],
+    "advantages_de": [
+      "Vollständiges 1-Jahres-Abonnement für 4K Ultra HD Filme & Serien",
+      "Dauerhaftes privates Profil mit PIN-Sperre das ganze Jahr über",
+      "Über 90% Ersparnis gegenüber dem offiziellen Jahrespreis",
+      "100% umfassende Jahres-Ersatzgarantie"
+    ]
+  },
+  {
+    "id": "spotify_1m_prod",
+    "short_id": "spotify_1m",
+    "brand_id": "spotify",
+    "category_id": "stream",
+    "name": "Spotify Premium 1m",
+    "name_ar": "Spotify Premium (شهر كامل)",
+    "button_title": "🎵 Spotify (شهر واحد) — $0.49 ⚡",
+    "icon_symbol": "🎵",
+    "market_price": 10.99,
+    "our_price": 0.49,
+    "price_egp": 25,
+    "price_sar": 2,
+    "subscription_duration": "شهر كامل (30 يوم)",
+    "warranty_duration": "شهر كامل ضمان استبدال",
+    "delivery_type": "personal_account",
+    "advantages_ar": [
+      "تفعيل مباشر على حسابك الشخصي مع الاحتفاظ بكافة قوائم التشغيل",
+      "استماع غير محدود بدون إعلانات وبأعلى جودة صوت 320kbps",
+      "إمكانية تحميل الأغاني والاستماع بدون إنترنت (Offline Mode)",
+      "ضمان استبدال رسمي 100% طوال المدة"
+    ],
+    "advantages_en": [
+      "Direct activation on your personal account preserving all playlists",
+      "Ad-free high fidelity streaming at maximum 320kbps audio bitrate",
+      "Offline download support on mobile, tablet, and desktop",
+      "100% official replacement warranty for the entire period"
+    ],
+    "advantages_es": [
+      "Activación en tu cuenta personal conservando todas tus listas de reproducción",
+      "Música sin anuncios en máxima calidad de audio 320kbps",
+      "Descargas para escuchar sin conexión a internet",
+      "Garantía oficial de reemplazo del 100%"
+    ],
+    "advantages_fr": [
+      "Activation sur votre compte personnel en conservant vos playlists",
+      "Écoute sans publicité en qualité audio maximale 320kbps",
+      "Téléchargement hors-ligne sur tous vos appareils",
+      "Garantie de remplacement officielle 100%"
+    ],
+    "advantages_ru": [
+      "Прямая активация на личный аккаунт с сохранением всех плейлистов",
+      "Прослушивание без рекламы в максимальном качестве 320 кбит/с",
+      "Скачивание музыки для прослушивания офлайн",
+      "100% официальная гарантия замены на весь срок"
+    ],
+    "advantages_tr": [
+      "Tüm çalma listeleriniz korunarak kişisel hesabınıza aktivasyon",
+      "En yüksek 320kbps ses kalitesinde reklamsız müzik dinleme",
+      "Çevrimdışı (Offline) dinleme için müzik indirme desteği",
+      "Tüm süre boyunca %100 resmi değişim garantisi"
+    ],
+    "advantages_de": [
+      "Direkte Aktivierung auf persönlichem Konto unter Beibehaltung aller Playlists",
+      "Werbefreies Musik-Streaming in höchster 320kbps Audioqualität",
+      "Offline-Download auf allen Geräten",
+      "100% offizielle Ersatzgarantie für die gesamte Laufzeit"
+    ]
+  },
+  {
+    "id": "spotify_3m_prod",
+    "short_id": "spotify_3m",
+    "brand_id": "spotify",
+    "category_id": "stream",
+    "name": "Spotify Premium 3m",
+    "name_ar": "Spotify Premium (3 شهور)",
+    "button_title": "🎵 Spotify (3 شهور) — $0.99 ⚡",
+    "icon_symbol": "🎵",
+    "market_price": 32.99,
+    "our_price": 0.99,
+    "price_egp": 50,
+    "price_sar": 4,
+    "subscription_duration": "3 شهور كاملة",
+    "warranty_duration": "3 شهور ضمان استبدال",
+    "delivery_type": "personal_account",
+    "advantages_ar": [
+      "3 شهور استماع متواصل بدون إعلانات وبأعلى نقاء صوتي",
+      "تخطي غير محدود للأغاني وتشغيل أي تراك تريده",
+      "تفعيل رسمي على حسابك أو حساب جاهز مع ضمان كامل",
+      "ضمان استبدال فوري 100% طوال 3 شهور"
+    ],
+    "advantages_en": [
+      "3 months of uninterrupted ad-free high fidelity streaming",
+      "Unlimited skips and on-demand playback for all tracks",
+      "Official activation with full warranty protection",
+      "100% official replacement warranty for 3 months"
+    ],
+    "advantages_es": [
+      "3 meses de música ininterrumpida sin anuncios en máxima calidad",
+      "Saltos de canciones ilimitados y reproducción bajo demanda",
+      "Activación oficial con cobertura y garantía total",
+      "Garantía oficial de reemplazo por 3 meses"
+    ],
+    "advantages_fr": [
+      "3 mois de streaming musical ininterrompu sans publicité",
+      "Sauts de pistes illimités et lecture à la demande",
+      "Activation officielle avec couverture garantie intégrale",
+      "Garantie de remplacement officielle de 3 mois"
+    ],
+    "advantages_ru": [
+      "3 месяца непрерывной музыки без рекламы в максимальном качестве",
+      "Безлимитный пропуск треков и воспроизведение по запросу",
+      "Официальная активация с полной гарантией",
+      "Официальная гарантия замены на 3 месяца"
+    ],
+    "advantages_tr": [
+      "3 ay boyunca en yüksek kalitede kesintisiz reklamsız müzik",
+      "Sınırsız şarkı atlama ve istediğin parçayı anında çalma",
+      "Tam garanti korumasıyla resmi aktivasyon",
+      "3 ay boyunca %100 resmi değişim garantisi"
+    ],
+    "advantages_de": [
+      "3 Monate unterbrechungsfreies werbefreies Streaming in Spitzenqualität",
+      "Unbegrenztes Überspringen von Titeln & On-Demand-Wiedergabe",
+      "Offizielle Aktivierung mit vollem Garantieschutz",
+      "100% offizielle Ersatzgarantie für 3 Monate"
+    ]
+  },
+  {
+    "id": "spotify_6m_prod",
+    "short_id": "spotify_6m",
+    "brand_id": "spotify",
+    "category_id": "stream",
+    "name": "Spotify Premium 6m",
+    "name_ar": "Spotify Premium (6 شهور)",
+    "button_title": "🎵 Spotify (6 شهور) — $1.69 ⚡",
+    "icon_symbol": "🎵",
+    "market_price": 65.99,
+    "our_price": 1.69,
+    "price_egp": 85,
+    "price_sar": 6,
+    "subscription_duration": "6 شهور كاملة",
+    "warranty_duration": "6 شهور ضمان استبدال",
+    "delivery_type": "personal_account",
+    "advantages_ar": [
+      "باقة 6 شهور موفرة جداً بجودة Extreme Audio 320kbps",
+      "تحميل ملايين الأغاني والبودكاست للاستماع في السفر وبدون نت",
+      "توفير يتجاوز 85% عن السعر الرسمي مع استقرار تام",
+      "ضمان استبدال رسمي 100% طوال 6 شهور"
+    ],
+    "advantages_en": [
+      "High-value 6-month plan with Extreme Audio 320kbps bitrate",
+      "Download millions of songs and podcasts for travel & offline use",
+      "Over 85% savings compared to standard subscription price",
+      "100% official replacement warranty for 6 months"
+    ],
+    "advantages_es": [
+      "Plan de 6 meses muy económico con calidad Extreme Audio 320kbps",
+      "Descarga millones de canciones y podcasts para escuchar sin internet",
+      "Más del 85% de ahorro frente al precio oficial",
+      "Garantía oficial de reemplazo por 6 meses"
+    ],
+    "advantages_fr": [
+      "Plan 6 mois très économique avec qualité Extreme Audio 320kbps",
+      "Téléchargez des millions de titres et podcasts pour écoute hors-ligne",
+      "Plus de 85% d'économie par rapport au prix officiel",
+      "Garantie de remplacement officielle de 6 mois"
+    ],
+    "advantages_ru": [
+      "Выгодный план на 6 месяцев с качеством Extreme Audio 320 кбит/с",
+      "Скачивание миллионов треков и подкастов для поездок офлайн",
+      "Экономия более 85% от официальной цены подписки",
+      "Официальная гарантия замены на 6 месяцев"
+    ],
+    "advantages_tr": [
+      "Extreme Audio 320kbps ses kalitesiyle 6 aylık avantajlı paket",
+      "Seyahat ve internetsiz dinleme için milyonlarca şarkı ve podcast indirme",
+      "Resmi fiyata göre %85'in üzerinde tasarruf ve tam kararlılık",
+      "6 ay boyunca %100 resmi değişim garantisi"
+    ],
+    "advantages_de": [
+      "Sehr sparsamer 6-Monate-Plan mit Extreme Audio 320kbps Qualität",
+      "Millionen Songs & Podcasts herunterladen für Offline-Nutzung",
+      "Über 85% Ersparnis gegenüber dem Standardpreis",
+      "100% offizielle Ersatzgarantie für 6 Monate"
+    ]
+  },
+  {
+    "id": "spotify_12m_prod",
+    "short_id": "spotify_12m",
+    "brand_id": "spotify",
+    "category_id": "stream",
+    "name": "Spotify Premium 12m",
+    "name_ar": "Spotify Premium (سنة كاملة)",
+    "button_title": "🎵 Spotify (سنة كاملة) — $2.49 ⚡",
+    "icon_symbol": "🎵",
+    "market_price": 131.99,
+    "our_price": 2.49,
+    "price_egp": 125,
+    "price_sar": 9,
+    "subscription_duration": "سنة كاملة (12 شهر)",
+    "warranty_duration": "سنة كاملة ضمان استبدال",
+    "delivery_type": "personal_account",
+    "advantages_ar": [
+      "اشتراك سنوي كامل ومستقر طوال 12 شهراً بدون أي انقطاع",
+      "تفعيل على حسابك الشخصي مع الاحتفاظ بجميع أغانيك وقوائمك",
+      "توفير هائل يتجاوز 88% عن السعر السنوي الرسمي",
+      "ضمان استبدال سنوي رسمي شامل 100%"
+    ],
+    "advantages_en": [
+      "Full 1-year uninterrupted annual subscription for 12 months",
+      "Direct personal account activation preserving all your playlists",
+      "Massive 88%+ savings vs standard annual retail subscription",
+      "100% comprehensive annual replacement warranty"
+    ],
+    "advantages_es": [
+      "Suscripción anual completa e ininterrumpida de 1 año",
+      "Activación en tu cuenta personal conservando todas tus canciones",
+      "Ahorro masivo superior al 88% frente al precio anual oficial",
+      "Garantía anual completa de reemplazo del 100%"
+    ],
+    "advantages_fr": [
+      "Abonnement annuel complet ininterrompu d'un an sur 12 mois",
+      "Activation sur compte personnel en conservant toutes vos playlists",
+      "Économie massive de plus de 88% par rapport au prix officiel",
+      "Garantie annuelle de remplacement intégrale 100%"
+    ],
+    "advantages_ru": [
+      "Годовая подписка на 12 месяцев без прерываний",
+      "Прямая активация на личный аккаунт с сохранением всех треков",
+      "Огромная экономия более 88% от официальной годовой цены",
+      "100% комплексная годовая гарантия замены"
+    ],
+    "advantages_tr": [
+      "12 ay boyunca kesintisiz tam 1 yıllık abonelik",
+      "Tüm şarkılarınız ve listeleriniz korunarak kişisel hesabınıza aktivasyon",
+      "Resmi yıllık fiyata göre %88'in üzerinde devasa tasarruf",
+      "1 yıl boyunca kapsamlı %100 resmi garanti"
+    ],
+    "advantages_de": [
+      "Vollständiges 1-Jahres-Abonnement ohne Unterbrechung für 12 Monate",
+      "Aktivierung auf persönlichem Konto unter Beibehaltung aller Playlists",
+      "Über 88% Ersparnis gegenüber dem regulären Jahrespreis",
+      "100% umfassende Jahres-Ersatzgarantie"
+    ]
+  },
+  {
+    "id": "youtube_1m_prod",
+    "short_id": "youtube_1m",
+    "brand_id": "youtube",
+    "category_id": "stream",
+    "name": "YouTube Premium 1m",
+    "name_ar": "YouTube Premium (شهر كامل)",
+    "button_title": "▶️ YouTube Premium (شهر) — $0.49 ⚡",
+    "icon_symbol": "▶️",
+    "market_price": 13.99,
+    "our_price": 0.49,
+    "price_egp": 25,
+    "price_sar": 2,
+    "subscription_duration": "شهر كامل (30 يوم)",
+    "warranty_duration": "شهر كامل ضمان استبدال",
+    "delivery_type": "personal_account",
+    "advantages_ar": [
+      "تفعيل رسمي على إيميلك الشخصي (Google Account) بدون كلمة مرور",
+      "مشاهدة خالية تماماً من الإعلانات على جميع أجهزتك وشاشتك الذكية",
+      "تشغيل في الخلفية مع قفل الشاشة واشتراك YouTube Music Premium كامل",
+      "ضمان استبدال رسمي 100% طوال المدة"
+    ],
+    "advantages_en": [
+      "Official activation on your personal Google Account without password",
+      "Completely ad-free video playback across all devices and Smart TVs",
+      "Background & lock-screen playback plus full YouTube Music Premium",
+      "100% official replacement warranty for the entire period"
+    ],
+    "advantages_es": [
+      "Activación oficial en tu cuenta de Google sin compartir contraseña",
+      "Reproducción de video 100% sin anuncios en todos tus dispositivos",
+      "Reproducción en segundo plano e incluye YouTube Music Premium",
+      "Garantía oficial de reemplazo del 100%"
+    ],
+    "advantages_fr": [
+      "Activation officielle sur votre compte Google sans mot de passe",
+      "Lecture vidéo 100% sans publicité sur tous vos écrans et Smart TV",
+      "Lecture en arrière-plan et YouTube Music Premium inclus",
+      "Garantie de remplacement officielle 100%"
+    ],
+    "advantages_ru": [
+      "Официальная активация на личный Google аккаунт без пароля",
+      "Просмотр видео без рекламы на всех устройствах и Smart TV",
+      "Фоновое воспроизведение с выключенным экраном и YouTube Music Premium",
+      "100% официальная гарантия замены на весь срок"
+    ],
+    "advantages_tr": [
+      "Şifre olmadan kişisel Google hesabınıza resmi aktivasyon",
+      "Tüm cihazlarda ve Smart TV'lerde reklamsız video deneyimi",
+      "Arka planda oynatma ve eksiksiz YouTube Music Premium dahil",
+      "Tüm süre boyunca %100 resmi değişim garantisi"
+    ],
+    "advantages_de": [
+      "Offizielle Aktivierung auf persönlichem Google-Konto ohne Passwort",
+      "Vollständig werbefreies Video-Streaming auf allen Geräten & Smart TVs",
+      "Hintergrundwiedergabe bei gesperrtem Bildschirm + YouTube Music Premium",
+      "100% offizielle Ersatzgarantie für die gesamte Laufzeit"
+    ]
+  },
+  {
+    "id": "youtube_3m_prod",
+    "short_id": "youtube_3m",
+    "brand_id": "youtube",
+    "category_id": "stream",
+    "name": "YouTube Premium 3m",
+    "name_ar": "YouTube Premium (3 شهور)",
+    "button_title": "▶️ YouTube Premium (3 شهور) — $0.99 ⚡",
+    "icon_symbol": "▶️",
+    "market_price": 41.99,
+    "our_price": 0.99,
+    "price_egp": 50,
+    "price_sar": 4,
+    "subscription_duration": "3 شهور كاملة",
+    "warranty_duration": "3 شهور ضمان استبدال",
+    "delivery_type": "personal_account",
+    "advantages_ar": [
+      "3 شهور مشاهدة متواصلة بدون أي إعلانات مزعجة نهائياً",
+      "تحميل الفيديوهات والأغاني لمشاهدتها بدون اتصال بالإنترنت",
+      "تفعيل رسمي وآمن 100% على حساب جوجل الخاص بك",
+      "ضمان استبدال فوري 100% طوال 3 شهور"
+    ],
+    "advantages_en": [
+      "3 months of uninterrupted ad-free video streaming",
+      "Offline video and music downloads on mobile and tablet devices",
+      "100% safe & official activation on your personal Google account",
+      "100% official replacement warranty for 3 months"
+    ],
+    "advantages_es": [
+      "3 meses de videos sin anuncios molestos e interrupciones",
+      "Descarga videos y música para verlos sin conexión a internet",
+      "Activación 100% segura y oficial en tu cuenta de Google",
+      "Garantía oficial de reemplazo por 3 meses"
+    ],
+    "advantages_fr": [
+      "3 mois de streaming vidéo sans aucune publicité gênante",
+      "Téléchargement de vidéos et musiques pour visionnage hors-ligne",
+      "Activation 100% sûre et officielle sur votre compte Google",
+      "Garantie de remplacement officielle de 3 mois"
+    ],
+    "advantages_ru": [
+      "3 месяца непрерывного просмотра без назойливой рекламы",
+      "Скачивание видео и музыки для просмотра без интернета",
+      "100% безопасная и официальная активация на ваш Google аккаунт",
+      "Официальная гарантия замены на 3 месяца"
+    ],
+    "advantages_tr": [
+      "3 ay boyunca kesintisiz ve can sıkıcı reklamlardan uzak video keyfi",
+      "İnternetsiz izlemek için video ve müzik indirme desteği",
+      "Kişisel Google hesabınızda %100 güvenli ve resmi aktivasyon",
+      "3 ay boyunca %100 resmi değişim garantisi"
+    ],
+    "advantages_de": [
+      "3 Monate werbefreies Video-Streaming ohne Unterbrechungen",
+      "Video- und Musik-Downloads für die Offline-Nutzung",
+      "100% sichere und offizielle Aktivierung auf Google-Konto",
+      "100% offizielle Ersatzgarantie für 3 Monate"
+    ]
+  },
+  {
+    "id": "youtube_6m_prod",
+    "short_id": "youtube_6m",
+    "brand_id": "youtube",
+    "category_id": "stream",
+    "name": "YouTube Premium 6m",
+    "name_ar": "YouTube Premium (6 شهور)",
+    "button_title": "▶️ YouTube Premium (6 شهور) — $1.69 ⚡",
+    "icon_symbol": "▶️",
+    "market_price": 83.99,
+    "our_price": 1.69,
+    "price_egp": 85,
+    "price_sar": 6,
+    "subscription_duration": "6 شهور كاملة",
+    "warranty_duration": "6 شهور ضمان استبدال",
+    "delivery_type": "personal_account",
+    "advantages_ar": [
+      "باقة 6 شهور موفرة جداً بدون إعلانات مع YouTube Music",
+      "تشغيل الصوت في الخلفية أثناء تصفح التطبيقات الأخرى وأثناء إغلاق الشاشة",
+      "توفير يتجاوز 88% عن السعر الرسمي مع استقرار تام",
+      "ضمان استبدال رسمي 100% طوال 6 شهور"
+    ],
+    "advantages_en": [
+      "High-value 6-month ad-free plan including YouTube Music Premium",
+      "Background audio playback while using other apps or with screen off",
+      "Over 88% savings compared to standard retail pricing",
+      "100% official replacement warranty for 6 months"
+    ],
+    "advantages_es": [
+      "Plan de 6 meses muy económico sin anuncios e incluye YouTube Music",
+      "Reproducción en segundo plano con la pantalla apagada",
+      "Más del 88% de ahorro frente al precio oficial",
+      "Garantía oficial de reemplazo por 6 meses"
+    ],
+    "advantages_fr": [
+      "Plan 6 mois sans publicité incluant YouTube Music Premium",
+      "Lecture audio en arrière-plan avec écran verrouillé",
+      "Plus de 88% d'économie par rapport au prix officiel",
+      "Garantie de remplacement officielle de 6 mois"
+    ],
+    "advantages_ru": [
+      "Выгодный план на 6 месяцев без рекламы с YouTube Music",
+      "Фоновое воспроизведение при заблокированном экране",
+      "Экономия более 88% от официальной цены подписки",
+      "Официальная гарантия замены на 6 месяцев"
+    ],
+    "advantages_tr": [
+      "YouTube Music Premium dahil 6 aylık avantajlı reklamsız paket",
+      "Ekran kapalıyken ve diğer uygulamaları kullanırken arka planda oynatma",
+      "Resmi fiyata göre %88'in üzerinde tasarruf ve tam kararlılık",
+      "6 ay boyunca %100 resmi değişim garantisi"
+    ],
+    "advantages_de": [
+      "Sehr sparsamer 6-Monate-Plan inklusive YouTube Music Premium",
+      "Hintergrundwiedergabe bei gesperrtem Bildschirm oder App-Wechsel",
+      "Über 88% Ersparnis gegenüber dem regulären Preis",
+      "100% offizielle Ersatzgarantie für 6 Monate"
+    ]
+  },
+  {
+    "id": "youtube_12m_prod",
+    "short_id": "youtube_12m",
+    "brand_id": "youtube",
+    "category_id": "stream",
+    "name": "YouTube Premium 12m",
+    "name_ar": "YouTube Premium (سنة كاملة)",
+    "button_title": "▶️ YouTube Premium (سنة) — $2.49 ⚡",
+    "icon_symbol": "▶️",
+    "market_price": 167.99,
+    "our_price": 2.49,
+    "price_egp": 125,
+    "price_sar": 9,
+    "subscription_duration": "سنة كاملة (12 شهر)",
+    "warranty_duration": "سنة كاملة ضمان استبدال",
+    "delivery_type": "personal_account",
+    "advantages_ar": [
+      "اشتراك سنوي كامل ومستقر طوال 12 شهراً بدون أي إعلانات",
+      "تفعيل على إيميلك الشخصي مباشرة مع الاحتفاظ باشتراكات القنوات والمفضلة",
+      "توفير هائل يتجاوز 90% عن السعر الرسمي",
+      "ضمان استبدال سنوي رسمي شامل 100%"
+    ],
+    "advantages_en": [
+      "Full 1-year annual ad-free subscription for 12 uninterrupted months",
+      "Direct activation on your personal email preserving all your subscriptions",
+      "Over 90% savings vs official annual retail pricing",
+      "100% comprehensive annual replacement warranty"
+    ],
+    "advantages_es": [
+      "Suscripción anual completa e ininterrumpida de 1 año sin anuncios",
+      "Activación en tu correo personal conservando todas tus suscripciones",
+      "Ahorro masivo superior al 90% frente al precio anual oficial",
+      "Garantía anual completa de reemplazo del 100%"
+    ],
+    "advantages_fr": [
+      "Abonnement annuel complet ininterrompu d'un an sans publicité",
+      "Activation directe sur e-mail personnel en conservant vos chaînes",
+      "Économie massive de plus de 90% par rapport au prix officiel",
+      "Garantie annuelle de remplacement intégrale 100%"
+    ],
+    "advantages_ru": [
+      "Годовая подписка на 12 месяцев без рекламы без прерываний",
+      "Прямая активация на личную почту с сохранением всех подписок",
+      "Огромная экономия более 90% от официальной годовой цены",
+      "100% комплексная годовая гарантия замены"
+    ],
+    "advantages_tr": [
+      "12 ay boyunca kesintisiz tam 1 yıllık reklamsız abonelik",
+      "Tüm kanal abonelikleriniz korunarak kişisel e-postanıza aktivasyon",
+      "Resmi fiyata göre %90'ın üzerinde devasa tasarruf",
+      "1 yıl boyunca kapsamlı %100 resmi garanti"
+    ],
+    "advantages_de": [
+      "Vollständiges 1-Jahres-Abonnement ohne Werbung für 12 Monate",
+      "Direkte Aktivierung auf persönlicher E-Mail mit allen Kanal-Abos",
+      "Über 90% Ersparnis gegenüber dem offiziellen Jahrespreis",
+      "100% umfassende Jahres-Ersatzgarantie"
+    ]
+  },
+  {
+    "id": "disney_1m_prod",
+    "short_id": "disney_1m",
+    "brand_id": "disney",
+    "category_id": "stream",
+    "name": "Disney+ Premium 1m",
+    "name_ar": "Disney+ Premium (شهر كامل)",
+    "button_title": "⭐ Disney+ (شهر واحد) — $0.89 ⚡",
+    "icon_symbol": "⭐",
+    "market_price": 13.99,
+    "our_price": 0.89,
+    "price_egp": 45,
+    "price_sar": 3,
+    "subscription_duration": "شهر كامل (30 يوم)",
+    "warranty_duration": "شهر كامل ضمان استبدال",
+    "delivery_type": "private_account",
+    "advantages_ar": [
+      "أفلام ومسلسلات Disney و Pixar و Marvel و Star Wars بدقة 4K UHD",
+      "دعم الدبلجة والترجمة العربية وصوت IMAX Enhanced السينمائي",
+      "بروفايل خاص مشفر برمز PIN مع ضمان استبدال فوري",
+      "ضمان استبدال رسمي 100%"
+    ],
+    "advantages_en": [
+      "Disney, Pixar, Marvel, Star Wars & National Geographic in 4K UHD",
+      "IMAX Enhanced cinematic audio with full multilingual audio & subtitles",
+      "Dedicated PIN-protected private profile with instant replacement warranty",
+      "100% official replacement warranty for the full month"
+    ],
+    "advantages_es": [
+      "Películas y series de Disney, Pixar, Marvel y Star Wars en 4K UHD",
+      "Audio cinematográfico IMAX Enhanced y subtítulos completos",
+      "Perfil privado protegido con PIN y garantía de reemplazo",
+      "Garantía oficial de reemplazo del 100%"
+    ],
+    "advantages_fr": [
+      "Films et séries Disney, Pixar, Marvel et Star Wars en 4K UHD",
+      "Son cinéma IMAX Enhanced avec doublages et sous-titres complets",
+      "Profil privé verrouillé par PIN avec garantie de remplacement",
+      "Garantie de remplacement officielle 100%"
+    ],
+    "advantages_ru": [
+      "Фильмы и сериалы Disney, Pixar, Marvel и Star Wars в 4K UHD",
+      "Кинематографичный звук IMAX Enhanced с полным переводом",
+      "Выделенный профиль с PIN-кодом и гарантией замены",
+      "100% официальная гарантия замены на месяц"
+    ],
+    "advantages_tr": [
+      "4K UHD kalitesinde Disney, Pixar, Marvel ve Star Wars içerikleri",
+      "IMAX Enhanced sinematik ses ve tam dublaj/altyazı desteği",
+      "PIN korumalı özel profil ve anında değişim garantisi",
+      "Tam 1 ay boyunca %100 resmi değişim garantisi"
+    ],
+    "advantages_de": [
+      "Disney, Pixar, Marvel, Star Wars & Nat Geo in 4K UHD",
+      "IMAX Enhanced Kinosound mit vollständiger Synchronisation",
+      "Dediziertes PIN-geschütztes Profil mit Ersatzgarantie",
+      "100% offizielle Ersatzgarantie für den Monat"
+    ]
+  },
+  {
+    "id": "disney_12m_prod",
+    "short_id": "disney_12m",
+    "brand_id": "disney",
+    "category_id": "stream",
+    "name": "Disney+ Premium 12m",
+    "name_ar": "Disney+ Premium (سنة كاملة)",
+    "button_title": "⭐ Disney+ (سنة كاملة) — $2.49 ⚡",
+    "icon_symbol": "⭐",
+    "market_price": 139.99,
+    "our_price": 2.49,
+    "price_egp": 125,
+    "price_sar": 9,
+    "subscription_duration": "سنة كاملة (12 شهر)",
+    "warranty_duration": "سنة كاملة ضمان استبدال",
+    "delivery_type": "private_account",
+    "advantages_ar": [
+      "اشتراك سنوي كامل لمشاهدة جميع عوالم ديزني ومارفل وناشيونال جيوغرافيك",
+      "بروفايل خاص دائم ومستقر طوال 12 شهراً",
+      "توفير يتجاوز 85% عن السعر الرسمي مع دعم فني مستمر",
+      "ضمان استبدال سنوي شامل 100%"
+    ],
+    "advantages_en": [
+      "Full 1-year annual subscription for all Disney, Marvel & Star Wars universes",
+      "Permanent private profile operating with total stability for 12 months",
+      "Over 85% savings vs official annual retail subscription",
+      "100% comprehensive annual replacement warranty"
+    ],
+    "advantages_es": [
+      "Suscripción anual de 1 año para todos los universos de Disney y Marvel",
+      "Perfil privado permanente con total estabilidad durante 12 meses",
+      "Más del 85% de ahorro frente al precio anual oficial",
+      "Garantía anual completa de reemplazo del 100%"
+    ],
+    "advantages_fr": [
+      "Abonnement annuel d'un an pour tous les univers Disney et Marvel",
+      "Profil privé permanent d'une stabilité totale pendant 12 mois",
+      "Plus de 85% d'économie par rapport au prix officiel",
+      "Garantie annuelle de remplacement intégrale 100%"
+    ],
+    "advantages_ru": [
+      "Годовая подписка на 12 месяцев на все вселенные Disney и Marvel",
+      "Постоянный личный профиль со стабильной работой целый год",
+      "Экономия более 85% от официальной годовой цены",
+      "100% комплексная годовая гарантия замены"
+    ],
+    "advantages_tr": [
+      "Tüm Disney, Marvel ve Star Wars evrenleri için 1 yıllık tam abonelik",
+      "12 ay boyunca tam kararlılıkla çalışan kalıcı özel profil",
+      "Resmi yıllık fiyata göre %85'in üzerinde tasarruf",
+      "1 yıl boyunca kapsamlı %100 resmi garanti"
+    ],
+    "advantages_de": [
+      "Vollständiges 1-Jahres-Abonnement für alle Disney & Marvel Universen",
+      "Dauerhaftes privates Profil mit maximaler Stabilität für 12 Monate",
+      "Über 85% Ersparnis gegenüber dem regulären Jahrespreis",
+      "100% umfassende Jahres-Ersatzgarantie"
+    ]
+  },
+  {
+    "id": "nordvpn_12m_prod",
+    "short_id": "nordvpn_12m",
+    "brand_id": "nordvpn",
+    "category_id": "vpn",
+    "name": "NordVPN Complete 12m",
+    "name_ar": "NordVPN Complete (سنة كاملة)",
+    "button_title": "🛡️ NordVPN (سنة كاملة) — $1.89 ⚡",
+    "icon_symbol": "🛡️",
+    "market_price": 68,
+    "our_price": 1.89,
+    "price_egp": 95,
+    "price_sar": 7,
+    "subscription_duration": "سنة كاملة (12 شهر)",
+    "warranty_duration": "سنة كاملة ضمان استبدال",
+    "delivery_type": "vpn_credentials",
+    "advantages_ar": [
+      "خوادم فائقة السرعة مع تشفير عسكري بروتوكول NordLynx / WireGuard",
+      "تجاوز الحجب الجغرافي وفتح خدمات البث العالمية (Netflix, Hulu, BBC iPlayer)",
+      "حماية من التهديدات Threat Protection وحظر الإعلانات والبرمجيات الخبيثة",
+      "ضمان استبدال سنوي رسمي 100%"
+    ],
+    "advantages_en": [
+      "Ultra-fast dedicated servers powered by military-grade NordLynx protocol",
+      "Bypass geo-restrictions and stream global media at maximum speed",
+      "Threat Protection suite with ad-blocker & malware defense",
+      "100% comprehensive annual replacement warranty"
+    ],
+    "advantages_es": [
+      "Servidores ultrarrápidos con protocolo militar NordLynx / WireGuard",
+      "Desbloqueo geográfico y streaming global a máxima velocidad",
+      "Protección contra amenazas con bloqueador de anuncios y malware",
+      "Garantía anual completa de reemplazo del 100%"
+    ],
+    "advantages_fr": [
+      "Serveurs ultra-rapides avec protocole militaire NordLynx",
+      "Déblocage géographique et streaming mondial à pleine vitesse",
+      "Protection anti-menaces avec bloqueur de pubs et de malwares",
+      "Garantie annuelle de remplacement intégrale 100%"
+    ],
+    "advantages_ru": [
+      "Сверхскоростные серверы с военным шифрованием NordLynx",
+      "Обход любых блокировок и просмотр мирового стриминга на полной скорости",
+      "Защита от угроз Threat Protection с блокировкой рекламы и вирусов",
+      "100% комплексная годовая гарантия замены"
+    ],
+    "advantages_tr": [
+      "Askeri düzeyde NordLynx protokolüyle ultra hızlı sunucular",
+      "Coğrafi engelleri aşma ve maksimum hızda küresel yayın izleme",
+      "Reklam ve kötü amaçlı yazılım engelleyicili Tehdit Koruması",
+      "1 yıl boyunca kapsamlı %100 resmi garanti"
+    ],
+    "advantages_de": [
+      "Ultraschnelle Server mit militärischem NordLynx-Protokoll",
+      "Geoblocking umgehen & weltweites Streaming mit voller Bandbreite",
+      "Bedrohungsschutz-Suite mit Werbe- & Malware-Blocker",
+      "100% umfassende Jahres-Ersatzgarantie"
+    ]
+  },
+  {
+    "id": "nordvpn_24m_prod",
+    "short_id": "nordvpn_24m",
+    "brand_id": "nordvpn",
+    "category_id": "vpn",
+    "name": "NordVPN Complete 2 Years",
+    "name_ar": "NordVPN Complete (سنتين كاملتين)",
+    "button_title": "🛡️ NordVPN (سنتين) — $2.89 ⚡",
+    "icon_symbol": "🛡️",
+    "market_price": 119,
+    "our_price": 2.89,
+    "price_egp": 145,
+    "price_sar": 11,
+    "subscription_duration": "سنتين كاملتين (24 شهر)",
+    "warranty_duration": "سنتين ضمان استبدال كامل",
+    "delivery_type": "vpn_credentials",
+    "advantages_ar": [
+      "حماية قصوى وتشفير عسكري لمدة 24 شهراً متواصلة",
+      "أكثر من 6,400 خادم في 111 دولة مع سياسة صارمة لعدم الاحتفاظ بالسجلات",
+      "توفير يتجاوز 90% مع ضمان استبدال رسمي طوال السنتين",
+      "ضمان استبدال شامل لمدة سنتين 100%"
+    ],
+    "advantages_en": [
+      "24 months of continuous military-grade encryption and privacy",
+      "6,400+ servers across 111 countries with strict audited No-Logs policy",
+      "Over 90% savings with official replacement coverage for 2 full years",
+      "100% full 2-year replacement warranty"
+    ],
+    "advantages_es": [
+      "24 meses de privacidad y cifrado militar continuo",
+      "Más de 6,400 servidores en 111 países con política de cero registros",
+      "Más del 90% de ahorro con garantía oficial por 2 años",
+      "Garantía completa de reemplazo por 2 años del 100%"
+    ],
+    "advantages_fr": [
+      "24 mois de confidentialité et de chiffrement militaire continu",
+      "Plus de 6 400 serveurs dans 111 pays avec politique No-Logs stricte",
+      "Plus de 90% d'économie avec garantie officielle sur 2 ans complets",
+      "Garantie de remplacement intégrale de 2 ans 100%"
+    ],
+    "advantages_ru": [
+      "24 месяца непрерывного военного шифрования и приватности",
+      "Более 6 400 серверов в 111 странах со строгой политикой без логов",
+      "Экономия более 90% с официальной гарантией на 2 года",
+      "100% полная гарантия замены на 2 года"
+    ],
+    "advantages_tr": [
+      "24 ay boyunca kesintisiz askeri düzeyde şifreleme ve gizlilik",
+      "111 ülkede 6.400+ sunucu ve katı sıfır kayıt (No-Logs) politikası",
+      "Tam 2 yıl boyunca resmi garanti ile %90'ın üzerinde tasarruf",
+      "2 yıl boyunca eksiksiz %100 değişim garantisi"
+    ],
+    "advantages_de": [
+      "24 Monate kontinuierliche militärische Verschlüsselung & Privatsphäre",
+      "Über 6.400 Server in 111 Ländern mit strenger No-Logs-Richtlinie",
+      "Über 90% Ersparnis mit vollem Ersatzschutz für 2 Jahre",
+      "100% volle 2-Jahres-Ersatzgarantie"
+    ]
+  },
+  {
+    "id": "surfshark_12m_prod",
+    "short_id": "surfshark_12m",
+    "brand_id": "surfshark",
+    "category_id": "vpn",
+    "name": "Surfshark One VPN 12m",
+    "name_ar": "Surfshark One VPN (سنة كاملة)",
+    "button_title": "🦈 Surfshark (سنة كاملة) — $1.69 ⚡",
+    "icon_symbol": "🦈",
+    "market_price": 59.88,
+    "our_price": 1.69,
+    "price_egp": 85,
+    "price_sar": 6,
+    "subscription_duration": "سنة كاملة (12 شهر)",
+    "warranty_duration": "سنة كاملة ضمان استبدال",
+    "delivery_type": "vpn_credentials",
+    "advantages_ar": [
+      "اتصال غير محدود لجميع أجهزتك Unlimited Devices في نفس الوقت",
+      "بروتوكول WireGuard فائق السرعة وخوادم 100% تعمل بذاكرة RAM فقط",
+      "ميزة CleanWeb لحجب الإعلانات والتتبع وبرامج التجسس",
+      "ضمان استبدال سنوي رسمي 100%"
+    ],
+    "advantages_en": [
+      "Unlimited simultaneous device connections on a single account",
+      "Blazing fast WireGuard protocol with 100% RAM-only servers",
+      "CleanWeb ad-blocker, anti-tracking & spyware defense suite",
+      "100% comprehensive annual replacement warranty"
+    ],
+    "advantages_es": [
+      "Conexiones simultáneas ilimitadas en todos tus dispositivos",
+      "Protocolo WireGuard ultrarrápido con servidores 100% solo RAM",
+      "Bloqueador de anuncios CleanWeb y defensa anti-rastreo",
+      "Garantía anual completa de reemplazo del 100%"
+    ],
+    "advantages_fr": [
+      "Connexions simultanées illimitées sur tous vos appareils",
+      "Protocole WireGuard ultra-rapide avec serveurs 100% RAM",
+      "Bloqueur de publicités CleanWeb et protection anti-traçage",
+      "Garantie annuelle de remplacement intégrale 100%"
+    ],
+    "advantages_ru": [
+      "Безлимитное количество устройств одновременно на одном аккаунте",
+      "Сверхбыстрый протокол WireGuard с серверами на 100% RAM",
+      "CleanWeb блокировщик рекламы, трекеров и вредоносных сайтов",
+      "100% комплексная годовая гарантия замены"
+    ],
+    "advantages_tr": [
+      "Tek hesapta aynı anda sınırsız cihaz bağlantısı (Unlimited Devices)",
+      "Tamamı RAM tabanlı sunucularla ışık hızında WireGuard protokolü",
+      "CleanWeb reklam engelleyici ve casus yazılım koruması",
+      "1 yıl boyunca kapsamlı %100 resmi garanti"
+    ],
+    "advantages_de": [
+      "Unbegrenzte gleichzeitige Geräteverbindungen mit einem Konto",
+      "Blitzschnelles WireGuard-Protokoll mit 100% RAM-Only-Servern",
+      "CleanWeb Werbeblocker, Tracking-Schutz & Spyware-Abwehr",
+      "100% umfassende Jahres-Ersatzgarantie"
+    ]
+  },
+  {
+    "id": "surfshark_24m_prod",
+    "short_id": "surfshark_24m",
+    "brand_id": "surfshark",
+    "category_id": "vpn",
+    "name": "Surfshark One VPN 2 Years",
+    "name_ar": "Surfshark One VPN (سنتين كاملتين)",
+    "button_title": "🦈 Surfshark (سنتين) — $2.69 ⚡",
+    "icon_symbol": "🦈",
+    "market_price": 119.76,
+    "our_price": 2.69,
+    "price_egp": 135,
+    "price_sar": 10,
+    "subscription_duration": "سنتين كاملتين (24 شهر)",
+    "warranty_duration": "سنتين ضمان استبدال كامل",
+    "delivery_type": "vpn_credentials",
+    "advantages_ar": [
+      "حماية شاملة لك ولعائلتك لمدة سنتين على كافة الأجهزة",
+      "أكثر من 3,200 خادم فائق السرعة في 100 دولة",
+      "توفير يتجاوز 90% عن السعر الرسمي مع استقرار تام",
+      "ضمان استبدال رسمي كامل لمدة سنتين 100%"
+    ],
+    "advantages_en": [
+      "Complete 24-month privacy suite for you and all family devices",
+      "3,200+ high-speed servers across 100 countries worldwide",
+      "Over 90% savings compared to standard retail pricing",
+      "100% full 2-year replacement warranty"
+    ],
+    "advantages_es": [
+      "Protección integral de 24 meses para todos los dispositivos familiares",
+      "Más de 3,200 servidores de alta velocidad en 100 países",
+      "Más del 90% de ahorro frente al precio oficial",
+      "Garantía completa de reemplazo por 2 años del 100%"
+    ],
+    "advantages_fr": [
+      "Protection complète de 24 mois pour tous les appareils de la famille",
+      "Plus de 3 200 serveurs haute vitesse dans 100 pays",
+      "Plus de 90% d'économie par rapport au prix officiel",
+      "Garantie de remplacement intégrale de 2 ans 100%"
+    ],
+    "advantages_ru": [
+      "Комплексная защита на 24 месяца для всех устройств семьи",
+      "Более 3 200 скоростных серверов в 100 странах мира",
+      "Экономия более 90% от официальной розничной цены",
+      "100% полная гарантия замены на 2 года"
+    ],
+    "advantages_tr": [
+      "Siz ve tüm ailenizin cihazları için 24 aylık kapsamlı güvenlik",
+      "Dünya genelinde 100 ülkede 3.200'den fazla yüksek hızlı sunucu",
+      "Resmi fiyata göre %90'ın üzerinde devasa tasarruf",
+      "2 yıl boyunca eksiksiz %100 değişim garantisi"
+    ],
+    "advantages_de": [
+      "Komplette 24-Monate-Sicherheitssuite für alle Familiengeräte",
+      "Über 3.200 Highspeed-Server in 100 Ländern weltweit",
+      "Über 90% Ersparnis gegenüber dem Standardpreis",
+      "100% volle 2-Jahres-Ersatzgarantie"
+    ]
+  },
+  {
+    "id": "expressvpn_12m_prod",
+    "short_id": "expressvpn_12m",
+    "brand_id": "expressvpn",
+    "category_id": "vpn",
+    "name": "ExpressVPN Premium 12m",
+    "name_ar": "ExpressVPN Premium (سنة كاملة)",
+    "button_title": "🚀 ExpressVPN (سنة كاملة) — $2.79 ⚡",
+    "icon_symbol": "🚀",
+    "market_price": 99.95,
+    "our_price": 2.79,
+    "price_egp": 140,
+    "price_sar": 10,
+    "subscription_duration": "سنة كاملة (12 شهر)",
+    "warranty_duration": "سنة كاملة ضمان استبدال",
+    "delivery_type": "vpn_credentials",
+    "advantages_ar": [
+      "أعلى سرعة استجابة واستقرار عبر بروتوكول Lightway الحصري",
+      "خوادم فائقة السرعة في 105 دولة حول العالم بدون أي قيود",
+      "تجاوز أقوى أنظمة الحجب وتشفير كامل للبيانات",
+      "ضمان استبدال سنوي رسمي 100%"
+    ],
+    "advantages_en": [
+      "Industry-leading speed & reliability via proprietary Lightway protocol",
+      "Ultra-fast servers in 105 countries worldwide with zero throttling",
+      "Bypasses the toughest geo-firewalls with military grade encryption",
+      "100% comprehensive annual replacement warranty"
+    ],
+    "advantages_es": [
+      "Velocidad y estabilidad líderes con el protocolo exclusivo Lightway",
+      "Servidores ultrarrápidos en 105 países sin límites de ancho de banda",
+      "Supera los bloqueos más estrictos con cifrado de grado militar",
+      "Garantía anual completa de reemplazo del 100%"
+    ],
+    "advantages_fr": [
+      "Vitesse et fiabilité de référence via le protocole exclusif Lightway",
+      "Serveurs ultra-rapides dans 105 pays sans aucun bridage",
+      "Contourne les restrictions les plus strictes avec chiffrement militaire",
+      "Garantie annuelle de remplacement intégrale 100%"
+    ],
+    "advantages_ru": [
+      "Лидирующая скорость и стабильность на протоколе Lightway",
+      "Сверхскоростные серверы в 105 странах без ограничения трафика",
+      "Обход самых жестких блокировок с военным шифрованием",
+      "100% комплексная годовая гарантия замены"
+    ],
+    "advantages_tr": [
+      "Özel Lightway protokolüyle sektör lideri hız ve kararlılık",
+      "Dünya genelinde 105 ülkede hız kısıtlamasız ultra hızlı sunucular",
+      "Askeri düzeyde şifrelemeyle en katı engelleri aşma gücü",
+      "1 yıl boyunca kapsamlı %100 resmi garanti"
+    ],
+    "advantages_de": [
+      "Branchenführende Geschwindigkeit & Stabilität mit Lightway-Protokoll",
+      "Ultraschnelle Server in 105 Ländern ohne Bandbreitenbegrenzung",
+      "Umgeht strengste Blockaden mit militärischer Verschlüsselung",
+      "100% umfassende Jahres-Ersatzgarantie"
+    ]
+  },
+  {
+    "id": "office365_12m_prod",
+    "short_id": "office365_12m",
+    "brand_id": "office365",
+    "category_id": "prod",
+    "name": "Microsoft 365 Pro 12m",
+    "name_ar": "Microsoft 365 / Office Pro (سنة كاملة)",
+    "button_title": "📎 Office 365 (سنة كاملة) — $1.29 ⚡",
+    "icon_symbol": "📎",
+    "market_price": 69.99,
+    "our_price": 1.29,
+    "price_egp": 65,
+    "price_sar": 5,
+    "subscription_duration": "سنة كاملة (12 شهر)",
+    "warranty_duration": "سنة كاملة ضمان استبدال",
+    "delivery_type": "license_key",
+    "advantages_ar": [
+      "أحدث تطبيقات Office الكاملة للكمبيوتر والموبايل (Word, Excel, PowerPoint, Outlook)",
+      "مساحة تخزين سحابية ضخمة 1TB (1000 جيجابايت) على OneDrive الخاص بك",
+      "تفعيل رسمي أصلي يقبل التحديثات المباشرة من Microsoft",
+      "ضمان استبدال سنوي رسمي 100%"
+    ],
+    "advantages_en": [
+      "Full genuine desktop & mobile Office apps (Word, Excel, PowerPoint, Outlook)",
+      "Massive 1TB (1,000 GB) secure personal cloud storage on OneDrive",
+      "Official genuine activation supporting direct updates from Microsoft",
+      "100% comprehensive annual replacement warranty"
+    ],
+    "advantages_es": [
+      "Suite completa de apps de Office para PC y móvil (Word, Excel, PowerPoint)",
+      "1TB (1,000 GB) de almacenamiento seguro en la nube OneDrive",
+      "Activación oficial que recibe actualizaciones directas de Microsoft",
+      "Garantía anual completa de reemplazo del 100%"
+    ],
+    "advantages_fr": [
+      "Applications Office authentiques complètes (Word, Excel, PowerPoint)",
+      "1 To (1 000 Go) de stockage cloud sécurisé sur OneDrive",
+      "Activation officielle avec mises à jour directes de Microsoft",
+      "Garantie annuelle de remplacement intégrale 100%"
+    ],
+    "advantages_ru": [
+      "Полный пакет официальных приложений Office (Word, Excel, PowerPoint)",
+      "1 ТБ (1 000 ГБ) защищенного облачного хранилища OneDrive",
+      "Официальная активация с поддержкой прямых обновлений Microsoft",
+      "100% комплексная годовая гарантия замены"
+    ],
+    "advantages_tr": [
+      "Eksiksiz orijinal Office uygulamaları (Word, Excel, PowerPoint, Outlook)",
+      "OneDrive üzerinde 1TB (1.000 GB) güvenli kişisel bulut depolama",
+      "Microsoft'tan doğrudan güncellemeleri alan resmi orijinal aktivasyon",
+      "1 yıl boyunca kapsamlı %100 resmi garanti"
+    ],
+    "advantages_de": [
+      "Vollständige Original-Office-Apps (Word, Excel, PowerPoint, Outlook)",
+      "1TB (1.000 GB) sicherer persönlicher Cloud-Speicher auf OneDrive",
+      "Offizielle Aktivierung mit direkten Microsoft-Updates",
+      "100% umfassende Jahres-Ersatzgarantie"
+    ]
+  },
+  {
+    "id": "office365_life_prod",
+    "short_id": "office365_life",
+    "brand_id": "office365",
+    "category_id": "prod",
+    "name": "Microsoft Office 2024 Pro Lifetime",
+    "name_ar": "Microsoft Office 2024 Pro (دائم مدى الحياة)",
+    "button_title": "📎 Office 2024 Pro (مدى الحياة) — $2.49 ⚡",
+    "icon_symbol": "📎",
+    "market_price": 249.99,
+    "our_price": 2.49,
+    "price_egp": 125,
+    "price_sar": 9,
+    "subscription_duration": "تفعيل دائم مدى الحياة",
+    "warranty_duration": "ضمان دائم مدى الحياة",
+    "delivery_type": "license_key",
+    "advantages_ar": [
+      "مفتاح ترخيص رقمي أصلي Retail دائم مدى الحياة لنظام Windows أو Mac",
+      "تثبيت وتفعيل رسمي مباشر من موقع Microsoft الرسمي setup.office.com",
+      "ترخيص دائم لا ينتهي ولا يتطلب أي اشتراكات شهرية أو سنوية",
+      "ضمان تفعيل رسمي مدى الحياة 100%"
+    ],
+    "advantages_en": [
+      "Genuine Microsoft Retail digital license key for lifetime validity",
+      "Direct online installation & activation from official setup.office.com",
+      "Permanent non-expiring license with zero recurring subscription fees",
+      "100% lifetime official activation guarantee"
+    ],
+    "advantages_es": [
+      "Clave de licencia digital Retail original de Microsoft de por vida",
+      "Descarga y activación directa desde el sitio oficial setup.office.com",
+      "Licencia permanente sin pagos recurrentes ni cuotas mensuales",
+      "Garantía oficial de activación de por vida del 100%"
+    ],
+    "advantages_fr": [
+      "Clé numérique Microsoft Retail authentique valable à vie",
+      "Téléchargement et activation directe sur setup.office.com officiel",
+      "Licence permanente sans aucun abonnement récurrent",
+      "Garantie d'activation officielle à vie 100%"
+    ],
+    "advantages_ru": [
+      "Официальный лицензионный ключ Microsoft Retail навсегда (Lifetime)",
+      "Установка и активация напрямую с официального сайта setup.office.com",
+      "Пожизненная лицензия без абонентской платы и продлений",
+      "100% пожизненная официальная гарантия активации"
+    ],
+    "advantages_tr": [
+      "Ömür boyu geçerli orijinal Microsoft Retail dijital lisans anahtarı",
+      "Resmi setup.office.com üzerinden doğrudan kurulum ve aktivasyon",
+      "Yinelenen abonelik ücreti olmayan kalıcı lisans",
+      "Ömür boyu %100 resmi aktivasyon garantisi"
+    ],
+    "advantages_de": [
+      "Originaler digitaler Microsoft Retail-Lizenzschlüssel auf Lebenszeit",
+      "Direkte Installation & Aktivierung über offizielles setup.office.com",
+      "Dauerhafte Lizenz ohne wiederkehrende Abogebühren",
+      "100% lebenslange offizielle Aktivierungsgarantie"
+    ]
+  },
+  {
+    "id": "notion_12m_prod",
+    "short_id": "notion_12m",
+    "brand_id": "notion",
+    "category_id": "prod",
+    "name": "Notion Plus + AI 12m",
+    "name_ar": "Notion Plus + Unlimited AI (سنة كاملة)",
+    "button_title": "📝 Notion Plus + AI (سنة) — $2.49 ⚡",
+    "icon_symbol": "📝",
+    "market_price": 120,
+    "our_price": 2.49,
+    "price_egp": 125,
+    "price_sar": 9,
+    "subscription_duration": "سنة كاملة (12 شهر)",
+    "warranty_duration": "سنة كاملة ضمان استبدال",
+    "delivery_type": "personal_account",
+    "advantages_ar": [
+      "مساحات عمل وصفحات وقواعد بيانات غير محدودة لإدارة المشاريع",
+      "استخدام غير محدود لأدوات الذكاء الاصطناعي Notion AI للكتابة والتلخيص والترجمة",
+      "رفع ملفات بلا حدود ودعوة أعضاء الفريق للتعاون المباشر",
+      "ضمان استبدال سنوي رسمي 100%"
+    ],
+    "advantages_en": [
+      "Unlimited blocks, pages and project management databases",
+      "Uncapped Notion AI usage for content writing, summarization & search",
+      "Unlimited file uploads and collaborative team workspace sharing",
+      "100% comprehensive annual replacement warranty"
+    ],
+    "advantages_es": [
+      "Bloques, páginas y bases de datos ilimitadas para gestión de proyectos",
+      "Uso ilimitado de Notion AI para redacción, resúmenes y traducción",
+      "Subida ilimitada de archivos y colaboración en equipo",
+      "Garantía anual completa de reemplazo del 100%"
+    ],
+    "advantages_fr": [
+      "Pages, blocs et bases de données illimités pour gestion de projet",
+      "Utilisation illimitée de Notion AI pour rédaction et résumés",
+      "Téléchargement illimité de fichiers et collaboration d'équipe",
+      "Garantie annuelle de remplacement intégrale 100%"
+    ],
+    "advantages_ru": [
+      "Неограниченные блоки, страницы и базы данных для управления проектами",
+      "Безлимитный Notion AI для написания текстов, саммари и поиска",
+      "Неограниченная загрузка файлов и командная работа",
+      "100% комплексная годовая гарантия замены"
+    ],
+    "advantages_tr": [
+      "Proje yönetimi için sınırsız blok, sayfa ve veritabanı",
+      "Yazma, özetleme ve arama için sınırsız Notion AI kullanımı",
+      "Sınırsız dosya yükleme ve ekip çalışma alanı paylaşımı",
+      "1 yıl boyunca kapsamlı %100 resmi garanti"
+    ],
+    "advantages_de": [
+      "Unbegrenzte Blöcke, Seiten und Projektmanagement-Datenbanken",
+      "Unbegrenzte Notion KI-Nutzung für Textgenerierung & Zusammenfassung",
+      "Unbegrenzter Datei-Upload und Team-Zusammenarbeit",
+      "100% umfassende Jahres-Ersatzgarantie"
+    ]
+  },
+  {
+    "id": "tradingview_1m_prod",
+    "short_id": "tradingview_1m",
+    "brand_id": "tradingview",
+    "category_id": "prod",
+    "name": "TradingView Premium 1m",
+    "name_ar": "TradingView Premium (شهر كامل)",
+    "button_title": "📈 TradingView Premium — $1.99 ⚡",
+    "icon_symbol": "📈",
+    "market_price": 59.95,
+    "our_price": 1.99,
+    "price_egp": 100,
+    "price_sar": 7,
+    "subscription_duration": "شهر كامل (30 يوم)",
+    "warranty_duration": "شهر كامل ضمان استبدال",
+    "delivery_type": "private_account",
+    "advantages_ar": [
+      "25 مؤشر فني لكل رسم بياني و8 رسوم بيانية في شاشة واحدة",
+      "تنبيهات أسعار لحظية غير محدودة وبيانات السوق من الدرجة الثانية (Level 2)",
+      "فواصل زمنية بالثواني وأشرطة بيانات تاريخية مضاعفة",
+      "ضمان استبدال رسمي 100%"
+    ],
+    "advantages_en": [
+      "25 technical indicators per chart + 8 charts in a single layout",
+      "Unlimited real-time price alerts and Level 2 market data feeds",
+      "Second-based intervals and 20,000 historical bars data",
+      "100% official replacement warranty for the full month"
+    ],
+    "advantages_es": [
+      "25 indicadores técnicos por gráfico y 8 gráficos en una sola pantalla",
+      "Alertas de precios ilimitadas en tiempo real y datos Level 2",
+      "Intervalos basados en segundos y barras históricas ampliadas",
+      "Garantía oficial de reemplazo del 100%"
+    ],
+    "advantages_fr": [
+      "25 indicateurs techniques par graphique et 8 graphiques par vue",
+      "Alertes de prix en temps réel illimitées et données Level 2",
+      "Intervalles en secondes et historique de barres étendu",
+      "Garantie de remplacement officielle 100%"
+    ],
+    "advantages_ru": [
+      "25 индикаторов на график и до 8 графиков в одном окне",
+      "Безлимитные алерты цен в реальном времени и данные Level 2",
+      "Секундные интервалы и 20 000 исторических баров",
+      "100% официальная гарантия замены на месяц"
+    ],
+    "advantages_tr": [
+      "Grafik başına 25 teknik gösterge ve tek ekranda 8 grafik",
+      "Sınırsız gerçek zamanlı fiyat alarmları ve Level 2 piyasa verileri",
+      "Saniye bazlı zaman dilimleri ve 20.000 geçmiş çubuk verisi",
+      "Tam 1 ay boyunca %100 resmi değişim garantisi"
+    ],
+    "advantages_de": [
+      "25 technische Indikatoren pro Chart & 8 Charts in einem Layout",
+      "Unbegrenzte Echtzeit-Preisalarme und Level-2-Marktdaten",
+      "Sekunden-Intervalle und 20.000 historische Balken",
+      "100% offizielle Ersatzgarantie für den Monat"
+    ]
+  },
+  {
+    "id": "grammarly_12m_prod",
+    "short_id": "grammarly_12m",
+    "brand_id": "grammarly",
+    "category_id": "prod",
+    "name": "Grammarly Premium 12m",
+    "name_ar": "Grammarly Premium (سنة كاملة)",
+    "button_title": "✍️ Grammarly (سنة كاملة) — $1.99 ⚡",
+    "icon_symbol": "✍️",
+    "market_price": 144,
+    "our_price": 1.99,
+    "price_egp": 100,
+    "price_sar": 7,
+    "subscription_duration": "سنة كاملة (12 شهر)",
+    "warranty_duration": "سنة كاملة ضمان استبدال",
+    "delivery_type": "personal_account",
+    "advantages_ar": [
+      "تصحيح القواعد المتقدم وإعادة صياغة الجمل الاحترافية بالذكاء الاصطناعي",
+      "كاشف السرقات الأدبية Plagiarism Checker مع مقارنة بمليارات المقالات",
+      "تحسين نبرة الصوت والمفردات اللغوية للأبحاث والإيميلات الرسمية",
+      "ضمان استبدال سنوي رسمي 100%"
+    ],
+    "advantages_en": [
+      "Advanced grammar correction and AI-powered full sentence rewrites",
+      "Built-in plagiarism detector comparing billions of web pages",
+      "Tone adjustment and vocabulary enhancement for academic writing",
+      "100% comprehensive annual replacement warranty"
+    ],
+    "advantages_es": [
+      "Corrección gramatical avanzada y reescritura de oraciones con IA",
+      "Detector de plagio integrado que compara miles de millones de páginas",
+      "Ajuste de tono y mejora de vocabulario para textos profesionales",
+      "Garantía anual completa de reemplazo del 100%"
+    ],
+    "advantages_fr": [
+      "Correction grammaticale avancée et réécriture de phrases par IA",
+      "Détecteur de plagiat intégré analysant des milliards de pages web",
+      "Ajustement du ton et enrichissement du vocabulaire professionnel",
+      "Garantie annuelle de remplacement intégrale 100%"
+    ],
+    "advantages_ru": [
+      "Продвинутая грамматика и перефразирование предложений с ИИ",
+      "Встроенный антиплагиат с проверкой по миллиардам веб-страниц",
+      "Настройка тональности и обогащение лексики для научных статей",
+      "100% комплексная годовая гарантия замены"
+    ],
+    "advantages_tr": [
+      "Yapay zeka ile gelişmiş dilbilgisi düzeltme ve cümle yeniden yazma",
+      "Milyarlarca web sayfasıyla karşılaştıran entegre İntihal Kontrolü",
+      "Akademik ve kurumsal yazılar için ton ayarlama ve kelime geliştirme",
+      "1 yıl boyunca kapsamlı %100 resmi garanti"
+    ],
+    "advantages_de": [
+      "Erweiterte Grammatikkorrektur und KI-Satzumformulierungen",
+      "Integrierter Plagiatsprüfer mit Abgleich von Milliarden Webseiten",
+      "Tonanpassung und Wortschatzerweiterung für akademische Texte",
+      "100% umfassende Jahres-Ersatzgarantie"
+    ]
+  },
+  {
+    "id": "duolingo_12m_prod",
+    "short_id": "duolingo_12m",
+    "brand_id": "duolingo",
+    "category_id": "prod",
+    "name": "Duolingo Super 12m",
+    "name_ar": "Duolingo Super (سنة كاملة)",
+    "button_title": "🦉 Duolingo Super (سنة كاملة) — $1.49 ⚡",
+    "icon_symbol": "🦉",
+    "market_price": 83.99,
+    "our_price": 1.49,
+    "price_egp": 75,
+    "price_sar": 6,
+    "subscription_duration": "سنة كاملة (12 شهر)",
+    "warranty_duration": "سنة كاملة ضمان استبدال",
+    "delivery_type": "personal_account",
+    "advantages_ar": [
+      "قلوب غير محدودة Unlimited Hearts للتعلم بدون توقف",
+      "خالٍ تماماً من أي إعلانات مع إمكانية مراجعة الأخطاء المخصصة",
+      "تفعيل على حسابك الشخصي مع حفظ كافة تقدمك ونقاطك",
+      "ضمان استبدال سنوي رسمي 100%"
+    ],
+    "advantages_en": [
+      "Unlimited Hearts for non-stop language learning without penalties",
+      "Completely ad-free experience with personalized mistakes review",
+      "Direct activation on your personal account preserving all streaks & XP",
+      "100% comprehensive annual replacement warranty"
+    ],
+    "advantages_es": [
+      "Vidas ilimitadas para aprender idiomas sin pausas ni límites",
+      "Experiencia 100% sin anuncios con repaso personalizado de errores",
+      "Activación en tu cuenta personal conservando tu racha y progreso",
+      "Garantía anual completa de reemplazo del 100%"
+    ],
+    "advantages_fr": [
+      "Vies illimitées pour un apprentissage des langues sans interruption",
+      "Expérience 100% sans publicité avec révision des erreurs ciblée",
+      "Activation sur compte personnel en conservant vos séries et XP",
+      "Garantie annuelle de remplacement intégrale 100%"
+    ],
+    "advantages_ru": [
+      "Бесконечные жизни для непрерывного изучения любых языков",
+      "Полное отсутствие рекламы с персонализированной работой над ошибками",
+      "Активация на личный аккаунт с сохранением ударного режима и очков XP",
+      "100% комплексная годовая гарантия замены"
+    ],
+    "advantages_tr": [
+      "Kesintisiz dil öğrenimi için sınırsız can (Unlimited Hearts)",
+      "Kişiselleştirilmiş hata incelemesi ile tamamen reklamsız deneyim",
+      "Tüm seriniz ve XP puanlarınız korunarak kişisel hesaba aktivasyon",
+      "1 yıl boyunca kapsamlı %100 resmi garanti"
+    ],
+    "advantages_de": [
+      "Unbegrenzte Herzen für pausenloses Sprachenlernen",
+      "Vollständig werbefrei mit personalisierter Fehleranalyse",
+      "Aktivierung auf persönlichem Konto mit Erhalt aller Streaks & XP",
+      "100% umfassende Jahres-Ersatzgarantie"
+    ]
+  },
+  {
+    "id": "win11pro_life_prod",
+    "short_id": "win11pro_life",
+    "brand_id": "win11pro",
+    "category_id": "prod",
+    "name": "Windows 11 Pro Retail Key",
+    "name_ar": "Windows 11 Pro Retail Key (دائم مدى الحياة)",
+    "button_title": "🪟 Windows 11 Pro Key — $1.99 ⚡",
+    "icon_symbol": "🪟",
+    "market_price": 199.99,
+    "our_price": 1.99,
+    "price_egp": 100,
+    "price_sar": 7,
+    "subscription_duration": "تفعيل دائم مدى الحياة",
+    "warranty_duration": "ضمان أصلي مدى الحياة",
+    "delivery_type": "license_key",
+    "advantages_ar": [
+      "مفتاح ترخيص أصلي Retail دائم مدى الحياة لنظام Windows 11 Pro",
+      "تفعيل رسمي فوري من سيرفرات Microsoft الرسمية (يقبل التحديثات وإعادة التثبيت)",
+      "دعم تشفير BitLocker وميزة Remote Desktop وميزات الأمان المتقدمة",
+      "ضمان تفعيل رسمي فوري 100%"
+    ],
+    "advantages_en": [
+      "Official genuine Microsoft Retail digital license key for lifetime",
+      "Direct online activation on Microsoft servers supporting reinstallations",
+      "Full support for BitLocker encryption, Remote Desktop & Hyper-V",
+      "100% lifetime official activation guarantee"
+    ],
+    "advantages_es": [
+      "Clave digital Retail original de Microsoft permanente de por vida",
+      "Activación directa en línea en servidores oficiales de Microsoft",
+      "Soporte completo para cifrado BitLocker y Escritorio Remoto",
+      "Garantía oficial de activación de por vida del 100%"
+    ],
+    "advantages_fr": [
+      "Clé numérique Microsoft Retail authentique permanente à vie",
+      "Activation directe en ligne sur les serveurs officiels de Microsoft",
+      "Support complet du chiffrement BitLocker et Bureau à distance",
+      "Garantie d'activation officielle à vie 100%"
+    ],
+    "advantages_ru": [
+      "Официальный цифровой ключ Microsoft Retail навсегда (Lifetime)",
+      "Прямая онлайн-активация на серверах Microsoft с поддержкой переустановок",
+      "Полная поддержка шифрования BitLocker и удаленного рабочего стола",
+      "100% пожизненная официальная гарантия активации"
+    ],
+    "advantages_tr": [
+      "Ömür boyu geçerli orijinal Microsoft Retail dijital lisans anahtarı",
+      "Yeniden yüklemeleri destekleyen Microsoft sunucularında doğrudan aktivasyon",
+      "BitLocker şifreleme ve Uzak Masaüstü (Remote Desktop) tam desteği",
+      "Ömür boyu %100 resmi aktivasyon garantisi"
+    ],
+    "advantages_de": [
+      "Originaler digitaler Microsoft Retail-Lizenzschlüssel für die Lebensdauer",
+      "Direkte Online-Aktivierung auf Microsoft-Servern mit Neuinstallations-Support",
+      "Volle Unterstützung für BitLocker-Verschlüsselung & Remotedesktop",
+      "100% lebenslange offizielle Aktivierungsgarantie"
+    ]
+  },
+  {
+    "id": "win10pro_life_prod",
+    "short_id": "win10pro_life",
+    "brand_id": "win10pro",
+    "category_id": "prod",
+    "name": "Windows 10 Pro Retail Key",
+    "name_ar": "Windows 10 Pro Retail Key (دائم مدى الحياة)",
+    "button_title": "🪟 Windows 10 Pro Key — $1.49 ⚡",
+    "icon_symbol": "🪟",
+    "market_price": 199.99,
+    "our_price": 1.49,
+    "price_egp": 75,
+    "price_sar": 6,
+    "subscription_duration": "تفعيل دائم مدى الحياة",
+    "warranty_duration": "ضمان أصلي مدى الحياة",
+    "delivery_type": "license_key",
+    "advantages_ar": [
+      "مفتاح ترخيص أصلي Retail دائم مدى الحياة لنظام Windows 10 Pro",
+      "يقبل الترقية المجانية المباشرة إلى Windows 11 Pro بضغطة زر",
+      "يقبل التحديثات وإعادة التثبيت على نفس الجهاز",
+      "ضمان تفعيل رسمي فوري 100%"
+    ],
+    "advantages_en": [
+      "Official genuine Microsoft Retail digital license key for lifetime",
+      "Eligible for direct free 1-click upgrade to Windows 11 Pro",
+      "Supports all official Windows updates & clean reinstallations",
+      "100% lifetime official activation guarantee"
+    ],
+    "advantages_es": [
+      "Clave digital Retail original de Microsoft permanente de por vida",
+      "Permite actualización gratuita directa a Windows 11 Pro en 1 clic",
+      "Soporta actualizaciones oficiales y reinstalaciones limpias",
+      "Garantía oficial de activación de por vida del 100%"
+    ],
+    "advantages_fr": [
+      "Clé numérique Microsoft Retail authentique permanente à vie",
+      "Éligible à la mise à niveau gratuite directe vers Windows 11 Pro",
+      "Supporte toutes les mises à jour et réinstallations propres",
+      "Garantie d'activation officielle à vie 100%"
+    ],
+    "advantages_ru": [
+      "Официальный цифровой ключ Microsoft Retail навсегда (Lifetime)",
+      "Поддержка прямого бесплатного обновления до Windows 11 Pro в 1 клик",
+      "Поддержка всех обновлений Windows и чистых переустановок",
+      "100% пожизненная официальная гарантия активации"
+    ],
+    "advantages_tr": [
+      "Ömür boyu geçerli orijinal Microsoft Retail dijital lisans anahtarı",
+      "Tek tıkla Windows 11 Pro'ya doğrudan ücretsiz yükseltme desteği",
+      "Tüm resmi Windows güncellemelerini ve yeniden yüklemeleri destekler",
+      "Ömür boyu %100 resmi aktivasyon garantisi"
+    ],
+    "advantages_de": [
+      "Originaler digitaler Microsoft Retail-Lizenzschlüssel für die Lebensdauer",
+      "Berechtigt zum direkten kostenlosen 1-Klick-Upgrade auf Windows 11 Pro",
+      "Unterstützt alle offiziellen Windows-Updates & Neuinstallationen",
+      "100% lebenslange offizielle Aktivierungsgarantie"
+    ]
+  }
 ];
 
-export function getCategories() {
-  return STORE_CATEGORIES;
+export function getProductById(id) {
+  return STORE_CATALOG.find((p) => p.id === id) || null;
 }
 
-export function getCategoryById(categoryId) {
-  return STORE_CATEGORIES.find((c) => c.id === categoryId) || null;
-}
-
-export function getBrandsByCategory(categoryId) {
-  return STORE_BRANDS.filter((b) => b.category_id === categoryId);
-}
-
-export function getBrandById(brandId) {
-  return STORE_BRANDS.find((b) => b.id === brandId) || null;
-}
-
-export function getCatalogByBrand(brandId) {
-  return STORE_CATALOG.filter((p) => p.brand_id === brandId);
+export function getProductByShortIdOrSlug(identifier) {
+  if (!identifier) return null;
+  const clean = identifier.toLowerCase().trim();
+  return (
+    STORE_CATALOG.find((p) => p.short_id === clean || p.id === clean || p.id === clean + '_prod') || null
+  );
 }
 
 export function getProductsByBrand(brandId) {
   return STORE_CATALOG.filter((p) => p.brand_id === brandId);
 }
 
-export function getCatalogByCategory(categoryId) {
+export function getProductsByCategory(categoryId) {
   return STORE_CATALOG.filter((p) => p.category_id === categoryId);
 }
 
-export function getProductById(productId) {
-  return (
-    STORE_CATALOG.find((p) => p.id === productId || p.short_id === productId) ||
-    null
-  );
+export function getCategoryById(categoryId) {
+  return STORE_CATEGORIES.find((c) => c.id === categoryId) || null;
 }
 
-export function getProductByShortIdOrSlug(identifier) {
-  if (!identifier) return null;
-  const idStr = String(identifier).trim().toLowerCase();
-  return (
-    STORE_CATALOG.find(
-      (p) =>
-        (p.id && p.id.toLowerCase() === idStr) ||
-        (p.short_id && p.short_id.toLowerCase() === idStr) ||
-        (p.name && p.name.toLowerCase() === idStr)
-    ) || null
-  );
+export function getBrandById(brandId) {
+  return STORE_BRANDS.find((b) => b.id === brandId) || null;
 }
 
+export function getBrandsByCategory(categoryId) {
+  return STORE_BRANDS.filter((b) => b.category_id === categoryId);
+}
