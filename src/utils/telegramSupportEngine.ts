@@ -30,6 +30,7 @@ import {
   renderMyOrders,
   renderPaymentMethodsScreen,
   renderWarrantyPolicyScreen,
+  renderAboutStoreScreen,
   renderReferralScreen,
   renderSupportScreen,
   recordReferral,
@@ -514,6 +515,24 @@ export async function processTelegramSupportMessage(
     cleanInput.includes('سياسة الضمان')
   ) {
     await renderWarrantyPolicyScreen(chatId, messageId, callbackQueryId);
+    return;
+  }
+
+  if (
+    cleanInput === 'about_store' ||
+    cleanInput === '/about' ||
+    cleanInput === '/info' ||
+    cleanInput.includes('عن المتجر') ||
+    cleanInput.includes('عن البوت') ||
+    cleanInput.includes('من نحن') ||
+    cleanInput.includes('معلومات') ||
+    cleanInput.includes('منذ 2022') ||
+    cleanInput.includes('2022') ||
+    cleanInput.includes('الثقة') ||
+    cleanInput.includes('الامان') ||
+    cleanInput.includes('الأمان')
+  ) {
+    await renderAboutStoreScreen(chatId, messageId, callbackQueryId);
     return;
   }
 

@@ -136,20 +136,21 @@ export async function renderMainMenu(
   if (callbackQueryId) await answerTelegramCallbackQuery(callbackQueryId);
 
   const text = [
-    '👑 <b>متجر UpStore الرقمي الرسمي</b>',
+    '👑 <b>متجر UpStore الرقمي المعتمد</b>',
+    '🏛️ <i>رواد الاشتراكات والتراخيص الرقمية المعتمدة منذ 2022 🛡️</i>',
     '━━━━━━━━━━━━━━━━━━━━━━',
-    '⚡ <b>اشتراكات الذكاء الاصطناعي والخدمات الرقمية</b>',
-    '🛡️ <b>تسليم فوري ومباشر مع ضمان استبدال ذهبي 100%</b>',
+    '⚡ <b>اشتراكات الذكاء الاصطناعي والتطبيقات الرسمية</b>',
+    '🛡️ <b>تسليم آلي فوري (16 رقم سيريال) مع ضمان استبدال ذهبي 100%</b>',
+    '👥 <b>أكثر من +28,500+ عميل موثوق بتقييم 99.8% ⭐</b>',
     '',
     'اختر من القائمة أدناه للبدء:',
   ].join('\n');
 
   const keyboard: { inline_keyboard: TelegramInlineKeyboardButton[][] } = {
     inline_keyboard: [
-      [{ text: '🛍️ تصفح الأقسام والمنتجات', callback_data: 'catalog' }],
-      [{ text: '🔥 نظام الأرباح ($1 لكل 5 أصدقاء 💸)', callback_data: 'referral' }],
-      [{ text: '💳 شحن المحفظة (+بونص إضافي)', callback_data: 'payment_methods' }],
-      [{ text: '👨‍💻 الدعم الفني المباشر', callback_data: 'support' }],
+      [{ text: '🛍️ تصفح الأقسام والمنتجات', callback_data: 'catalog' }, { text: '💳 شحن المحفظة والدفع', callback_data: 'payment_methods' }],
+      [{ text: '🏆 عن المتجر (تأسس 2022)', callback_data: 'about_store' }, { text: '🛡️ سياسة الضمان الذهبي', callback_data: 'warranty_policy' }],
+      [{ text: '🔥 نظام الأرباح ($1 لكل 5 أصدقاء 💸)', callback_data: 'referral' }, { text: '👨‍💻 الدعم الفني المباشر', callback_data: 'support' }],
     ],
   };
 
@@ -725,6 +726,55 @@ export async function renderPaymentMethodsScreen(
       [{ text: '⚡ شحن Bybit (+بونص تلقائي)', callback_data: 'buy_bybit_643361f7' }],
       [{ text: '🟡 شحن Binance (+بونص تلقائي)', callback_data: 'buy_binance_643361f7' }],
       [{ text: '👨‍💻 تواصل مع الدعم الفني (@UPSTORE_HELP)', url: 'https://t.me/UPSTORE_HELP' }],
+      [{ text: '🏠 القائمة الرئيسية', callback_data: 'main_menu' }],
+    ],
+  };
+
+  if (messageId) {
+    const res = await editTelegramMessageText(chatId, messageId, text, { parse_mode: 'HTML', reply_markup: keyboard });
+    if (!res || !res.ok) {
+      await deleteTelegramMessage(chatId, messageId);
+      await sendTelegramMessage(chatId, text, { parse_mode: 'HTML', reply_markup: keyboard });
+    }
+  } else {
+    await sendTelegramMessage(chatId, text, { parse_mode: 'HTML', reply_markup: keyboard });
+  }
+}
+
+// ── 8.5 ABOUT STORE & TRUST SCREEN (EST. 2022) ──
+export async function renderAboutStoreScreen(
+  chatId: number | string,
+  messageId?: number,
+  callbackQueryId?: string
+): Promise<void> {
+  if (callbackQueryId) await answerTelegramCallbackQuery(callbackQueryId);
+
+  const text = [
+    '👑 <b>متجر UpStore الرقمي المعتمد | ريادة وتوثيق منذ 2022</b>',
+    '━━━━━━━━━━━━━━━━━━━━━━',
+    '🏛️ <b>تأسس في 2022 — أكثر من 3+ سنوات من الريادة المعتمدة</b>',
+    '',
+    'انطلق متجر <b>UpStore</b> في عام <b>2022</b> ليكون الوجهة الأولى الموثوقة لتوفير الاشتراكات الرقمية وحسابات الذكاء الاصطناعي العالمية وتراخيص المطورين والتطبيقات الأصلية بأرخص الأسعار الرسمية وضمان 100% مستمر.',
+    '',
+    '━━━━━━━━━━━━━━━━━━━━━━',
+    '📊 <b>أرقام وإحصائيات الثقة الموثقة (2022 - 2026):</b>',
+    '👥 <b>+28,500+ عميل معتمد</b> تم خدمتهم بنجاح ورضا تام.',
+    '⚡ <b>+45,000+ طلب واشتراك</b> تم تسليمها آلياً وفورياً.',
+    '⭐ <b>تقييم 99.8% (5 نجوم)</b> من المستخدمين الموثقين.',
+    '⏱️ <b>متوسط سرعة التسليم:</b> 3 إلى 5 ثوانٍ فقط فور التحويل.',
+    '',
+    '━━━━━━━━━━━━━━━━━━━━━━',
+    '🛡️ <b>ركائز الأمان والضمان الذهبي 100%:</b>',
+    '• 💎 <b>تراخيص رسمية 100%:</b> حسابات وسيريالات (16 رقماً) أصلية وثابتة.',
+    '• 🛡️ <b>ضمان استبدال فوري:</b> تعويض أو استبدال فوري طوال فترة الاشتراك بدون أي تعقيد.',
+    '• 🔒 <b>دفع آمن ومباشر:</b> Bybit (UID: 47183921) و Binance Pay (ID: 764476139) بدون رسوم وسيطة.',
+    '• 👨‍💻 <b>دعم بشري متخصص 24/7:</b> متابعة مستمرة وسريعة عبر @UPSTORE_HELP.',
+  ].join('\n');
+
+  const keyboard: { inline_keyboard: TelegramInlineKeyboardButton[][] } = {
+    inline_keyboard: [
+      [{ text: '🛍️ تصفح الأقسام والمنتجات', callback_data: 'catalog' }, { text: '💳 شحن المحفظة والدفع', callback_data: 'payment_methods' }],
+      [{ text: '🛡️ سياسة الضمان الذهبي', callback_data: 'warranty_policy' }, { text: '👨‍💻 تواصل مع الدعم (@UPSTORE_HELP)', url: 'https://t.me/UPSTORE_HELP' }],
       [{ text: '🏠 القائمة الرئيسية', callback_data: 'main_menu' }],
     ],
   };

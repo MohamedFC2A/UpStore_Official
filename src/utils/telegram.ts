@@ -54,6 +54,7 @@ export const STORE_PERSISTENT_KEYBOARD = {
   keyboard: [
     [{ text: '🛍️ المنتجات' }, { text: '💳 المحفظة' }],
     [{ text: '📦 طلباتي' }, { text: '🎁 الأرباح' }],
+    [{ text: '🏆 عن المتجر (منذ 2022)' }, { text: '🛡️ الضمان' }],
     [{ text: '🏠 الرئيسية' }, { text: '💬 الدعم' }],
   ],
   resize_keyboard: true,

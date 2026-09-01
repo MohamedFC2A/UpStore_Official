@@ -529,6 +529,7 @@ function getPersistentKeyboard(lang = DEFAULT_LANGUAGE) {
     keyboard: [
       [{ text: `🛍️ ${t('btn_catalog', lang)}` }, { text: `💳 ${t('btn_wallet', lang)}` }],
       [{ text: `📦 ${t('btn_orders', lang)}` }, { text: `🎁 ${t('btn_referral', lang)}` }],
+      [{ text: `${t('btn_about', lang)}` }, { text: `🛡️ ${t('btn_warranty', lang)}` }],
       [{ text: `🏠 ${t('btn_main_menu', lang)}` }, { text: t('btn_language', lang) }],
     ],
     resize_keyboard: true,
@@ -590,6 +591,7 @@ async function renderMainMenu(chatId, messageId, callbackQueryId, businessConnec
     t('main_menu_title', lang),
     '──────────────────',
     t('main_menu_sub', lang),
+    `• ${t('about_established_badge', lang)}`,
     `• ${t('warranty_badge', lang)}`,
     `• ${t('instant_delivery', lang)}`,
   ].join('\n');
@@ -598,11 +600,15 @@ async function renderMainMenu(chatId, messageId, callbackQueryId, businessConnec
     inline_keyboard: [
       [
         { text: `🛍️ ${t('btn_catalog', lang)}`, callback_data: 'catalog' },
+        { text: `💳 ${t('btn_wallet', lang)}`, callback_data: 'payment_methods' },
+      ],
+      [
+        { text: `📦 ${t('btn_orders', lang)}`, callback_data: 'my_orders' },
         { text: `🎁 ${t('btn_referral', lang)}`, callback_data: 'referral' },
       ],
       [
-        { text: `💳 ${t('btn_wallet', lang)}`, callback_data: 'payment_methods' },
-        { text: `📦 ${t('btn_orders', lang)}`, callback_data: 'my_orders' },
+        { text: `${t('btn_about', lang)}`, callback_data: 'about_store' },
+        { text: `🛡️ ${t('btn_warranty', lang)}`, callback_data: 'warranty_policy' },
       ],
       [
         { text: `👨‍💻 ${t('btn_support', lang)}`, callback_data: 'support' },
@@ -1370,6 +1376,59 @@ async function renderWalletTopupMethod(chatId, method, amount, returnProdId = nu
   }
 }
 
+async function renderAboutStoreScreen(chatId, messageId, callbackQueryId, businessConnectionId = null) {
+  if (callbackQueryId) await answerCallbackQuery(callbackQueryId);
+
+  const lang = getUserLanguage(chatId);
+  const text = [
+    t('about_store_title', lang),
+    '━━━━━━━━━━━━━━━━━━━━━━',
+    t('about_established_badge', lang),
+    '',
+    t('about_heritage_text', lang),
+    '',
+    '━━━━━━━━━━━━━━━━━━━━━━',
+    t('about_stats_header', lang),
+    t('about_stat_customers', lang),
+    t('about_stat_orders', lang),
+    t('about_stat_rating', lang),
+    t('about_stat_speed', lang),
+    '',
+    '━━━━━━━━━━━━━━━━━━━━━━',
+    t('about_pillars_header', lang),
+    t('about_pillar_official', lang),
+    t('about_pillar_warranty', lang),
+    t('about_pillar_payment', lang),
+    t('about_pillar_support', lang),
+  ].join('\n');
+
+  const keyboard = {
+    inline_keyboard: [
+      [
+        { text: `🛍️ ${t('btn_catalog', lang)}`, callback_data: 'catalog' },
+        { text: `💳 ${t('btn_wallet', lang)}`, callback_data: 'payment_methods' },
+      ],
+      [
+        { text: t('btn_view_warranty', lang), callback_data: 'warranty_policy' },
+        { text: `👨‍💻 ${t('btn_support', lang)} (@UPSTORE_HELP)`, url: 'https://t.me/UPSTORE_HELP' },
+      ],
+      [
+        { text: `🏠 ${t('btn_main_menu', lang)}`, callback_data: 'main_menu' },
+      ],
+    ],
+  };
+
+  if (messageId) {
+    const editRes = await editMessageText(chatId, messageId, text, keyboard, businessConnectionId);
+    if (!editRes || !editRes.ok) {
+      await deleteMessage(chatId, messageId);
+      await sendMessage(chatId, text, keyboard, businessConnectionId);
+    }
+  } else {
+    await sendMessage(chatId, text, keyboard, businessConnectionId);
+  }
+}
+
 async function renderWarrantyPolicyScreen(chatId, messageId, callbackQueryId, businessConnectionId = null) {
   if (callbackQueryId) await answerCallbackQuery(callbackQueryId);
 
@@ -1807,6 +1866,10 @@ async function handleUpdate(update) {
       await renderWarrantyPolicyScreen(chatId, messageId, callbackId, businessConnectionId);
       return;
     }
+    if (data === 'about_store') {
+      await renderAboutStoreScreen(chatId, messageId, callbackId, businessConnectionId);
+      return;
+    }
     if (data === 'referral') {
       await renderReferralScreen(chatId, messageId, callbackId, businessConnectionId);
       return;
@@ -2141,6 +2204,30 @@ async function handleUpdate(update) {
     return;
   }
   if (
+    text === '/about' ||
+    text === '/info' ||
+    text.includes('عن المتجر') ||
+    text.includes('عن البوت') ||
+    text.includes('من نحن') ||
+    text.includes('معلومات') ||
+    text.includes('منذ 2022') ||
+    text.includes('2022') ||
+    text.includes('الثقة') ||
+    text.includes('الامان') ||
+    text.includes('الأمان') ||
+    lower.includes('about') ||
+    lower.includes('acerca') ||
+    lower.includes('propos') ||
+    lower.includes('hakkımızda') ||
+    lower.includes('hakkimizda') ||
+    lower.includes('über uns') ||
+    lower.includes('ueber uns') ||
+    lower.includes('о нас')
+  ) {
+    await renderAboutStoreScreen(chatId, null, null, businessConnectionId);
+    return;
+  }
+  if (
     text === '/referral' ||
     text.includes('الأرباح') ||
     text.includes('ارباح') ||
@@ -2289,11 +2376,13 @@ async function handleUpdate(update) {
 
   // ── FAST DETERMINISTIC MENU RESPONSE (AI DISABLED FOR @upstore_one_bot) ──
   const fastStoreResponse = [
-    '👋 <b>أهلاً بك في متجر UpStore الرقمي!</b>',
+    '👑 <b>أهلاً بك في متجر UpStore الرقمي المعتمد!</b>',
+    '🏛️ <i>رواد الاشتراكات والتراخيص الرقمية الأصلية منذ 2022 🛡️</i>',
     '──────────────────',
     '⚡ <b>يمكنك تنفيذ أي من العمليات التالية مباشرة:</b>',
-    '• 🛍️ <b>المنتجات:</b> تصفح الاشتراكات والبرامج الرسمية بأسعار مخفضة.',
-    '• 💳 <b>المحفظة والدفع:</b> شحن رصيدك عبر Bybit و Binance.',
+    '• 🛍️ <b>المنتجات:</b> تصفح اشتراكات الذكاء الاصطناعي والتطبيقات بأسعار مخفضة.',
+    '• 💳 <b>المحفظة والدفع:</b> شحن رصيدك عبر Bybit و Binance بدون رسوم.',
+    '• 🏆 <b>عن المتجر:</b> تاريخ التأسيس (2022) وإحصائيات الثقة الموثقة.',
     '• 📦 <b>طلباتي:</b> استعراض كافة طلباتك السابقة وأكواد السيريال (16 رقم).',
     '• 👨‍💻 <b>الدعم الفني:</b> للتواصل المباشر مع الدعم الفني @UPSTORE_HELP.',
     '──────────────────',
@@ -2304,7 +2393,8 @@ async function handleUpdate(update) {
   await sendMessage(chatId, fastStoreResponse, {
     inline_keyboard: [
       [{ text: `🛍️ ${t('btn_catalog', lang)}`, callback_data: 'catalog' }, { text: `💳 ${t('btn_wallet', lang)}`, callback_data: 'payment_methods' }],
-      [{ text: `📦 ${t('btn_orders', lang)}`, callback_data: 'my_orders' }, { text: `👨‍💻 ${t('btn_support', lang)}`, callback_data: 'support' }],
+      [{ text: `🏆 ${t('btn_about', lang)}`, callback_data: 'about_store' }, { text: `📦 ${t('btn_orders', lang)}`, callback_data: 'my_orders' }],
+      [{ text: `🛡️ ${t('btn_warranty', lang)}`, callback_data: 'warranty_policy' }, { text: `👨‍💻 ${t('btn_support', lang)}`, callback_data: 'support' }],
     ],
   }, businessConnectionId);
 }
