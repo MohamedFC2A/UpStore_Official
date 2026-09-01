@@ -192,6 +192,12 @@ export function setUserLanguage(chatId, langCode) {
 
 export const I18N_STRINGS = {
   "ar": {
+    "wallet_topup_success_title": "🎉 <b>تم تأكيد عملية الدفع وشحن المحفظة بنجاح! 🤍</b>",
+    "recharged_amount_label": "المبلغ المشحون:",
+    "total_credited_label": "إجمالي المضاف للمحفظة:",
+    "amount_credited_label": "المبلغ المضاف:",
+    "wallet_new_balance_label": "رصيد محفظتك الجديد:",
+    "wallet_topup_ready_hint": "🛍️ يمكنك الآن تصفح المنتجات والشراء الفوري بضغطة زر واحدة من رصيدك بسعر الجملة!",
     "verification_in_progress_title": "🔍 <b>طلب التحقق قيد المراجعة الفورية ⚡</b>",
     "verification_eta_label": "الوقت المتوقع للفحص:",
     "verification_eta_value": "5 - 15 دقيقة كحد أقصى ⏳",
@@ -385,6 +391,12 @@ export const I18N_STRINGS = {
     "wallet_purchase_ready_hint": "لديك رصيد كافٍ لإتمام الشراء والتفعيل الفوري!"
   },
   "en": {
+    "wallet_topup_success_title": "🎉 <b>Payment Confirmed & Wallet Credited Successfully! 🤍</b>",
+    "recharged_amount_label": "Recharged Amount:",
+    "total_credited_label": "Total Credited to Wallet:",
+    "amount_credited_label": "Credited Amount:",
+    "wallet_new_balance_label": "Your New Wallet Balance:",
+    "wallet_topup_ready_hint": "🛍️ You can now browse products and buy instantly with 1-click using your balance at wholesale rates!",
     "verification_in_progress_title": "🔍 <b>Verification Request Under Instant Review ⚡</b>",
     "verification_eta_label": "Estimated Verification Time:",
     "verification_eta_value": "5 - 15 Minutes Maximum ⏳",
@@ -578,6 +590,12 @@ export const I18N_STRINGS = {
     "wallet_purchase_ready_hint": "You have sufficient balance for instant activation!"
   },
   "es": {
+    "wallet_topup_success_title": "🎉 <b>¡Pago confirmado y billetera recargada con éxito! 🤍</b>",
+    "recharged_amount_label": "Monto recargado:",
+    "total_credited_label": "Total acreditado en billetera:",
+    "amount_credited_label": "Monto acreditado:",
+    "wallet_new_balance_label": "Tu nuevo saldo de billetera:",
+    "wallet_topup_ready_hint": "🛍️ ¡Ahora puedes explorar productos y comprar al instante con 1 clic con tu saldo a precio mayorista!",
     "verification_in_progress_title": "🔍 <b>Solicitud de verificación en revisión instantánea ⚡</b>",
     "verification_eta_label": "Tiempo estimado de verificación:",
     "verification_eta_value": "5 - 15 minutos como máximo ⏳",
@@ -771,6 +789,12 @@ export const I18N_STRINGS = {
     "wallet_purchase_ready_hint": "¡Tiene saldo suficiente para activación instantánea!"
   },
   "fr": {
+    "wallet_topup_success_title": "🎉 <b>Paiement confirmé et portefeuille crédité avec succès ! 🤍</b>",
+    "recharged_amount_label": "Montant rechargé :",
+    "total_credited_label": "Total crédité au portefeuille :",
+    "amount_credited_label": "Montant crédité :",
+    "wallet_new_balance_label": "Nouveau solde du portefeuille :",
+    "wallet_topup_ready_hint": "🛍️ Vous pouvez maintenant parcourir les produits et acheter en 1 clic avec votre solde au tarif de gros !",
     "verification_in_progress_title": "🔍 <b>Demande de vérification en cours d'examen instantané ⚡</b>",
     "verification_eta_label": "Temps estimé de vérification :",
     "verification_eta_value": "5 - 15 minutes maximum ⏳",
@@ -964,6 +988,12 @@ export const I18N_STRINGS = {
     "wallet_purchase_ready_hint": "Vous disposez d'un solde suffisant pour une activation instantanée !"
   },
   "ru": {
+    "wallet_topup_success_title": "🎉 <b>Оплата подтверждена, баланс кошелька успешно пополнен! 🤍</b>",
+    "recharged_amount_label": "Сумма пополнения:",
+    "total_credited_label": "Всего начислено на кошелек:",
+    "amount_credited_label": "Зачисленная сумма:",
+    "wallet_new_balance_label": "Новый баланс вашего кошелька:",
+    "wallet_topup_ready_hint": "🛍️ Теперь вы можете просматривать товары и покупать в 1 клик со своего баланса по оптовой цене!",
     "verification_in_progress_title": "🔍 <b>Запрос на проверку на мгновенном рассмотрении ⚡</b>",
     "verification_eta_label": "Ориентировочное время проверки:",
     "verification_eta_value": "5 - 15 минут максимум ⏳",
@@ -1157,6 +1187,12 @@ export const I18N_STRINGS = {
     "wallet_purchase_ready_hint": "У вас достаточно средств для мгновенной активации!"
   },
   "tr": {
+    "wallet_topup_success_title": "🎉 <b>Ödeme Onaylandı ve Cüzdan Başarıyla Yüklendi! 🤍</b>",
+    "recharged_amount_label": "Yüklenen Tutar:",
+    "total_credited_label": "Cüzdana Eklenen Toplam:",
+    "amount_credited_label": "Eklenen Tutar:",
+    "wallet_new_balance_label": "Yeni Cüzdan Bakiyeniz:",
+    "wallet_topup_ready_hint": "🛍️ Artık ürünlere göz atabilir ve bakiyenizle toptan fiyata tek tıkla anında satın alabilirsiniz!",
     "verification_in_progress_title": "🔍 <b>Doğrulama Talebi Anında İncelemede ⚡</b>",
     "verification_eta_label": "Tahmini Doğrulama Süresi:",
     "verification_eta_value": "Maksimum 5 - 15 Dakika ⏳",
@@ -1350,6 +1386,12 @@ export const I18N_STRINGS = {
     "wallet_purchase_ready_hint": "Anında aktivasyon için yeterli bakiyeniz var!"
   },
   "de": {
+    "wallet_topup_success_title": "🎉 <b>Zahlung bestätigt und Wallet erfolgreich aufgeladen! 🤍</b>",
+    "recharged_amount_label": "Aufgeladener Betrag:",
+    "total_credited_label": "Gesamtgutschrift Wallet:",
+    "amount_credited_label": "Gutgeschriebener Betrag:",
+    "wallet_new_balance_label": "Ihr neues Wallet-Guthaben:",
+    "wallet_topup_ready_hint": "🛍️ Sie können jetzt Produkte durchsuchen und sofort per 1-Klick mit Ihrem Guthaben zum Großhandelspreis kaufen!",
     "verification_in_progress_title": "🔍 <b>Verifizierungsanfrage in sofortiger Prüfung ⚡</b>",
     "verification_eta_label": "Voraussichtliche Prüfzeit:",
     "verification_eta_value": "Maximal 5 - 15 Minuten ⏳",

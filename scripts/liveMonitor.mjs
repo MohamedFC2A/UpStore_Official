@@ -12,6 +12,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import { createClient } from '@supabase/supabase-js';
 import { creditUserWallet, getUserWallet } from './storeWallet.mjs';
+import { getUserLanguage, t } from './storeI18n.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const SUBSCRIBERS_FILE = path.join(__dirname, 'live_subscribers.json');
@@ -521,36 +522,38 @@ async function handleLiveBotUpdate(update) {
         const creditedWallet = await creditUserWallet(
           targetChatId,
           amount,
-          'ADMIN_APPROVED_LIVE_BOT',
+          'ADMIN_APPROVED_TOPUP',
           { reqId, approvedBy: adminName, adminId: cb.from?.id },
           supabase
         );
 
+        const targetLang = getUserLanguage(targetChatId) || 'ar';
+
         // 1. Notify the customer on @upstore_one_bot
         const bonusMsg = creditedWallet.creditedBonus > 0
           ? [
-              `💵 <b>المبلغ المشحون:</b> <code>+$${amount.toFixed(2)} USDT</code>`,
-              `🎁 <b>بونص إضافي هدية:</b> <code>+$${creditedWallet.creditedBonus.toFixed(2)} USDT</code>`,
-              `💎 <b>إجمالي المضاف للمحفظة:</b> <code>+$${creditedWallet.totalCredited.toFixed(2)} USDT</code>`,
+              `💵 <b>${t('recharged_amount_label', targetLang)}</b> <code>+$${amount.toFixed(2)} USDT</code>`,
+              `🎁 <b>${t('wallet_bonus_label', targetLang)}</b> <code>+$${creditedWallet.creditedBonus.toFixed(2)} USDT</code>`,
+              `💎 <b>${t('total_credited_label', targetLang)}</b> <code>+$${creditedWallet.totalCredited.toFixed(2)} USDT</code>`,
             ]
           : [
-              `💵 <b>المبلغ المضاف:</b> <code>+$${amount.toFixed(2)} USDT</code>`,
+              `💵 <b>${t('amount_credited_label', targetLang)}</b> <code>+$${amount.toFixed(2)} USDT</code>`,
             ];
 
         const customerMsg = [
-          '🎉 <b>تم تأكيد عملية الدفع وشحن المحفظة بنجاح! 🤍</b>',
+          t('wallet_topup_success_title', targetLang),
           '──────────────────',
           ...bonusMsg,
-          `💳 <b>رصيد محفظتك الجديد:</b> <code>$${creditedWallet.balance.toFixed(2)} USDT</code>`,
-          `🆔 <b>رقم العملية:</b> <code>#${reqId}</code>`,
+          `💳 <b>${t('wallet_new_balance_label', targetLang)}</b> <code>$${creditedWallet.balance.toFixed(2)} USDT</code>`,
+          `🆔 <b>${t('order_ref_label', targetLang)}</b> <code>#${reqId}</code>`,
           '──────────────────',
-          '🛍️ يمكنك الآن تصفح المنتجات والشراء الفوري بضغطة زر واحدة من رصيدك بسعر الجملة!',
+          t('wallet_topup_ready_hint', targetLang),
         ].join('\n');
 
         await sendUpstoreBotMessage(targetChatId, customerMsg, {
           inline_keyboard: [
-            [{ text: '🛍️ تصفح المنتجات والاشتراكات', callback_data: 'catalog' }],
-            [{ text: '💳 فتح المحفظة والرصيد', callback_data: 'payment_methods' }],
+            [{ text: `🛍️ ${t('btn_catalog', targetLang)}`, callback_data: 'catalog' }],
+            [{ text: `💳 ${t('btn_wallet', targetLang)}`, callback_data: 'payment_methods' }],
           ],
         });
 

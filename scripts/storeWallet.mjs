@@ -157,8 +157,9 @@ export async function creditUserWallet(chatId, amount, reason = 'TOPUP', meta = 
     throw new Error(`Minimum top-up amount is $${MIN_TOPUP_USD.toFixed(2)} USD (received $${numAmount.toFixed(2)})`);
   }
 
-  // Calculate smart bonus on top-up
-  const isTopup = reason.toUpperCase().includes('TOPUP') || reason.toUpperCase().includes('DEPOSIT');
+  // Calculate smart bonus on top-up: Any deposit/recharge or admin approval gets bonus unless explicitly exempt
+  const isExplicitNonTopup = ['REFUND', 'BONUS_ONLY', 'ADMIN_MANUAL_CORRECTION', 'REFERRAL_REWARD'].includes(reason.toUpperCase()) || meta.noBonus === true;
+  const isTopup = !isExplicitNonTopup;
   const bonusAmount = isTopup ? calculateTopupBonus(numAmount) : 0;
   const totalCredited = Number((numAmount + bonusAmount).toFixed(2));
 

@@ -2059,8 +2059,24 @@ async function handleUpdate(update) {
           notifyWalletTopup(cb.from, amount, method.toUpperCase(), creditedWallet.balance, verification);
         } catch {}
 
+        const bonusMsg = creditedWallet.creditedBonus > 0
+          ? [
+              `💵 <b>${t('recharged_amount_label', lang)}</b> <code>+$${amount.toFixed(2)} USDT</code>`,
+              `🎁 <b>${t('wallet_bonus_label', lang)}</b> <code>+$${creditedWallet.creditedBonus.toFixed(2)} USDT</code>`,
+              `💎 <b>${t('total_credited_label', lang)}</b> <code>+$${creditedWallet.totalCredited.toFixed(2)} USDT</code>`,
+            ]
+          : [
+              `💵 <b>${t('amount_credited_label', lang)}</b> <code>+$${amount.toFixed(2)} USDT</code>`,
+            ];
+
         const successText = [
-          t('wallet_topup_success_message', lang, { amount: amount.toFixed(2), balance: creditedWallet.balance.toFixed(2) }),
+          t('wallet_topup_success_title', lang),
+          '──────────────────',
+          ...bonusMsg,
+          `💳 <b>${t('wallet_new_balance_label', lang)}</b> <code>$${creditedWallet.balance.toFixed(2)} USDT</code>`,
+          `🆔 <b>${t('order_ref_label', lang)}</b> <code>#${orderRef}</code>`,
+          '──────────────────',
+          t('wallet_topup_ready_hint', lang),
         ].join('\n');
 
         const successButtons = [];
@@ -2628,8 +2644,24 @@ async function handleUpdate(update) {
           notifyWalletTopup(message.from, expectedAmount, 'BYBIT/TXID', creditedWallet.balance, verification);
         } catch {}
 
+        const bonusMsg = creditedWallet.creditedBonus > 0
+          ? [
+              `💵 <b>${t('recharged_amount_label', lang)}</b> <code>+$${expectedAmount.toFixed(2)} USDT</code>`,
+              `🎁 <b>${t('wallet_bonus_label', lang)}</b> <code>+$${creditedWallet.creditedBonus.toFixed(2)} USDT</code>`,
+              `💎 <b>${t('total_credited_label', lang)}</b> <code>+$${creditedWallet.totalCredited.toFixed(2)} USDT</code>`,
+            ]
+          : [
+              `💵 <b>${t('amount_credited_label', lang)}</b> <code>+$${expectedAmount.toFixed(2)} USDT</code>`,
+            ];
+
         const successText = [
-          t('wallet_topup_success_message', lang, { amount: expectedAmount.toFixed(2), balance: creditedWallet.balance.toFixed(2) }),
+          t('wallet_topup_success_title', lang),
+          '──────────────────',
+          ...bonusMsg,
+          `💳 <b>${t('wallet_new_balance_label', lang)}</b> <code>$${creditedWallet.balance.toFixed(2)} USDT</code>`,
+          `🆔 <b>${t('order_ref_label', lang)}</b> <code>#${orderRef}</code>`,
+          '──────────────────',
+          t('wallet_topup_ready_hint', lang),
         ].join('\n');
 
         await sendMessage(chatId, successText, {

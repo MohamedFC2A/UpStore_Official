@@ -52,6 +52,21 @@ async function runWalletTests() {
   console.log('6. ✅ Valid purchase debited $4.99. Remaining balance:', validDebit.newBalance);
   if (Math.abs(validDebit.newBalance - 11.51) > 0.01) throw new Error(`Balance mismatch: expected 11.51, got ${validDebit.newBalance}`);
 
+  // 7. Test Admin Approval Top-Up awards bonus properly (e.g. $25 -> +$3.00 bonus = $28.00)
+  const adminTestUser = `admin_test_${Date.now()}`;
+  const adminCredit = await creditUserWallet(adminTestUser, 25.0, 'ADMIN_APPROVED_TOPUP', { reqId: 'REQ-123456' });
+  console.log('7. ✅ Admin Approved Top-Up Credited:', adminCredit.totalCredited, 'Bonus:', adminCredit.creditedBonus);
+  if (adminCredit.totalCredited !== 28.00 || adminCredit.creditedBonus !== 3.00) {
+    throw new Error(`Admin approval bonus failed: expected 28.00 total and 3.00 bonus, got ${adminCredit.totalCredited}`);
+  }
+
+  // 8. Test Auto TXID Verification awards bonus properly (e.g. $50 -> +$7.00 bonus = $57.00)
+  const autoCredit = await creditUserWallet(adminTestUser, 50.0, 'AUTO_TXID_VERIFIED');
+  console.log('8. ✅ Auto TXID Verified Top-Up Credited:', autoCredit.totalCredited, 'Bonus:', autoCredit.creditedBonus);
+  if (autoCredit.creditedBonus !== 7.00) {
+    throw new Error(`Auto TXID bonus failed: expected 7.00 bonus, got ${autoCredit.creditedBonus}`);
+  }
+
   console.log('\n🎉 ALL WALLET LOGIC, $5 MINIMUM, & SMART TIERED BONUS TESTS PASSED 100%!\n');
 }
 
