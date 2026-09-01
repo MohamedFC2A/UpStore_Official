@@ -25,6 +25,8 @@ import {
   detectUserLanguage,
   getLocalizedDuration,
   getLocalizedWarranty,
+  getLocalizedDeliveryMethod,
+  getLocalizedAdvantages,
   t,
   matchPersistentButton,
 } from './storeI18n.mjs';
@@ -862,8 +864,9 @@ async function renderProductDetails(chatId, shortId, messageId, callbackQueryId,
     ? Math.round(((product.market_price - product.our_price) / product.market_price) * 100)
     : 0;
 
-  const advantages = (product.advantages_ar && product.advantages_ar.length > 0)
-    ? product.advantages_ar.slice(0, 4).map((a) => `• ${a}`).join('\n')
+  const rawAdvantages = getLocalizedAdvantages(product, lang);
+  const advantages = (rawAdvantages && rawAdvantages.length > 0)
+    ? rawAdvantages.slice(0, 4).map((a) => `• ${a}`).join('\n')
     : '';
 
   const discountText = discountPct > 0 ? ` <i>(${t('discount', lang)} ${discountPct}%)</i>` : '';
@@ -873,6 +876,7 @@ async function renderProductDetails(chatId, shortId, messageId, callbackQueryId,
 
   const durationText = getLocalizedDuration(product.subscription_duration, lang);
   const warrantyText = getLocalizedWarranty(product.warranty_duration, lang);
+  const deliveryMethodText = getLocalizedDeliveryMethod(product.delivery_type, lang);
   const prodPrice = product.our_price;
 
   // ONLY 2 BUTTON ROWS: 1. Buy Button, 2. Back & Home
@@ -896,6 +900,7 @@ async function renderProductDetails(chatId, shortId, messageId, callbackQueryId,
     localPriceText,
     `⏳ <b>${t('duration_label', lang)}:</b> ${durationText}`,
     `🛡️ <b>${t('warranty_label', lang)}:</b> ${warrantyText}`,
+    `📦 <b>${t('delivery_method_label', lang)}:</b> ${deliveryMethodText}`,
     `⚡ <b>${t('delivery', lang)}:</b> ${t('instant_delivery', lang)}`,
     advantages ? `──────────────────\n<b>${t('features_label', lang)}:</b>\n${advantages}` : '',
   ].filter(Boolean).join('\n');
@@ -1142,25 +1147,55 @@ async function deliverInstantOrder(chatId, product, orderRef, txInfo, messageId 
   const generatedPass = `UpStore#${Math.floor(100000 + Math.random() * 900000)}`;
 
   const brand = getBrandById(product.brand_id);
-  const prodTitle = brand ? (lang === 'ar' ? brand.name_ar : (brand.name_en || brand.name_ar)) : product.name_ar;
+  const prodTitle = lang === 'ar' ? product.name_ar : (product.name || product.name_ar);
+  const durationText = getLocalizedDuration(product.subscription_duration, lang);
+  const warrantyText = getLocalizedWarranty(product.warranty_duration, lang);
+  const deliveryMethodText = getLocalizedDeliveryMethod(product.delivery_type, lang);
+
+  let credentialLines = [];
+  if (product.delivery_type === 'license_key') {
+    credentialLines = [
+      t('order_serial_title', lang),
+      `<code>${serialCode}</code>`,
+      t('order_copy_code_hint', lang),
+    ];
+  } else if (product.delivery_type === 'personal_account') {
+    credentialLines = [
+      `✉️ <b>${deliveryMethodText}</b>`,
+      `• <b>${t('order_serial_title', lang)}</b> <code>${serialCode}</code>`,
+      lang === 'ar'
+        ? '<i>(تم ربط وتوثيق طلب التفعيل الفوري مع حسابك الشخصي بنجاح 🤍)</i>'
+        : '<i>(Activation successfully verified & bound to your personal account 🤍)</i>',
+    ];
+  } else if (product.delivery_type === 'api_token') {
+    const apiToken = `sk-upstore-${Math.floor(100000 + Math.random() * 900000)}-${serialCode.replace(/-/g, '').toLowerCase()}`;
+    credentialLines = [
+      `⚡ <b>${t('delivery_api_token', lang)}:</b>`,
+      `<code>${apiToken}</code>`,
+      t('order_copy_code_hint', lang),
+    ];
+  } else {
+    // private_account, vpn_credentials
+    credentialLines = [
+      t('order_credentials_title', lang),
+      `• <b>${t('order_username_label', lang)}</b> <code>${generatedUser}</code>`,
+      `• <b>${t('order_password_label', lang)}</b> <code>${generatedPass}</code>`,
+      `• <b>${t('order_serial_title', lang)}</b> <code>${serialCode}</code>`,
+    ];
+  }
 
   const deliveryText = [
-    '✅ <b>Payment Confirmed / تم تأكيد الدفع بنجاح!</b>',
+    t('order_delivery_title', lang),
     '──────────────────',
-    `📦 <b>المنتج:</b> ${prodTitle}`,
-    `🆔 <b>رقم الطلب:</b> <code>#${orderRef}</code>`,
-    `💎 <b>المبلغ المستلم:</b> <code>${txInfo.amount || product.our_price} USDT</code>`,
+    `📦 <b>${t('order_product_label', lang)}</b> ${prodTitle}`,
+    `🆔 <b>${t('order_ref_label', lang)}</b> <code>#${orderRef}</code>`,
+    `💎 <b>${t('order_amount_received_label', lang)}</b> <code>${txInfo.amount || product.our_price} USDT</code>`,
+    `⏳ <b>${t('order_duration_label', lang)}</b> ${durationText}`,
+    `🛡️ <b>${t('warranty_label', lang)}</b> ${warrantyText}`,
     '──────────────────',
-    '🔑 <b>كود التفعيل / السيريال (16 رقم):</b>',
-    `<code>${serialCode}</code>`,
-    '<i>(اضغط على الكود للنسخ المباشر 👆)</i>',
+    ...credentialLines,
     '──────────────────',
-    '👤 <b>بيانات الحساب / Credentials:</b>',
-    `• <b>Username / Email:</b> <code>${generatedUser}</code>`,
-    `• <b>Password:</b> <code>${generatedPass}</code>`,
-    `• <b>مدة الاشتراك:</b> ${getLocalizedDuration(product.subscription_duration, lang)}`,
-    '──────────────────',
-    '🛡️ <i>الضمان الذهبي مفعل 100% طوال المدة. للدعم: @UPSTORE_HELP</i>',
+    t('order_warranty_notice', lang),
   ].join('\n');
 
   // Trigger live broadcast to @upstorelive_bot

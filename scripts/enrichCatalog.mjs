@@ -1,9 +1,7 @@
-/**
- * storeCatalog.mjs — High-Performance Multilingual Wholesale Catalog Engine
- * Supports 35 Curated Products with Accurate Wholesale Pricing (+20% margin),
- * Real-world Subscription Durations, Precise Delivery Types, and Rich Multilingual Advantages.
- */
+import fs from 'fs';
+import path from 'path';
 
+// ── 1. ALL 35 PRODUCTS WITH PRECISE DELIVERY TYPES & MULTILINGUAL ADVANTAGES ──
 export const STORE_CATEGORIES = [
   { id: 'ai', name_ar: 'الذكاء الاصطناعي (AI)', name_en: 'Artificial Intelligence (AI)', emoji: '🤖' },
   { id: 'dev', name_ar: 'أدوات المطورين والبرمجة', name_en: 'Developer Tools', emoji: '💻' },
@@ -1687,4 +1685,82 @@ export function getProductByShortIdOrSlug(identifier) {
     ) || null
   );
 }
+
+// ── EXPORT WRITER TO OVERWRITE STORECATALOG.MJS AND STORECATALOG.TS ──
+const rawContent = fs.readFileSync('scripts/enrichCatalog.mjs', 'utf-8');
+
+// 1. Write scripts/storeCatalog.mjs
+const mjsHeader = `/**
+ * storeCatalog.mjs — High-Performance Multilingual Wholesale Catalog Engine
+ * Supports 35 Curated Products with Accurate Wholesale Pricing (+20% margin),
+ * Real-world Subscription Durations, Precise Delivery Types, and Rich Multilingual Advantages.
+ */
+`;
+
+const jsExportBlock = rawContent.slice(rawContent.indexOf('export const STORE_CATEGORIES = ['));
+fs.writeFileSync('scripts/storeCatalog.mjs', mjsHeader + '\n' + jsExportBlock);
+console.log('✅ Generated scripts/storeCatalog.mjs');
+
+// 2. Write src/utils/storeCatalog.ts with full TypeScript types
+const tsHeader = `/**
+ * storeCatalog.ts — High-Performance Multilingual Wholesale Catalog Engine
+ */
+
+export interface StoreCategory {
+  id: string;
+  name_ar: string;
+  name_en: string;
+  emoji: string;
+}
+
+export interface StoreBrand {
+  id: string;
+  category_id: string;
+  name_ar: string;
+  name_en: string;
+  icon: string;
+  desc: string;
+}
+
+export interface StoreProduct {
+  id: string;
+  short_id: string;
+  brand_id: string;
+  category_id: string;
+  name: string;
+  name_ar: string;
+  button_title: string;
+  icon_symbol: string;
+  market_price: number;
+  our_price: number;
+  price_egp: number;
+  price_sar: number;
+  subscription_duration: string;
+  warranty_duration: string;
+  delivery_type: string;
+  advantages_ar: string[];
+  advantages_en: string[];
+  advantages_es: string[];
+  advantages_fr: string[];
+  advantages_ru: string[];
+  advantages_tr: string[];
+  advantages_de: string[];
+}
+`;
+
+const tsTypesReplacements = jsExportBlock
+  .replace('export const STORE_CATEGORIES = [', 'export const STORE_CATEGORIES: StoreCategory[] = [')
+  .replace('export const STORE_BRANDS = [', 'export const STORE_BRANDS: StoreBrand[] = [')
+  .replace('export const STORE_CATALOG = [', 'export const STORE_CATALOG: StoreProduct[] = [')
+  .replace('export function getCategoryById(categoryId) {', 'export function getCategoryById(categoryId: string) {')
+  .replace('export function getBrandsByCategory(categoryId) {', 'export function getBrandsByCategory(categoryId: string) {')
+  .replace('export function getBrandById(brandId) {', 'export function getBrandById(brandId: string) {')
+  .replace('export function getCatalogByBrand(brandId) {', 'export function getCatalogByBrand(brandId: string) {')
+  .replace('export function getProductsByBrand(brandId) {', 'export function getProductsByBrand(brandId: string) {')
+  .replace('export function getCatalogByCategory(categoryId) {', 'export function getCatalogByCategory(categoryId: string) {')
+  .replace('export function getProductById(productId) {', 'export function getProductById(productId: string) {')
+  .replace('export function getProductByShortIdOrSlug(identifier) {', 'export function getProductByShortIdOrSlug(identifier: string) {');
+
+fs.writeFileSync('src/utils/storeCatalog.ts', tsHeader + '\n' + tsTypesReplacements);
+console.log('✅ Generated src/utils/storeCatalog.ts with TypeScript types');
 

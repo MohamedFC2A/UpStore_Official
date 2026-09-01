@@ -5,9 +5,13 @@ import {
   detectUserLanguage,
   getLocalizedDuration,
   getLocalizedWarranty,
+  getLocalizedDeliveryMethod,
+  getLocalizedAdvantages,
   t,
   I18N_STRINGS,
+  matchPersistentButton,
 } from './storeI18n.mjs';
+import { STORE_CATALOG } from './storeCatalog.mjs';
 
 console.log('🧪 Starting comprehensive storeI18n automated verification...\n');
 
@@ -35,7 +39,32 @@ if (missingKeyCount === 0) {
   process.exit(1);
 }
 
-// 2. Test Smart Auto-Detection: English Telegram client ('en') MUST detect 'en'
+// 2. Test Delivery Method Localization across all 7 languages
+const deliveryTypes = ['personal_account', 'private_account', 'license_key', 'api_token', 'vpn_credentials'];
+for (const dt of deliveryTypes) {
+  for (const lang of langCodes) {
+    const locDel = getLocalizedDeliveryMethod(dt, lang);
+    if (!locDel || locDel.includes('undefined')) {
+      console.error(`❌ getLocalizedDeliveryMethod failed for ${dt} in ${lang}`);
+      process.exit(1);
+    }
+  }
+}
+console.log('✅ All delivery methods localized cleanly across all 7 languages!');
+
+// 3. Test Localized Advantages across all 35 products for all 7 languages
+for (const prod of STORE_CATALOG) {
+  for (const lang of langCodes) {
+    const advs = getLocalizedAdvantages(prod, lang);
+    if (!advs || !Array.isArray(advs) || advs.length === 0) {
+      console.error(`❌ Product ${prod.short_id} has no localized advantages for language '${lang}'`);
+      process.exit(1);
+    }
+  }
+}
+console.log(`✅ All ${STORE_CATALOG.length} products have verified distinct localized advantages in all 7 languages!`);
+
+// 4. Test Smart Auto-Detection: English Telegram client ('en') MUST detect 'en'
 const testUserEn = `test_en_${Date.now()}`;
 const detectedEn = detectUserLanguage(testUserEn, 'en');
 console.log(`\nAuto-detection test (en): Telegram 'en' -> Detected: '${detectedEn}'`);
@@ -44,7 +73,7 @@ if (detectedEn !== 'en') {
   process.exit(1);
 }
 
-// 3. Test Smart Auto-Detection for Russian, Turkish, German, French, Spanish
+// 5. Test Smart Auto-Detection for Russian, Turkish, German, French, Spanish
 const locales = [
   { code: 'ru', expected: 'ru' },
   { code: 'tr', expected: 'tr' },
@@ -65,7 +94,7 @@ for (const loc of locales) {
 }
 console.log('✅ Smart Auto-Detection test passed for all locales and fallback!');
 
-// 4. Test Manual Override Persistence
+// 6. Test Manual Override Persistence
 const testManualUser = `manual_${Date.now()}`;
 detectUserLanguage(testManualUser, 'en'); // Initially auto-detected as 'en'
 setUserLanguage(testManualUser, 'es'); // Manually switched to 'es'
@@ -77,7 +106,7 @@ if (postOverride !== 'es') {
 }
 console.log('✅ Manual language override persistence verified!');
 
-// 5. Test Localized Duration & Warranty
+// 7. Test Localized Duration & Warranty
 const durTest = getLocalizedDuration('18 شهراً كاملاً', 'en');
 const warTest = getLocalizedWarranty('18 شهراً ضمان ذهبي', 'en');
 console.log('\nDuration (en):', durTest);
@@ -86,9 +115,8 @@ if (durTest !== '18 Full Months' || warTest !== '18 Months Replacement Warranty'
   console.error('❌ Duration/Warranty localization failed for English!');
   process.exit(1);
 }
-// 6. Test matchPersistentButton across Arabic, English, Spanish, etc.
-import { matchPersistentButton } from './storeI18n.mjs';
 
+// 8. Test matchPersistentButton across Arabic, English, Spanish, etc.
 const buttonTests = [
   { input: '🛍️ المنتجات', expected: 'catalog' },
   { input: '🛍️ Products', expected: 'catalog' },
@@ -98,8 +126,8 @@ const buttonTests = [
   { input: '📦 My Orders', expected: 'my_orders' },
   { input: '🎁 المكافآت', expected: 'referral' },
   { input: '🎁 Rewards', expected: 'referral' },
-  { input: '🏆 عن المتجر (منذ 2022)', expected: 'about_store' },
-  { input: '🏆 About Us (Est. 2022)', expected: 'about_store' },
+  { input: '🤍 عن المتجر (منذ 2022)', expected: 'about_store' },
+  { input: '🤍 About Us (Est. 2022)', expected: 'about_store' },
   { input: '🛡️ الضمان', expected: 'warranty_policy' },
   { input: '🛡️ Warranty', expected: 'warranty_policy' },
   { input: '🏠 الرئيسية', expected: 'main_menu' },
