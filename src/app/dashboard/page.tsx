@@ -2089,12 +2089,12 @@ function SupportTab({
                 {isAr ? 'الدعم المباشر على تيليجرام (24/7)' : 'Live Telegram Helpdesk'}
               </span>
               <span className="text-xs sm:text-sm font-black text-black">
-                @UpStore_Support_bot
+                @upstore_one_bot
               </span>
             </div>
           </div>
           <a
-            href="https://t.me/UpStore_Support_bot"
+            href="https://t.me/upstore_one_bot"
             target="_blank"
             rel="noopener noreferrer"
             className="px-3.5 py-2 bg-[#4CC9F0] hover:bg-[#3db6db] border-2 border-black rounded-xl text-xs font-black text-black shadow-[2px_2px_0px_0px_#000] transition-colors shrink-0 flex items-center gap-1"
@@ -2765,7 +2765,7 @@ function SellerTab() {
 
         <div className="pt-2">
           <a
-            href="https://t.me/UpStore_Support_bot"
+            href="https://t.me/upstore_one_bot"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 px-6 py-3.5 bg-[#06D6A0] hover:bg-[#05b385] text-black font-black text-xs rounded-xl border-2 border-black shadow-[3px_3px_0px_0px_#000] transition-all active:translate-x-0.5 active:translate-y-0.5 cursor-pointer"

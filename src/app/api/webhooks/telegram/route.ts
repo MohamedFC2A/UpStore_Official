@@ -66,7 +66,7 @@ export async function GET() {
   return NextResponse.json({
     status: 'active',
     service: 'UpStore Telegram Intelligent Support Bot Webhook',
-    bot: '@UpStore_Support_bot',
+    bot: '@upstore_one_bot',
     escalation_help: '@UPSTORE_HELP',
     ai_engine: 'DeepSeek + Gemini Multimodal Vision',
     monthly_media_limit: 3,

@@ -107,7 +107,7 @@ export function StoreSleepOverlay({ initialIsMaintenance = false }: StoreSleepOv
     return null;
   }
 
-  const telegramBotUrl = 'https://t.me/UpStore_Support_bot';
+  const telegramBotUrl = 'https://t.me/upstore_one_bot';
 
   return (
     <aside

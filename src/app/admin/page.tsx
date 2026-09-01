@@ -280,9 +280,9 @@ export default function AdminPage() {
   const [lemonsqueezyVariantId, setLemonSqueezyVariantId] = useState('');
   const [lemonsqueezyWebhookSecret, setLemonSqueezyWebhookSecret] = useState('');
 
-  const [instapayAddress, setInstapayAddress] = useState('mo_matany@instapay');
-  const [instapayUrl, setInstapayUrl] = useState('https://ipn.eg/S/mo_matany/instapay/30M8Zj');
-  const [vodafoneCashNumber, setVodafoneCashNumber] = useState('01041140422');
+  const [instapayAddress, setInstapayAddress] = useState('');
+  const [instapayUrl, setInstapayUrl] = useState('');
+  const [vodafoneCashNumber, setVodafoneCashNumber] = useState('');
   const [orangeCashNumber, setOrangeCashNumber] = useState('01234567890');
   const [etisalatCashNumber, setEtisalatCashNumber] = useState('01123456789');
   const [fawryMerchantCode, setFawryMerchantCode] = useState('984120');

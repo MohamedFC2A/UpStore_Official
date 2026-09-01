@@ -53,7 +53,7 @@ export async function POST(request: NextRequest) {
       profile = prof;
     }
 
-    const isAdmin = profile?.role === 'admin' || user?.email === 'mo.matany@gmail.com' || profile?.email === 'mo.matany@gmail.com';
+    const isAdmin = profile?.role === 'admin';
     const maxStrikes = isAdmin ? 15 : 3;
 
     if (profile?.is_banned) {
@@ -150,7 +150,7 @@ export async function POST(request: NextRequest) {
         session_id: sessionId || null,
         receipt_url: publicUrl,
         detected_recipient: ocrResult?.recipient || null,
-        expected_recipient: 'mo_matany / 01041140422',
+        expected_recipient: 'UpStore Official Accounts',
         fraud_type: fraudType,
         reason: fraudReason,
         strike_number: newStrikes,
@@ -170,7 +170,7 @@ export async function POST(request: NextRequest) {
 <b>نوع المخالفة:</b> <code>${fraudType}</code>
 <b>السبب:</b> ${fraudReason}
 <b>المحول إليه المكتشف:</b> <code>${ocrResult?.recipient || 'غير معتمد / وهمي'}</code>
-<b>المحول إليه المطلوب:</b> <code>mo_matany / 01041140422</code>
+<b>المحول إليه المطلوب:</b> <code>حسابات المتجر المعتمدة</code>
 <b>الجلسة:</b> <code>${sessionId || 'N/A'}</code>
 <b>رابط الإيصال:</b> <a href="${publicUrl}">اضغط للمعاينة</a>
         `.trim();
@@ -187,7 +187,7 @@ export async function POST(request: NextRequest) {
             .update({
               fraud_strikes: newStrikes,
               is_banned: true,
-              ban_reason: `تم حظر الحساب نهائياً لتكرار محاولات رفع إيصالات مزيفة أو محولة لأشخاص آخرين (${maxStrikes} مخالفات رصدها الذكاء الاصطناعي). آخر سبب: ${fraudReason}`,
+              ban_reason: `تم حظر الحساب نهائياً لتكرار محاولات رفع إيصالات مزيفة أو محولة لأشخاص آخرين (${maxStrikes} مخالفات رصدها النظام). آخر سبب: ${fraudReason}`,
               banned_at: new Date().toISOString(),
             })
             .eq('id', effectiveUserId);
@@ -207,7 +207,7 @@ export async function POST(request: NextRequest) {
             strikeCount: newStrikes,
             maxStrikes,
             message:
-              `تم حظر حسابك نهائياً: لقد قمت بارتكاب ${maxStrikes} مخالفات برفع إيصالات غير مطابقة أو محولة لأشخاص آخرين غير الحساب المعتمد (mo_matany / 01041140422). تم إيقاف الحساب بشكل دائم.`,
+              `تم حظر حسابك نهائياً: لقد قمت بارتكاب ${maxStrikes} مخالفات برفع إيصالات غير مطابقة أو محولة لأشخاص آخرين غير الحساب الرسمي المعتمد. تم إيقاف الحساب بشكل دائم.`,
           },
           { status: 403 }
         );
@@ -225,7 +225,7 @@ export async function POST(request: NextRequest) {
         const remainingStrikes = maxStrikes - newStrikes;
         const fierceWarning = `تحذير أمني صارم (المخالفة ${newStrikes} من ${maxStrikes}): تم اكتشاف أن الإيصال المرفوع ${
           fraudType === 'wrong_recipient'
-            ? `محول لحساب آخر (${ocrResult?.recipient || 'غير معتمد'}) وليس للحساب الرسمي المعتمد (mo_matany / 01041140422).`
+            ? `محول لحساب آخر (${ocrResult?.recipient || 'غير معتمد'}) وليس لحساب المتجر الرسمي المعتمد.`
             : 'صورة غير صالحة أو وهمية وليست إيصال تحويل حقيقي.'
         } تم تسجيل هذه المخالفة في سجلك الأمني. متبقي لديك (${remainingStrikes}) محاولات قبل حظر الحساب نهائياً.${isAdmin ? ' (وضع الاختبار للإدارة: مسموح حتى 15 مخالفة)' : ''}`;
 
@@ -333,7 +333,7 @@ export async function POST(request: NextRequest) {
       url: publicUrl,
       ocr: ocrResult,
       status: 'successful',
-      message: 'تم التحقق من الإيصال ومطابقة الحساب المعتمد (mo_matany) بنجاح.',
+      message: 'تم التحقق من بيانات الإيصال ومطابقة الحساب المعتمد بنجاح.',
     });
   } catch (error: any) {
     console.error('Receipt upload error:', error);

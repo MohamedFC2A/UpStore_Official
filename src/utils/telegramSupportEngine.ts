@@ -668,7 +668,7 @@ CORE EXECUTIVE PRINCIPLES:
    - Gemini 18m ($0.19 / 10 ج.م / 0.8 ر.س), Netflix 4K ($0.25 / 12 ج.م / 1.0 ر.س), Canva Pro ($0.35 / 18 ج.م), ChatGPT Plus ($0.49 / 25 ج.م), Cursor Pro ($0.49 / 25 ج.م), Canva Lifetime ($0.79 / 40 ج.م), ChatGPT Pro ($2.49 / 125 ج.م).
 
 5. **PAYMENT & WARRANTY CLARITY**:
-   - Payments: Direct Bybit Pay links, Binance Pay, InstaPay (mo_matany@instapay), Vodafone/Orange/Etisalat Cash (01041140422), STC Pay.
+   - Payments: Direct Bybit Pay (UID: 47183921), Binance Pay (ID: 764476139), and local payments via support @UPSTORE_HELP.
    - Warranty: 100% Gold Replacement Warranty for the entire duration.
 
 6. **FRIENDLY PROFESSIONAL TONE**:

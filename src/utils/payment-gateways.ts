@@ -75,13 +75,13 @@ export interface PaymentGatewaysConfig {
 }
 
 export const DEFAULT_PAYMENT_CONFIG: PaymentGatewaysConfig = {
-  instapayAddress: 'mo_matany@instapay',
-  instapayUrl: 'https://ipn.eg/S/mo_matany/instapay/30M8Zj',
-  vodafoneCashNumber: '01041140422',
-  vodafoneCashUrl: 'https://vf.eg/vfcash?id=mt&qrId=qPfWzP',
-  orangeCashNumber: '01234567890',
-  etisalatCashNumber: '01123456789',
-  wePayNumber: '01512345678',
+  instapayAddress: 'upstore@instapay',
+  instapayUrl: '',
+  vodafoneCashNumber: '',
+  vodafoneCashUrl: '',
+  orangeCashNumber: '',
+  etisalatCashNumber: '',
+  wePayNumber: '',
   fawryMerchantCode: '984120',
   
   stcPayNumber: '0551234567',
@@ -92,8 +92,8 @@ export const DEFAULT_PAYMENT_CONFIG: PaymentGatewaysConfig = {
   snbIban: 'SA4410000001234567890123',
   snbAccountName: 'UpStore Digital Trading',
 
-  paypalUrl: 'https://www.paypal.com/qrcodes/p2pqrc/N7AD8WM43LYVA',
-  paypalUsername: 'MOHAMED MATANY',
+  paypalUrl: '',
+  paypalUsername: 'UpStore Official',
   paypalQrImage: '/images/payment/paypal-qr.jpg',
 
   enablePaypal: true,

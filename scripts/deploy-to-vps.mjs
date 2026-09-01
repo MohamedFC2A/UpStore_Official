@@ -7,6 +7,7 @@ const VPS_PORT = 22022;
 const VPS_USER = 'root';
 const VPS_PASS = 'Mohamedgg2008#';
 const REMOTE_APP_DIR = '/root/upstorebot';
+const USERNAMES = ['root', 'ubuntu'];
 
 async function executeCommand(conn, cmd) {
   return new Promise((resolve, reject) => {

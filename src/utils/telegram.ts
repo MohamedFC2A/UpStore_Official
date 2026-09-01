@@ -577,5 +577,5 @@ export async function isAuthorizedTelegramAdmin(
   return false;
 }
 
-export const TELEGRAM_UNAUTHORIZED_MESSAGE = `⛔ <b>عذراً، هذا البوت مخصص للإدارة المركزية لمتجر UpStore فقط وغير متاح للعامة.</b>\n\nللحصول على المساعدة، يرجى التوجه إلى بوت الدعم الفني المعتمد: @UpStore_Support_bot`;
+export const TELEGRAM_UNAUTHORIZED_MESSAGE = `⛔ <b>عذراً، هذا البوت مخصص للإدارة المركزية لمتجر UpStore فقط وغير متاح للعامة.</b>\n\nللحصول على المساعدة، يرجى التوجه إلى بوت المتجر المعتمد: @upstore_one_bot أو الدعم @UPSTORE_HELP`;
 

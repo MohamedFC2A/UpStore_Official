@@ -654,8 +654,8 @@ async function testPaymobGateway(settings: Record<string, any>): Promise<Gateway
 async function testEgyptManualGateway(settings: Record<string, any>): Promise<GatewayHealthInfo> {
   const start = Date.now();
   const enabled = settings.enable_egypt_manual !== false;
-  const instapay = settings.instapay_address || 'mo_matany';
-  const vodafone = settings.vodafone_cash_number || '01012345678';
+  const instapay = settings.instapay_address || 'upstore@instapay';
+  const vodafone = settings.vodafone_cash_number || '';
   const orange = settings.orange_cash_number || '01234567890';
   const etisalat = settings.etisalat_cash_number || '01123456789';
   const fawry = settings.fawry_merchant_code || '984120';

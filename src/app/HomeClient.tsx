@@ -929,7 +929,7 @@ export default function HomePage() {
             </p>
           </div>
           <a
-            href="https://t.me/UpStore_Support_bot"
+            href="https://t.me/upstore_one_bot"
             target="_blank"
             rel="noopener noreferrer"
             className="px-6 py-3 rounded-xl bg-black hover:bg-neutral-800 text-white text-xs sm:text-sm font-black border-2 border-black shadow-[3px_3px_0px_0px_#06D6A0] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all flex items-center gap-2 shrink-0 cursor-pointer"

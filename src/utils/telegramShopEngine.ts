@@ -578,30 +578,23 @@ export async function renderDirectLocalCheckout(
   }
 
   const text = [
-    '📱 <b>فاتورة الدفع المحلي (InstaPay & كاش)</b>',
+    '📱 <b>طرق الدفع المحلية (عبر الدعم الفني)</b>',
     '━━━━━━━━━━━━━━━━━━━━━━',
     `📦 <b>المنتج:</b> ${product.name_ar}`,
     `🆔 <b>رقم الطلب:</b> <code>#${orderRef}</code>`,
     '',
     '💵 <b>المبلغ المطلوب:</b>',
-    `<code>${product.price_egp}</code> ج.م <i>(اضغط على الرقم للنسخ)</i>`,
-    `أو <code>${product.price_sar}</code> ر.س <i>(اضغط على الرقم للنسخ)</i>`,
-    '',
-    '💳 <b>عنوان انستاباي (InstaPay Username):</b>',
-    '<code>mo_matany@instapay</code> <i>(اضغط للنسخ)</i>',
-    '',
-    '📱 <b>محافظ كاش مصر (فودافون / اتصالات / أورنج / WE):</b>',
-    '<code>01041140422</code> <i>(اضغط على الرقم للنسخ)</i>',
+    `<code>${product.price_egp}</code> ج.م / <code>${product.price_sar}</code> ر.س ($${product.our_price.toFixed(2)} USDT)`,
     '',
     '━━━━━━━━━━━━━━━━━━━━━━',
-    '📌 <b>بعد التحويل:</b>',
-    'أرسل صورة الإشعار أو رقم المحفظة المحول منها هنا في الشات للتسليم الفوري ⚡.',
+    '📌 <b>للدفع عبر المحافظ والتحويلات المحلية:</b>',
+    'تواصل مباشرة مع خدمة العملاء @UPSTORE_HELP وسيتم تزويدك ببيانات التحويل واعتماد طلبك فوراً ⚡.',
   ].join('\n');
 
   const keyboard: { inline_keyboard: TelegramInlineKeyboardButton[][] } = {
     inline_keyboard: [
       [
-        { text: '👨‍💻 تأكيد الإيصال للدعم', callback_data: 'support' },
+        { text: '👨‍💻 تواصل مع الدعم (@UPSTORE_HELP)', url: 'https://t.me/UPSTORE_HELP' },
       ],
       [
         { text: '🔙 رجوع للمنتج', callback_data: `prod_${product.short_id}` },
@@ -714,17 +707,14 @@ export async function renderPaymentMethodsScreen(
     '',
     '━━━━━━━━━━━━━━━━━━━━━━',
     '⚡ <b>بيانات التحويل المعتمدة (رسوم 0%):</b>',
-    '• <b>Bybit UID:</b>',
+    '• ⚡ <b>Bybit UID:</b>',
     '<code>47183921</code> <i>(اضغط على الرقم للنسخ)</i>',
     '',
-    '• <b>Binance Pay / UID:</b>',
+    '• 🟡 <b>Binance Pay / UID:</b>',
     '<code>764476139</code> <i>(اضغط على الرقم للنسخ)</i>',
     '',
-    '• <b>InstaPay:</b>',
-    '<code>mo_matany@instapay</code> <i>(اضغط للنسخ)</i>',
-    '',
-    '• <b>محافظ كاش مصر:</b>',
-    '<code>01041140422</code> <i>(اضغط على الرقم للنسخ)</i>',
+    '• 📱 <b>طرق الدفع المحلية (المحافظ والتحويلات):</b>',
+    'عبر التواصل المباشر مع الدعم الفني @UPSTORE_HELP',
     '',
     '━━━━━━━━━━━━━━━━━━━━━━',
     '📌 بعد التحويل، أرسل <b>معرف العملية</b> هنا لشحن الرصيد مع البونص فوراً 🚀.',
@@ -734,7 +724,7 @@ export async function renderPaymentMethodsScreen(
     inline_keyboard: [
       [{ text: '⚡ شحن Bybit (+بونص تلقائي)', callback_data: 'buy_bybit_643361f7' }],
       [{ text: '🟡 شحن Binance (+بونص تلقائي)', callback_data: 'buy_binance_643361f7' }],
-      [{ text: '👨‍💻 شحن كاش وإنستاباي مع الدعم', callback_data: 'support' }],
+      [{ text: '👨‍💻 تواصل مع الدعم الفني (@UPSTORE_HELP)', url: 'https://t.me/UPSTORE_HELP' }],
       [{ text: '🏠 القائمة الرئيسية', callback_data: 'main_menu' }],
     ],
   };

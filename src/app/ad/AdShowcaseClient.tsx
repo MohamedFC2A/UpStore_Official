@@ -98,7 +98,7 @@ const PRODUCT_PRESETS: ProductPreset[] = [
       { start: 2.4, end: 5.2, text: '18 شهر كامل على بريدك الشخصي', stage: 1 },
       { start: 5.2, end: 7.0, text: 'وبأقوى سعر: 49 ج.م فقط (خصم 92%)', stage: 1 },
       { start: 7.0, end: 8.8, text: 'تفعيل سريع بضغطة واحدة وضمان شامل', stage: 2 },
-      { start: 8.8, end: 12.4, text: 'من UpStore.one • مقدم من Matany Labs', stage: 3 },
+      { start: 8.8, end: 12.4, text: 'من UpStore.one • ضمان ذهبي رسمي 100%', stage: 3 },
     ],
   },
   {
@@ -228,7 +228,7 @@ const PRODUCT_PRESETS: ProductPreset[] = [
       { start: 2.4, end: 5.2, text: 'تطبيق APK خاص لجميع الهواتف والشاشات الذكية', stage: 1 },
       { start: 5.2, end: 7.0, text: 'بـ 49 ج.م فقط للبطولة كاملة مع كود التفعيل', stage: 1 },
       { start: 7.0, end: 8.8, text: 'تحميل مباشر وتفعيل تلقائي فوري', stage: 2 },
-      { start: 8.8, end: 12.4, text: 'شجع فريقك مع UpStore.one و Matany Labs', stage: 3 },
+      { start: 8.8, end: 12.4, text: 'شجع فريقك مع UpStore.one الرسمي', stage: 3 },
     ],
   },
 ];
@@ -2002,7 +2002,7 @@ export default function AdShowcaseClient() {
                         {activePreset.warranty}
                       </span>
                       <span className="px-2 py-0.5 bg-black text-white rounded border border-black">
-                        Matany Labs
+                        UpStore Official
                       </span>
                     </div>
                   </div>

@@ -119,8 +119,8 @@ export function AiSupportModal({
           id: `ai-${Date.now()}`,
           role: 'assistant',
           text: isAr
-            ? 'حدث ضغط مؤقت على الخوادم. يمكنك مراسلتنا مباشرة على support@upstore.one أو تيليجرام @UpStore_Support_bot وسنرد فوراً.'
-            : 'Service busy. Please contact support@upstore.one or Telegram @UpStore_Support_bot.',
+            ? 'حدث ضغط مؤقت على الخوادم. يمكنك مراسلتنا مباشرة على support@upstore.one أو تيليجرام @upstore_one_bot وسنرد فوراً.'
+            : 'Service busy. Please contact support@upstore.one or Telegram @upstore_one_bot.',
           timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
         },
       ]);
@@ -279,7 +279,7 @@ export function AiSupportModal({
             </span>
 
             <a
-              href="https://t.me/UpStore_Support_bot"
+              href="https://t.me/upstore_one_bot"
               target="_blank"
               rel="noopener noreferrer"
               className="text-black font-black hover:underline flex items-center gap-1"

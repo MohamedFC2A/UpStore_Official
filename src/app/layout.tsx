@@ -48,18 +48,17 @@ export const metadata: Metadata = {
   metadataBase: new URL('https://upstore.one'),
   applicationName: 'UpStore',
   authors: [
-    { name: 'Matany Labs', url: 'https://www.tiktok.com/@matany_labs' },
-    { name: 'UpStore Team', url: 'https://upstore.one' },
+    { name: 'UpStore Official Team', url: 'https://upstore.one' },
   ],
   generator: 'Next.js',
-  creator: 'Matany Labs',
+  creator: 'UpStore Official Team',
   publisher: 'UpStore',
   keywords: [
     // Brand & Main Domain
     'UpStore',
     'upstore.one',
     'UpStore Marketplace',
-    'Matany Labs',
+    'UpStore Team',
     'متجر اب ستور',
     'متجر upstore',
     'اب ستور ون',
@@ -218,11 +217,11 @@ const organizationJsonLd = {
     'E-commerce',
   ],
   priceRange: '$',
-  currenciesAccepted: 'USD, EUR, EGP, SAR, AED, BTC, USDT, LTC',
-  paymentAccepted: 'Credit Card, Debit Card, Stripe, Bitcoin, Crypto, Binance Pay, Vodafone Cash, InstaPay',
+  currenciesAccepted: 'USD, EUR, EGP, SAR, AED, USDT, BTC',
+  paymentAccepted: 'Bybit, Binance Pay, Local Payments via Support',
   sameAs: [
-    'https://t.me/UpStore_Support_bot',
-    'https://www.tiktok.com/@matany_labs',
+    'https://t.me/upstore_one_bot',
+    'https://t.me/upstorelive_bot',
   ],
   areaServed: 'Global',
   hasMerchantReturnPolicy: {
@@ -243,7 +242,7 @@ const organizationJsonLd = {
   contactPoint: {
     '@type': 'ContactPoint',
     contactType: 'Customer Support',
-    url: 'https://t.me/UpStore_Support_bot',
+    url: 'https://t.me/upstore_one_bot',
     availableLanguage: ['English', 'Arabic'],
   },
 };

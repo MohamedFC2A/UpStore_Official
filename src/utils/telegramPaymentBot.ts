@@ -380,7 +380,7 @@ export async function dispatchPaymentAlertToAdmin(details: PaymentOrderDetails):
 <b>التحليل الجنائي للإيصال (AI OCR):</b>
 ├ <b>المبلغ المستخرج:</b> <code>${amountStr}</code>${amountComparison}
 ├ <b>المحوّل:</b> <code>${escapeHtml(ocr.senderName || ocr.senderPhone || ocr.senderAccount || details.paymentSender || 'غير ظاهر')}</code>
-├ <b>المستلم:</b> <code>${escapeHtml(ocr.recipient || 'mo_matany')}</code>
+├ <b>المستلم:</b> <code>${escapeHtml(ocr.recipient || 'حساب المتجر')}</code>
 ├ <b>الرقم المرجعي (Ref):</b> <code>${escapeHtml(ocr.referenceNumber || details.paymentTransactionId || 'غير محدد')}</code>
 ├ <b>التوقيت:</b> <code>${escapeHtml(ocr.transactionDate || '')} ${escapeHtml(ocr.transactionTime || '')}</code>
 └ <b>الحالة:</b> <code>${ocr.status === 'successful' ? 'ناجحة ومكتملة' : ocr.status}</code> (دقة: ${ocr.confidence}%)

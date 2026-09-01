@@ -57,7 +57,7 @@ ABOUT UPSTORE:
 2. Payment Methods Supported:
    - Binance Pay (ID: 764476139)
    - Bybit Pay (UID: 47183921)
-   - Egypt: Vodafone Cash (01041140422), InstaPay (mo_matany@instapay).
+   - Local Payments (Egypt / Arab Countries): Available via contacting official support @UPSTORE_HELP.
 3. Delivery Speed: Instant automated delivery inside the chat.
 4. Support: 24/7 dedicated human and AI support + Telegram support @UPSTORE_HELP.
 

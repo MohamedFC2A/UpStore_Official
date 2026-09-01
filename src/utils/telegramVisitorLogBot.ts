@@ -17,7 +17,7 @@ import { ClientTelemetryData } from './clientTelemetry';
 import { resolvePrecisionDeviceModel } from './deviceResolver';
 
 export const VISITOR_BOT_TOKEN = process.env.TELEGRAM_VISITOR_BOT_TOKEN || '';
-export const VISITOR_BOT_USERNAME = process.env.TELEGRAM_VISITOR_BOT_USERNAME || 'Logztbot';
+export const VISITOR_BOT_USERNAME = process.env.TELEGRAM_VISITOR_BOT_USERNAME || 'upstorelive_bot';
 
 const OPENROUTER_API_KEY = process.env.OPENROUTER_API_KEY || '';
 const GEMINI_MODEL = 'google/gemini-2.5-flash-lite';

@@ -66,7 +66,7 @@ export default function NotFound() {
           </Link>
 
           <a
-            href="https://t.me/UpStore_Support_bot"
+            href="https://t.me/upstore_one_bot"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-gray-300 font-semibold text-sm transition-all"

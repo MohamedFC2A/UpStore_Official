@@ -193,11 +193,11 @@ export async function POST(req: Request) {
       }
 
       case 'egypt_manual': {
-        const instapay = settings.instapay_address || 'mo_matany';
-        const vodafone = settings.vodafone_cash_number || '01012345678';
-        success = Boolean(instapay && vodafone);
-        messageAr = `تم التحقق من عناوين مصر (IPA: ${instapay} / كاش: ${vodafone})`;
-        messageEn = `Egypt addresses verified (IPA: ${instapay} / Cash: ${vodafone})`;
+        const instapay = settings.instapay_address || 'upstore@instapay';
+        const vodafone = settings.vodafone_cash_number || '';
+        success = Boolean(instapay || vodafone);
+        messageAr = `تم التحقق من عناوين مصر (IPA: ${instapay || 'غير محدد'})`;
+        messageEn = `Egypt addresses verified (IPA: ${instapay || 'Not set'})`;
         break;
       }
 

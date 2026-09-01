@@ -573,18 +573,18 @@ export function OrderTracking({
                     {step.isActive && isTelegram && (
                       <div className="mt-3.5 pt-2.5 border-t border-black/10">
                         <a
-                          href={`https://wa.me/201041140422?text=${encodeURIComponent(
+                          href={`https://t.me/UPSTORE_HELP?text=${encodeURIComponent(
                             isAr 
                               ? `طلب رقم: #${displayId}`
                               : `Order ID: #${displayId}`
                           )}`}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="inline-flex items-center gap-2 px-4 py-2.5 bg-[#25D366] hover:bg-[#20bd5a] border-2 border-black rounded-xl text-xs font-black text-black shadow-[2.5px_2.5px_0px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 transition-all cursor-pointer"
+                          className="inline-flex items-center gap-2 px-4 py-2.5 bg-[#0088cc] hover:bg-[#0077b5] border-2 border-black rounded-xl text-xs font-black text-white shadow-[2.5px_2.5px_0px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 transition-all cursor-pointer"
                         >
-                          <Zap className="w-3.5 h-3.5 stroke-[2.5] fill-black" />
-                          <span>{isAr ? 'استلام فوري (واتساب)' : 'Instant Delivery (WhatsApp)'}</span>
-                          <ExternalLink className="w-3 h-3 stroke-[2.5]" />
+                          <Zap className="w-3.5 h-3.5 stroke-[2.5] fill-white" />
+                          <span>{isAr ? 'استلام فوري (@UPSTORE_HELP)' : 'Instant Delivery (@UPSTORE_HELP)'}</span>
+                          <ExternalLink className="w-3.5 h-3.5 stroke-[2.5]" />
                         </a>
                       </div>
                     )}
@@ -618,17 +618,17 @@ export function OrderTracking({
             )}
 
             <a
-              href={`https://wa.me/201041140422?text=${encodeURIComponent(
+              href={`https://t.me/UPSTORE_HELP?text=${encodeURIComponent(
                 isAr ? `طلب رقم: #${displayId}` : `Order ID: #${displayId}`
               )}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex-1 sm:flex-none flex items-center justify-center gap-1.5 px-4 py-2.5 bg-[#25D366] hover:bg-[#20bd5a] border-2 border-black rounded-xl text-xs font-black text-black shadow-[2.5px_2.5px_0px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 transition-all cursor-pointer"
-              title={isAr ? 'استلام فوري عبر واتساب' : 'Instant Delivery via WhatsApp'}
+              className="flex-1 sm:flex-none flex items-center justify-center gap-1.5 px-4 py-2.5 bg-[#0088cc] hover:bg-[#0077b5] border-2 border-black rounded-xl text-xs font-black text-white shadow-[2.5px_2.5px_0px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 transition-all cursor-pointer"
+              title={isAr ? 'استلام فوري عبر الدعم الفني' : 'Instant Delivery via Support'}
             >
-              <Zap className="w-3.5 h-3.5 stroke-[2.5] fill-black" />
+              <Zap className="w-3.5 h-3.5 stroke-[2.5] fill-white" />
               <span>{isAr ? 'استلام فوري' : 'Instant Delivery'}</span>
-              <ExternalLink className="w-3 h-3 stroke-[2.5]" />
+              <ExternalLink className="w-3.5 h-3.5 stroke-[2.5]" />
             </a>
           </div>
 

@@ -119,7 +119,7 @@ export async function GET() {
   return NextResponse.json({
     status: 'active',
     service: 'UpStore Visitor Intelligence & Telemetry Engine (Single-Alert Mobile Deduplication)',
-    bot: '@Logztbot',
+    bot: '@upstorelive_bot',
     rule: 'Strict 1-Alert-Per-Mobile-Device (Zero Duplication)',
   });
 }

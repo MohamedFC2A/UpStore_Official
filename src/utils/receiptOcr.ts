@@ -24,38 +24,19 @@ export interface ReceiptOcrResult {
 }
 
 /**
- * List of authorized official recipient handles for UpStore Egypt
+ * List of authorized official recipient handles for UpStore
  */
 export const APPROVED_RECIPIENT_PATTERNS = [
-  'mo_matany',
-  'momatany',
-  'mo.matany',
-  'mo_matany@instapay',
-  'momatany@instapay',
-  'mo_matany@ipn',
-  'momatany@ipn',
-  '01041140422',
-  '010 4114 0422',
-  '010-4114-0422',
-  '+201041140422',
-  '201041140422',
-  '1041140422',
-  '01021469502',
-  '01000000000',
   '764476139',
   '382910482',
   '47183921',
   'upstore',
+  'upstore.one',
+  'upstore_one_bot',
+  'upstorelive_bot',
   'uversionstore',
-  'mohamed matany',
-  'mohamedmatany',
-  'mohamed_matany',
-  'mohamed',
-  'matany',
-  'محمد مطاوع',
-  'محمد متاني',
-  'محمد مطاوع متاني',
-  'محمد متانى',
+  'اب ستور',
+  'متجر اب ستور',
 ] as const;
 
 // Pre-compute normalized lookup structures for O(1) set matching
@@ -65,7 +46,7 @@ const CLEAN_APPROVED_SET = new Set<string>(
 const CLEAN_APPROVED_LIST = Array.from(CLEAN_APPROVED_SET);
 
 /**
- * Checks whether the extracted recipient string matches the approved store owner account (mo_matany / 01041140422)
+ * Checks whether the extracted recipient string matches the approved store accounts
  * Optimized to O(1) set lookup + single pass substring test
  */
 export function isApprovedRecipientHandle(recipient: string | null | undefined): boolean {
@@ -86,21 +67,12 @@ export function isApprovedRecipientHandle(recipient: string | null | undefined):
     }
   }
 
-  // 3. Check 01041140422 phone number variations
-  const digitsOnly = recipient.replace(/\D/g, '');
-  if (digitsOnly.endsWith('1041140422') || digitsOnly === '01041140422') {
-    return true;
-  }
-
-  // 4. Check Arabic names
+  // 3. Check official Arabic store names
   const arabicClean = recipient.replace(/[ًٌٍَُِّْ]/g, '').trim();
   if (
-    arabicClean.includes('محمد مطاوع') ||
-    arabicClean.includes('محمد متاني') ||
-    arabicClean.includes('محمد متانى') ||
-    arabicClean.includes('مطاوع') ||
-    arabicClean.includes('متاني') ||
-    arabicClean.includes('متانى')
+    arabicClean.includes('اب ستور') ||
+    arabicClean.includes('متجر اب ستور') ||
+    arabicClean.includes('UpStore')
   ) {
     return true;
   }
@@ -194,7 +166,7 @@ export function extractInstapayPatterns(rawText: string, _expectedAmount?: numbe
     }
   }
 
-  // Look for InstaPay IPA handle anywhere (e.g. user@instapay or mo_matany@...)
+  // Look for InstaPay IPA handle anywhere (e.g. user@instapay or handle@ipn)
   const ipaMatch = normalized.match(/([a-zA-Z0-9._-]+@instapay|[a-zA-Z0-9._-]+@ipn)/i);
   if (ipaMatch && ipaMatch[1]) {
     result.senderAccount = ipaMatch[1];
@@ -245,14 +217,13 @@ MANDATORY FRAUD RULES:
      Set "is_valid_receipt": false, "fraud_type": "fake_image", "fraud_reason": "الصورة المرفوعة صورة شخصية أو عنصر غير ذي صلة وليست إيصال تحويل مالي حقيقي".
 2. Recipient Inspection:
    - Official Store Approved Recipients:
-     * For InstaPay / IPN: "mo_matany" or "mo_matany@instapay" or "mo_matany@ipn"
-     * For Vodafone Cash / Mobile Wallets: "01041140422" (or "010 4114 0422" / "201041140422")
-     * For Binance Pay: "764476139" (or "382910482")
      * For Bybit: "47183921"
-   - If recipient field is visible and matches ANY of the official store accounts ("mo_matany", "01041140422", "764476139", "47183921"):
-     Set "recipient_matches_mo_matany": true, "wrong_recipient_detected": false.
-   - If recipient field clearly belongs to ANY OTHER PERSON, DIFFERENT PHONE NUMBER, OR DIFFERENT WALLET (e.g. "01012345678", "011...", "012...", "ahmed...", "queenz..."):
-     Set "recipient_matches_mo_matany": false, "wrong_recipient_detected": true, "fraud_type": "wrong_recipient", "fraud_reason": "تم تحويل الإيصال لرقم أو شخص آخر وليس لحساب المتجر الرسمي المعتمد".
+     * For Binance Pay: "764476139"
+     * For Store Handles: "upstore", "upstore_one_bot", "upstorelive_bot"
+   - If recipient field is visible and matches ANY official store accounts ("47183921", "764476139", "upstore"):
+     Set "recipient_matches_official": true, "wrong_recipient_detected": false.
+   - If recipient field clearly belongs to ANY OTHER UNRELATED RECIPIENT:
+     Set "recipient_matches_official": false, "wrong_recipient_detected": true, "fraud_type": "wrong_recipient", "fraud_reason": "تم تحويل الإيصال لحساب شخص آخر وليس لحساب المتجر الرسمي المعتمد".
    - If recipient is not visible or cut off in a real bank or wallet receipt:
      Set "is_recipient_visible": false, "recipient": null, "wrong_recipient_detected": false.
 3. Extract Amount, Sender, Reference Number (IPN...), Date.
@@ -268,7 +239,7 @@ Return ONLY this JSON format:
   "senderPhone": string or null,
   "recipient": string or null,
   "is_recipient_visible": boolean,
-  "recipient_matches_mo_matany": boolean,
+  "recipient_matches_official": boolean,
   "wrong_recipient_detected": boolean,
   "fraud_type": "wrong_recipient" | "fake_image" | null,
   "fraud_reason": string or null,
@@ -484,7 +455,7 @@ export async function analyzeReceiptWithOcr(
     if (isWrongRecipient) {
       isFraud = true;
       fraudType = 'wrong_recipient';
-      fraudReason = `تم التحويل لحساب آخر (${detectedRecipient}) وليس للحساب الرسمي المعتمد (mo_matany).`;
+      fraudReason = `تم التحويل لحساب آخر (${detectedRecipient}) وليس للحساب الرسمي المعتمد للمتجر.`;
       finalStatus = 'fraud_rejected';
     } else if (isMissingRecipient) {
       finalStatus = 'strict_review';
@@ -553,7 +524,7 @@ interface RawOcrPayload {
   senderPhone?: string | null;
   recipient?: string | null;
   is_recipient_visible?: boolean;
-  recipient_matches_mo_matany?: boolean;
+  recipient_matches_official?: boolean;
   isApprovedRecipient?: boolean;
   wrong_recipient_detected?: boolean;
   fraud_type?: 'wrong_recipient' | 'fake_image' | 'edited_receipt' | 'recycled_ref' | null;
@@ -608,7 +579,7 @@ function parseOcrJsonResponse(text: string): ReceiptOcrResult | null {
   const extractedRecipient = rawObj.recipient ? String(rawObj.recipient).trim() : null;
   const isRecipientVisible = Boolean(rawObj.is_recipient_visible ?? (extractedRecipient !== null));
   const isApproved =
-    Boolean(rawObj.recipient_matches_mo_matany || rawObj.isApprovedRecipient) ||
+    Boolean(rawObj.recipient_matches_official || rawObj.isApprovedRecipient) ||
     isApprovedRecipientHandle(extractedRecipient);
 
   const isWrongRecipient =
@@ -630,7 +601,7 @@ function parseOcrJsonResponse(text: string): ReceiptOcrResult | null {
     fraudType = 'wrong_recipient';
     fraudReason =
       rawObj.fraud_reason ||
-      `تم تحويل الإيصال لشخص آخر (${extractedRecipient || 'حساب غير معتمد'}) وليس إلى حساب المتجر المعتمد (mo_matany).`;
+      `تم تحويل الإيصال لشخص آخر (${extractedRecipient || 'حساب غير معتمد'}) وليس إلى حساب المتجر المعتمد.`;
     status = 'fraud_rejected';
   } else if (!isRecipientVisible || !extractedRecipient) {
     isFraud = false;

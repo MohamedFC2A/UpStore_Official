@@ -444,7 +444,7 @@ export const useHyperAdaptiveStore = create<HyperAdaptiveState>((set, get) => ({
         descEn: 'All products carry a 30-day replacement warranty with 24/7 live support.',
         actionLabelAr: 'تحدث مع الدعم الفني',
         actionLabelEn: 'Contact VIP Support',
-        actionUrl: 'https://t.me/UpStore_Support_bot',
+        actionUrl: 'https://t.me/upstore_one_bot',
       });
     }
   },

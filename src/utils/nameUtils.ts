@@ -16,7 +16,7 @@ export function heuristicExtractFirstName(input?: string | null): string {
   // 1. If input is email, extract the local part
   let namePart = input.includes('@') ? input.split('@')[0] : input;
 
-  // 2. Clean out Arabic brackets or extraneous parts e.g. "Mohamed Matany (محمد)" -> "Mohamed Matany"
+  // 2. Clean out Arabic brackets or extraneous parts e.g. "Mohamed (محمد)" -> "Mohamed"
   namePart = namePart.replace(/\([^)]*\)/g, '').trim();
 
   // 3. Remove non-alphanumeric separators (dots, underscores, dashes, numbers)

@@ -38,7 +38,7 @@ export default function PinPage() {
   const [adminError, setAdminError] = useState<string | null>(null);
 
   const supabase = createClient();
-  const telegramBotUrl = 'https://t.me/UpStore_Support_bot';
+  const telegramBotUrl = 'https://t.me/upstore_one_bot';
   const humanSupportUrl = 'https://t.me/UPSTORE_HELP';
 
   useEffect(() => {
@@ -213,8 +213,8 @@ export default function PinPage() {
             </h1>
             <p className="text-xs sm:text-sm text-neutral-800 font-bold leading-relaxed">
               {isAr
-                ? 'استخدم هذا الكود عند التحدث مع بوت الدعم الفني في تيليجرام (@UpStore_Support_bot) ليتمكن من جلب بيانات طلباتك والتأكد من هويتك فوراً.'
-                : 'Use this code with the Telegram Support Bot (@UpStore_Support_bot) to instantly verify your identity and view order details.'}
+                ? 'استخدم هذا الكود عند التحدث مع بوت المتجر في تيليجرام (@upstore_one_bot) ليتمكن من جلب بيانات طلباتك والتأكد من هويتك فوراً.'
+                : 'Use this code with the Telegram Bot (@upstore_one_bot) to instantly verify your identity and view order details.'}
             </p>
           </div>
 
@@ -252,7 +252,7 @@ export default function PinPage() {
               className="w-full py-4 bg-[#06D6A0] hover:bg-[#05b385] text-black font-black text-sm rounded-2xl border-2 border-black shadow-[4px_4px_0px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 transition-all flex items-center justify-center gap-2 cursor-pointer"
             >
               <Send className="w-4 h-4 stroke-[2.5]" />
-              <span>{isAr ? 'فتح بوت الدعم الفني الذكي (@UpStore_Support_bot)' : 'Open Support Bot (@UpStore_Support_bot)'}</span>
+              <span>{isAr ? 'فتح بوت المتجر (@upstore_one_bot)' : 'Open Store Bot (@upstore_one_bot)'}</span>
             </a>
 
             <a

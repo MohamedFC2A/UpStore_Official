@@ -854,17 +854,17 @@ export function NeubrutalismReceipt({
         {showActions && (
           <div className="space-y-2.5 pt-2 print:hidden border-t-2 border-dashed border-neutral-300">
             
-            {/* WhatsApp Priority Delivery Dispatch */}
+            {/* Support Priority Delivery Dispatch */}
             <a
-              href={`https://wa.me/201041140422?text=${encodeURIComponent(
+              href={`https://t.me/UPSTORE_HELP?text=${encodeURIComponent(
                 `مرحباً خدمة تسليم طلبات UpStore، أود تأكيد واستلام طلبي:\n- رقم الطلب: ${primaryOrderId || '#ORDER'}\n- الإجمالي: ${totalAmount || ''}\n- طريقة الدفع: ${paymentMethod || 'تحويل إلكتروني'}\n(مرفق صورة إيصال التحويل للاعتماد والتسليم)`
               )}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="w-full py-3 sm:py-3.5 bg-[#25D366] hover:bg-[#20bd5a] border-2 border-black text-black font-black text-xs sm:text-sm uppercase tracking-wider rounded-xl sm:rounded-2xl shadow-[3px_3px_0px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 active:scale-[0.99] transition-all flex items-center justify-center gap-2 cursor-pointer"
+              className="w-full py-3 sm:py-3.5 bg-[#0088cc] hover:bg-[#0077b5] border-2 border-black text-white font-black text-xs sm:text-sm uppercase tracking-wider rounded-xl sm:rounded-2xl shadow-[3px_3px_0px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 active:scale-[0.99] transition-all flex items-center justify-center gap-2 cursor-pointer"
             >
               <Smartphone className="w-4 h-4 stroke-[2.5]" />
-              <span>{isAr ? 'تأكيد واستلام الطلب (واتساب: 01041140422)' : 'Confirm & Receive Order (01041140422)'}</span>
+              <span>{isAr ? 'تأكيد واستلام الطلب (@UPSTORE_HELP)' : 'Confirm & Receive Order via Support'}</span>
               <ExternalLink className="w-3.5 h-3.5 stroke-[2.5]" />
             </a>
 

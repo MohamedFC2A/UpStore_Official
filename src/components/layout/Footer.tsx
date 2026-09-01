@@ -25,9 +25,9 @@ function TikTokIcon(props: React.SVGProps<SVGSVGElement>) {
 // ─── UpStore Official Social Channels ────────────────────────────────────────
 
 const SOCIALS = [
-  { label: 'Telegram Support', Icon: Send, href: 'https://t.me/UpStore_Support_bot', color: 'hover:bg-[#FFE600]' },
-  { label: 'TikTok Official', Icon: TikTokIcon, href: 'https://www.tiktok.com/@matany_labs', color: 'hover:bg-[#FF70A6]' },
-  { label: 'Email Support', Icon: Mail, href: 'mailto:support@upstore.one', color: 'hover:bg-[#06D6A0]' },
+  { label: 'Store Bot', Icon: Send, href: 'https://t.me/upstore_one_bot', color: 'hover:bg-[#FFE600]' },
+  { label: 'Live Monitor', Icon: Send, href: 'https://t.me/upstorelive_bot', color: 'hover:bg-[#FF70A6]' },
+  { label: 'Official Support', Icon: Mail, href: 'https://t.me/UPSTORE_HELP', color: 'hover:bg-[#06D6A0]' },
 ] as const;
 
 export default function Footer() {
@@ -43,12 +43,12 @@ export default function Footer() {
   const handleCopyEmail = (e: React.MouseEvent) => {
     e.preventDefault();
     if (typeof navigator !== 'undefined' && navigator.clipboard) {
-      navigator.clipboard.writeText('MatanyLabs@gmail.com');
+      navigator.clipboard.writeText('support@upstore.one');
     }
     setCopiedEmail(true);
     toast.success(
-      language === 'ar' ? 'تم نسخ البريد الإلكتروني للمطور!' : 'Developer email copied!',
-      'MatanyLabs@gmail.com'
+      language === 'ar' ? 'تم نسخ البريد الإلكتروني الرسمي!' : 'Official support email copied!',
+      'support@upstore.one'
     );
     setTimeout(() => setCopiedEmail(false), 2500);
   };
@@ -168,7 +168,7 @@ export default function Footer() {
                 <p className="text-xs font-black text-neutral-500 uppercase tracking-widest">{getFooterText('Support Channels:')}</p>
                 <p className="text-neutral-800">
                   <span className="font-black text-black">{getFooterText('Telegram Support:')}</span>{' '}
-                  <a href="https://t.me/UpStore_Support_bot" target="_blank" rel="noopener noreferrer" className="hover:underline text-black font-black bg-[#FFE600] px-2 py-0.5 rounded-lg border border-black inline-block shadow-[1px_1px_0px_0px_#000]">@UpStore_Support</a>
+                  <a href="https://t.me/UPSTORE_HELP" target="_blank" rel="noopener noreferrer" className="hover:underline text-black font-black bg-[#FFE600] px-2 py-0.5 rounded-lg border border-black inline-block shadow-[1px_1px_0px_0px_#000]">@UPSTORE_HELP</a>
                 </p>
                 <p className="text-neutral-800">
                   <span className="font-black text-black">{getFooterText('Contact Email:')}</span>{' '}
@@ -236,12 +236,12 @@ export default function Footer() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col gap-4" suppressHydrationWarning>
           <div className="flex flex-col md:flex-row items-center justify-between gap-4 text-xs font-black" suppressHydrationWarning>
             
-            {/* UpStore Copyright + Clean Matany Labs Developer Signature */}
+            {/* UpStore Copyright + Clean Official Engineering Signature */}
             <div className="flex items-center gap-3 flex-wrap justify-center md:justify-start">
               <p suppressHydrationWarning>{t('copyright', { year: new Date().getFullYear() })}</p>
               <span className="hidden sm:inline-block text-black/30 font-black">•</span>
               
-              {/* High-End Matany Labs Engineering Studio Badge */}
+              {/* High-End UpStore Engineering Studio Badge */}
               <div 
                 dir="ltr" 
                 className="font-sans antialiased inline-flex items-center gap-2 px-2.5 py-1.5 rounded-2xl bg-[#0d0d11] text-white border-2 border-black shadow-[2.5px_2.5px_0px_0px_#000] hover:shadow-[3.5px_3.5px_0px_0px_#000] hover:-translate-y-0.5 transition-all select-none group"
@@ -254,39 +254,39 @@ export default function Footer() {
                 {/* Studio Name & Subtitle */}
                 <div className="flex flex-col text-start leading-none pr-1">
                   <span className="text-[8px] font-black uppercase tracking-wider text-neutral-400">
-                    Engineered by
+                    Official
                   </span>
                   <span className="text-xs font-black tracking-tight text-white group-hover:text-[#FFE600] transition-colors">
-                    Matany Labs
+                    UpStore Engineering
                   </span>
                 </div>
 
-                {/* Connected Action Buttons (TikTok & Email) */}
+                {/* Connected Action Buttons (Telegram & Email) */}
                 <div className="flex items-center gap-1 ps-1.5 border-s border-neutral-700">
-                  {/* TikTok Profile Link */}
+                  {/* Telegram Bot Link */}
                   <a
-                    href="https://www.tiktok.com/@matany_labs"
+                    href="https://t.me/upstore_one_bot"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-1 px-2 py-1 rounded-xl bg-neutral-900 hover:bg-[#FF0050] text-neutral-300 hover:text-white border border-neutral-700/80 hover:border-black transition-all text-[11px] font-black cursor-pointer"
-                    title="TikTok: @matany_labs"
-                    aria-label="Matany Labs TikTok"
+                    className="flex items-center gap-1 px-2 py-1 rounded-xl bg-neutral-900 hover:bg-[#0088cc] text-neutral-300 hover:text-white border border-neutral-700/80 hover:border-black transition-all text-[11px] font-black cursor-pointer"
+                    title="Telegram Store: @upstore_one_bot"
+                    aria-label="UpStore Bot"
                   >
-                    <TikTokIcon className="w-3.5 h-3.5 text-[#FF70A6] group-hover:text-white" />
-                    <span className="hidden sm:inline text-[10px]">TikTok</span>
+                    <Send className="w-3.5 h-3.5 text-[#0088cc] group-hover:text-white" />
+                    <span className="hidden sm:inline text-[10px]">Bot</span>
                   </a>
 
                   {/* Email Link & 1-Click Copy */}
                   <a
-                    href="mailto:MatanyLabs@gmail.com"
+                    href="mailto:support@upstore.one"
                     onClick={handleCopyEmail}
                     className={`flex items-center gap-1 px-2 py-1 rounded-xl border transition-all text-[11px] font-black cursor-pointer ${
                       copiedEmail 
                         ? 'bg-[#06D6A0] text-black border-black shadow-[1px_1px_0px_0px_#000]' 
                         : 'bg-neutral-900 hover:bg-[#06D6A0] text-neutral-300 hover:text-black border-neutral-700/80 hover:border-black'
                     }`}
-                    title="MatanyLabs@gmail.com (انقر للنسخ)"
-                    aria-label="Email Matany Labs"
+                    title="support@upstore.one (انقر للنسخ)"
+                    aria-label="Email UpStore Support"
                   >
                     {copiedEmail ? (
                       <>

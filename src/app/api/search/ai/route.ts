@@ -424,6 +424,6 @@ function generateStoreAnswer(query: string, isAr: boolean) {
       ? 'فريق الدعم الفني متواجد 24/7 على تيليجرام لمساعدتك في أي استفسار أو طلب خاص.'
       : 'Our technical support team is available 24/7 on Telegram to assist with any inquiry.',
     actionLabel: isAr ? 'تواصل معنا على تيليجرام' : 'Telegram Support',
-    actionUrl: 'https://t.me/UpStore_Support_bot',
+    actionUrl: 'https://t.me/upstore_one_bot',
   };
 }

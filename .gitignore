@@ -47,5 +47,9 @@ next-env.d.ts
 # screen recordings
 *.mp4
 
+*.tar.gz
+scripts/user_wallets.json
+data/user_languages.json
+
 .vercel
 scratch/

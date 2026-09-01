@@ -51,7 +51,7 @@ export const ADMIN_USER_IDS = new Set([
 
 export const ADMIN_EMAILS = new Set([
   'uversionstore@gmail.com',
-  'mohamedahmedmatany@gmail.com',
+  'support@upstore.one',
 ]);
 
 export function isAdminIdentity(input: {

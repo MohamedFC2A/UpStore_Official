@@ -56,10 +56,10 @@ function ManualSuccessContent() {
   const [bybitBep20, setBybitBep20] = useState('0x71C836e520023a1B3a0279612301A949826a7C10');
   const [bybitTon, setBybitTon] = useState('EQBvW8m53GoU_jPAIp7LwY8Gj044kX_613p_dC6lQ1_y9Z1X');
   const [binancePayId, setBinancePayId] = useState('764476139');
-  const [instapayAddress, setInstapayAddress] = useState('mo_matany@instapay');
-  const [instapayUrl, setInstapayUrl] = useState('https://ipn.eg/S/mo_matany/instapay/30M8Zj');
-  const [vodafoneNumber, setVodafoneNumber] = useState('01041140422');
-  const [vodafoneUrl, setVodafoneUrl] = useState('https://vf.eg/vfcash?id=mt&qrId=qPfWzP');
+  const [instapayAddress, setInstapayAddress] = useState('');
+  const [instapayUrl, setInstapayUrl] = useState('');
+  const [vodafoneNumber, setVodafoneNumber] = useState('');
+  const [vodafoneUrl, setVodafoneUrl] = useState('');
   const [egCarrier, setEgCarrier] = useState<'vodafone' | 'orange' | 'etisalat' | 'we'>('vodafone');
   const [stcNumber, setStcNumber] = useState('0551234567');
   const [alrajhiIban, setAlrajhiIban] = useState('SA0380000000608010167519');
@@ -159,7 +159,7 @@ function ManualSuccessContent() {
             if (s.key === 'bybit_usdt_ton' && val) setBybitTon(val);
             if (s.key === 'binance_pay_id' && val) setBinancePayId(val);
             if (s.key === 'instapay_address') {
-              const clean = val && !val.includes('yourname') ? val : 'mo_matany@instapay';
+              const clean = val && !val.includes('yourname') ? val : '';
               setInstapayAddress(clean);
             }
             if (s.key === 'instapay_url' && val) {
@@ -327,7 +327,7 @@ function ManualSuccessContent() {
           if (data.ocr.senderAccount || data.ocr.senderPhone) setSenderAccount(data.ocr.senderAccount || data.ocr.senderPhone);
           if (data.ocr.referenceNumber) setTransactionId(data.ocr.referenceNumber);
           useToastStore.getState().success(
-            isAr ? 'تم التحقق من الحساب المعتمد (mo_matany) بنجاح' : 'Receipt verified for mo_matany'
+            isAr ? 'تم التحقق من بيانات الإيصال بنجاح' : 'Receipt verified successfully'
           );
         }
       }
@@ -467,19 +467,15 @@ function ManualSuccessContent() {
             </p>
           </div>
 
-          {/* Instant Delivery WhatsApp Hero Button */}
+          {/* Instant Delivery Support Hero Button */}
           <a
-            href={`https://wa.me/201041140422?text=${encodeURIComponent(
-              isAr
-                ? `مرحباً خدمة تسليم UpStore،\nتم تأكيد ودفع طلبي بنجاح، أود استلام التراخيص وتأكيد التفعيل:\n• رقم الطلب: #${shortSessionId}\n• المبلغ: ${totalLocalAmount} ${currencySymbol}`
-                : `Hello UpStore Delivery Support,\nMy order has been verified. Order ID: #${shortSessionId}`
-            )}`}
+            href="https://t.me/UPSTORE_HELP"
             target="_blank"
             rel="noopener noreferrer"
-            className="w-full py-3.5 bg-[#25D366] hover:bg-[#20bd5a] border-2 border-black text-black font-black uppercase tracking-wider rounded-xl sm:rounded-2xl shadow-[3.5px_3.5px_0px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 flex items-center justify-center gap-2 cursor-pointer text-xs sm:text-sm transition-all"
+            className="w-full py-3.5 bg-[#0088cc] hover:bg-[#0077b5] border-2 border-black text-white font-black uppercase tracking-wider rounded-xl sm:rounded-2xl shadow-[3.5px_3.5px_0px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 flex items-center justify-center gap-2 cursor-pointer text-xs sm:text-sm transition-all"
           >
             <Smartphone className="w-4 h-4 stroke-[2.5]" />
-            <span>{isAr ? 'تأكيد واستلام الطلب (واتساب: 01041140422)' : 'Confirm & Receive Order via WhatsApp'}</span>
+            <span>{isAr ? 'تأكيد واستلام الطلب (@UPSTORE_HELP)' : 'Confirm & Receive Order via Support'}</span>
             <ExternalLink className="w-3.5 h-3.5 stroke-[2.5]" />
           </a>
 
@@ -627,7 +623,7 @@ function ManualSuccessContent() {
 
         {/* ─── 1. INSTAPAY DIRECT PAYMENT CARD (ICONIC SMART STEPS) ─── */}
         {isInstapay && (() => {
-          const smartInstapayUrl = instapayUrl || 'https://ipn.eg/S/mo_matany/instapay/30M8Zj';
+          const smartInstapayUrl = instapayUrl || '';
 
           return (
             <div className="p-3.5 sm:p-4 bg-[#F9F3FF] border-2 border-black rounded-2xl space-y-2.5 shadow-[3px_3px_0px_0px_#000]">
@@ -642,7 +638,7 @@ function ManualSuccessContent() {
                     </span>
                     <span className="text-[10px] text-purple-900 font-bold flex items-center gap-1">
                       <span>{isAr ? 'المستلم المعتمد:' : 'Recipient:'}</span>
-                      <span className="font-mono text-[#501A79] font-black">mo_matany@instapay</span>
+                      <span className="font-mono text-[#501A79] font-black">{instapayAddress || 'UpStore Official'}</span>
                       <Check className="w-3 h-3 text-emerald-600 stroke-[3] inline" />
                     </span>
                   </div>
@@ -697,7 +693,7 @@ function ManualSuccessContent() {
                       {isAr ? 'فتح تطبيق InstaPay والتحويل فوراً' : 'Open InstaPay App & Transfer'}
                     </span>
                     <span className="text-[10px] text-neutral-600 font-bold block truncate">
-                      {isAr ? 'المستلم مكتوب تلقائياً في التطبيق (mo_matany@instapay)' : 'Pre-filled recipient in app: mo_matany@instapay'}
+                      {isAr ? 'المستلم مكتوب تلقائياً في التطبيق' : 'Pre-filled recipient in app'}
                     </span>
                   </div>
                 </div>
@@ -726,44 +722,44 @@ function ManualSuccessContent() {
               nameEn: 'Vodafone Cash',
               color: '#E60000',
               activeBg: 'bg-[#E60000] text-white border-black',
-              ussd: `*9*7*${vodafoneNumber || '01041140422'}*${roundedAmount}#`,
+              ussd: `*9*7*${vodafoneNumber || ''}*${roundedAmount}#`,
               menuUssd: '*9#',
               menuInstructionsAr: 'اطلب #9* ← اختر 1 تحويل أموال ← أدخل الرقم والمبلغ والرقم السري',
               appUrl: vodafoneUrl
                 ? (vodafoneUrl.includes('?') 
                     ? `${vodafoneUrl}&amount=${totalLocalAmount}&price=${totalLocalAmount}&val=${totalLocalAmount}` 
                     : `${vodafoneUrl}?amount=${totalLocalAmount}&price=${totalLocalAmount}&val=${totalLocalAmount}`)
-                : `https://vf.eg/vfcash?id=mt&qrId=qPfWzP&amount=${totalLocalAmount}&price=${totalLocalAmount}&val=${totalLocalAmount}`,
+                : '',
             },
             orange: {
               nameAr: 'أورنج كاش (Orange Cash)',
               nameEn: 'Orange Cash',
               color: '#FF7900',
               activeBg: 'bg-[#FF7900] text-white border-black',
-              ussd: `*115*1*${vodafoneNumber || '01041140422'}*${roundedAmount}#`,
+              ussd: `*115*1*${vodafoneNumber || ''}*${roundedAmount}#`,
               menuUssd: '#115#',
               menuInstructionsAr: 'اطلب #115# ← اختر 1 تحويل أموال ← أدخل الرقم والمبلغ والرقم السري',
-              appUrl: `https://vf.eg/vfcash?id=mt&qrId=qPfWzP&amount=${totalLocalAmount}`,
+              appUrl: '',
             },
             etisalat: {
               nameAr: 'اتصالات كاش (Etisalat / e&)',
               nameEn: 'Etisalat Cash (e&)',
               color: '#719E19',
               activeBg: 'bg-[#719E19] text-white border-black',
-              ussd: `*777*1*${vodafoneNumber || '01041140422'}*${roundedAmount}#`,
+              ussd: `*777*1*${vodafoneNumber || ''}*${roundedAmount}#`,
               menuUssd: '*777#',
               menuInstructionsAr: 'اطلب #777* ← اختر 1 تحويل أموال ← أدخل الرقم والمبلغ والرقم السري',
-              appUrl: `https://vf.eg/vfcash?id=mt&qrId=qPfWzP&amount=${totalLocalAmount}`,
+              appUrl: '',
             },
             we: {
               nameAr: 'وي باي (WE Pay)',
               nameEn: 'WE Pay',
               color: '#562584',
               activeBg: 'bg-[#562584] text-white border-black',
-              ussd: `*322*1*${vodafoneNumber || '01041140422'}*${roundedAmount}#`,
+              ussd: `*322*1*${vodafoneNumber || ''}*${roundedAmount}#`,
               menuUssd: '*322#',
               menuInstructionsAr: 'اطلب #322* ← اختر 1 تحويل أموال ← أدخل الرقم والمبلغ والرقم السري',
-              appUrl: `https://vf.eg/vfcash?id=mt&qrId=qPfWzP&amount=${totalLocalAmount}`,
+              appUrl: '',
             },
           };
 
@@ -1057,7 +1053,7 @@ function ManualSuccessContent() {
                     {isAr ? 'السداد المباشر بضغطة واحدة' : 'Instant 1-Click Payment'}
                   </span>
                   <span className="text-[10px] text-neutral-600 font-bold block truncate">
-                    MOHAMED MATANY (0% Fees)
+                    UpStore Official (0% Fees)
                   </span>
                 </div>
               </div>
@@ -1555,7 +1551,7 @@ function ManualSuccessContent() {
                         {isAr ? 'خدمة تسليم الطلب المباشرة' : 'Direct Dispatch Service'}
                       </h4>
                       <p className="text-[10px] sm:text-[11px] text-emerald-900 font-bold truncate">
-                        {isAr ? 'تواصل فوراً مع مسؤول التسليم على واتساب (01041140422)' : 'Contact delivery officer on WhatsApp'}
+                        {isAr ? 'تواصل فوراً مع الدعم الفني الرسمي على تيليجرام' : 'Contact official support on Telegram'}
                       </p>
                     </div>
                   </div>
@@ -1565,17 +1561,13 @@ function ManualSuccessContent() {
                 </div>
 
                 <a
-                  href={`https://wa.me/201041140422?text=${encodeURIComponent(
-                    isAr
-                      ? `مرحباً خدمة تسليم UpStore،\nأود استلام وتفعيل طلبي:\n• رقم الطلب: #${shortSessionId}\n• المبلغ: ${totalLocalAmount} ${currencySymbol}\n• وسيلة الدفع: ${isVodafone ? 'فودافون كاش' : isInstapay ? 'إنستاباي' : isOrange ? 'أورنج كاش' : isStc ? 'STC Pay' : 'محفظة / تحويل بنكي'}\n(تم رفع الإيصال بنجاح وجاهز للاستلام)`
-                      : `Hello UpStore Delivery Support,\nI would like direct delivery for my order:\n• Order ID: #${shortSessionId}\n• Amount: ${totalLocalAmount} ${currencySymbol}\n• Payment Method: ${method}\n(Payment proof uploaded)`
-                  )}`}
+                  href="https://t.me/UPSTORE_HELP"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full py-3.5 px-4 bg-[#25D366] hover:bg-[#20bd5a] border-2 border-black text-black font-black text-xs sm:text-sm uppercase tracking-wider rounded-xl sm:rounded-2xl shadow-[3px_3px_0px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 transition-all flex items-center justify-center gap-2 cursor-pointer"
+                  className="w-full py-3.5 px-4 bg-[#0088cc] hover:bg-[#0077b5] border-2 border-black text-white font-black text-xs sm:text-sm uppercase tracking-wider rounded-xl sm:rounded-2xl shadow-[3px_3px_0px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 transition-all flex items-center justify-center gap-2 cursor-pointer"
                 >
                   <Smartphone className="w-4 h-4 stroke-[2.5]" />
-                  <span>{isAr ? 'استلام الطلب' : 'Receive Order'}</span>
+                  <span>{isAr ? 'استلام وتأكيد الطلب (@UPSTORE_HELP)' : 'Receive & Confirm Order via Support'}</span>
                   <ExternalLink className="w-3.5 h-3.5 stroke-[2.5]" />
                 </a>
               </div>
@@ -1586,7 +1578,7 @@ function ManualSuccessContent() {
         {/* Support & Dashboard Footer */}
         <div className="pt-2 border-t-2 border-black flex flex-col sm:flex-row items-center justify-between gap-3 text-xs">
           <a
-            href={`https://t.me/UpStore_Support_bot?text=${encodeURIComponent(
+            href={`https://t.me/UPSTORE_HELP?text=${encodeURIComponent(
               isAr
                 ? `السلام عليكم، أود متابعة واعتماد طلبي رقم #${shortSessionId} بمبلغ ${totalLocalAmount} ${currencySymbol}`
                 : `Hello, I would like to follow up on my order #${shortSessionId} of ${totalLocalAmount} ${currencySymbol}`
@@ -1596,7 +1588,7 @@ function ManualSuccessContent() {
             className="text-black font-black underline flex items-center gap-1 hover:opacity-80"
           >
             <Smartphone className="w-3.5 h-3.5 stroke-[2.5]" />
-            <span>{isAr ? 'الدعم الفني المباشر @UpStore_Support' : 'Live Support @UpStore_Support'}</span>
+            <span>{isAr ? 'الدعم الفني المباشر @UPSTORE_HELP' : 'Live Support @UPSTORE_HELP'}</span>
           </a>
 
           <Link href="/dashboard" className="text-neutral-700 font-bold hover:underline">
@@ -1647,7 +1639,7 @@ function ManualSuccessContent() {
                       <>
                         {isAr ? 'يجب أن يكون التحويل موجهاً حصراً إلى رقم محفظة فودافون كاش الرسمية ' : 'The transfer must be sent strictly to the official Vodafone Cash wallet '}
                         <code className="px-1.5 py-0.5 bg-[#FF70A6] border border-black rounded font-mono font-black text-black text-[11px]">
-                          {vodafoneNumber || '01041140422'}
+                          {vodafoneNumber || 'المحفظة الرسمية'}
                         </code>
                         {isAr ? ' الخاصة بالمتجر.' : ' only.'}
                       </>
@@ -1655,7 +1647,7 @@ function ManualSuccessContent() {
                       <>
                         {isAr ? 'يجب أن يكون التحويل موجهاً حصراً إلى معرف الدفع الرسمي ' : 'The transfer must be sent strictly to the official IPA handle '}
                         <code className="px-1.5 py-0.5 bg-[#FFE600] border border-black rounded font-mono font-black text-black text-[11px]">
-                          {instapayAddress || 'mo_matany'}
+                          {instapayAddress || 'الحساب الرسمي'}
                         </code>
                         {isAr ? ' الخاص بالمتجر.' : ' only.'}
                       </>
@@ -1788,7 +1780,7 @@ function ManualSuccessContent() {
                         {isAr ? 'المحول إليه الرسمي المطلوب:' : 'Required Official Recipient:'}
                       </span>
                       <span className="font-mono font-black text-emerald-800 block">
-                        mo_matany
+                        حساب المتجر الرسمي
                       </span>
                     </div>
                   </div>
@@ -1809,7 +1801,7 @@ function ManualSuccessContent() {
                 {fraudWarning.isBanned ? (
                   <div className="space-y-2">
                     <Link
-                      href="https://t.me/UpStore_payment_bot"
+                      href="https://t.me/UPSTORE_HELP"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="w-full py-3 bg-black text-white hover:bg-neutral-800 border-2 border-black rounded-2xl text-xs font-black flex items-center justify-center gap-2 shadow-[2px_2px_0px_0px_#000] cursor-pointer"

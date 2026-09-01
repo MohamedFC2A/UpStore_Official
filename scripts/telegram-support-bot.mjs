@@ -23,8 +23,30 @@ import {
   getUserLanguage,
   setUserLanguage,
   detectUserLanguage,
+  getLocalizedDuration,
+  getLocalizedWarranty,
   t,
 } from './storeI18n.mjs';
+import {
+  notifyUserEntry,
+  notifyUserNavigation,
+  notifyUserChat,
+  notifyPurchaseAttempt,
+  notifyPurchaseDelivered,
+  notifyWalletTopup,
+  notifyPendingPaymentApproval,
+  setOrderApprovalHandler,
+  notifySystemUpdate,
+  startLiveBotPolling,
+} from './liveMonitor.mjs';
+import {
+  getUserWallet,
+  creditUserWallet,
+  debitUserWallet,
+  MIN_TOPUP_USD,
+  MIN_TOPUP_EGP,
+  MIN_TOPUP_SAR,
+} from './storeWallet.mjs';
 
 const BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN || '8855216740:AAEbNj5orlWvMb7sDRw7Zasqim4GybGDT0o';
 const BOT_USERNAME = 'upstore_one_bot';
@@ -146,10 +168,38 @@ async function verifyBybitPayment(expectedAmount) {
   }
 }
 
+// Set of consumed transfer IDs / TxIDs to prevent double spending
+const consumedTxIds = new Set();
+
+function isTxIdConsumed(txId) {
+  if (!txId) return false;
+  return consumedTxIds.has(String(txId).trim().toLowerCase());
+}
+
+function markTxIdConsumed(txId) {
+  if (!txId) return;
+  consumedTxIds.add(String(txId).trim().toLowerCase());
+}
+
+/**
+ * Generates a unique 16-digit serial key formatted in 4 blocks of 4 (e.g. 8492-4912-7019-3852)
+ */
+export function generate16DigitSerial() {
+  let digits = '';
+  for (let i = 0; i < 16; i++) {
+    digits += Math.floor(Math.random() * 10);
+  }
+  return `${digits.slice(0, 4)}-${digits.slice(4, 8)}-${digits.slice(8, 12)}-${digits.slice(12, 16)}`;
+}
+
 async function verifyTransferIdOrTxid(txidInput, expectedAmount = null) {
   try {
     const cleanTx = (txidInput || '').trim();
     if (!cleanTx || cleanTx.length < 3) return { success: false };
+
+    if (isTxIdConsumed(cleanTx)) {
+      return { success: false, error: 'TXID_ALREADY_USED' };
+    }
 
     // 1. Query Internal Transfers
     const transfers = await queryBybitApi('/v5/asset/transfer/query-inter-transfer-list', {
@@ -164,6 +214,9 @@ async function verifyTransferIdOrTxid(txidInput, expectedAmount = null) {
           t.status === 'SUCCESS' &&
           (transferIdStr === cleanTx || cleanTx.includes(transferIdStr) || transferIdStr.includes(cleanTx))
         ) {
+          if (isTxIdConsumed(transferIdStr)) return { success: false, error: 'TXID_ALREADY_USED' };
+          markTxIdConsumed(transferIdStr);
+          markTxIdConsumed(cleanTx);
           return {
             success: true,
             type: 'internal_transfer',
@@ -189,6 +242,9 @@ async function verifyTransferIdOrTxid(txidInput, expectedAmount = null) {
           (d.status === 3 || d.status === 1) &&
           (txIdStr === cleanTx || cleanTx.toLowerCase().includes(txIdStr.toLowerCase()) || txIdStr.toLowerCase().includes(cleanTx.toLowerCase()))
         ) {
+          if (isTxIdConsumed(txIdStr)) return { success: false, error: 'TXID_ALREADY_USED' };
+          markTxIdConsumed(txIdStr);
+          markTxIdConsumed(cleanTx);
           return {
             success: true,
             type: 'on_chain_deposit',
@@ -205,7 +261,11 @@ async function verifyTransferIdOrTxid(txidInput, expectedAmount = null) {
     if (expectedAmount && expectedAmount > 0) {
       const fallbackVerify = await verifyBybitPayment(expectedAmount);
       if (fallbackVerify && fallbackVerify.success) {
-        return fallbackVerify;
+        const fallbackId = fallbackVerify.transferId || fallbackVerify.txID || `${expectedAmount}_${Date.now()}`;
+        if (!isTxIdConsumed(fallbackId)) {
+          markTxIdConsumed(fallbackId);
+          return fallbackVerify;
+        }
       }
     }
 
@@ -216,9 +276,7 @@ async function verifyTransferIdOrTxid(txidInput, expectedAmount = null) {
   }
 }
 
-const OPENROUTER_API_KEY = process.env.OPENROUTER_API_KEY || '';
-const OPENROUTER_ENDPOINT = 'https://openrouter.ai/api/v1/chat/completions';
-const MONTHLY_MEDIA_UPLOAD_LIMIT = 3;
+const MONTHLY_MEDIA_UPLOAD_LIMIT = 5;
 
 const mediaUploadRecords = new Map();
 const userChatHistories = new Map();
@@ -365,153 +423,16 @@ async function downloadTelegramFileAsBase64(fileId) {
   }
 }
 
-async function analyzeMediaWithGeminiVision(dataUrl, caption) {
-  const systemPrompt = [
-    `You are Chief Forensic Support Specialist at UpStore Telegram Store (@${BOT_USERNAME}).`,
-    'Friendly, polite tone with helpful emojis. Formal 2-3 sentences max in Arabic.',
-    'Official accounts: mo_matany (InstaPay) / 01041140422 (Vodafone Cash) / Bybit Pay Direct Links.',
-  ].join('\n');
-
-  const res = await fetch(OPENROUTER_ENDPOINT, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${OPENROUTER_API_KEY}`,
-    },
-    body: JSON.stringify({
-      model: 'google/gemini-2.5-flash-lite',
-      messages: [
-        { role: 'system', content: systemPrompt },
-        { role: 'user', content: [
-          { type: 'text', text: caption || 'Verify receipt or error screenshot.' },
-          { type: 'image_url', image_url: { url: dataUrl } }
-        ] },
-      ],
-      temperature: 0.35,
-      max_tokens: 350,
-    }),
-  });
-
-  if (!res.ok) return 'تم استلام الملف بنجاح ✅. جارٍ المراجعة والتحقق من قبل فريق الدعم الفني عبر @UPSTORE_HELP 👨‍💻.';
-  const data = await res.json();
-  return data?.choices?.[0]?.message?.content?.trim() || 'تم فحص المستند بنجاح ✅.';
-}
-
-async function deleteMessage(chatId, messageId) {
-  if (!messageId) return;
-  try {
-    const payload = { chat_id: chatId, message_id: messageId };
-    await fetch(`${TELEGRAM_API}/deleteMessage`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload),
-    });
-  } catch {}
-}
-
-function matchPersistentButton(text) {
-  if (!text) return null;
-  const clean = text.replace(/^[^\p{L}\p{N}]+/gu, '').trim().toLowerCase();
-
-  // Test across all 7 supported languages
-  for (const l of Object.keys(SUPPORTED_LANGUAGES)) {
-    const cat = (t('btn_catalog', l) || '').toLowerCase();
-    const orders = (t('btn_orders', l) || '').toLowerCase();
-    const wallet = (t('btn_wallet', l) || '').toLowerCase();
-    const ref = (t('btn_referral', l) || '').toLowerCase();
-    const supp = (t('btn_support', l) || '').toLowerCase();
-    const war = (t('btn_warranty', l) || '').toLowerCase();
-    const home = (t('btn_main_menu', l) || '').toLowerCase();
-    const lang = (t('btn_language', l) || '').toLowerCase();
-
-    if (clean === cat || clean.includes(cat) || text.includes(t('btn_catalog', l))) return 'catalog';
-    if (clean === orders || clean.includes(orders) || text.includes(t('btn_orders', l))) return 'my_orders';
-    if (clean === wallet || clean.includes(wallet) || text.includes(t('btn_wallet', l))) return 'payment_methods';
-    if (clean === ref || clean.includes(ref) || text.includes(t('btn_referral', l))) return 'referral';
-    if (clean === supp || clean.includes(supp) || text.includes(t('btn_support', l))) return 'support';
-    if (clean === war || clean.includes(war) || text.includes(t('btn_warranty', l))) return 'warranty_policy';
-    if (clean === home || clean.includes(home) || text.includes(t('btn_main_menu', l))) return 'main_menu';
-    if (clean.includes('language') || clean.includes('idioma') || clean.includes('langue') || clean.includes('язык') || clean.includes('dil') || clean.includes('sprache') || text.includes(t('btn_language', l))) return 'language_select';
-  }
-  return null;
-}
-
-function getKeyboardForQueryAndReply(userQuery, botReply, lang = DEFAULT_LANGUAGE) {
-  const q = `${userQuery || ''} ${botReply || ''}`.toLowerCase();
-  const buttons = [];
-
-  if (/gemini|جيمناي|جيميني/.test(q)) {
-    buttons.push([
-      { text: '✦ Gemini 18m — $0.19 🔥', callback_data: 'prod_643361f7' },
-      { text: `⚡ ${t('btn_pay_bybit', lang)}`, callback_data: 'buy_bybit_643361f7' },
-    ]);
-  } else if (/netflix|نتفلكس/.test(q)) {
-    buttons.push([
-      { text: '🎬 Netflix 4K — $0.25 🔥', callback_data: 'prod_netflix_4k' },
-      { text: `⚡ ${t('btn_pay_bybit', lang)}`, callback_data: 'buy_bybit_netflix_4k' },
-    ]);
-  } else if (/chatgpt|gpt|شات/.test(q)) {
-    buttons.push([
-      { text: '🟢 ChatGPT Plus — $0.49 🔥', callback_data: 'prod_b2c3d4e5' },
-      { text: '🚀 ChatGPT Pro — $2.49 🔥', callback_data: 'prod_chatgpt_pro' },
-    ]);
-  } else if (/canva|كانفا/.test(q)) {
-    buttons.push([
-      { text: '🎨 Canva Pro (1Y) — $0.35 🔥', callback_data: 'prod_a1b2c3d4' },
-      { text: '👑 Canva Lifetime — $0.79 🔥', callback_data: 'prod_canvapro_life' },
-    ]);
-  }
-
-  if (buttons.length === 0) {
-    buttons.push([
-      { text: `🛍️ ${t('btn_catalog', lang)}`, callback_data: 'catalog' },
-      { text: `💳 ${t('btn_wallet', lang)}`, callback_data: 'payment_methods' },
-    ]);
-    buttons.push([
-      { text: `👨‍💻 ${t('btn_support', lang)}`, callback_data: 'support' },
-      { text: `🛡️ ${t('btn_warranty', lang)}`, callback_data: 'warranty_policy' },
-    ]);
-  }
-
-  return { inline_keyboard: buttons.slice(0, 3) };
-}
-
-async function generateDeepSeekReply(chatId, userQuery) {
-  const lang = getUserLanguage(chatId);
-  const history = getChatHistory(chatId);
-  const langName = SUPPORTED_LANGUAGES[lang]?.name || 'العربية';
-
-  const systemPrompt = [
-    `You are Lead Senior Technical Support Specialist at UpStore Telegram Store (@${BOT_USERNAME}).`,
-    `CRITICAL INSTRUCTION: You MUST write your reply in the user's active language: ${lang} (${langName}).`,
-    'Ultra-concise in 1-3 sentences. Answer the exact inquiry directly without fluff.',
-    'Fire 90% OFF Prices: Gemini 18m ($0.19 / 10 EGP), Netflix 4K ($0.25 / 12 EGP), Canva Pro ($0.35 / 18 EGP), Cursor Pro ($0.49 / 25 EGP), ChatGPT Plus ($0.49 / 25 EGP), Canva Lifetime ($0.79 / 40 EGP), ChatGPT Pro ($2.49 / 125 EGP).',
-    'Payment: Bybit Pay links, Binance Pay, InstaPay (mo_matany@instapay), Vodafone Cash (01041140422).',
-    'Warranty: 100% Gold Replacement Warranty. Human help @UPSTORE_HELP.',
-  ].join('\n');
-
-  try {
-    const res = await fetch(OPENROUTER_ENDPOINT, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${OPENROUTER_API_KEY}`,
-      },
-      body: JSON.stringify({
-        model: 'deepseek/deepseek-chat',
-        messages: [{ role: 'system', content: systemPrompt }, ...history, { role: 'user', content: userQuery }],
-        temperature: 0.45,
-        max_tokens: 250,
-      }),
-    });
-
-    if (!res.ok) throw new Error(`API status ${res.status}`);
-    const data = await res.json();
-    return data?.choices?.[0]?.message?.content?.trim() || `${t('support_desc', lang)} @UPSTORE_HELP 👨‍💻`;
-  } catch (err) {
-    return `${t('support_desc', lang)} @UPSTORE_HELP 👨‍💻`;
-  }
-}
+// Register direct order delivery handler when admin approves on @upstorelive_bot
+setOrderApprovalHandler(async (chatId, shortId, orderRef, meta) => {
+  const product = getProductByShortIdOrSlug(shortId) || STORE_CATALOG[0];
+  const txInfo = {
+    amount: product.our_price,
+    type: `Admin Approved (@${meta.adminName || 'Admin'})`,
+    transferId: meta.reqId || `LIVE-${Date.now()}`,
+  };
+  return await deliverInstantOrder(chatId, product, orderRef, txInfo, null, null);
+});
 
 const userReferrals = new Map();
 
@@ -575,19 +496,20 @@ async function recordReferral(newChatId, referrerId) {
 
       // Send instant celebratory notification to referrer
       try {
+        const refLang = getUserLanguage(referrerId);
         const notifyText = [
-          '🎉 <b>مبروك! انضم مستخدم جديد عبر رابط دعوتك! 🔥</b>',
+          t('referral_new_user_title', refLang),
           '━━━━━━━━━━━━━━━━━━━━━━',
-          '💎 <b>المكافأة:</b> <code>+1 نقطة فورية</code> ⭐',
-          `📊 <b>إجمالي نقاطك:</b> <code>${points} نقطة</code>`,
-          `💵 <b>رصيدك المكتسب للمشتريات:</b> <code>$${earnedDollars.toFixed(2)} USDT</code>`,
-          `🎯 <i>متبقي لك <b>${remainingForNext} نقاط</b> للحصول على <b>+$1.00 دولار رصيد محفظة إضافي</b> لشراء أي اشتراك مجاناً! 🚀</i>`,
+          t('referral_reward_instant', refLang),
+          `📊 <b>${t('referral_total_points_label', refLang)}</b> <code>${points}</code>`,
+          `💵 <b>${t('referral_wallet_label', refLang)}</b> <code>$${earnedDollars.toFixed(2)} USDT</code>`,
+          t('referral_next_dollar_label', refLang, { remaining: remainingForNext }),
         ].join('\n');
 
         await sendMessage(referrerId, notifyText, {
           inline_keyboard: [
-            [{ text: '🎁 عرض لوحة المكافآت', callback_data: 'referral' }],
-            [{ text: '🛍️ تصفح المنتجات والشراء بالرصيد', callback_data: 'catalog' }],
+            [{ text: t('btn_referral_dashboard', refLang), callback_data: 'referral' }],
+            [{ text: t('btn_shop_balance', refLang), callback_data: 'catalog' }],
           ],
         });
       } catch (err) {
@@ -801,7 +723,7 @@ async function renderBrandTiers(chatId, brandId, messageId, callbackQueryId, bus
   }
 
   const brandName = lang === 'ar' ? brand.name_ar : (brand.name_en || brand.name_ar);
-  const desc = brand.desc ? `<i>${brand.desc}</i>\n` : '';
+  const desc = (lang === 'ar' && brand.desc) ? `<i>${brand.desc}</i>\n` : '';
 
   const text = [
     `<b>${brand.icon || '💎'} ${brandName}</b>`,
@@ -816,7 +738,7 @@ async function renderBrandTiers(chatId, brandId, messageId, callbackQueryId, bus
       const match = (p.name_ar || '').match(/\(([^)]+)\)/);
       label = match ? match[1] : (p.subscription_duration || p.name_ar);
     } else {
-      label = p.name || p.subscription_duration;
+      label = p.name || getLocalizedDuration(p.subscription_duration, lang) || p.subscription_duration;
     }
     return [
       {
@@ -869,30 +791,67 @@ async function renderProductDetails(chatId, shortId, messageId, callbackQueryId,
     ? `💵 <b>${t('local_price_label', lang)}:</b> <code>${product.price_egp} ج.م</code> | <code>${product.price_sar} ر.س</code>`
     : `💵 <b>${t('local_price_label', lang)}:</b> <code>${product.price_egp} EGP</code> | <code>${product.price_sar} SAR</code>`;
 
+  const durationText = getLocalizedDuration(product.subscription_duration, lang);
+  const warrantyText = getLocalizedWarranty(product.warranty_duration, lang);
+
+  // Fetch current user wallet balance
+  const wallet = await getUserWallet(chatId, supabase);
+  const currentBal = wallet.balance || 0;
+  const prodPrice = product.our_price;
+  const hasEnoughBalance = currentBal >= prodPrice;
+  const shortage = Number(Math.max(0, prodPrice - currentBal).toFixed(2));
+  // Recommended topup amount is at least $5 or shortage rounded up
+  const recommendedTopup = Math.max(MIN_TOPUP_USD, Math.ceil(shortage));
+
+  let walletSection = '';
+  let inline_keyboard = [];
+
+  if (hasEnoughBalance) {
+    walletSection = [
+      '──────────────────',
+      `💰 <b>${t('wallet_current_balance', lang)}</b> <code>$${currentBal.toFixed(2)} USDT</code> ✅`,
+      `⚡ <i>${t('wallet_purchase_ready_hint', lang) || 'لديك رصيد كافٍ لإتمام الشراء والتفعيل الفوري!'}</i>`,
+    ].join('\n');
+
+    inline_keyboard.push([
+      { text: `🛍️ ${t('btn_pay_with_balance', lang, { amount: prodPrice.toFixed(2) })}`, callback_data: `pay_wallet_${product.short_id}` }
+    ]);
+  } else {
+    walletSection = [
+      '──────────────────',
+      `💳 <b>${t('wallet_current_balance', lang)}</b> <code>$${currentBal.toFixed(2)} USDT</code>`,
+      `⚠️ <b>${t('wallet_insufficient_hint', lang) || 'يجب شحن المحفظة أولاً قبل الشراء (الحد الأدنى 5.00$):'}</b>`,
+      `• ${t('required_amount_label', lang) || 'المبلغ المطلوب:'} <code>$${prodPrice.toFixed(2)} USDT</code>`,
+      `• ${t('shortage_label', lang) || 'المبلغ المتبقي للشحن:'} <code>$${shortage.toFixed(2)} USDT</code>`,
+    ].join('\n');
+
+    inline_keyboard.push([
+      { text: `💳 ${t('btn_topup_amount', lang, { amount: recommendedTopup })}`, callback_data: `topup_wallet_${recommendedTopup}_${product.short_id}` },
+      { text: `⚡ ${t('btn_topup_amount', lang, { amount: '5.00' })}`, callback_data: `topup_wallet_5.00_${product.short_id}` },
+    ]);
+    inline_keyboard.push([
+      { text: `💳 ${t('btn_topup_wallet', lang)}`, callback_data: `topup_select_${product.short_id}` },
+    ]);
+  }
+
+  inline_keyboard.push([
+    { text: `🔙 ${t('btn_back', lang)}`, callback_data: `brand_${product.brand_id}` },
+    { text: `🏠 ${t('btn_main_menu', lang)}`, callback_data: 'main_menu' },
+  ]);
+
   const caption = [
     `<b>${product.icon_symbol || brand?.icon || '💎'} ${prodTitle}</b>`,
     '──────────────────',
-    `💰 <b>${t('product_price', lang)}:</b> <code>$${product.our_price.toFixed(2)} USDT</code>${discountText}`,
+    `💰 <b>${t('product_price', lang)}:</b> <code>$${prodPrice.toFixed(2)} USDT</code>${discountText}`,
     localPriceText,
-    `⏳ <b>${t('duration_label', lang)}:</b> ${product.subscription_duration}`,
-    `🛡️ <b>${t('warranty_label', lang)}:</b> ${product.warranty_duration}`,
+    `⏳ <b>${t('duration_label', lang)}:</b> ${durationText}`,
+    `🛡️ <b>${t('warranty_label', lang)}:</b> ${warrantyText}`,
     `⚡ <b>${t('delivery', lang)}:</b> ${t('instant_delivery', lang)}`,
     advantages ? `──────────────────\n<b>${t('features_label', lang)}:</b>\n${advantages}` : '',
-    '──────────────────',
-    t('choose_payment', lang),
+    walletSection,
   ].filter(Boolean).join('\n');
 
-  const keyboard = {
-    inline_keyboard: [
-      [{ text: `⚡ Bybit Pay ($${product.our_price.toFixed(2)})`, callback_data: `buy_bybit_${product.short_id}` }],
-      [{ text: `🟡 Binance Pay ($${product.our_price.toFixed(2)})`, callback_data: `buy_binance_${product.short_id}` }],
-      [{ text: `📱 InstaPay / Cash (${product.price_egp} EGP)`, callback_data: `buy_local_${product.short_id}` }],
-      [
-        { text: `🔙 ${t('btn_back', lang)}`, callback_data: `brand_${product.brand_id}` },
-        { text: `🏠 ${t('btn_main_menu', lang)}`, callback_data: 'main_menu' },
-      ],
-    ],
-  };
+  const keyboard = { inline_keyboard };
 
   if (messageId) {
     const editRes = await editMessageText(chatId, messageId, caption, keyboard, businessConnectionId);
@@ -926,6 +885,8 @@ async function renderDirectBybitCheckout(chatId, shortId, messageId, callbackQue
       console.error('[Supabase Order Insert Exception]:', err);
     }
   }
+
+  notifyPurchaseAttempt({ id: chatId }, product, 'Bybit Pay (Crypto)', orderRef);
 
   const text = [
     t('bybit_checkout_title', lang),
@@ -989,6 +950,8 @@ async function renderDirectBinanceCheckout(chatId, shortId, messageId, callbackQ
     }
   }
 
+  notifyPurchaseAttempt({ id: chatId }, product, 'Binance Pay', orderRef);
+
   const text = [
     t('binance_checkout_title', lang),
     '──────────────────',
@@ -1031,11 +994,13 @@ async function renderDirectBinanceCheckout(chatId, shortId, messageId, callbackQ
 
 async function deliverInstantOrder(chatId, product, orderRef, txInfo, messageId = null, businessConnectionId = null) {
   const lang = getUserLanguage(chatId);
+  const serialCode = generate16DigitSerial();
+
   if (supabase) {
     try {
       await supabase.from('orders').update({
         status: 'completed',
-        product_key: `AUTO_PAY_${txInfo.transferId || txInfo.txID || 'VERIFIED'}`,
+        product_key: serialCode,
       }).eq('session_id', `tg_${chatId}_${orderRef}`);
     } catch (err) {
       console.error('[Supabase Order Complete Update Exception]:', err);
@@ -1049,19 +1014,38 @@ async function deliverInstantOrder(chatId, product, orderRef, txInfo, messageId 
   const prodTitle = brand ? (lang === 'ar' ? brand.name_ar : (brand.name_en || brand.name_ar)) : product.name_ar;
 
   const deliveryText = [
-    '✅ <b>Payment Confirmed / تم تأكيد الدفع!</b>',
+    '✅ <b>Payment Confirmed / تم تأكيد الدفع بنجاح!</b>',
     '──────────────────',
-    `📦 <b>Product:</b> ${prodTitle}`,
-    `🆔 <b>Order:</b> <code>#${orderRef}</code>`,
-    `💎 <b>Amount:</b> <code>${txInfo.amount} USDT</code>`,
+    `📦 <b>المنتج:</b> ${prodTitle}`,
+    `🆔 <b>رقم الطلب:</b> <code>#${orderRef}</code>`,
+    `💎 <b>المبلغ المستلم:</b> <code>${txInfo.amount || product.our_price} USDT</code>`,
     '──────────────────',
-    '🔑 <b>Account Credentials / بيانات الحساب:</b>',
+    '🔑 <b>كود التفعيل / السيريال (16 رقم):</b>',
+    `<code>${serialCode}</code>`,
+    '<i>(اضغط على الكود للنسخ المباشر 👆)</i>',
+    '──────────────────',
+    '👤 <b>بيانات الحساب / Credentials:</b>',
     `• <b>Username / Email:</b> <code>${generatedUser}</code>`,
     `• <b>Password:</b> <code>${generatedPass}</code>`,
-    `• <b>Duration:</b> ${product.subscription_duration}`,
+    `• <b>مدة الاشتراك:</b> ${getLocalizedDuration(product.subscription_duration, lang)}`,
     '──────────────────',
-    '✨ <i>Warranty active 100%. Support: @UPSTORE_HELP</i>',
+    '🛡️ <i>الضمان الذهبي مفعل 100% طوال المدة. للدعم: @UPSTORE_HELP</i>',
   ].join('\n');
+
+  // Trigger live broadcast to @upstorelive_bot
+  try {
+    notifyPurchaseDelivered(
+      { id: chatId, first_name: `User #${chatId}` },
+      product,
+      txInfo.type || 'Bybit / Crypto Pay',
+      orderRef,
+      txInfo,
+      { username: generatedUser, password: generatedPass },
+      serialCode
+    );
+  } catch (err) {
+    console.warn('[LiveMonitor Delivery Broadcast Warning]:', err.message);
+  }
 
   const keyboard = {
     inline_keyboard: [
@@ -1092,20 +1076,24 @@ async function renderDirectLocalCheckout(chatId, shortId, messageId, callbackQue
         product_id: product.id,
         product_key: 'PENDING_TELEGRAM_FULFILLMENT',
         session_id: `tg_${chatId}_${orderRef}`,
-        payment_sender: `Telegram @${chatId} (Local Pay)`,
+        payment_sender: `Telegram @${chatId} (Local Pay Support)`,
       });
     } catch (err) {
       console.error('[Supabase Order Insert Exception]:', err);
     }
   }
 
+  notifyPurchaseAttempt({ id: chatId }, product, 'Local Pay (Via Support)', orderRef);
+
+  const brand = getBrandById(product.brand_id);
+  const prodTitle = brand ? (lang === 'ar' ? brand.name_ar : (brand.name_en || brand.name_ar)) : product.name_ar;
+
   const text = [
-    t('local_checkout_title', lang),
+    `<b>${t('local_checkout_title', lang)}</b>`,
     '──────────────────',
-    `<b>${t('instapay_label', lang)}</b> <code>mo_matany@instapay</code>`,
-    `<b>${t('vfcash_label', lang)}</b> <code>01041140422</code>`,
-    `<b>${t('local_amount_label', lang)}</b> <code>${product.price_egp}</code> EGP / <code>${product.price_sar}</code> SAR`,
-    `<i>(${t('btn_copy_hint', lang)})</i>`,
+    `📦 <b>المنتج:</b> ${prodTitle}`,
+    `🆔 <b>رقم الطلب:</b> <code>#${orderRef}</code>`,
+    `💵 <b>المبلغ:</b> <code>${product.price_egp} EGP</code> / <code>${product.price_sar} SAR</code> ($${product.our_price.toFixed(2)} USDT)`,
     '──────────────────',
     t('local_step', lang),
   ].join('\n');
@@ -1113,7 +1101,7 @@ async function renderDirectLocalCheckout(chatId, shortId, messageId, callbackQue
   const keyboard = {
     inline_keyboard: [
       [
-        { text: `👨‍💻 ${t('btn_support', lang)}`, callback_data: 'support' },
+        { text: `👨‍💻 ${t('btn_support', lang)} (@UPSTORE_HELP)`, url: 'https://t.me/UPSTORE_HELP' },
       ],
       [
         { text: `🔙 ${t('btn_back', lang)}`, callback_data: `prod_${product.short_id}` },
@@ -1165,24 +1153,22 @@ async function renderMyOrders(chatId, messageId, callbackQueryId, businessConnec
   }
 
   if (!ordersText) {
-    ordersText = t('no_orders', lang);
+    ordersText = `<i>${t('no_orders', lang)}</i>\n`;
   }
 
   const text = [
     t('orders_title', lang),
     '──────────────────',
-    ordersText,
+    ordersText.trim(),
+    '──────────────────',
+    '⚡ <i>جميع المنتجات مشمولة بالضمان الذهبي 100%.</i>',
   ].join('\n');
 
   const keyboard = {
     inline_keyboard: [
-      [
-        { text: `🔄 ${t('btn_refresh', lang)}`, callback_data: 'my_orders' },
-        { text: `👨‍💻 ${t('btn_support', lang)}`, callback_data: 'support' },
-      ],
-      [
-        { text: `🏠 ${t('btn_main_menu', lang)}`, callback_data: 'main_menu' },
-      ],
+      [{ text: `🛍️ ${t('btn_catalog', lang)}`, callback_data: 'catalog' }],
+      [{ text: `🔄 ${t('btn_refresh', lang)}`, callback_data: 'my_orders' }],
+      [{ text: `🏠 ${t('btn_main_menu', lang)}`, callback_data: 'main_menu' }],
     ],
   };
 
@@ -1201,13 +1187,20 @@ async function renderPaymentMethodsScreen(chatId, messageId, callbackQueryId, bu
   if (callbackQueryId) await answerCallbackQuery(callbackQueryId);
 
   const lang = getUserLanguage(chatId);
+  const wallet = await getUserWallet(chatId, supabase);
+  const bal = wallet.balance || 0;
+
   const text = [
-    `<b>${t('btn_wallet', lang)} — UpStore</b>`,
+    t('wallet_title', lang),
     '──────────────────',
-    '• <b>Bybit UID:</b> <code>47183921</code>',
-    '• <b>Binance Pay ID:</b> <code>764476139</code>',
-    '• <b>InstaPay:</b> <code>mo_matany@instapay</code>',
-    '• <b>Cash (Vodafone/Orange/WE):</b> <code>01041140422</code>',
+    `💰 <b>${t('wallet_current_balance', lang)}</b> <code>$${bal.toFixed(2)} USDT</code>`,
+    `📊 <b>${t('total_recharged_label', lang) || 'إجمالي المشحون:'}</b> <code>$${(wallet.totalRecharged || 0).toFixed(2)} USDT</code> | <b>${t('total_spent_label', lang) || 'المشتريات:'}</b> <code>$${(wallet.totalSpent || 0).toFixed(2)} USDT</code>`,
+    '──────────────────',
+    t('wallet_min_deposit_notice', lang),
+    '──────────────────',
+    '• ⚡ <b>Bybit UID:</b> <code>47183921</code>',
+    '• 🟡 <b>Binance Pay ID:</b> <code>764476139</code>',
+    '• 📱 <b>طرق الدفع المحلية:</b> عبر التواصل مع الدعم الفني @UPSTORE_HELP',
     `<i>(${t('btn_copy_hint', lang)})</i>`,
     '──────────────────',
     t('local_step', lang),
@@ -1215,10 +1208,154 @@ async function renderPaymentMethodsScreen(chatId, messageId, callbackQueryId, bu
 
   const keyboard = {
     inline_keyboard: [
-      [{ text: '⚡ Bybit Pay', callback_data: 'buy_bybit_643361f7' }],
-      [{ text: '🟡 Binance Pay', callback_data: 'buy_binance_643361f7' }],
-      [{ text: `👨‍💻 ${t('btn_support', lang)}`, callback_data: 'support' }],
-      [{ text: `🏠 ${t('btn_main_menu', lang)}`, callback_data: 'main_menu' }],
+      [
+        { text: `⚡ ${t('btn_topup_amount', lang, { amount: '5.00' })}`, callback_data: 'topup_wallet_5.00' },
+        { text: `⚡ ${t('btn_topup_amount', lang, { amount: '10.00' })}`, callback_data: 'topup_wallet_10.00' },
+      ],
+      [
+        { text: `⚡ ${t('btn_topup_amount', lang, { amount: '20.00' })}`, callback_data: 'topup_wallet_20.00' },
+        { text: `⚡ ${t('btn_topup_amount', lang, { amount: '50.00' })}`, callback_data: 'topup_wallet_50.00' },
+      ],
+      [
+        { text: `🛍️ ${t('btn_catalog', lang)}`, callback_data: 'catalog' },
+        { text: `🔄 ${t('btn_refresh_balance', lang)}`, callback_data: 'payment_methods' },
+      ],
+      [
+        { text: `👨‍💻 ${t('btn_support', lang)}`, callback_data: 'support' },
+        { text: `🏠 ${t('btn_main_menu', lang)}`, callback_data: 'main_menu' },
+      ],
+    ],
+  };
+
+  if (messageId) {
+    const editRes = await editMessageText(chatId, messageId, text, keyboard, businessConnectionId);
+    if (!editRes || !editRes.ok) {
+      await deleteMessage(chatId, messageId);
+      await sendMessage(chatId, text, keyboard, businessConnectionId);
+    }
+  } else {
+    await sendMessage(chatId, text, keyboard, businessConnectionId);
+  }
+}
+
+async function renderWalletTopupScreen(chatId, defaultAmount = 5.0, returnProdId = null, messageId = null, callbackQueryId = null, businessConnectionId = null) {
+  if (callbackQueryId) await answerCallbackQuery(callbackQueryId);
+
+  const lang = getUserLanguage(chatId);
+  const wallet = await getUserWallet(chatId, supabase);
+  const amt = Math.max(MIN_TOPUP_USD, Number(defaultAmount) || MIN_TOPUP_USD);
+
+  const text = [
+    t('wallet_title', lang),
+    '──────────────────',
+    `💰 <b>${t('wallet_current_balance', lang)}</b> <code>$${wallet.balance.toFixed(2)} USDT</code>`,
+    `⚡ <b>${t('topup_package_label', lang) || 'باقة الشحن المختارة:'}</b> <code>$${amt.toFixed(2)} USDT</code>`,
+    '──────────────────',
+    t('wallet_min_deposit_notice', lang),
+    '──────────────────',
+    t('wallet_topup_select_method', lang, { amount: amt.toFixed(2) }),
+  ].join('\n');
+
+  const backTarget = returnProdId ? `prod_${returnProdId}` : 'payment_methods';
+
+  const keyboard = {
+    inline_keyboard: [
+      [
+        { text: `⚡ Bybit UID ($${amt.toFixed(2)})`, callback_data: `topup_method_bybit_${amt}_${returnProdId || 'none'}` },
+        { text: `🟡 Binance Pay ($${amt.toFixed(2)})`, callback_data: `topup_method_binance_${amt}_${returnProdId || 'none'}` },
+      ],
+      [
+        { text: `👨‍💻 ${t('btn_pay_local', lang)} (@UPSTORE_HELP)`, url: 'https://t.me/UPSTORE_HELP' },
+      ],
+      [
+        { text: `🔙 ${t('btn_back', lang)}`, callback_data: backTarget },
+        { text: `🏠 ${t('btn_main_menu', lang)}`, callback_data: 'main_menu' },
+      ],
+    ],
+  };
+
+  if (messageId) {
+    const editRes = await editMessageText(chatId, messageId, text, keyboard, businessConnectionId);
+    if (!editRes || !editRes.ok) {
+      await deleteMessage(chatId, messageId);
+      await sendMessage(chatId, text, keyboard, businessConnectionId);
+    }
+  } else {
+    await sendMessage(chatId, text, keyboard, businessConnectionId);
+  }
+}
+
+async function renderWalletTopupMethod(chatId, method, amount, returnProdId = null, messageId = null, callbackQueryId = null, businessConnectionId = null) {
+  if (callbackQueryId) await answerCallbackQuery(callbackQueryId);
+
+  const lang = getUserLanguage(chatId);
+  const amt = Math.max(MIN_TOPUP_USD, Number(amount) || MIN_TOPUP_USD);
+  const orderRef = `TOPUP-${Math.floor(100000 + Math.random() * 900000)}`;
+
+  if (supabase) {
+    try {
+      await supabase.from('orders').insert({
+        amount: amt,
+        status: 'pending_manual_payment',
+        product_key: `WALLET_TOPUP_${amt}_USDT`,
+        session_id: `tg_${chatId}_${orderRef}`,
+        payment_sender: `Telegram @${chatId} (TopUp ${method})`,
+      });
+    } catch (err) {}
+  }
+
+  let methodTitle = '';
+  let lines = [];
+  let checkCallback = `check_topup_${method}_${amt}_${orderRef}_${returnProdId || 'none'}`;
+
+  if (method === 'bybit') {
+    methodTitle = 'Bybit Internal Transfer';
+    lines = [
+      `<b>⚡ شحن المحفظة عبر Bybit Pay ($${amt.toFixed(2)} USDT)</b>`,
+      '──────────────────',
+      `• <b>Bybit UID:</b> <code>47183921</code>`,
+      `• <b>المبلغ المطلوب:</b> <code>${amt.toFixed(2)}</code> USDT`,
+      `<i>(${t('btn_copy_hint', lang)})</i>`,
+      '──────────────────',
+      '1. حوّل المبلغ إلى معرف Bybit أعلاه عبر التحويل الداخلي (Internal Transfer).',
+      '2. بعد التحويل، اضغط على زر التحقق بالأسفل أو أرسل رقم التحويل هنا لإيداع الرصيد تلقائياً.',
+    ];
+  } else if (method === 'binance') {
+    methodTitle = 'Binance Pay';
+    lines = [
+      `<b>🟡 شحن المحفظة عبر Binance Pay ($${amt.toFixed(2)} USDT)</b>`,
+      '──────────────────',
+      `• <b>Binance Pay ID:</b> <code>764476139</code>`,
+      `• <b>المبلغ المطلوب:</b> <code>${amt.toFixed(2)}</code> USDT`,
+      `<i>(${t('btn_copy_hint', lang)})</i>`,
+      '──────────────────',
+      '1. حوّل المبلغ إلى معرّف بينانس أعلاه.',
+      '2. بعد التحويل، اضغط زر التأكيد بالأسفل وأرسل Order ID للمحفظة فورياً.',
+    ];
+  } else {
+    methodTitle = 'Local Payment Support';
+    lines = [
+      `<b>📱 شحن المحفظة بالدفع المحلي ($${amt.toFixed(2)} USDT)</b>`,
+      '──────────────────',
+      t('local_step', lang),
+      '──────────────────',
+      'تواصل مباشرة مع خدمة العملاء @UPSTORE_HELP وسيتم تزويدك ببيانات التحويل وشحن محفظتك فوراً ⚡',
+    ];
+  }
+
+  const text = lines.join('\n');
+  const keyboard = {
+    inline_keyboard: [
+      [
+        { text: `⚡ ${t('btn_verify_payment_auto', lang) || 'تحقق من الشحن الآن'}`, callback_data: checkCallback },
+      ],
+      [
+        { text: `👨‍💻 ${t('btn_support', lang)} (@UPSTORE_HELP)`, url: 'https://t.me/UPSTORE_HELP' },
+        { text: `🔙 ${t('btn_back', lang)}`, callback_data: returnProdId && returnProdId !== 'none' ? `prod_${returnProdId}` : 'payment_methods' },
+      ],
+      [
+        { text: `🏠 ${t('btn_main_menu', lang)}`, callback_data: 'main_menu' },
+      ],
     ],
   };
 
@@ -1371,31 +1508,40 @@ async function handleUpdate(update) {
     const chatId = cb.message?.chat?.id || cb.from?.id;
     const messageId = cb.message?.message_id;
     const callbackId = cb.id;
+    const data = cb.data;
     if (!chatId || !data) return;
 
     const fromLang = cb.from?.language_code || '';
-    detectUserLanguage(chatId, fromLang);
+    const lang = detectUserLanguage(chatId, fromLang);
 
     if (data === 'main_menu') {
+      notifyUserNavigation(cb.from, '🏠 Main Menu', 'العودة للقائمة الرئيسية');
       await renderMainMenu(chatId, messageId, callbackId, businessConnectionId);
       return;
     }
     if (data === 'catalog') {
+      notifyUserNavigation(cb.from, '🛍️ Catalog', 'تصفح الكتالوج والأقسام');
       await renderCatalog(chatId, messageId, callbackId, businessConnectionId);
       return;
     }
     if (data.startsWith('cat_')) {
       const catId = data.replace('cat_', '').trim();
+      const cat = getCategoryById(catId);
+      notifyUserNavigation(cb.from, '📁 Category', cat?.name_ar || catId);
       await renderCategoryBrands(chatId, catId, messageId, callbackId, businessConnectionId);
       return;
     }
     if (data.startsWith('brand_')) {
       const brandId = data.replace('brand_', '').trim();
+      const brand = getBrandById(brandId);
+      notifyUserNavigation(cb.from, '💎 Brand Tiers', brand?.name_ar || brandId);
       await renderBrandTiers(chatId, brandId, messageId, callbackId, businessConnectionId);
       return;
     }
     if (data.startsWith('prod_')) {
       const prodId = data.replace('prod_', '').trim();
+      const product = getProductByShortIdOrSlug(prodId);
+      notifyUserNavigation(cb.from, '📦 Product Details', product ? `${product.name_ar} ($${product.our_price})` : prodId);
       await renderProductDetails(chatId, prodId, messageId, callbackId, businessConnectionId);
       return;
     }
@@ -1405,7 +1551,7 @@ async function handleUpdate(update) {
       const orderRef = parts[3] || 'UNKNOWN';
       const product = getProductByShortIdOrSlug(prodId) || STORE_CATALOG[0];
 
-      await answerCallbackQuery(callbackId, '⚡ جارٍ فحص سجلات Bybit والتحقق التلقائي...', false);
+      await answerCallbackQuery(callbackId, t('bybit_checking_toast', lang), false);
       const verification = await verifyBybitPayment(product.our_price);
 
       if (verification && verification.success) {
@@ -1414,12 +1560,12 @@ async function handleUpdate(update) {
       } else {
         await sendMessage(
           chatId,
-          `⏳ <b>لم يتم رصد التحويل بعد (${product.our_price.toFixed(2)} USDT) في حساب Bybit.</b>\n\n<blockquote>إذا كنت قد أتممت التحويل للتو، يُرجى الانتظار 15-30 ثانية لتأكيد الشبكة ثم الضغط على زر الفحص مجدداً، أو إرسال رقم المعاملة (TXID) / صورة الإشعار في الشات وسنتحقق منها فوراً ⚡.</blockquote>`,
+          t('bybit_pending_message', lang, { amount: product.our_price.toFixed(2) }),
           {
             inline_keyboard: [
-              [{ text: '🔄 إعادة فحص سجلات Bybit ⚡', callback_data: `check_bybit_${product.short_id}_${orderRef}` }],
-              [{ text: '👨‍💻 مساعدة من الدعم', callback_data: 'support' }],
-              [{ text: '🔙 رجوع للمنتج', callback_data: `prod_${product.short_id}` }],
+              [{ text: t('bybit_recheck_btn', lang), callback_data: `check_bybit_${product.short_id}_${orderRef}` }],
+              [{ text: `👨‍💻 ${t('btn_support', lang)}`, callback_data: 'support' }],
+              [{ text: t('btn_back_to_product', lang), callback_data: `prod_${product.short_id}` }],
             ],
           },
           businessConnectionId
@@ -1429,11 +1575,33 @@ async function handleUpdate(update) {
     }
     if (data.startsWith('buy_bybit_') || data === 'PAY_BYBIT_CRYPTO') {
       const prodId = data === 'PAY_BYBIT_CRYPTO' ? '643361f7' : data.replace('buy_bybit_', '').trim();
+      const product = getProductByShortIdOrSlug(prodId) || STORE_CATALOG[0];
+      const wallet = await getUserWallet(chatId, supabase);
+      if (wallet.balance < product.our_price) {
+        await answerCallbackQuery(callbackId, t('wallet_must_recharge_notice', lang, {
+          balance: wallet.balance.toFixed(2),
+          required: product.our_price.toFixed(2),
+          shortage: (product.our_price - wallet.balance).toFixed(2),
+        }), true);
+        await renderWalletTopupScreen(chatId, Math.max(MIN_TOPUP_USD, product.our_price - wallet.balance), prodId, messageId, null, businessConnectionId);
+        return;
+      }
       await renderDirectBybitCheckout(chatId, prodId, messageId, callbackId, businessConnectionId);
       return;
     }
     if (data.startsWith('buy_binance_')) {
       const prodId = data.replace('buy_binance_', '').trim();
+      const product = getProductByShortIdOrSlug(prodId) || STORE_CATALOG[0];
+      const wallet = await getUserWallet(chatId, supabase);
+      if (wallet.balance < product.our_price) {
+        await answerCallbackQuery(callbackId, t('wallet_must_recharge_notice', lang, {
+          balance: wallet.balance.toFixed(2),
+          required: product.our_price.toFixed(2),
+          shortage: (product.our_price - wallet.balance).toFixed(2),
+        }), true);
+        await renderWalletTopupScreen(chatId, Math.max(MIN_TOPUP_USD, product.our_price - wallet.balance), prodId, messageId, null, businessConnectionId);
+        return;
+      }
       await renderDirectBinanceCheckout(chatId, prodId, messageId, callbackId, businessConnectionId);
       return;
     }
@@ -1443,15 +1611,39 @@ async function handleUpdate(update) {
       const orderRef = parts[3] || 'UNKNOWN';
       const product = getProductByShortIdOrSlug(prodId) || STORE_CATALOG[0];
 
-      await answerCallbackQuery(callbackId, '⚡ تم استلام طلب التحقق من Binance Pay...', false);
+      await answerCallbackQuery(callbackId, t('binance_checking_toast', lang), false);
+
+      // Dispatch approval ticket directly to @upstorelive_bot
+      try {
+        notifyPendingPaymentApproval(
+          cb.from,
+          product.our_price,
+          'Binance Pay (ID: 764476139)',
+          orderRef,
+          'PRODUCT_PURCHASE',
+          { shortId: product.short_id, reqId: orderRef }
+        );
+      } catch (err) {}
+
+      const binancePendingMsg = [
+        '⏳ <b>تم إرسال إشعار الدفع إلى الإدارة للمراجعة!</b>',
+        '──────────────────',
+        `📦 <b>المنتج:</b> ${product.name_ar}`,
+        `🆔 <b>رقم العملية:</b> <code>#${orderRef}</code>`,
+        `💎 <b>المبلغ:</b> <code>${product.our_price.toFixed(2)} USDT</code>`,
+        '──────────────────',
+        '⚡ تم إرسال الطلب إلى الإدارة على @upstorelive_bot للتأكيد.',
+        'بمجرد التحقق، سيصلك الحساب وكود السيريال (16 رقم) هنا فوراً!',
+      ].join('\n');
+
       await sendMessage(
         chatId,
-        `⏳ <b>جاري التحقق من عملية الدفع عبر Binance Pay (${product.our_price.toFixed(2)} USDT)...</b>\n\n<blockquote>يُرجى إرسال <b>معرف العملية (Order ID / Pay ID)</b> أو صورة إشعار التحويل هنا في الشات وسيتم التفعيل والتسليم فوراً ⚡.</blockquote>`,
+        binancePendingMsg,
         {
           inline_keyboard: [
-            [{ text: '👨‍💻 إرسال المعرف للدعم', callback_data: 'support' }],
-            [{ text: '🔙 رجوع للدفع', callback_data: `buy_binance_${product.short_id}` }],
-            [{ text: '🏠 الرئيسية', callback_data: 'main_menu' }],
+            [{ text: `📦 ${t('btn_orders', lang)}`, callback_data: 'my_orders' }],
+            [{ text: `👨‍💻 ${t('btn_support', lang)}`, callback_data: 'support' }],
+            [{ text: `🏠 ${t('btn_main_menu', lang)}`, callback_data: 'main_menu' }],
           ],
         },
         businessConnectionId
@@ -1460,9 +1652,149 @@ async function handleUpdate(update) {
     }
     if (data.startsWith('buy_local_')) {
       const prodId = data.replace('buy_local_', '').trim();
+      const product = getProductByShortIdOrSlug(prodId) || STORE_CATALOG[0];
+      const wallet = await getUserWallet(chatId, supabase);
+      if (wallet.balance < product.our_price) {
+        await answerCallbackQuery(callbackId, t('wallet_must_recharge_notice', lang, {
+          balance: wallet.balance.toFixed(2),
+          required: product.our_price.toFixed(2),
+          shortage: (product.our_price - wallet.balance).toFixed(2),
+        }), true);
+        await renderWalletTopupScreen(chatId, Math.max(MIN_TOPUP_USD, product.our_price - wallet.balance), prodId, messageId, null, businessConnectionId);
+        return;
+      }
       await renderDirectLocalCheckout(chatId, prodId, messageId, callbackId, businessConnectionId);
       return;
     }
+    if (data.startsWith('pay_wallet_')) {
+      const prodId = data.replace('pay_wallet_', '').trim();
+      const product = getProductByShortIdOrSlug(prodId) || STORE_CATALOG[0];
+      const prodPrice = product.our_price;
+
+      const debitResult = await debitUserWallet(chatId, prodPrice, 'STORE_PURCHASE', { product_id: product.id, title: product.name_ar }, supabase);
+
+      if (!debitResult.success) {
+        await answerCallbackQuery(callbackId, t('wallet_must_recharge_notice', lang, {
+          balance: debitResult.wallet?.balance?.toFixed(2) || '0.00',
+          required: prodPrice.toFixed(2),
+          shortage: debitResult.shortage || prodPrice.toFixed(2),
+        }), true);
+        await renderWalletTopupScreen(chatId, Math.max(MIN_TOPUP_USD, debitResult.shortage || 5.0), prodId, messageId, null, businessConnectionId);
+        return;
+      }
+
+      await answerCallbackQuery(callbackId, t('wallet_purchase_success', lang, { amount: prodPrice.toFixed(2) }), false);
+      const orderRef = `WAL-${Math.floor(100000 + Math.random() * 900000)}`;
+
+      const fakeTxInfo = {
+        amount: prodPrice,
+        type: 'Wallet Balance Deduction',
+        transferId: `WAL-DEBIT-${Date.now()}`,
+      };
+
+      await deliverInstantOrder(chatId, product, orderRef, fakeTxInfo, messageId, businessConnectionId);
+      return;
+    }
+
+    if (data.startsWith('topup_wallet_')) {
+      const parts = data.split('_');
+      // Format: topup_wallet_AMOUNT_PRODID or topup_wallet_AMOUNT
+      const amount = parseFloat(parts[2]) || MIN_TOPUP_USD;
+      const returnProdId = parts[3] || null;
+      await renderWalletTopupScreen(chatId, amount, returnProdId, messageId, callbackId, businessConnectionId);
+      return;
+    }
+
+    if (data.startsWith('topup_select_')) {
+      const prodId = data.replace('topup_select_', '').trim();
+      await renderWalletTopupScreen(chatId, MIN_TOPUP_USD, prodId, messageId, callbackId, businessConnectionId);
+      return;
+    }
+
+    if (data.startsWith('topup_method_')) {
+      const parts = data.split('_');
+      // Format: topup_method_METHOD_AMOUNT_RETURNPRODID
+      const method = parts[2]; // bybit, binance, local
+      const amount = parseFloat(parts[3]) || MIN_TOPUP_USD;
+      const returnProdId = parts[4] || null;
+      await renderWalletTopupMethod(chatId, method, amount, returnProdId, messageId, callbackId, businessConnectionId);
+      return;
+    }
+
+    if (data.startsWith('check_topup_')) {
+      const parts = data.split('_');
+      // Format: check_topup_METHOD_AMOUNT_ORDERREF_RETURNPRODID
+      const method = parts[2];
+      const amount = parseFloat(parts[3]) || MIN_TOPUP_USD;
+      const orderRef = parts[4] || 'TOPUP';
+      const returnProdId = parts[5] && parts[5] !== 'none' ? parts[5] : null;
+
+      await answerCallbackQuery(callbackId, t('bybit_checking_toast', lang), false);
+
+      let verification = { success: false };
+      if (method === 'bybit') {
+        verification = await verifyBybitPayment(amount);
+      }
+
+      if (verification && verification.success) {
+        const creditedWallet = await creditUserWallet(chatId, amount, `TOPUP_${method.toUpperCase()}`, verification, supabase);
+        try {
+          notifyWalletTopup(cb.from, amount, method.toUpperCase(), creditedWallet.balance, verification);
+        } catch {}
+
+        const successText = [
+          t('wallet_topup_success_message', lang, { amount: amount.toFixed(2), balance: creditedWallet.balance.toFixed(2) }),
+        ].join('\n');
+
+        const successButtons = [];
+        if (returnProdId) {
+          successButtons.push([{ text: `🛍️ ${t('btn_shop_with_balance', lang)}`, callback_data: `prod_${returnProdId}` }]);
+        } else {
+          successButtons.push([{ text: `🛍️ ${t('btn_catalog', lang)}`, callback_data: 'catalog' }]);
+        }
+        successButtons.push([{ text: `💳 ${t('btn_back_to_wallet', lang)}`, callback_data: 'payment_methods' }]);
+
+        await editMessageText(chatId, messageId, successText, { inline_keyboard: successButtons }, businessConnectionId);
+        return;
+      } else {
+        // Dispatch pending topup confirmation request to @upstorelive_bot with Action Buttons!
+        try {
+          notifyPendingPaymentApproval(
+            cb.from,
+            amount,
+            method === 'binance' ? 'Binance Pay (ID: 764476139)' : (method === 'bybit' ? 'Bybit Internal UID (47183921)' : 'Local Payment (Via Support)'),
+            orderRef,
+            'WALLET_TOPUP',
+            { reqId: orderRef }
+          );
+        } catch (err) {}
+
+        const pendingTopupMsg = [
+          '⏳ <b>تم إرسال طلب تأكيد الإيداع للإدارة!</b>',
+          '──────────────────',
+          `💵 <b>المبلغ المطلوب:</b> <code>$${amount.toFixed(2)} USDT</code>`,
+          `🆔 <b>رقم العملية:</b> <code>#${orderRef}</code>`,
+          '──────────────────',
+          '⚡ جاري فحص ومراجعة عملية التحويل من قبل الإدارة على @upstorelive_bot.',
+          'سيتم إضافة الرصيد إلى محفظتك تلقائياً وإشعارك هنا فور الاعتماد.',
+        ].join('\n');
+
+        await sendMessage(
+          chatId,
+          pendingTopupMsg,
+          {
+            inline_keyboard: [
+              [{ text: t('bybit_recheck_btn', lang), callback_data: data }],
+              [{ text: `👨‍💻 ${t('btn_support', lang)}`, callback_data: 'support' }],
+              [{ text: `🔙 ${t('btn_back', lang)}`, callback_data: 'payment_methods' }],
+            ],
+          },
+          businessConnectionId
+        );
+        return;
+      }
+    }
+
     if (data === 'my_orders') {
       await renderMyOrders(chatId, messageId, callbackId, businessConnectionId);
       return;
@@ -1499,7 +1831,7 @@ async function handleUpdate(update) {
     }
     if (data === 'SUPPORT_RESET_MEMORY') {
       resetChatHistory(chatId);
-      await answerCallbackQuery(callbackId, 'تم بدء جلسة جديدة بنجاح ✅', false);
+      await answerCallbackQuery(callbackId, t('session_reset_toast', lang), false);
       await renderMainMenu(chatId, messageId, null, businessConnectionId);
       return;
     }
@@ -1510,15 +1842,15 @@ async function handleUpdate(update) {
 
   const chatId = message.chat.id;
   const userLangCode = message.from?.language_code || '';
-  detectUserLanguage(chatId, userLangCode);
+  const lang = detectUserLanguage(chatId, userLangCode);
 
   if (message.photo && Array.isArray(message.photo) && message.photo.length > 0) {
     const quota = getMediaQuota(chatId);
     if (quota.isExceeded) {
       await sendMessage(
         chatId,
-        'لقد استنفدت الحد المسموح به لرفع الصور والمستندات لهذا الشهر (' + MONTHLY_MEDIA_UPLOAD_LIMIT + ' مرات شهرياً).\n\nيمكنك وصف مشكلتك نصياً أو التواصل مع الدعم الفني البشري عبر @UPSTORE_HELP 👨‍💻.',
-        { inline_keyboard: [[{ text: '👨‍💻 الدعم الفني المباشر', callback_data: 'support' }]] },
+        t('media_quota_exceeded', lang, { limit: MONTHLY_MEDIA_UPLOAD_LIMIT }),
+        { inline_keyboard: [[{ text: t('btn_human_support', lang), callback_data: 'support' }]] },
         businessConnectionId
       );
       return;
@@ -1526,13 +1858,34 @@ async function handleUpdate(update) {
     consumeMediaQuota(chatId);
     const remaining = Math.max(0, MONTHLY_MEDIA_UPLOAD_LIMIT - (quota.count + 1));
     await sendChatAction(chatId, 'typing', businessConnectionId);
-    const bestPhoto = message.photo[message.photo.length - 1];
-    const file = await downloadTelegramFileAsBase64(bestPhoto.file_id);
-    if (file) {
-      const reply = await analyzeMediaWithGeminiVision(file.dataUrl, message.caption || '');
-      const quotaNotice = '\n\n<blockquote><b>رصيد رفع الصور المتبقي لهذا الشهر:</b> <code>' + remaining + ' من ' + MONTHLY_MEDIA_UPLOAD_LIMIT + '</code> 📸</blockquote>';
-      await sendMessage(chatId, reply + quotaNotice, getKeyboardForQueryAndReply(message.caption || '', reply), businessConnectionId);
-    }
+
+    const reqId = `IMG-${Date.now().toString().slice(-6)}`;
+    try {
+      notifyPendingPaymentApproval(
+        message.from,
+        5.0,
+        'Photo Receipt / إيصال دفع مصور',
+        reqId,
+        'WALLET_TOPUP',
+        { note: message.caption || 'Photo Receipt Upload' }
+      );
+    } catch (e) {}
+
+    const receiptReply = [
+      '✅ <b>تم استلام صورة الإيصال بنجاح!</b>',
+      '──────────────────',
+      `🆔 <b>رقم المرجع:</b> <code>#${reqId}</code>`,
+      '⚡ تم إرسال الإيصال مباشرة إلى الإدارة على @upstorelive_bot للتحقق الفوري.',
+      'سيتم شحن رصيد محفظتك تلقائياً وإشعارك هنا فور الاعتماد 💳✨',
+    ].join('\n');
+
+    const quotaNotice = `\n\n<blockquote><b>${t('media_quota_remaining_photo', lang)}</b> <code>${remaining} / ${MONTHLY_MEDIA_UPLOAD_LIMIT}</code> 📸</blockquote>`;
+    await sendMessage(chatId, receiptReply + quotaNotice, {
+      inline_keyboard: [
+        [{ text: `🛍️ ${t('btn_catalog', lang)}`, callback_data: 'catalog' }, { text: `💳 ${t('btn_wallet', lang)}`, callback_data: 'payment_methods' }],
+        [{ text: `👨‍💻 ${t('btn_support', lang)}`, callback_data: 'support' }],
+      ],
+    }, businessConnectionId);
     return;
   }
 
@@ -1541,8 +1894,8 @@ async function handleUpdate(update) {
     if (quota.isExceeded) {
       await sendMessage(
         chatId,
-        'لقد استنفدت الحد المسموح به لرفع الصور والمستندات لهذا الشهر (' + MONTHLY_MEDIA_UPLOAD_LIMIT + ' مرات شهرياً).\n\nيمكنك وصف مشكلتك نصياً أو التواصل مع الدعم الفني البشري عبر @UPSTORE_HELP 👨‍💻.',
-        { inline_keyboard: [[{ text: '👨‍💻 الدعم الفني المباشر', callback_data: 'support' }]] },
+        t('media_quota_exceeded', lang, { limit: MONTHLY_MEDIA_UPLOAD_LIMIT }),
+        { inline_keyboard: [[{ text: t('btn_human_support', lang), callback_data: 'support' }]] },
         businessConnectionId
       );
       return;
@@ -1550,12 +1903,34 @@ async function handleUpdate(update) {
     consumeMediaQuota(chatId);
     const remaining = Math.max(0, MONTHLY_MEDIA_UPLOAD_LIMIT - (quota.count + 1));
     await sendChatAction(chatId, 'typing', businessConnectionId);
-    const file = await downloadTelegramFileAsBase64(message.document.file_id);
-    if (file) {
-      const reply = await analyzeMediaWithGeminiVision(file.dataUrl, message.caption || '');
-      const quotaNotice = '\n\n<blockquote><b>رصيد رفع الصور المتبقي لهذا الشهر:</b> <code>' + remaining + ' من ' + MONTHLY_MEDIA_UPLOAD_LIMIT + '</code> 📄</blockquote>';
-      await sendMessage(chatId, reply + quotaNotice, getKeyboardForQueryAndReply(message.caption || '', reply), businessConnectionId);
-    }
+
+    const reqId = `DOC-${Date.now().toString().slice(-6)}`;
+    try {
+      notifyPendingPaymentApproval(
+        message.from,
+        5.0,
+        'Document Receipt / مستند تحويل',
+        reqId,
+        'WALLET_TOPUP',
+        { note: message.caption || 'Document Receipt Upload' }
+      );
+    } catch (e) {}
+
+    const receiptReply = [
+      '✅ <b>تم استلام مستند التحويل بنجاح!</b>',
+      '──────────────────',
+      `🆔 <b>رقم المرجع:</b> <code>#${reqId}</code>`,
+      '⚡ تم إرسال المستند مباشرة إلى الإدارة على @upstorelive_bot للتحقق الفوري.',
+      'سيتم شحن رصيد محفظتك تلقائياً وإشعارك هنا فور الاعتماد 💳✨',
+    ].join('\n');
+
+    const quotaNotice = `\n\n<blockquote><b>${t('media_quota_remaining_doc', lang)}</b> <code>${remaining} / ${MONTHLY_MEDIA_UPLOAD_LIMIT}</code> 📄</blockquote>`;
+    await sendMessage(chatId, receiptReply + quotaNotice, {
+      inline_keyboard: [
+        [{ text: `🛍️ ${t('btn_catalog', lang)}`, callback_data: 'catalog' }, { text: `💳 ${t('btn_wallet', lang)}`, callback_data: 'payment_methods' }],
+        [{ text: `👨‍💻 ${t('btn_support', lang)}`, callback_data: 'support' }],
+      ],
+    }, businessConnectionId);
     return;
   }
 
@@ -1563,6 +1938,7 @@ async function handleUpdate(update) {
   if (!text) return;
 
   if (text.startsWith('/start')) {
+    notifyUserEntry(message.from, text);
     const parts = text.split(/\s+/);
     if (parts.length > 1) {
       const payload = parts[1].trim();
@@ -1571,13 +1947,7 @@ async function handleUpdate(update) {
         const referrerId = refMatch[1];
         const res = await recordReferral(chatId, referrerId);
         if (res) {
-          const welcomeRefText = [
-            '👋 <b>أهلاً بك في متجر UpStore الرقمي! 👑</b>',
-            '━━━━━━━━━━━━━━━━━━━━━━',
-            '🎁 <b>تم تسجيل انضمامك بنجاح عبر دعوة صديقك!</b>',
-            '⚡ تصفح الآن أقوى اشتراكات وتراخيص الذكاء الاصطناعي العالمية بأرخص الأسعار مع تسليم فوري وضمان استبدال ذهبي 100% 🛡️.',
-          ].join('\n');
-          await sendMessage(chatId, welcomeRefText, null, businessConnectionId);
+          await sendMessage(chatId, t('referral_welcome_new_user', lang), null, businessConnectionId);
         }
       }
     }
@@ -1621,6 +1991,43 @@ async function handleUpdate(update) {
   }
 
   const lower = text.toLowerCase();
+
+  // ── 'دفع' / 'شحن' KEYWORD DIRECT WALLET TOP-UP ROUTING ──
+  if (
+    text === '/pay' ||
+    text === '/deposit' ||
+    text === '/topup' ||
+    text === 'دفع' ||
+    text === 'شحن' ||
+    text === 'شحن المحفظة' ||
+    text === 'شحن رصيد' ||
+    text === 'المحفظة' ||
+    text === 'شحن محفظة' ||
+    text.includes('شحن المحفظة') ||
+    text.includes('شحن رصيد') ||
+    text.includes('عايز اشحن') ||
+    text.includes('عايز ادفع') ||
+    text.includes('كيف ادفع') ||
+    text.includes('اريد الشحن') ||
+    text.includes('طريقة الشحن') ||
+    lower === 'pay' ||
+    lower === 'deposit' ||
+    lower === 'topup' ||
+    lower.includes('top up')
+  ) {
+    await renderWalletTopupScreen(chatId, 5.0, null, null, null, businessConnectionId);
+    return;
+  }
+
+  // ── NUMERIC AMOUNT WALLET TOP-UP ROUTING (e.g. 10, 25, 50, $100) ──
+  const numericTopupMatch = text.match(/^\$?\s*(\d+(\.\d+)?)\s*(?:usdt|\$|usd|دولار)?$/i);
+  if (numericTopupMatch) {
+    const parsedAmount = parseFloat(numericTopupMatch[1]);
+    if (parsedAmount >= 1 && parsedAmount <= 1000) {
+      await renderWalletTopupScreen(chatId, parsedAmount, null, null, null, businessConnectionId);
+      return;
+    }
+  }
 
   if (
     text === '/lang' ||
@@ -1684,18 +2091,37 @@ async function handleUpdate(update) {
     text === '/crypto' ||
     text === '/usdt' ||
     lower === 'bybit' ||
-    text.includes('بايبيت')
+    text.includes('بايبيت') ||
+    text.includes('بيبات') ||
+    text.includes('بايبت')
   ) {
     await renderDirectBybitCheckout(chatId, '643361f7', null, null, businessConnectionId);
     return;
   }
   if (
+    text === '/binance' ||
+    lower === 'binance' ||
+    text.includes('بينانس') ||
+    text.includes('بنانس')
+  ) {
+    await renderDirectBinanceCheckout(chatId, '643361f7', null, null, businessConnectionId);
+    return;
+  }
+  if (
     text === '/payments' ||
     text === '/wallet' ||
+    text === '/pay' ||
+    text === 'دفع' ||
+    text === 'الدفع' ||
+    text === 'شحن' ||
+    text === 'الشحن' ||
     text.includes('طرق الدفع') ||
-    text.includes('المحفظة') ||
-    text.includes('الرصيد') ||
+    text.includes('شحن المحفظة') ||
+    text.includes('شحن رصيد') ||
     lower.includes('wallet') ||
+    lower.includes('payment') ||
+    lower.includes('recharge') ||
+    lower.includes('topup') ||
     lower.includes('billetera') ||
     lower.includes('portefeuille') ||
     lower.includes('кошелек') ||
@@ -1748,13 +2174,13 @@ async function handleUpdate(update) {
   }
   if (text === '/clear' || text === '/reset') {
     resetChatHistory(chatId);
-    await sendMessage(chatId, '<b>[✓] تم مسح سجل المحادثة وبدء جلسة جديدة بنجاح ✅</b>', {
-      inline_keyboard: [[{ text: '🏠 القائمة الرئيسية', callback_data: 'main_menu' }]],
+    await sendMessage(chatId, t('session_reset_success', lang), {
+      inline_keyboard: [[{ text: `🏠 ${t('btn_main_menu', lang)}`, callback_data: 'main_menu' }]],
     }, businessConnectionId);
     return;
   }
 
-  // ── SMART BYBIT TRANSFER ID & TRANSACTION AUTO-VERIFIER ──
+  // ── SMART TRANSACTION ID / TRANSFER ID VERIFIER & APPROVAL DISPATCHER ──
   const isLikelyTransferId = /^\d{4,25}$/.test(text) ||
     /^(0x)?[a-fA-F0-9]{32,66}$/.test(text) ||
     text.toLowerCase().includes('txid') ||
@@ -1792,24 +2218,67 @@ async function handleUpdate(update) {
       }
     }
 
-    const orderRef = pendingOrder?.session_id ? pendingOrder.session_id.split('_').pop() : 'DIRECT';
+    const isWalletTopupOrder = pendingOrder?.product_key?.startsWith('WALLET_TOPUP_');
+    const orderRef = pendingOrder?.session_id ? pendingOrder.session_id.split('_').pop() : `TX-${Date.now().toString().slice(-6)}`;
     const product = pendingOrder?.products || STORE_CATALOG[0];
-    const expectedAmount = pendingOrder ? Number(pendingOrder.amount) : product.our_price;
+    const expectedAmount = pendingOrder ? Number(pendingOrder.amount) : (isWalletTopupOrder ? 5.0 : product.our_price);
 
     const verification = await verifyTransferIdOrTxid(extractedId, expectedAmount);
 
     if (verification && verification.success) {
-      await deliverInstantOrder(chatId, product, orderRef, verification, null, businessConnectionId);
-      return;
+      if (isWalletTopupOrder) {
+        const creditedWallet = await creditUserWallet(chatId, expectedAmount, 'AUTO_TXID_VERIFIED', verification, supabase);
+        try {
+          notifyWalletTopup(message.from, expectedAmount, 'BYBIT/TXID', creditedWallet.balance, verification);
+        } catch {}
+
+        const successText = [
+          t('wallet_topup_success_message', lang, { amount: expectedAmount.toFixed(2), balance: creditedWallet.balance.toFixed(2) }),
+        ].join('\n');
+
+        await sendMessage(chatId, successText, {
+          inline_keyboard: [
+            [{ text: `🛍️ ${t('btn_catalog', lang)}`, callback_data: 'catalog' }],
+            [{ text: `💳 ${t('btn_back_to_wallet', lang)}`, callback_data: 'payment_methods' }],
+          ],
+        }, businessConnectionId);
+        return;
+      } else {
+        await deliverInstantOrder(chatId, product, orderRef, verification, null, businessConnectionId);
+        return;
+      }
     } else {
+      // Dispatch interactive approval request to @upstorelive_bot with Action Buttons!
+      try {
+        notifyPendingPaymentApproval(
+          message.from,
+          expectedAmount,
+          'Transfer ID / معرف تحويل',
+          extractedId,
+          isWalletTopupOrder ? 'WALLET_TOPUP' : 'PRODUCT_PURCHASE',
+          { shortId: product?.short_id || '643361f7', reqId: orderRef }
+        );
+      } catch (err) {}
+
+      const pendingNoticeText = [
+        '⏳ <b>تم استلام بيانات العملية بنجاح!</b>',
+        '──────────────────',
+        `🧾 <b>المعرف / TXID:</b> <code>${extractedId}</code>`,
+        `🆔 <b>رقم المرجع:</b> <code>#${orderRef}</code>`,
+        `💎 <b>المبلغ:</b> <code>${expectedAmount.toFixed(2)} USDT</code>`,
+        '──────────────────',
+        '⚡ تم إرسال العملية إلى الإدارة على @upstorelive_bot للمراجعة الفورية.',
+        'سيتم اعتماد طلبك وشحن المحفظة / تسليم الحساب وإشعارك هنا فوراً!',
+      ].join('\n');
+
       await sendMessage(
         chatId,
-        `⏳ <b>جارٍ فحص معرف التحويل:</b> <code>${extractedId}</code>\n\n<blockquote>لم يتم رصد مطابقة لهذا المعرف حتى الآن على Bybit.\n\nإذا كنت قد أتممت التحويل للتو، يُرجى الانتظار 15-30 ثانية لتأكيد العملية في سيرفر Bybit ثم إرسال المعرف مجدداً، أو الضغط على زر الفحص بالأسفل ⚡.</blockquote>`,
+        pendingNoticeText,
         {
           inline_keyboard: [
-            [{ text: '🔍 فحص وتأكيد الدفع التلقائي ⚡', callback_data: `check_bybit_${product.short_id || '643361f7'}_${orderRef}` }],
-            [{ text: '👨‍💻 مساعدة من الدعم الفني', callback_data: 'support' }],
-            [{ text: '🏠 القائمة الرئيسية', callback_data: 'main_menu' }],
+            [{ text: `📦 ${t('btn_orders', lang)}`, callback_data: 'my_orders' }],
+            [{ text: `💳 ${t('btn_wallet', lang)}`, callback_data: 'payment_methods' }],
+            [{ text: `👨‍💻 ${t('btn_support', lang)}`, callback_data: 'support' }],
           ],
         },
         businessConnectionId
@@ -1818,11 +2287,26 @@ async function handleUpdate(update) {
     }
   }
 
-  await sendChatAction(chatId, 'typing', businessConnectionId);
-  const aiReply = await generateDeepSeekReply(chatId, text);
-  appendChatHistory(chatId, text, aiReply);
-  const lang = getUserLanguage(chatId);
-  await sendMessage(chatId, aiReply, getKeyboardForQueryAndReply(text, aiReply, lang), businessConnectionId);
+  // ── FAST DETERMINISTIC MENU RESPONSE (AI DISABLED FOR @upstore_one_bot) ──
+  const fastStoreResponse = [
+    '👋 <b>أهلاً بك في متجر UpStore الرقمي!</b>',
+    '──────────────────',
+    '⚡ <b>يمكنك تنفيذ أي من العمليات التالية مباشرة:</b>',
+    '• 🛍️ <b>المنتجات:</b> تصفح الاشتراكات والبرامج الرسمية بأسعار مخفضة.',
+    '• 💳 <b>المحفظة والدفع:</b> شحن رصيدك عبر Bybit و Binance.',
+    '• 📦 <b>طلباتي:</b> استعراض كافة طلباتك السابقة وأكواد السيريال (16 رقم).',
+    '• 👨‍💻 <b>الدعم الفني:</b> للتواصل المباشر مع الدعم الفني @UPSTORE_HELP.',
+    '──────────────────',
+    '<i>اضغط على أي زر للمتابعة أو اكتب "دفع" لشحن محفظتك مباشرة:</i>',
+  ].join('\n');
+
+  notifyUserChat(message.from, text, 'Fast Store Menu');
+  await sendMessage(chatId, fastStoreResponse, {
+    inline_keyboard: [
+      [{ text: `🛍️ ${t('btn_catalog', lang)}`, callback_data: 'catalog' }, { text: `💳 ${t('btn_wallet', lang)}`, callback_data: 'payment_methods' }],
+      [{ text: `📦 ${t('btn_orders', lang)}`, callback_data: 'my_orders' }, { text: `👨‍💻 ${t('btn_support', lang)}`, callback_data: 'support' }],
+    ],
+  }, businessConnectionId);
 }
 
 async function runLongPolling() {
@@ -1836,6 +2320,15 @@ async function runLongPolling() {
   } catch {}
 
   console.log(`🚀 @${BOT_USERNAME} is active and listening for incoming updates (Direct & Business)...`);
+  
+  // Launch @upstorelive_bot polling daemon concurrently
+  try {
+    startLiveBotPolling();
+    notifySystemUpdate('🟢 تم تشغيل سيرفر UpStore VPS', 'تمت ترقية البوت وتفعيل البث المباشر على @upstorelive_bot بنجاح 24/7 ⚡');
+  } catch (e) {
+    console.warn('[LiveMonitor Launch Exception]:', e.message);
+  }
+
   let offset = 0;
 
   const allowedUpdates = JSON.stringify([

@@ -103,12 +103,12 @@ export const AdminNotificationsTab: React.FC<AdminNotificationsTabProps> = ({
       if (res.ok && data.ok) {
         setVisitorBotResult({
           success: true,
-          message: 'تم إرسال إشعار الرصد الفوري بنجاح إلى @Logztbot! تفقد محادثة التيليجرام الآن.',
+          message: 'تم إرسال إشعار الرصد الفوري بنجاح إلى @upstorelive_bot! تفقد محادثة التيليجرام الآن.',
         });
       } else {
         setVisitorBotResult({
           success: false,
-          message: data.error || 'فشل إرسال الإشعار. تأكد من فتح @Logztbot والضغط على /start لتسجيل المعرّف.',
+          message: data.error || 'فشل إرسال الإشعار. تأكد من فتح @upstorelive_bot والضغط على /start لتسجيل المعرّف.',
         });
       }
     } catch (e: any) {
@@ -124,7 +124,7 @@ export const AdminNotificationsTab: React.FC<AdminNotificationsTabProps> = ({
   return (
     <div className="space-y-8 animate-fade-in text-black">
       
-      {/* Telegram Live Visitor Intelligence Bot (@Logztbot) Card */}
+      {/* Telegram Live Visitor Intelligence Bot (@upstorelive_bot) Card */}
       <div className="bg-white border-2 border-black rounded-3xl p-6 sm:p-8 space-y-6 shadow-[6px_6px_0px_0px_#000]">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b-2 border-black pb-4 select-none">
           <div className="flex items-center gap-3">
@@ -135,7 +135,7 @@ export const AdminNotificationsTab: React.FC<AdminNotificationsTabProps> = ({
               <h3 className="text-base font-black text-black flex items-center gap-2">
                 بوت استخبارات وزوار المتجر اللحظي
                 <span className="px-2 py-0.5 rounded-md bg-[#06D6A0] border border-black text-black text-[10px] font-mono font-black">
-                  @Logztbot Live
+                  @upstorelive_bot Live
                 </span>
               </h3>
               <p className="text-xs text-neutral-700 font-bold mt-0.5">
@@ -146,13 +146,13 @@ export const AdminNotificationsTab: React.FC<AdminNotificationsTabProps> = ({
 
           <div className="flex items-center gap-2">
             <a
-              href="https://t.me/Logztbot"
+              href="https://t.me/upstorelive_bot"
               target="_blank"
               rel="noopener noreferrer"
               className="py-2 px-3.5 bg-neutral-100 hover:bg-neutral-200 border-2 border-black rounded-xl text-black font-black text-xs shadow-[2px_2px_0px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 transition-all flex items-center gap-1.5"
             >
               <ExternalLink className="w-3.5 h-3.5 stroke-[2.5]" />
-              فتح المحادثة @Logztbot
+              فتح المحادثة @upstorelive_bot
             </a>
           </div>
         </div>

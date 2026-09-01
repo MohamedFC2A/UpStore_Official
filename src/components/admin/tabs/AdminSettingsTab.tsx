@@ -552,7 +552,7 @@ export const AdminSettingsTab: React.FC<AdminSettingsTabProps> = ({
                 type="text"
                 value={instapayAddress}
                 onChange={(e) => setInstapayAddress(e.target.value)}
-                placeholder="e.g. mo_matany or upstore@instapay"
+                placeholder="e.g. upstore@instapay"
                 className="w-full px-3 py-2 bg-white border-2 border-black rounded-xl text-black font-bold outline-none shadow-[1.5px_1.5px_0px_0px_#000]"
               />
             </div>
@@ -565,7 +565,7 @@ export const AdminSettingsTab: React.FC<AdminSettingsTabProps> = ({
                 type="text"
                 value={instapayUrl}
                 onChange={(e) => setInstapayUrl(e.target.value)}
-                placeholder="e.g. https://ipn.eg/S/mo_matany/instapay/30M8Zj"
+                placeholder="e.g. https://ipn.eg/S/upstore/instapay/..."
                 className="w-full px-3 py-2 bg-white border-2 border-black rounded-xl text-black font-mono font-bold outline-none shadow-[1.5px_1.5px_0px_0px_#000]"
               />
             </div>

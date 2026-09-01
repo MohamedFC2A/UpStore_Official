@@ -62,7 +62,7 @@ export default function RefundPage() {
             </div>
           </div>
           <a
-            href="https://t.me/UpStore_Support_bot"
+            href="https://t.me/upstore_one_bot"
             target="_blank"
             rel="noopener noreferrer"
             className="px-6 py-3 rounded-2xl bg-black hover:bg-neutral-800 text-white font-black text-xs uppercase tracking-wider flex items-center gap-2 transition-all shrink-0 cursor-pointer shadow-[3px_3px_0px_0px_#FFE600] active:translate-x-0.5 active:translate-y-0.5"
