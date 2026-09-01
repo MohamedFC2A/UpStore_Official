@@ -63,6 +63,7 @@ async function main() {
   const conn = await connectSSH();
 
   const files = [
+    { local: path.resolve('./scripts/storeCatalog.mjs'), remote: `${REMOTE_APP_DIR}/scripts/storeCatalog.mjs` },
     { local: path.resolve('./scripts/storeWallet.mjs'), remote: `${REMOTE_APP_DIR}/scripts/storeWallet.mjs` },
     { local: path.resolve('./scripts/storeI18n.mjs'), remote: `${REMOTE_APP_DIR}/scripts/storeI18n.mjs` },
     { local: path.resolve('./scripts/liveMonitor.mjs'), remote: `${REMOTE_APP_DIR}/scripts/liveMonitor.mjs` },

@@ -353,6 +353,20 @@ async function sendPhoto(chatId, photoPathOrUrl, caption, replyMarkup = null, bu
 
 const userLastBotMessage = new Map();
 
+async function deleteMessage(chatId, messageId) {
+  if (!chatId || !messageId) return;
+  try {
+    const res = await fetch(`${TELEGRAM_API}/deleteMessage`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ chat_id: chatId, message_id: messageId }),
+    });
+    return await res.json();
+  } catch (err) {
+    return null;
+  }
+}
+
 async function deletePreviousBotMessage(chatId) {
   const prevMsgId = userLastBotMessage.get(String(chatId));
   if (prevMsgId) {
