@@ -285,6 +285,7 @@ const MONTHLY_MEDIA_UPLOAD_LIMIT = 5;
 
 const mediaUploadRecords = new Map();
 const userChatHistories = new Map();
+const userPendingPaymentSessions = new Map();
 
 function getMediaQuota(chatId) {
   const now = new Date();
@@ -1024,6 +1025,15 @@ async function renderDirectBybitCheckout(chatId, shortId, messageId, callbackQue
 
   notifyPurchaseAttempt({ id: chatId }, product, 'Bybit Pay (Crypto)', orderRef);
 
+  userPendingPaymentSessions.set(String(chatId), {
+    method: 'bybit',
+    amount: product.our_price,
+    orderRef,
+    product,
+    type: 'PRODUCT_PURCHASE',
+    timestamp: Date.now(),
+  });
+
   const text = [
     t('bybit_checkout_title', lang),
     '──────────────────',
@@ -1039,6 +1049,12 @@ async function renderDirectBybitCheckout(chatId, shortId, messageId, callbackQue
 
   const keyboard = {
     inline_keyboard: [
+      [
+        {
+          text: t('btn_submit_txid', lang),
+          callback_data: `submit_txid_bybit_${product.our_price}_${orderRef}`,
+        },
+      ],
       [
         {
           text: `⚡ ${t('btn_verify_bybit', lang)}`,
@@ -1090,6 +1106,15 @@ async function renderDirectBinanceCheckout(chatId, shortId, messageId, callbackQ
 
   notifyPurchaseAttempt({ id: chatId }, product, 'Binance Pay', orderRef);
 
+  userPendingPaymentSessions.set(String(chatId), {
+    method: 'binance',
+    amount: product.our_price,
+    orderRef,
+    product,
+    type: 'PRODUCT_PURCHASE',
+    timestamp: Date.now(),
+  });
+
   const text = [
     t('binance_checkout_title', lang),
     '──────────────────',
@@ -1103,6 +1128,12 @@ async function renderDirectBinanceCheckout(chatId, shortId, messageId, callbackQ
 
   const keyboard = {
     inline_keyboard: [
+      [
+        {
+          text: t('btn_submit_txid', lang),
+          callback_data: `submit_txid_binance_${product.our_price}_${orderRef}`,
+        },
+      ],
       [
         {
           text: `🟡 ${t('btn_verify_binance', lang)}`,
@@ -1581,9 +1612,21 @@ async function renderWalletTopupMethod(chatId, method, amount, returnProdId = nu
     ];
   }
 
+  userPendingPaymentSessions.set(String(chatId), {
+    method,
+    amount: amt,
+    orderRef,
+    returnProdId,
+    type: 'WALLET_TOPUP',
+    timestamp: Date.now(),
+  });
+
   const text = lines.join('\n');
   const keyboard = {
     inline_keyboard: [
+      [
+        { text: t('btn_submit_txid', lang), callback_data: `submit_txid_${method}_${amt}_${orderRef}` },
+      ],
       [
         { text: `⚡ ${t('btn_verify_payment_auto', lang) || 'تحقق من الشحن الآن'}`, callback_data: checkCallback },
       ],
@@ -2129,6 +2172,7 @@ async function handleUpdate(update) {
 
         const kbd = {
           inline_keyboard: [
+            [{ text: t('btn_submit_txid', lang), callback_data: `submit_txid_${method}_${amount}_${orderRef}` }],
             [{ text: t('bybit_recheck_btn', lang), callback_data: data }],
             [{ text: `👨‍💻 ${t('btn_support', lang)}`, callback_data: 'support' }],
             [{ text: `🔙 ${t('btn_back', lang)}`, callback_data: 'payment_methods' }],
@@ -2142,6 +2186,48 @@ async function handleUpdate(update) {
         }
         return;
       }
+    }
+
+    if (data.startsWith('submit_txid_')) {
+      const parts = data.split('_');
+      const method = parts[2] || 'bybit';
+      const amount = parseFloat(parts[3]) || 5.0;
+      const orderRef = parts.slice(4).join('_') || `TOPUP-${Date.now().toString().slice(-6)}`;
+
+      await answerCallbackQuery(callbackId, t('btn_submit_txid', lang), false);
+
+      userPendingPaymentSessions.set(String(chatId), {
+        method,
+        amount,
+        orderRef,
+        waitingTxid: true,
+        timestamp: Date.now(),
+      });
+
+      const promptMsg = [
+        t('submit_txid_prompt_title', lang),
+        '━━━━━━━━━━━━━━━━━━━━━━',
+        `💵 <b>${t('required_amount_label', lang)}</b> <code>$${amount.toFixed(2)} USDT</code>`,
+        `🆔 <b>${t('order_ref_label', lang)}</b> <code>#${orderRef}</code>`,
+        '━━━━━━━━━━━━━━━━━━━━━━',
+        t('submit_txid_prompt_desc', lang),
+        '',
+        t('submit_txid_prompt_hint', lang),
+      ].join('\n');
+
+      const kbd = {
+        inline_keyboard: [
+          [{ text: `👨‍💻 ${t('btn_support', lang)}`, callback_data: 'support' }],
+          [{ text: `🔙 ${t('btn_back', lang)}`, callback_data: 'payment_methods' }],
+        ],
+      };
+
+      const editRes = await editMessageText(chatId, messageId, promptMsg, kbd, businessConnectionId);
+      if (!editRes || !editRes.ok) {
+        await deleteMessage(chatId, messageId);
+        await sendMessage(chatId, promptMsg, kbd, businessConnectionId);
+      }
+      return;
     }
 
     if (data === 'my_orders') {
@@ -2593,26 +2679,38 @@ async function handleUpdate(update) {
   }
 
   // ── SMART TRANSACTION ID / TRANSFER ID VERIFIER & APPROVAL DISPATCHER ──
-  const isLikelyTransferId = /^\d{4,25}$/.test(text) ||
+  const pendingSession = userPendingPaymentSessions.get(String(chatId));
+  const isLikelyTransferId = pendingSession?.waitingTxid ||
+    /^\d{4,25}$/.test(text) ||
     /^(0x)?[a-fA-F0-9]{32,66}$/.test(text) ||
     text.toLowerCase().includes('txid') ||
     text.toLowerCase().includes('transfer') ||
+    text.toLowerCase().includes('order') ||
+    text.toLowerCase().includes('uid') ||
+    text.toLowerCase().includes('hash') ||
     text.includes('معرف') ||
     text.includes('العملية') ||
     text.includes('رقم التحويل') ||
+    text.includes('رقم الحوالة') ||
     text.includes('تم التحويل') ||
     text.includes('حولتها') ||
-    text.includes('دفعت');
+    text.includes('دفعت') ||
+    text.includes('فودافون') ||
+    text.includes('انستاباي') ||
+    text.includes('إنستاباي') ||
+    text.includes('كاش');
 
   if (isLikelyTransferId) {
     await sendChatAction(chatId, 'typing', businessConnectionId);
 
     // Extract potential ID from text
-    const extractedId = text.replace(/[^a-zA-Z0-9_-]/g, ' ').trim().split(/\s+/).find(w => w.length >= 4) || text;
+    const cleanWordMatch = text.replace(/[^a-zA-Z0-9_-]/g, ' ').trim().split(/\s+/).find(w => w.length >= 4);
+    const displayId = cleanWordMatch && cleanWordMatch.length >= 4 ? cleanWordMatch : text.trim();
+    const extractedId = displayId;
 
-    // Fetch user's latest pending order from Supabase
+    // Fetch user's latest pending order from Supabase if not in active session
     let pendingOrder = null;
-    if (supabase) {
+    if (supabase && !pendingSession) {
       try {
         const { data: orders } = await supabase
           .from('orders')
@@ -2630,10 +2728,27 @@ async function handleUpdate(update) {
       }
     }
 
-    const isWalletTopupOrder = pendingOrder?.product_key?.startsWith('WALLET_TOPUP_');
-    const orderRef = pendingOrder?.session_id ? pendingOrder.session_id.split('_').pop() : `TX-${Date.now().toString().slice(-6)}`;
-    const product = pendingOrder?.products || STORE_CATALOG[0];
-    const expectedAmount = pendingOrder ? Number(pendingOrder.amount) : (isWalletTopupOrder ? 5.0 : product.our_price);
+    let isWalletTopupOrder = true;
+    let expectedAmount = 5.0;
+    let orderRef = `TX-${Date.now().toString().slice(-6)}`;
+    let product = STORE_CATALOG[0];
+    let methodTitle = 'Bybit Internal UID (47183921)';
+
+    if (pendingSession) {
+      expectedAmount = pendingSession.amount || 5.0;
+      orderRef = pendingSession.orderRef || orderRef;
+      isWalletTopupOrder = pendingSession.type !== 'PRODUCT_PURCHASE';
+      if (pendingSession.product) product = pendingSession.product;
+      methodTitle = pendingSession.method === 'binance'
+        ? 'Binance Pay (ID: 764476139)'
+        : (pendingSession.method === 'bybit' ? 'Bybit UID (47183921)' : 'Local Payment');
+      userPendingPaymentSessions.delete(String(chatId));
+    } else if (pendingOrder) {
+      expectedAmount = Number(pendingOrder.amount) || 5.0;
+      isWalletTopupOrder = pendingOrder?.product_key?.startsWith('WALLET_TOPUP_');
+      orderRef = pendingOrder?.session_id ? pendingOrder.session_id.split('_').pop() : orderRef;
+      if (pendingOrder.products) product = pendingOrder.products;
+    }
 
     const verification = await verifyTransferIdOrTxid(extractedId, expectedAmount);
 
@@ -2684,33 +2799,40 @@ async function handleUpdate(update) {
             product_id: product?.id || null,
             product_key: isWalletTopupOrder ? `WALLET_TOPUP_${expectedAmount}_USDT` : 'PENDING_TELEGRAM_FULFILLMENT',
             session_id: `tg_${chatId}_${orderRef}`,
-            payment_sender: `Telegram @${chatId} (TxID: ${extractedId})`,
+            payment_sender: `Telegram @${chatId} (Payment ID: ${displayId})`,
             updated_at: new Date().toISOString(),
           });
         } catch (err) {}
       }
 
-      // Dispatch interactive approval request to @upstorelive_bot with Action Buttons!
+      // Dispatch interactive approval request to @upstorelive_bot with Action Buttons and full customer payment ID!
       try {
         notifyPendingPaymentApproval(
           message.from,
           expectedAmount,
-          'Transfer ID / معرف تحويل',
-          extractedId,
+          methodTitle,
+          displayId,
           isWalletTopupOrder ? 'WALLET_TOPUP' : 'PRODUCT_PURCHASE',
-          { shortId: product?.short_id || '643361f7', reqId: orderRef }
+          {
+            shortId: product?.short_id || '643361f7',
+            reqId: orderRef,
+            rawMessage: text,
+            senderAccount: displayId,
+          }
         );
       } catch (err) {}
 
       const pendingNoticeText = [
-        '⏳ <b>تم استلام بيانات العملية بنجاح!</b>',
-        '──────────────────',
-        `🧾 <b>المعرف / TXID:</b> <code>${extractedId}</code>`,
-        `🆔 <b>رقم المرجع:</b> <code>#${orderRef}</code>`,
-        `💎 <b>المبلغ:</b> <code>${expectedAmount.toFixed(2)}$ USDT</code>`,
-        '──────────────────',
-        '⚡ تم إرسال العملية إلى فريق المراجعة والدعم @UPSTORE_HELP للتأكيد الفوري.',
-        'سيتم اعتماد طلبك وشحن المحفظة / تسليم الحساب وإشعارك هنا فوراً!',
+        t('txid_received_title', lang),
+        '━━━━━━━━━━━━━━━━━━━━━━',
+        `🧾 <b>${t('payment_id_label', lang)}</b> <code>${displayId}</code>`,
+        `🆔 <b>${t('order_ref_label', lang)}</b> <code>#${orderRef}</code>`,
+        `💵 <b>${t('required_amount_label', lang)}</b> <code>$${expectedAmount.toFixed(2)} USDT</code>`,
+        `⏱️ <b>${t('verification_eta_label', lang)}</b> <code>${t('verification_eta_value', lang)}</code>`,
+        '━━━━━━━━━━━━━━━━━━━━━━',
+        `🛡️ <b>${t('verification_status_label', lang)}</b> <i>${t('txid_forwarded_to_admin_desc', lang)}</i>`,
+        '',
+        t('verification_guarantee_notice', lang),
       ].join('\n');
 
       await sendMessage(
@@ -2718,8 +2840,7 @@ async function handleUpdate(update) {
         pendingNoticeText,
         {
           inline_keyboard: [
-            [{ text: `📦 ${t('btn_orders', lang)}`, callback_data: 'my_orders' }],
-            [{ text: `💳 ${t('btn_wallet', lang)}`, callback_data: 'payment_methods' }],
+            [{ text: `🛍️ ${t('btn_catalog', lang)}`, callback_data: 'catalog' }, { text: `💳 ${t('btn_wallet', lang)}`, callback_data: 'payment_methods' }],
             [{ text: `👨‍💻 ${t('btn_support', lang)}`, callback_data: 'support' }],
           ],
         },

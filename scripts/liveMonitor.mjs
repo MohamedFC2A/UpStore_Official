@@ -419,16 +419,17 @@ export async function notifyPendingPaymentApproval(user, amount, method, refOrTx
   const html = [
     title,
     '━━━━━━━━━━━━━━━━━━━━━━',
-    `👤 <b>العميل:</b> <b>${u.fullName}</b> (${u.username})`,
-    `🆔 <b>User ID:</b> <code>${u.id}</code> <a href="tg://user?id=${u.id}">[بروفايل]</a>`,
-    `💵 <b>المبلغ:</b> <code>$${numAmount.toFixed(2)} USDT</code> (~${Math.round(numAmount * 50)} ج.م)`,
+    `👤 <b>العميل:</b> <b>${u.fullName}</b> (@${u.username || 'بدون_يوزر'})`,
+    `🆔 <b>User ID:</b> <code>${u.id}</code> <a href="tg://user?id=${u.id}">[فتح الدردشة 💬]</a>`,
+    `💵 <b>المبلغ:</b> <code>$${numAmount.toFixed(2)} USDT</code> (~${Math.round(numAmount * 50)} EGP)`,
     `🏦 <b>طريقة الدفع:</b> <b>${method}</b>`,
-    `🧾 <b>المعرف / البيان / TXID:</b> <code>${refOrTxId}</code>`,
+    `🧾 <b>معرّف الدفع / TXID من العميل:</b> <code>${refOrTxId}</code>`,
+    meta.senderAccount ? `📱 <b>حساب/رقم المحول:</b> <code>${meta.senderAccount}</code>` : '',
     `🆔 <b>رقم المرجع:</b> <code>#${reqId}</code>`,
-    meta.note ? `📝 <b>ملاحظة العميل:</b> <code>${meta.note}</code>` : '',
+    meta.rawMessage ? `💬 <b>نص رسالة العميل:</b>\n<blockquote>${meta.rawMessage}</blockquote>` : (meta.note ? `📝 <b>ملاحظة:</b> <code>${meta.note}</code>` : ''),
     `⏱ <b>التوقيت:</b> <code>${time}</code>`,
     '━━━━━━━━━━━━━━━━━━━━━━',
-    '👇 <b>اضغط على الزر المطلوب لاتخاذ الإجراء فوراً:</b>',
+    '👇 <b>تأكد من مطابقة المعرف بحسابك ثم اضغط الإجراء فوراً:</b>',
   ].filter(Boolean).join('\n');
 
   await broadcastLiveMessage(html, { inline_keyboard: actionKeyboard });
