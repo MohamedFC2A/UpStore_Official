@@ -192,6 +192,8 @@ export function setUserLanguage(chatId, langCode) {
 
 export const I18N_STRINGS = {
   "ar": {
+    "total_recharged_label": "إجمالي المشحون:",
+    "total_spent_label": "المشتريات:",
     "wallet_topup_success_title": "🎉 <b>تم تأكيد عملية الدفع وشحن المحفظة بنجاح! 🤍</b>",
     "recharged_amount_label": "المبلغ المشحون:",
     "total_credited_label": "إجمالي المضاف للمحفظة:",
@@ -391,6 +393,8 @@ export const I18N_STRINGS = {
     "wallet_purchase_ready_hint": "لديك رصيد كافٍ لإتمام الشراء والتفعيل الفوري!"
   },
   "en": {
+    "total_recharged_label": "Total Recharged:",
+    "total_spent_label": "Purchases:",
     "wallet_topup_success_title": "🎉 <b>Payment Confirmed & Wallet Credited Successfully! 🤍</b>",
     "recharged_amount_label": "Recharged Amount:",
     "total_credited_label": "Total Credited to Wallet:",
@@ -590,6 +594,8 @@ export const I18N_STRINGS = {
     "wallet_purchase_ready_hint": "You have sufficient balance for instant activation!"
   },
   "es": {
+    "total_recharged_label": "Total recargado:",
+    "total_spent_label": "Compras:",
     "wallet_topup_success_title": "🎉 <b>¡Pago confirmado y billetera recargada con éxito! 🤍</b>",
     "recharged_amount_label": "Monto recargado:",
     "total_credited_label": "Total acreditado en billetera:",
@@ -789,6 +795,8 @@ export const I18N_STRINGS = {
     "wallet_purchase_ready_hint": "¡Tiene saldo suficiente para activación instantánea!"
   },
   "fr": {
+    "total_recharged_label": "Total rechargé :",
+    "total_spent_label": "Achats :",
     "wallet_topup_success_title": "🎉 <b>Paiement confirmé et portefeuille crédité avec succès ! 🤍</b>",
     "recharged_amount_label": "Montant rechargé :",
     "total_credited_label": "Total crédité au portefeuille :",
@@ -988,6 +996,8 @@ export const I18N_STRINGS = {
     "wallet_purchase_ready_hint": "Vous disposez d'un solde suffisant pour une activation instantanée !"
   },
   "ru": {
+    "total_recharged_label": "Всего пополнено:",
+    "total_spent_label": "Покупки:",
     "wallet_topup_success_title": "🎉 <b>Оплата подтверждена, баланс кошелька успешно пополнен! 🤍</b>",
     "recharged_amount_label": "Сумма пополнения:",
     "total_credited_label": "Всего начислено на кошелек:",
@@ -1187,6 +1197,8 @@ export const I18N_STRINGS = {
     "wallet_purchase_ready_hint": "У вас достаточно средств для мгновенной активации!"
   },
   "tr": {
+    "total_recharged_label": "Toplam Yüklenen:",
+    "total_spent_label": "Harcamalar:",
     "wallet_topup_success_title": "🎉 <b>Ödeme Onaylandı ve Cüzdan Başarıyla Yüklendi! 🤍</b>",
     "recharged_amount_label": "Yüklenen Tutar:",
     "total_credited_label": "Cüzdana Eklenen Toplam:",
@@ -1386,6 +1398,8 @@ export const I18N_STRINGS = {
     "wallet_purchase_ready_hint": "Anında aktivasyon için yeterli bakiyeniz var!"
   },
   "de": {
+    "total_recharged_label": "Insgesamt aufgeladen:",
+    "total_spent_label": "Einkäufe:",
     "wallet_topup_success_title": "🎉 <b>Zahlung bestätigt und Wallet erfolgreich aufgeladen! 🤍</b>",
     "recharged_amount_label": "Aufgeladener Betrag:",
     "total_credited_label": "Gesamtgutschrift Wallet:",
