@@ -471,6 +471,11 @@ export async function processTelegramSupportMessage(
     return;
   }
 
+  if (cleanInput.startsWith('buy_action_')) {
+    await renderDirectBybitCheckout(chatId, cleanInput.replace('buy_action_', ''), messageId, callbackQueryId);
+    return;
+  }
+
   if (cleanInput.startsWith('buy_bybit_')) {
     await renderDirectBybitCheckout(chatId, cleanInput.replace('buy_bybit_', ''), messageId, callbackQueryId);
     return;

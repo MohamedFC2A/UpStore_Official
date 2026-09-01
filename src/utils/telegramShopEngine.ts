@@ -346,33 +346,18 @@ export async function renderProductDetails(
     `💰 <b>السعر:</b> <code>$${product.our_price.toFixed(2)} USDT</code> 🔥${discountPct > 0 ? ` <i>(خصم ${discountPct}%)</i>` : ''}`,
     `💵 <code>${product.price_egp} ج.م</code> | <code>${product.price_sar} ر.س</code>`,
     `⏳ <b>المدة:</b> ${product.subscription_duration} | 🛡️ <b>الضمان:</b> ${product.warranty_duration}`,
-    '⚡ <b>التسليم:</b> فوري وتلقائي داخل المحادثة',
+    '⚡ <b>التسليم:</b> فوري وتلقائي داخل المحادثة (سيريال 16 رقم)',
     '',
     '<b>المزايا:</b>',
     advantagesList,
-    '',
-    '━━━━━━━━━━━━━━━━━━━━━━',
-    'اختر وسيلة الدفع للشراء الفوري:',
   ].join('\n');
 
   const keyboard: { inline_keyboard: TelegramInlineKeyboardButton[][] } = {
     inline_keyboard: [
       [
         {
-          text: `⚡ Bybit Pay ($${product.our_price.toFixed(2)} USDT)`,
-          callback_data: `buy_bybit_${product.short_id}`,
-        },
-      ],
-      [
-        {
-          text: `🟡 Binance Pay ($${product.our_price.toFixed(2)} USDT)`,
-          callback_data: `buy_binance_${product.short_id}`,
-        },
-      ],
-      [
-        {
-          text: `📱 انستاباي / كاش (${product.price_egp} ج.م)`,
-          callback_data: `buy_local_${product.short_id}`,
+          text: `🛍️ شراء الآن ($${product.our_price.toFixed(2)} USDT)`,
+          callback_data: `buy_action_${product.short_id}`,
         },
       ],
       [

@@ -436,6 +436,38 @@ setOrderApprovalHandler(async (chatId, shortId, orderRef, meta) => {
 });
 
 const userReferrals = new Map();
+const REFERRALS_FILE = path.join(process.cwd(), 'data', 'user_referrals.json');
+
+function loadReferralsFromDisk() {
+  try {
+    if (fs.existsSync(REFERRALS_FILE)) {
+      const raw = fs.readFileSync(REFERRALS_FILE, 'utf-8');
+      const parsed = JSON.parse(raw);
+      for (const [k, v] of Object.entries(parsed)) {
+        userReferrals.set(String(k), v);
+      }
+      console.log(`[Referrals] Loaded ${userReferrals.size} referral records from disk.`);
+    }
+  } catch (err) {
+    console.warn('[Referrals Disk Load Warning]:', err.message);
+  }
+}
+
+function saveReferralsToDisk() {
+  try {
+    const dir = path.dirname(REFERRALS_FILE);
+    if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
+    const obj = {};
+    for (const [k, v] of userReferrals.entries()) {
+      obj[k] = v;
+    }
+    fs.writeFileSync(REFERRALS_FILE, JSON.stringify(obj, null, 2), 'utf-8');
+  } catch (err) {
+    console.warn('[Referrals Disk Save Error]:', err.message);
+  }
+}
+
+loadReferralsFromDisk();
 
 async function getUserReferralStats(chatId) {
   let stats = userReferrals.get(String(chatId));
@@ -460,6 +492,7 @@ async function getUserReferralStats(chatId) {
 
 async function saveUserReferralStats(chatId, stats) {
   userReferrals.set(String(chatId), stats);
+  saveReferralsToDisk();
   if (supabase) {
     try {
       await supabase.from('site_settings').upsert({
@@ -467,7 +500,9 @@ async function saveUserReferralStats(chatId, stats) {
         value: JSON.stringify(stats),
         updated_at: new Date().toISOString(),
       });
-    } catch {}
+    } catch (err) {
+      console.warn('[Referral Supabase Save Exception]:', err.message);
+    }
   }
 }
 
@@ -800,51 +835,21 @@ async function renderProductDetails(chatId, shortId, messageId, callbackQueryId,
 
   const durationText = getLocalizedDuration(product.subscription_duration, lang);
   const warrantyText = getLocalizedWarranty(product.warranty_duration, lang);
-
-  // Fetch current user wallet balance
-  const wallet = await getUserWallet(chatId, supabase);
-  const currentBal = wallet.balance || 0;
   const prodPrice = product.our_price;
-  const hasEnoughBalance = currentBal >= prodPrice;
-  const shortage = Number(Math.max(0, prodPrice - currentBal).toFixed(2));
-  // Recommended topup amount is at least $5 or shortage rounded up
-  const recommendedTopup = Math.max(MIN_TOPUP_USD, Math.ceil(shortage));
 
-  let walletSection = '';
-  let inline_keyboard = [];
-
-  if (hasEnoughBalance) {
-    walletSection = [
-      '──────────────────',
-      `💰 <b>${t('wallet_current_balance', lang)}</b> <code>$${currentBal.toFixed(2)} USDT</code> ✅`,
-      `⚡ <i>${t('wallet_purchase_ready_hint', lang) || 'لديك رصيد كافٍ لإتمام الشراء والتفعيل الفوري!'}</i>`,
-    ].join('\n');
-
-    inline_keyboard.push([
-      { text: `🛍️ ${t('btn_pay_with_balance', lang, { amount: prodPrice.toFixed(2) })}`, callback_data: `pay_wallet_${product.short_id}` }
-    ]);
-  } else {
-    walletSection = [
-      '──────────────────',
-      `💳 <b>${t('wallet_current_balance', lang)}</b> <code>$${currentBal.toFixed(2)} USDT</code>`,
-      `⚠️ <b>${t('wallet_insufficient_hint', lang) || 'يجب شحن المحفظة أولاً قبل الشراء (الحد الأدنى 5.00$):'}</b>`,
-      `• ${t('required_amount_label', lang) || 'المبلغ المطلوب:'} <code>$${prodPrice.toFixed(2)} USDT</code>`,
-      `• ${t('shortage_label', lang) || 'المبلغ المتبقي للشحن:'} <code>$${shortage.toFixed(2)} USDT</code>`,
-    ].join('\n');
-
-    inline_keyboard.push([
-      { text: `💳 ${t('btn_topup_amount', lang, { amount: recommendedTopup })}`, callback_data: `topup_wallet_${recommendedTopup}_${product.short_id}` },
-      { text: `⚡ ${t('btn_topup_amount', lang, { amount: '5.00' })}`, callback_data: `topup_wallet_5.00_${product.short_id}` },
-    ]);
-    inline_keyboard.push([
-      { text: `💳 ${t('btn_topup_wallet', lang)}`, callback_data: `topup_select_${product.short_id}` },
-    ]);
-  }
-
-  inline_keyboard.push([
-    { text: `🔙 ${t('btn_back', lang)}`, callback_data: `brand_${product.brand_id}` },
-    { text: `🏠 ${t('btn_main_menu', lang)}`, callback_data: 'main_menu' },
-  ]);
+  // ONLY 2 BUTTON ROWS: 1. Buy Button, 2. Back & Home
+  const inline_keyboard = [
+    [
+      {
+        text: `🛍️ ${t('btn_buy_now', lang, { amount: prodPrice.toFixed(2) })}`,
+        callback_data: `buy_action_${product.short_id}`,
+      },
+    ],
+    [
+      { text: `🔙 ${t('btn_back', lang)}`, callback_data: `brand_${product.brand_id}` },
+      { text: `🏠 ${t('btn_main_menu', lang)}`, callback_data: 'main_menu' },
+    ],
+  ];
 
   const caption = [
     `<b>${product.icon_symbol || brand?.icon || '💎'} ${prodTitle}</b>`,
@@ -855,7 +860,6 @@ async function renderProductDetails(chatId, shortId, messageId, callbackQueryId,
     `🛡️ <b>${t('warranty_label', lang)}:</b> ${warrantyText}`,
     `⚡ <b>${t('delivery', lang)}:</b> ${t('instant_delivery', lang)}`,
     advantages ? `──────────────────\n<b>${t('features_label', lang)}:</b>\n${advantages}` : '',
-    walletSection,
   ].filter(Boolean).join('\n');
 
   const keyboard = { inline_keyboard };
@@ -868,6 +872,88 @@ async function renderProductDetails(chatId, shortId, messageId, callbackQueryId,
     }
   } else {
     await sendMessage(chatId, caption, keyboard, businessConnectionId);
+  }
+}
+
+async function handleBuyAction(chatId, shortId, messageId, callbackQueryId, businessConnectionId = null) {
+  if (callbackQueryId) await answerCallbackQuery(callbackQueryId);
+
+  const lang = getUserLanguage(chatId);
+  const product = getProductByShortIdOrSlug(shortId);
+  if (!product) {
+    await renderCatalog(chatId, messageId, null, businessConnectionId);
+    return;
+  }
+
+  const wallet = await getUserWallet(chatId, supabase);
+  const currentBal = wallet.balance || 0;
+  const prodPrice = product.our_price;
+
+  // Case 1: User has enough balance -> Instant purchase & 16-digit serial delivery
+  if (currentBal >= prodPrice) {
+    const debitResult = await debitUserWallet(chatId, prodPrice, `PURCHASE_${product.short_id}`, { product_id: product.id, title: product.name_ar }, supabase);
+    if (debitResult.success) {
+      const orderRef = `WAL-${Math.floor(100000 + Math.random() * 900000)}`;
+      const txInfo = {
+        amount: prodPrice,
+        type: 'Wallet Balance Deduction',
+        transferId: `WAL-DEBIT-${Date.now()}`,
+      };
+      await deliverInstantOrder(chatId, product, orderRef, txInfo, messageId, businessConnectionId);
+      return;
+    }
+  }
+
+  // Case 2: Insufficient balance -> Redirect to clean Top-Up / Recharge screen
+  await renderInsufficientFundsScreen(chatId, product, currentBal, messageId, businessConnectionId);
+}
+
+async function renderInsufficientFundsScreen(chatId, product, currentBal, messageId, businessConnectionId = null) {
+  const lang = getUserLanguage(chatId);
+  const brand = getBrandById(product.brand_id);
+  const prodTitle = brand ? (lang === 'ar' ? brand.name_ar : (brand.name_en || brand.name_ar)) : product.name_ar;
+  const prodPrice = product.our_price;
+  const shortage = Number(Math.max(0, prodPrice - currentBal).toFixed(2));
+
+  const text = [
+    t('insufficient_funds_title', lang),
+    '━━━━━━━━━━━━━━━━━━━━━━',
+    `📦 <b>المنتج المطلوب:</b> ${prodTitle}`,
+    `💰 <b>${t('required_amount_label', lang)}</b> <code>$${prodPrice.toFixed(2)} USDT</code>`,
+    `💳 <b>${t('wallet_current_balance', lang)}</b> <code>$${currentBal.toFixed(2)} USDT</code>`,
+    `📉 <b>${t('shortage_label', lang)}</b> <code>$${shortage.toFixed(2)} USDT</code>`,
+    '━━━━━━━━━━━━━━━━━━━━━━',
+    t('insufficient_funds_desc', lang),
+    '',
+    t('insufficient_choose_method', lang),
+  ].join('\n');
+
+  const keyboard = {
+    inline_keyboard: [
+      [
+        { text: `⚡ ${t('btn_pay_bybit', lang)}`, callback_data: `topup_method_bybit_5.00_${product.short_id}` },
+      ],
+      [
+        { text: `🟡 ${t('btn_pay_binance', lang)}`, callback_data: `topup_method_binance_5.00_${product.short_id}` },
+      ],
+      [
+        { text: `📱 ${t('btn_pay_local', lang)} (@UPSTORE_HELP)`, url: 'https://t.me/UPSTORE_HELP' },
+      ],
+      [
+        { text: `🔙 ${t('btn_back', lang)}`, callback_data: `prod_${product.short_id}` },
+        { text: `🏠 ${t('btn_main_menu', lang)}`, callback_data: 'main_menu' },
+      ],
+    ],
+  };
+
+  if (messageId) {
+    const editRes = await editMessageText(chatId, messageId, text, keyboard, businessConnectionId);
+    if (!editRes || !editRes.ok) {
+      await deleteMessage(chatId, messageId);
+      await sendMessage(chatId, text, keyboard, businessConnectionId);
+    }
+  } else {
+    await sendMessage(chatId, text, keyboard, businessConnectionId);
   }
 }
 
@@ -1632,6 +1718,11 @@ async function handleUpdate(update) {
         );
         return;
       }
+    }
+    if (data.startsWith('buy_action_') || data.startsWith('buy_prod_')) {
+      const prodId = data.replace('buy_action_', '').replace('buy_prod_', '').trim();
+      await handleBuyAction(chatId, prodId, messageId, callbackId, businessConnectionId);
+      return;
     }
     if (data.startsWith('buy_bybit_') || data === 'PAY_BYBIT_CRYPTO') {
       const prodId = data === 'PAY_BYBIT_CRYPTO' ? '643361f7' : data.replace('buy_bybit_', '').trim();

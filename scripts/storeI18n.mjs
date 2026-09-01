@@ -341,7 +341,18 @@ export const I18N_STRINGS = {
     "about_pillar_warranty": "• 🛡️ <b>ضمان استبدال فوري:</b> تعويض أو استبدال فوري طوال فترة الاشتراك بدون أي تعقيد.",
     "about_pillar_payment": "• 🔒 <b>دفع آمن ومباشر:</b> Bybit (UID: 47183921) و Binance Pay (ID: 764476139) بدون رسوم وسيطة.",
     "about_pillar_support": "• 👨‍💻 <b>دعم بشري متخصص 24/7:</b> متابعة مستمرة وسريعة عبر @UPSTORE_HELP.",
-    "btn_view_warranty": "🛡️ سياسة الضمان الذهبي"
+    "btn_view_warranty": "🛡️ سياسة الضمان الذهبي",
+    "btn_buy_now": "🛍️ شراء الآن ({amount}$ USDT)",
+    "btn_buy_balance": "🛍️ شراء بالرصيد ({amount}$ USDT)",
+    "btn_topup_and_buy": "⚡ شحن المحفظة ومتابعة الشراء",
+    "insufficient_funds_title": "⚠️ <b>رصيد المحفظة غير كافٍ لإتمام الشراء</b>",
+    "insufficient_funds_sub": "رصيدك الحالي أقل من سعر المنتج المطلوب:",
+    "insufficient_funds_desc": "💡 <i>الحد الأدنى لشحن المحفظة هو <b>.00 USDT</b>. يمكنك شحن محفظتك الآن، وسيتم خصم سعر المنتج وتفعيله فوراً، ويتبقى باقي الرصيد في محفظتك لاستخدامه في أي وقت!</i>",
+    "insufficient_choose_method": "👇 <b>اختر وسيلة الدفع لشحن محفظتك:</b>",
+    "shortage_label": "المبلغ المتبقي:",
+    "required_amount_label": "المبلغ المطلوب:",
+    "wallet_insufficient_hint": "يجب شحن المحفظة أولاً قبل الشراء",
+    "wallet_purchase_ready_hint": "لديك رصيد كافٍ لإتمام الشراء والتفعيل الفوري!"
   },
   "en": {
     "main_menu_title": "<b>UpStore Digital</b>",
@@ -493,7 +504,18 @@ export const I18N_STRINGS = {
     "about_pillar_warranty": "• 🛡️ <b>Instant Replacement:</b> Zero-hassle immediate replacement for the full subscription term.",
     "about_pillar_payment": "• 🔒 <b>Secure Direct Payments:</b> Bybit (UID: 47183921) & Binance Pay (ID: 764476139) with 0% fee.",
     "about_pillar_support": "• 👨‍💻 <b>24/7 Dedicated Support:</b> Instant human assistance via @UPSTORE_HELP.",
-    "btn_view_warranty": "🛡️ View Golden Warranty"
+    "btn_view_warranty": "🛡️ View Golden Warranty",
+    "btn_buy_now": "🛍️ Buy Now ( USDT)",
+    "btn_buy_balance": "🛍️ Buy with Balance ( USDT)",
+    "btn_topup_and_buy": "⚡ Top-Up & Buy",
+    "insufficient_funds_title": "⚠️ <b>Insufficient Wallet Balance</b>",
+    "insufficient_funds_sub": "Your current balance is less than required:",
+    "insufficient_funds_desc": "💡 <i>Minimum wallet recharge is <b>.00 USDT</b>. Top up now to activate your product instantly with remaining balance kept in your wallet for future purchases!</i>",
+    "insufficient_choose_method": "👇 <b>Select payment method to recharge:</b>",
+    "shortage_label": "Shortage Amount:",
+    "required_amount_label": "Required Amount:",
+    "wallet_insufficient_hint": "Please recharge your wallet first",
+    "wallet_purchase_ready_hint": "You have sufficient balance for instant activation!"
   },
   "es": {
     "main_menu_title": "<b>UpStore Digital</b>",
@@ -645,7 +667,18 @@ export const I18N_STRINGS = {
     "about_pillar_warranty": "• 🛡️ <b>Reemplazo Inmediato:</b> Sin complicaciones durante toda la vigencia.",
     "about_pillar_payment": "• 🔒 <b>Pagos Directos y Seguros:</b> Bybit (UID: 47183921) y Binance Pay (ID: 764476139).",
     "about_pillar_support": "• 👨‍💻 <b>Soporte Dedicado 24/7:</b> Asistencia humana inmediata vía @UPSTORE_HELP.",
-    "btn_view_warranty": "🛡️ Ver Garantía Dorada"
+    "btn_view_warranty": "🛡️ Ver Garantía Dorada",
+    "btn_buy_now": "🛍️ Comprar Ahora ( USDT)",
+    "btn_buy_balance": "🛍️ Comprar con Saldo ( USDT)",
+    "btn_topup_and_buy": "⚡ Recargar y Comprar",
+    "insufficient_funds_title": "⚠️ <b>Saldo Insuficiente en la Billetera</b>",
+    "insufficient_funds_sub": "Su saldo actual es menor que el requerido:",
+    "insufficient_funds_desc": "💡 <i>La recarga mínima es de <b>.00 USDT</b>. ¡Recargue ahora para activar su producto al instante y conserve el saldo restante para futuras compras!</i>",
+    "insufficient_choose_method": "👇 <b>Seleccione el método de pago para recargar:</b>",
+    "shortage_label": "Monto Faltante:",
+    "required_amount_label": "Monto Requerido:",
+    "wallet_insufficient_hint": "Por favor recargue su billetera primero",
+    "wallet_purchase_ready_hint": "¡Tiene saldo suficiente para activación instantánea!"
   },
   "fr": {
     "main_menu_title": "<b>UpStore Digital</b>",
@@ -797,7 +830,18 @@ export const I18N_STRINGS = {
     "about_pillar_warranty": "• 🛡️ <b>Remplacement Immédiat:</b> Remplacement sans tracas pendant toute la durée.",
     "about_pillar_payment": "• 🔒 <b>Paiements Sécurisés:</b> Bybit (UID: 47183921) et Binance Pay (ID: 764476139).",
     "about_pillar_support": "• 👨‍💻 <b>Support Dédié 24/7:</b> Assistance humaine via @UPSTORE_HELP.",
-    "btn_view_warranty": "🛡️ Voir la Garantie Dorée"
+    "btn_view_warranty": "🛡️ Voir la Garantie Dorée",
+    "btn_buy_now": "🛍️ Acheter Maintenant ( USDT)",
+    "btn_buy_balance": "🛍️ Acheter avec le Solde ( USDT)",
+    "btn_topup_and_buy": "⚡ Recharger et Acheter",
+    "insufficient_funds_title": "⚠️ <b>Solde du Portefeuille Insuffisant</b>",
+    "insufficient_funds_sub": "Votre solde actuel est inférieur au montant requis :",
+    "insufficient_funds_desc": "💡 <i>La recharge minimale est de <b>.00 USDT</b>. Rechargez maintenant pour activer votre produit immédiatement et conservez le solde restant !</i>",
+    "insufficient_choose_method": "👇 <b>Choisissez le moyen de paiement pour recharger :</b>",
+    "shortage_label": "Montant Manquant :",
+    "required_amount_label": "Montant Requis :",
+    "wallet_insufficient_hint": "Veuillez d'abord recharger votre portefeuille",
+    "wallet_purchase_ready_hint": "Vous disposez d'un solde suffisant pour une activation instantanée !"
   },
   "ru": {
     "main_menu_title": "<b>UpStore Цифровой Магазин</b>",
@@ -949,7 +993,18 @@ export const I18N_STRINGS = {
     "about_pillar_warranty": "• 🛡️ <b>Мгновенная Замена:</b> Быстрое решение любых вопросов на весь срок.",
     "about_pillar_payment": "• 🔒 <b>Прямая Оплата:</b> Bybit (UID: 47183921) и Binance Pay (ID: 764476139) без комиссий.",
     "about_pillar_support": "• 👨‍💻 <b>Поддержка 24/7:</b> Оперативная помощь через @UPSTORE_HELP.",
-    "btn_view_warranty": "🛡️ Золотая Гарантия"
+    "btn_view_warranty": "🛡️ Золотая Гарантия",
+    "btn_buy_now": "🛍️ Купить Сейчас ( USDT)",
+    "btn_buy_balance": "🛍️ Купить с Баланса ( USDT)",
+    "btn_topup_and_buy": "⚡ Пополнить и Купить",
+    "insufficient_funds_title": "⚠️ <b>Недостаточно Средств на Балансе</b>",
+    "insufficient_funds_sub": "Ваш текущий баланс меньше требуемой суммы:",
+    "insufficient_funds_desc": "💡 <i>Минимальная сумма пополнения — <b>.00 USDT</b>. Пополните счет сейчас, чтобы мгновенно активировать подписку, а остаток средств останется на вашем балансе!</i>",
+    "insufficient_choose_method": "👇 <b>Выберите способ оплаты для пополнения:</b>",
+    "shortage_label": "Не хватает:",
+    "required_amount_label": "Требуется:",
+    "wallet_insufficient_hint": "Пожалуйста, сначала пополните баланс",
+    "wallet_purchase_ready_hint": "У вас достаточно средств для мгновенной активации!"
   },
   "tr": {
     "main_menu_title": "<b>UpStore Dijital Mağaza</b>",
@@ -1101,7 +1156,18 @@ export const I18N_STRINGS = {
     "about_pillar_warranty": "• 🛡️ <b>Anında Değişim:</b> Abonelik süresi boyunca kesintisiz anında değişim.",
     "about_pillar_payment": "• 🔒 <b>Güvenli Direkt Ödeme:</b> Bybit (UID: 47183921) ve Binance Pay (ID: 764476139).",
     "about_pillar_support": "• 👨‍💻 <b>7/24 Canlı Destek:</b> @UPSTORE_HELP üzerinden hızlı insan desteği.",
-    "btn_view_warranty": "🛡️ Altın Garantiyi İncele"
+    "btn_view_warranty": "🛡️ Altın Garantiyi İncele",
+    "btn_buy_now": "🛍️ Şimdi Satın Al ( USDT)",
+    "btn_buy_balance": "🛍️ Bakiye ile Satın Al ( USDT)",
+    "btn_topup_and_buy": "⚡ Bakiye Yükle ve Al",
+    "insufficient_funds_title": "⚠️ <b>Yetersiz Cüzdan Bakiyesi</b>",
+    "insufficient_funds_sub": "Mevcut bakiyeniz gerekli tutardan az:",
+    "insufficient_funds_desc": "💡 <i>Minimum cüzdan yükleme tutarı <b>.00 USDT</b>'dir. Ürününüzü anında etkinleştirmek için şimdi yükleme yapın, kalan bakiye cüzdanınızda kalsın!</i>",
+    "insufficient_choose_method": "👇 <b>Yükleme yapmak için ödeme yöntemi seçin:</b>",
+    "shortage_label": "Kalan Tutar:",
+    "required_amount_label": "Gerekli Tutar:",
+    "wallet_insufficient_hint": "Lütfen önce cüzdanınıza bakiye yükleyin",
+    "wallet_purchase_ready_hint": "Anında aktivasyon için yeterli bakiyeniz var!"
   },
   "de": {
     "main_menu_title": "<b>UpStore Digitaler Store</b>",
@@ -1253,7 +1319,18 @@ export const I18N_STRINGS = {
     "about_pillar_warranty": "• 🛡️ <b>Sofortiger Ersatz:</b> Schneller, unkomplizierter Ersatz während der gesamten Laufzeit.",
     "about_pillar_payment": "• 🔒 <b>Sichere Direktzahlung:</b> Bybit (UID: 47183921) und Binance Pay (ID: 764476139) gebührenfrei.",
     "about_pillar_support": "• 👨‍💻 <b>24/7 Kundensupport:</b> Schnelle menschliche Betreuung via @UPSTORE_HELP.",
-    "btn_view_warranty": "🛡️ Gold-Garantie ansehen"
+    "btn_view_warranty": "🛡️ Gold-Garantie ansehen",
+    "btn_buy_now": "🛍️ Jetzt Kaufen ( USDT)",
+    "btn_buy_balance": "🛍️ Mit Guthaben Kaufen ( USDT)",
+    "btn_topup_and_buy": "⚡ Aufladen & Kaufen",
+    "insufficient_funds_title": "⚠️ <b>Unzureichendes Guthaben</b>",
+    "insufficient_funds_sub": "Ihr aktuelles Guthaben reicht nicht aus:",
+    "insufficient_funds_desc": "💡 <i>Die Mindestaufladung beträgt <b>.00 USDT</b>. Laden Sie jetzt auf, um Ihr Produkt sofort zu aktivieren — das Restguthaben bleibt auf Ihrem Konto!</i>",
+    "insufficient_choose_method": "👇 <b>Zahlungsmethode zum Aufladen wählen:</b>",
+    "shortage_label": "Fehlender Betrag:",
+    "required_amount_label": "Benötigter Betrag:",
+    "wallet_insufficient_hint": "Bitte laden Sie zuerst Ihr Guthaben auf",
+    "wallet_purchase_ready_hint": "Sie haben genügend Guthaben für die sofortige Aktivierung!"
   }
 };
 
