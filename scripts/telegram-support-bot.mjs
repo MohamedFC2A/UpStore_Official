@@ -351,6 +351,16 @@ async function sendPhoto(chatId, photoPathOrUrl, caption, replyMarkup = null, bu
   }
 }
 
+const userLastBotMessage = new Map();
+
+async function deletePreviousBotMessage(chatId) {
+  const prevMsgId = userLastBotMessage.get(String(chatId));
+  if (prevMsgId) {
+    userLastBotMessage.delete(String(chatId));
+    await deleteMessage(chatId, prevMsgId).catch(() => {});
+  }
+}
+
 async function sendMessage(chatId, text, replyMarkup = null, businessConnectionId = null) {
   try {
     const payload = { chat_id: chatId, text, parse_mode: 'HTML', disable_web_page_preview: true };
@@ -361,7 +371,11 @@ async function sendMessage(chatId, text, replyMarkup = null, businessConnectionI
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload),
     });
-    return await res.json();
+    const data = await res.json();
+    if (data && data.ok && data.result && data.result.message_id) {
+      userLastBotMessage.set(String(chatId), data.result.message_id);
+    }
+    return data;
   } catch (err) {
     return null;
   }
@@ -377,7 +391,11 @@ async function editMessageText(chatId, messageId, text, replyMarkup = null, busi
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload),
     });
-    return await res.json();
+    const data = await res.json();
+    if (data && data.ok && data.result && data.result.message_id) {
+      userLastBotMessage.set(String(chatId), data.result.message_id);
+    }
+    return data;
   } catch (err) {
     return null;
   }
@@ -615,6 +633,7 @@ async function renderLanguageSelection(chatId, messageId, callbackQueryId, busin
       await sendMessage(chatId, text, keyboard, businessConnectionId);
     }
   } else {
+    await deletePreviousBotMessage(chatId);
     await sendMessage(chatId, text, keyboard, businessConnectionId);
   }
 }
@@ -658,6 +677,7 @@ async function renderMainMenu(chatId, messageId, callbackQueryId, businessConnec
   if (messageId) {
     const editRes = await editMessageText(chatId, messageId, text, keyboard, businessConnectionId);
     if (!editRes || !editRes.ok) {
+      await deleteMessage(chatId, messageId);
       await sendMessage(chatId, text, {
         inline_keyboard: keyboard.inline_keyboard,
         keyboard: pKeyboard.keyboard,
@@ -666,6 +686,7 @@ async function renderMainMenu(chatId, messageId, callbackQueryId, businessConnec
       }, businessConnectionId);
     }
   } else {
+    await deletePreviousBotMessage(chatId);
     await sendMessage(chatId, text, {
       inline_keyboard: keyboard.inline_keyboard,
       keyboard: pKeyboard.keyboard,
@@ -701,6 +722,7 @@ async function renderCatalog(chatId, messageId, callbackQueryId, businessConnect
       await sendMessage(chatId, text, keyboard, businessConnectionId);
     }
   } else {
+    await deletePreviousBotMessage(chatId);
     await sendMessage(chatId, text, keyboard, businessConnectionId);
   }
 }
@@ -1272,6 +1294,7 @@ async function renderMyOrders(chatId, messageId, callbackQueryId, businessConnec
       await sendMessage(chatId, text, keyboard, businessConnectionId);
     }
   } else {
+    await deletePreviousBotMessage(chatId);
     await sendMessage(chatId, text, keyboard, businessConnectionId);
   }
 }
@@ -1327,6 +1350,7 @@ async function renderPaymentMethodsScreen(chatId, messageId, callbackQueryId, bu
       await sendMessage(chatId, text, keyboard, businessConnectionId);
     }
   } else {
+    await deletePreviousBotMessage(chatId);
     await sendMessage(chatId, text, keyboard, businessConnectionId);
   }
 }
@@ -1512,6 +1536,7 @@ async function renderAboutStoreScreen(chatId, messageId, callbackQueryId, busine
       await sendMessage(chatId, text, keyboard, businessConnectionId);
     }
   } else {
+    await deletePreviousBotMessage(chatId);
     await sendMessage(chatId, text, keyboard, businessConnectionId);
   }
 }
@@ -1544,6 +1569,7 @@ async function renderWarrantyPolicyScreen(chatId, messageId, callbackQueryId, bu
       await sendMessage(chatId, text, keyboard, businessConnectionId);
     }
   } else {
+    await deletePreviousBotMessage(chatId);
     await sendMessage(chatId, text, keyboard, businessConnectionId);
   }
 }
@@ -1603,6 +1629,7 @@ async function renderReferralScreen(chatId, messageId, callbackQueryId, business
       await sendMessage(chatId, text, keyboard, businessConnectionId);
     }
   } else {
+    await deletePreviousBotMessage(chatId);
     await sendMessage(chatId, text, keyboard, businessConnectionId);
   }
 }
@@ -1636,6 +1663,7 @@ async function renderSupportScreen(chatId, messageId, callbackQueryId, businessC
       await sendMessage(chatId, text, keyboard, businessConnectionId);
     }
   } else {
+    await deletePreviousBotMessage(chatId);
     await sendMessage(chatId, text, keyboard, businessConnectionId);
   }
 }
@@ -1764,6 +1792,20 @@ async function handleUpdate(update) {
 
       await answerCallbackQuery(callbackId, t('binance_checking_toast', lang), false);
 
+      if (supabase) {
+        try {
+          await supabase.from('orders').upsert({
+            amount: product.our_price,
+            status: 'pending_manual_payment',
+            product_id: product.id,
+            product_key: 'PENDING_TELEGRAM_FULFILLMENT',
+            session_id: `tg_${chatId}_${orderRef}`,
+            payment_sender: `Telegram @${chatId} (Binance Pay ID: 764476139)`,
+            updated_at: new Date().toISOString(),
+          });
+        } catch (err) {}
+      }
+
       // Dispatch approval ticket directly to @upstorelive_bot
       try {
         notifyPendingPaymentApproval(
@@ -1781,24 +1823,25 @@ async function handleUpdate(update) {
         '──────────────────',
         `📦 <b>المنتج:</b> ${product.name_ar}`,
         `🆔 <b>رقم العملية:</b> <code>#${orderRef}</code>`,
-        `💎 <b>المبلغ:</b> <code>${product.our_price.toFixed(2)} USDT</code>`,
+        `💎 <b>المبلغ:</b> <code>${product.our_price.toFixed(2)}$ USDT</code>`,
         '──────────────────',
-        '⚡ تم إرسال الطلب إلى الإدارة على @upstorelive_bot للتأكيد.',
+        '⚡ تم إرسال الطلب إلى فريق المراجعة والدعم @UPSTORE_HELP للتأكيد الفوري.',
         'بمجرد التحقق، سيصلك الحساب وكود السيريال (16 رقم) هنا فوراً!',
       ].join('\n');
 
-      await sendMessage(
-        chatId,
-        binancePendingMsg,
-        {
-          inline_keyboard: [
-            [{ text: `📦 ${t('btn_orders', lang)}`, callback_data: 'my_orders' }],
-            [{ text: `👨‍💻 ${t('btn_support', lang)}`, callback_data: 'support' }],
-            [{ text: `🏠 ${t('btn_main_menu', lang)}`, callback_data: 'main_menu' }],
-          ],
-        },
-        businessConnectionId
-      );
+      const kbd = {
+        inline_keyboard: [
+          [{ text: `📦 ${t('btn_orders', lang)}`, callback_data: 'my_orders' }],
+          [{ text: `👨‍💻 ${t('btn_support', lang)}`, callback_data: 'support' }],
+          [{ text: `🏠 ${t('btn_main_menu', lang)}`, callback_data: 'main_menu' }],
+        ],
+      };
+
+      const editRes = await editMessageText(chatId, messageId, binancePendingMsg, kbd, businessConnectionId);
+      if (!editRes || !editRes.ok) {
+        await deleteMessage(chatId, messageId);
+        await sendMessage(chatId, binancePendingMsg, kbd, businessConnectionId);
+      }
       return;
     }
     if (data.startsWith('buy_local_')) {
@@ -1908,6 +1951,19 @@ async function handleUpdate(update) {
         await editMessageText(chatId, messageId, successText, { inline_keyboard: successButtons }, businessConnectionId);
         return;
       } else {
+        if (supabase) {
+          try {
+            await supabase.from('orders').upsert({
+              amount: amount,
+              status: 'pending_manual_payment',
+              product_key: `WALLET_TOPUP_${amount}_USDT`,
+              session_id: `tg_${chatId}_${orderRef}`,
+              payment_sender: `Telegram @${chatId} (TopUp ${method.toUpperCase()})`,
+              updated_at: new Date().toISOString(),
+            });
+          } catch (err) {}
+        }
+
         // Dispatch pending topup confirmation request to @upstorelive_bot with Action Buttons!
         try {
           notifyPendingPaymentApproval(
@@ -1926,22 +1982,23 @@ async function handleUpdate(update) {
           `💵 <b>المبلغ المطلوب:</b> <code>$${amount.toFixed(2)} USDT</code>`,
           `🆔 <b>رقم العملية:</b> <code>#${orderRef}</code>`,
           '──────────────────',
-          '⚡ جاري فحص ومراجعة عملية التحويل من قبل الإدارة على @upstorelive_bot.',
+          '⚡ جاري فحص ومراجعة عملية التحويل وتأكيد الإيداع فوراً من قبل فريق الدعم @UPSTORE_HELP.',
           'سيتم إضافة الرصيد إلى محفظتك تلقائياً وإشعارك هنا فور الاعتماد.',
         ].join('\n');
 
-        await sendMessage(
-          chatId,
-          pendingTopupMsg,
-          {
-            inline_keyboard: [
-              [{ text: t('bybit_recheck_btn', lang), callback_data: data }],
-              [{ text: `👨‍💻 ${t('btn_support', lang)}`, callback_data: 'support' }],
-              [{ text: `🔙 ${t('btn_back', lang)}`, callback_data: 'payment_methods' }],
-            ],
-          },
-          businessConnectionId
-        );
+        const kbd = {
+          inline_keyboard: [
+            [{ text: t('bybit_recheck_btn', lang), callback_data: data }],
+            [{ text: `👨‍💻 ${t('btn_support', lang)}`, callback_data: 'support' }],
+            [{ text: `🔙 ${t('btn_back', lang)}`, callback_data: 'payment_methods' }],
+          ],
+        };
+
+        const editRes = await editMessageText(chatId, messageId, pendingTopupMsg, kbd, businessConnectionId);
+        if (!editRes || !editRes.ok) {
+          await deleteMessage(chatId, messageId);
+          await sendMessage(chatId, pendingTopupMsg, kbd, businessConnectionId);
+        }
         return;
       }
     }
@@ -2025,12 +2082,24 @@ async function handleUpdate(update) {
         { note: message.caption || 'Photo Receipt Upload' }
       );
     } catch (e) {}
+    if (supabase) {
+      try {
+        await supabase.from('orders').upsert({
+          amount: 5.0,
+          status: 'pending_manual_payment',
+          product_key: 'WALLET_TOPUP_PHOTO_RECEIPT',
+          session_id: `tg_${chatId}_${reqId}`,
+          payment_sender: `Telegram @${chatId} (Photo Receipt)`,
+          updated_at: new Date().toISOString(),
+        });
+      } catch (err) {}
+    }
 
     const receiptReply = [
       '✅ <b>تم استلام صورة الإيصال بنجاح!</b>',
       '──────────────────',
       `🆔 <b>رقم المرجع:</b> <code>#${reqId}</code>`,
-      '⚡ تم إرسال الإيصال مباشرة إلى الإدارة على @upstorelive_bot للتحقق الفوري.',
+      '⚡ تم إرسال الإيصال مباشرة إلى فريق المراجعة والدعم @UPSTORE_HELP للتحقق الفوري.',
       'سيتم شحن رصيد محفظتك تلقائياً وإشعارك هنا فور الاعتماد 💳✨',
     ].join('\n');
 
@@ -2071,11 +2140,24 @@ async function handleUpdate(update) {
       );
     } catch (e) {}
 
+    if (supabase) {
+      try {
+        await supabase.from('orders').upsert({
+          amount: 5.0,
+          status: 'pending_manual_payment',
+          product_key: 'WALLET_TOPUP_DOC_RECEIPT',
+          session_id: `tg_${chatId}_${reqId}`,
+          payment_sender: `Telegram @${chatId} (Document Receipt)`,
+          updated_at: new Date().toISOString(),
+        });
+      } catch (err) {}
+    }
+
     const receiptReply = [
       '✅ <b>تم استلام مستند التحويل بنجاح!</b>',
       '──────────────────',
       `🆔 <b>رقم المرجع:</b> <code>#${reqId}</code>`,
-      '⚡ تم إرسال المستند مباشرة إلى الإدارة على @upstorelive_bot للتحقق الفوري.',
+      '⚡ تم إرسال المستند مباشرة إلى فريق المراجعة والدعم @UPSTORE_HELP للتحقق الفوري.',
       'سيتم شحن رصيد محفظتك تلقائياً وإشعارك هنا فور الاعتماد 💳✨',
     ].join('\n');
 
@@ -2431,6 +2513,20 @@ async function handleUpdate(update) {
         return;
       }
     } else {
+      if (supabase) {
+        try {
+          await supabase.from('orders').upsert({
+            amount: expectedAmount,
+            status: 'pending_manual_payment',
+            product_id: product?.id || null,
+            product_key: isWalletTopupOrder ? `WALLET_TOPUP_${expectedAmount}_USDT` : 'PENDING_TELEGRAM_FULFILLMENT',
+            session_id: `tg_${chatId}_${orderRef}`,
+            payment_sender: `Telegram @${chatId} (TxID: ${extractedId})`,
+            updated_at: new Date().toISOString(),
+          });
+        } catch (err) {}
+      }
+
       // Dispatch interactive approval request to @upstorelive_bot with Action Buttons!
       try {
         notifyPendingPaymentApproval(
@@ -2448,9 +2544,9 @@ async function handleUpdate(update) {
         '──────────────────',
         `🧾 <b>المعرف / TXID:</b> <code>${extractedId}</code>`,
         `🆔 <b>رقم المرجع:</b> <code>#${orderRef}</code>`,
-        `💎 <b>المبلغ:</b> <code>${expectedAmount.toFixed(2)} USDT</code>`,
+        `💎 <b>المبلغ:</b> <code>${expectedAmount.toFixed(2)}$ USDT</code>`,
         '──────────────────',
-        '⚡ تم إرسال العملية إلى الإدارة على @upstorelive_bot للمراجعة الفورية.',
+        '⚡ تم إرسال العملية إلى فريق المراجعة والدعم @UPSTORE_HELP للتأكيد الفوري.',
         'سيتم اعتماد طلبك وشحن المحفظة / تسليم الحساب وإشعارك هنا فوراً!',
       ].join('\n');
 
