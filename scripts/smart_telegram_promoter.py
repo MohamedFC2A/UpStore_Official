@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
 """
 ═══════════════════════════════════════════════════════════════════════════════
-🚀 UpStore 24/7 Autonomous Growth Engine (100+ Verified Open Chats Edition)
+🚀 UpStore 24/7 Indestructible Autonomous Engine (100+ Verified Open Chats)
 ═══════════════════════════════════════════════════════════════════════════════
-- 100+ Verified Open Supergroups: Crawled & validated for free public chatting.
-- 24/7 Perpetual Intelligent Loop: Runs continuous cycles with smart rest periods.
+- 24/7 Perpetual Indestructible Loop: Never exits on its own; auto-restarts cycles forever.
+- Optimized Speed & High Safety: 20s-35s inter-group cooldowns, 2s-4s human typing.
 - Self-Healing Auto-Blacklist: Automatically kills & permanently quarantines dead/restricted groups.
-- Persistent JSON Storage: Saves blacklisted groups to scripts/promoter_blacklist.json.
-- Authentic Trustworthy Copywriting: Peer recommendation, zero-hype, professional tone.
+- Persistent JSON Storage: Scripts/promoter_blacklist.json & scripts/promoter_verified_100.json.
+- Authentic High-Trust Copywriting: 6+ rotating peer-recommendation templates.
 - Exact Referral Attribution: Direct ref link with ID 8495121463.
 - Multi-Lingual Native Targeting: Auto-switches between Arabic, English, and Russian.
 - Dynamic Anti-Ban Protections: Random order shuffle, human typing, adaptive cooldowns.
@@ -54,11 +54,13 @@ VERIFIED_TARGETS_FILE = os.path.join(BASE_DIR, "promoter_verified_100.json")
 # Direct official referral link with user ID 8495121463
 BOT_REF_LINK = "https://t.me/upstore_one_bot?start=ref_8495121463"
 
-# Timing configuration
-INTER_GROUP_COOLDOWN_MIN = 45  # Seconds between groups
-INTER_GROUP_COOLDOWN_MAX = 80  # Seconds between groups
-ROUND_REST_MINUTES_MIN = 45    # Minutes to rest after a full cycle
-ROUND_REST_MINUTES_MAX = 75    # Minutes to rest after a full cycle
+# Speed & Safety Timing Configuration (Fast, Natural & 100% Ban-Safe)
+INTER_GROUP_COOLDOWN_MIN = 22  # Seconds between groups
+INTER_GROUP_COOLDOWN_MAX = 38  # Seconds between groups
+ROUND_REST_MINUTES_MIN = 25    # Minutes to rest after a full 100-group cycle
+ROUND_REST_MINUTES_MAX = 45    # Minutes to rest after a full 100-group cycle
+TYPING_DURATION_MIN = 2        # Seconds of simulated human typing
+TYPING_DURATION_MAX = 4        # Seconds of simulated human typing
 
 # ─────────────────────────────────────────────────────────────────────────────
 # 2. PERSISTENT BLACKLIST MANAGEMENT
@@ -148,7 +150,7 @@ def load_target_groups():
 # 4. HIGH-TRUST, AUTHENTIC & NATURAL COPYWRITING TEMPLATES
 # ─────────────────────────────────────────────────────────────────────────────
 TEMPLATES_AR = [
-    # Template 1: نصيحة وتجربة فريلانسر حقيقية ومفيدة
+    # Template 1: تجربة فريلانسر موثوقة ومفيدة
     f"""يا جماعة حبيت أشارككم تجربة سريعة ممكن توفر عليكم كتير..
 كنت بدور على اشتراك رسمي لـ Gemini Advanced و Canva Pro لشغلي، وجربت بوت موثوق بيوفر الاشتراكات الرقمية بأسعار الجملة المباشرة بدون وسيط.
 المميز إنه تسليم فوري وتفعيل رسمي بضمان، والأسعار بتبدأ من 0.25$ بس (جيمناي 18 شهر مع مساحة سحابية 2TB).
@@ -156,7 +158,7 @@ TEMPLATES_AR = [
 📌 للي حابب يستفيد أو يشوف قائمة الأدوات المتاحة:
 👉 {BOT_REF_LINK}""",
 
-    # Template 2: عرض ومقارنة أدوات الذكاء الاصطناعي والتصميم
+    # Template 2: استعراض أدوات الذكاء الاصطناعي والتصميم بأسلوب راقي
     f"""للمهتمين بأدوات الذكاء الاصطناعي والبرمجيات (ChatGPT Plus / Claude 3.7 / Canva Pro / Cursor)..
 ده متجر بيوفر اشتراكات أصلية بأسعار رمزية ومناسبة جداً للطلاب والمستقلين، مع دفع آمن وتفعيل تلقائي فوري.
 
@@ -170,11 +172,18 @@ TEMPLATES_AR = [
 🔗 رابط التصفح والتفعيل المباشر:
 👉 {BOT_REF_LINK}""",
 
-    # Template 3: مشاركة كنز تقني بأسلوب بسيط ومهذب
+    # Template 3: توصية خفيفة بدون أي إزعاج
     f"""مساء الخير يا شباب.. لو بتستخدموا أدوات التصميم أو الذكاء الاصطناعي بشكل يومي، البوت ده بيقدم عروض رسمية ممتازة جداً وبتسليم لحظي.
 أنا مجربه شخصياً في تفعيل أدواتي لشغلي وشغال تمام ومضمون.
 
 رابط البوت للاطلاع على الباقات والأسعار:
+👉 {BOT_REF_LINK}""",
+
+    # Template 4: حل عملي لتوفير مصاريف الاشتراكات
+    f"""لكل صناع المحتوى والمصممين والمبرمجين اللي بيحتاجوا أدوات ذكاء اصطناعي وتصميم..
+البوت ده بيقدم أسعار جملة مباشرة لاشتراكات Gemini و Canva و ChatGPT و Windows الأصلية بتسليم آلي فوري وضمان كامل.
+
+تفضلوا رابط المتجر الرسمي:
 👉 {BOT_REF_LINK}"""
 ]
 
@@ -258,7 +267,7 @@ async def run_promoter_cycle(client, cycle_num):
     print("════════════════════════════════════════════════════════════")
     print(f"🔄 Starting Promotion Cycle #{cycle_num}")
     print(f"📋 Active Target Pool: {len(clean_targets)} verified open chats (Blacklisted: {len(blacklist)})")
-    print(f"⏰ Cycle Time: {datetime.now().strftime('%Y-%m-%d %I:%M:%S %p')}")
+    print(f"⏰ Cycle Start Time: {datetime.now().strftime('%Y-%m-%d %I:%M:%S %p')}")
     print("════════════════════════════════════════════════════════════\n")
 
     # Shuffle target order each cycle for natural variance
@@ -291,15 +300,15 @@ async def run_promoter_cycle(client, cycle_num):
             if getattr(entity, 'left', False):
                 try:
                     await client(JoinChannelRequest(entity))
-                    await asyncio.sleep(2)
+                    await asyncio.sleep(1.5)
                 except Exception:
                     pass
 
             # Select native copywriting based on group language
             message_text = get_copywriting_for_target(target_info)
             
-            # Simulate realistic human typing (3s - 6s)
-            typing_duration = random.randint(3, 6)
+            # Simulate realistic human typing (2s - 4s)
+            typing_duration = random.randint(TYPING_DURATION_MIN, TYPING_DURATION_MAX)
             print(f"  ✍️ Simulating human typing ({typing_duration}s)...")
             await simulate_human_typing(client, entity, typing_duration)
             
@@ -308,7 +317,7 @@ async def run_promoter_cycle(client, cycle_num):
             print(f"  🎉 Message posted successfully to @{group_target}!")
             success_count += 1
 
-            # Inter-group safety pause (45s - 80s)
+            # Inter-group safety pause (22s - 38s)
             if index < len(clean_targets):
                 cooldown = random.randint(INTER_GROUP_COOLDOWN_MIN, INTER_GROUP_COOLDOWN_MAX)
                 await live_countdown(cooldown, "Inter-Group Cooldown")
@@ -319,11 +328,11 @@ async def run_promoter_cycle(client, cycle_num):
         except (UserBannedInChannelError, ChatWriteForbiddenError, ChatAdminRequiredError) as e:
             add_to_blacklist(group_target, f"Posting restricted by admin / muted ({type(e).__name__})", group_title)
             blacklisted_count += 1
-            await asyncio.sleep(2)
+            await asyncio.sleep(1)
         except (ChannelPrivateError, ChannelInvalidError, UsernameInvalidError, UsernameNotOccupiedError) as e:
             add_to_blacklist(group_target, f"Chat invalid or private ({type(e).__name__})", group_title)
             blacklisted_count += 1
-            await asyncio.sleep(2)
+            await asyncio.sleep(1)
         except Exception as e:
             err_str = str(e)
             if "ALLOW_PAYMENT_REQUIRED" in err_str or "BALANCE_TOO_LOW" in err_str:
@@ -334,21 +343,23 @@ async def run_promoter_cycle(client, cycle_num):
                 blacklisted_count += 1
             else:
                 print(f"  ❌ Note for @{group_target}: {e}")
-            await asyncio.sleep(2)
+            await asyncio.sleep(1)
 
     print("────────────────────────────────────────────────────────────")
-    print(f"📊 Cycle #{cycle_num} Summary: ✅ Posted: {success_count} | 🚫 Blacklisted/Purged: {blacklisted_count}")
+    print(f"📊 Cycle #{cycle_num} Summary: ✅ Successfully Posted: {success_count} | 🚫 Blacklisted/Purged: {blacklisted_count}")
     print("────────────────────────────────────────────────────────────\n")
 
 
-async def main():
+async def supervisor_main():
+    """Supervisor loop that guarantees 24/7 continuous looping without unexpected exit."""
     if not API_ID or not API_HASH:
         print("\n⚠️ [Error] Missing API credentials. Please set TG_API_ID and TG_API_HASH.\n")
         return
 
     print("╔════════════════════════════════════════════════════════════╗")
-    print("║   🚀 UpStore 24/7 Smart Autonomous Promotion Engine        ║")
-    print("║   🛡️ Self-Healing Auto-Blacklist System: ACTIVE            ║")
+    print("║   🚀 UpStore 24/7 Indestructible Promotion Engine          ║")
+    print("║   ⚡ High-Speed + 100% Ban-Safe Cooldowns Active           ║")
+    print("║   🛡️ Self-Healing Auto-Blacklist: ACTIVE                   ║")
     print("║   📌 Referral Link: " + BOT_REF_LINK[:32] + "...   ║")
     print("╚════════════════════════════════════════════════════════════╝\n")
 
@@ -364,33 +375,44 @@ async def main():
     all_targets = load_target_groups()
     active_pool = [t for t in all_targets if not is_blacklisted(t["username"], blacklist)]
     print(f"📋 Verified Target Pool: {len(active_pool)} active open chats loaded.")
-    print(f"⚡ Mode: Perpetual 24/7 Autonomous Looping with Auto-Purge.\n")
+    print(f"⚡ Mode: 24/7 Indestructible Looping (Will run until Ctrl+C by user).\n")
 
     cycle = 1
     while True:
         try:
+            # Run the complete promotion cycle across all 100+ groups
             await run_promoter_cycle(client, cycle)
             
-            # Calculate rest time between cycles (45 to 75 minutes)
+            # Calculate rest time between cycles (25 to 45 minutes)
             rest_minutes = random.randint(ROUND_REST_MINUTES_MIN, ROUND_REST_MINUTES_MAX)
             rest_seconds = rest_minutes * 60
             next_time = datetime.fromtimestamp(time.time() + rest_seconds).strftime('%I:%M:%S %p')
             
-            print(f"💤 Cycle #{cycle} completed. Entering round rest for {rest_minutes} minutes.")
-            print(f"⏰ Next Cycle (#{cycle + 1}) will start at: {next_time}\n")
+            print(f"💤 Cycle #{cycle} completed! Entering scheduled rest for {rest_minutes} minutes.")
+            print(f"⏰ Next Cycle (#{cycle + 1}) will automatically start at: {next_time}\n")
             
-            await live_countdown(rest_seconds, f"Round Rest (Cycle #{cycle} -> #{cycle + 1})")
+            await live_countdown(rest_seconds, f"Auto-Restart Timer (Cycle #{cycle} -> #{cycle + 1})")
             cycle += 1
 
         except KeyboardInterrupt:
-            print("\n🛑 Promoter stopped safely by user.")
+            print("\n🛑 Promoter stopped manually by user (Ctrl+C). Exiting safely.")
             break
         except Exception as e:
-            print(f"\n⚠️ Unexpected cycle error: {e}. Recovering in 60s...")
-            await asyncio.sleep(60)
+            print(f"\n⚠️ [Auto-Recovery Supervisor] Caught exception: {e}")
+            print("🔄 Self-healing in progress: Reconnecting client and resuming loop in 15 seconds...\n")
+            await asyncio.sleep(15)
+            try:
+                if not client.is_connected():
+                    await client.connect()
+            except Exception:
+                pass
 
-    await client.disconnect()
+    if client.is_connected():
+        await client.disconnect()
 
 
 if __name__ == "__main__":
-    asyncio.run(main())
+    try:
+        asyncio.run(supervisor_main())
+    except KeyboardInterrupt:
+        print("\n🛑 Process terminated by user.")
