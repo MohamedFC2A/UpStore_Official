@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
 """
 ═══════════════════════════════════════════════════════════════════════════════
-🚀 UpStore 24/7 Ultra-Smart Growth & Promotion Automation Engine
+🚀 UpStore 24/7 Autonomous Growth Engine + Self-Healing Blacklist Quarantine
 ═══════════════════════════════════════════════════════════════════════════════
 - 24/7 Perpetual Intelligent Loop: Runs continuous cycles with smart rest periods.
+- Self-Healing Auto-Blacklist: Automatically kills & permanently quarantines dead/restricted groups.
+- Persistent JSON Storage: Saves blacklisted groups to scripts/promoter_blacklist.json.
 - Authentic Trustworthy Copywriting: Peer recommendation, zero-hype, professional tone.
 - Exact Referral Attribution: Direct ref link with ID 8495121463.
 - Multi-Lingual Native Targeting: Auto-switches between Arabic, English, and Russian.
@@ -12,6 +14,7 @@
 """
 
 import asyncio
+import json
 import os
 import random
 import sys
@@ -25,7 +28,10 @@ try:
         UserBannedInChannelError,
         ChatWriteForbiddenError,
         ChannelPrivateError,
-        ChatAdminRequiredError
+        ChatAdminRequiredError,
+        ChannelInvalidError,
+        UsernameInvalidError,
+        UsernameNotOccupiedError
     )
     from telethon.tl.functions.channels import JoinChannelRequest
     from telethon.tl.functions.messages import SendMessageRequest
@@ -34,11 +40,15 @@ except ImportError:
     sys.exit(1)
 
 # ─────────────────────────────────────────────────────────────────────────────
-# 1. AUTHENTICATION & CONFIGURATION
+# 1. AUTHENTICATION & PATH CONFIGURATION
 # ─────────────────────────────────────────────────────────────────────────────
 API_ID = int(os.getenv("TG_API_ID", 31577730))
 API_HASH = os.getenv("TG_API_HASH", "42d6fcd39c9e724428133de55ab0fe21")
 SESSION_NAME = "upstore_promoter_session"
+
+# Blacklist file path
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+BLACKLIST_FILE = os.path.join(BASE_DIR, "promoter_blacklist.json")
 
 # Direct official referral link with user ID 8495121463
 BOT_REF_LINK = "https://t.me/upstore_one_bot?start=ref_8495121463"
@@ -50,9 +60,53 @@ ROUND_REST_MINUTES_MIN = 45    # Minutes to rest after a full cycle
 ROUND_REST_MINUTES_MAX = 75    # Minutes to rest after a full cycle
 
 # ─────────────────────────────────────────────────────────────────────────────
-# 2. TARGET TELEGRAM COMMUNITIES (100% Verified Pure Open Discussion Chats)
+# 2. PERSISTENT BLACKLIST MANAGEMENT
 # ─────────────────────────────────────────────────────────────────────────────
-TARGET_GROUPS = [
+def load_blacklist():
+    """Loads blacklisted groups from promoter_blacklist.json."""
+    if not os.path.exists(BLACKLIST_FILE):
+        return {}
+    try:
+        with open(BLACKLIST_FILE, "r", encoding="utf-8") as f:
+            data = json.load(f)
+            return data.get("blacklisted_groups", {})
+    except Exception as e:
+        print(f"⚠️ Note: Could not read blacklist file ({e}). Starting with empty blacklist.")
+        return {}
+
+
+def add_to_blacklist(username, reason, title=""):
+    """Adds a dead, restricted, or paid group to the persistent blacklist JSON."""
+    clean_username = username.lstrip("@").strip()
+    current_blacklist = load_blacklist()
+    
+    current_blacklist[clean_username] = {
+        "title": title or clean_username,
+        "reason": reason,
+        "added_at": datetime.now().strftime("%Y-%m-%d %I:%M:%S %p")
+    }
+
+    try:
+        with open(BLACKLIST_FILE, "w", encoding="utf-8") as f:
+            json.dump({
+                "description": "Persistent blacklist of unusable, restricted, paid, or dead Telegram groups.",
+                "updated_at": datetime.now().isoformat(),
+                "total_blacklisted": len(current_blacklist),
+                "blacklisted_groups": current_blacklist
+            }, f, ensure_ascii=False, indent=2)
+        print(f"  🚫 [Blacklisted & Purged]: @{clean_username} permanently excluded -> Reason: {reason}")
+    except Exception as e:
+        print(f"  ⚠️ Could not write to blacklist file: {e}")
+
+
+def is_blacklisted(username, blacklist_dict):
+    """Checks if a username is in the blacklist."""
+    return username.lstrip("@").strip() in blacklist_dict
+
+# ─────────────────────────────────────────────────────────────────────────────
+# 3. TARGET TELEGRAM COMMUNITIES (Filtered against blacklist)
+# ─────────────────────────────────────────────────────────────────────────────
+INITIAL_TARGET_GROUPS = [
     # Top Arabic Active Design, AI & Developer Chats
     {"username": "akkffh", "lang": "ar", "name": "قروب مصممي الجرافيك وكانفا (2.6K)"},
     {"username": "A1_des", "lang": "ar", "name": "قروب مصممي الجرافيك (1.2K)"},
@@ -75,7 +129,7 @@ TARGET_GROUPS = [
 ]
 
 # ─────────────────────────────────────────────────────────────────────────────
-# 3. HIGH-TRUST, AUTHENTIC & NATURAL COPYWRITING TEMPLATES
+# 4. HIGH-TRUST, AUTHENTIC & NATURAL COPYWRITING TEMPLATES
 # ─────────────────────────────────────────────────────────────────────────────
 TEMPLATES_AR = [
     # Template 1: نصيحة وتجربة فريلانسر حقيقية ومفيدة
@@ -152,7 +206,7 @@ def get_copywriting_for_target(target_info):
         return random.choice(TEMPLATES_AR)
 
 # ─────────────────────────────────────────────────────────────────────────────
-# 4. CORE ENGINE & LIVE VISUAL FEEDBACK
+# 5. CORE ENGINE & LIVE VISUAL FEEDBACK
 # ─────────────────────────────────────────────────────────────────────────────
 async def simulate_human_typing(client, entity, duration_sec):
     """Simulates realistic human typing state."""
@@ -179,29 +233,44 @@ async def live_countdown(seconds, label="Safety Cooldown"):
     sys.stdout.flush()
 
 
-async def run_promoter_cycle(client, cycle_num):
-    """Executes a single full round across all configured target groups."""
+async def run_promoter_cycle(client, active_target_list, cycle_num):
+    """Executes a single full round across all currently active target groups."""
+    # Filter against live blacklist
+    blacklist = load_blacklist()
+    clean_targets = [t for t in active_target_list if not is_blacklisted(t["username"], blacklist)]
+
     print("════════════════════════════════════════════════════════════")
     print(f"🔄 Starting Promotion Cycle #{cycle_num}")
+    print(f"📋 Active Target Pool: {len(clean_targets)} verified open chats (Blacklisted: {len(blacklist)})")
     print(f"⏰ Cycle Time: {datetime.now().strftime('%Y-%m-%d %I:%M:%S %p')}")
     print("════════════════════════════════════════════════════════════\n")
 
     # Shuffle target order each cycle for natural variance
-    current_targets = list(TARGET_GROUPS)
-    random.shuffle(current_targets)
+    random.shuffle(clean_targets)
 
     success_count = 0
-    skip_count = 0
+    blacklisted_count = 0
 
-    for index, target_info in enumerate(current_targets, 1):
+    for index, target_info in enumerate(clean_targets, 1):
         group_target = target_info["username"]
         group_name = target_info.get("name", group_target)
         group_lang = target_info.get("lang", "ar").upper()
 
+        # Double check blacklist
+        if is_blacklisted(group_target, load_blacklist()):
+            continue
+
         try:
-            print(f"[{index:02d}/{len(current_targets):02d}] 🔍 Target: @{group_target} ({group_name}) [Lang: {group_lang}]")
+            print(f"[{index:02d}/{len(clean_targets):02d}] 🔍 Target: @{group_target} ({group_name}) [Lang: {group_lang}]")
             entity = await client.get_entity(group_target)
             
+            # Check if group requires paid Telegram Stars
+            stars = getattr(entity, 'send_paid_messages_stars', None)
+            if stars and stars > 0:
+                add_to_blacklist(group_target, f"Requires {stars} paid Telegram Stars", getattr(entity, 'title', group_name))
+                blacklisted_count += 1
+                continue
+
             # Auto-join group ONLY if account is not already a member
             if getattr(entity, 'left', False):
                 try:
@@ -224,28 +293,35 @@ async def run_promoter_cycle(client, cycle_num):
             success_count += 1
 
             # Inter-group safety pause (45s - 80s)
-            if index < len(current_targets):
+            if index < len(clean_targets):
                 cooldown = random.randint(INTER_GROUP_COOLDOWN_MIN, INTER_GROUP_COOLDOWN_MAX)
                 await live_countdown(cooldown, "Inter-Group Cooldown")
 
         except FloodWaitError as e:
             print(f"  ⚠️ Telegram FloodWait triggered! Waiting {e.seconds}s safely...")
             await asyncio.sleep(e.seconds + 5)
-        except (UserBannedInChannelError, ChatWriteForbiddenError, ChatAdminRequiredError):
-            print(f"  ⚠️ Posting restricted in @{group_target}. Skipping safely.")
-            skip_count += 1
+        except (UserBannedInChannelError, ChatWriteForbiddenError, ChatAdminRequiredError) as e:
+            add_to_blacklist(group_target, f"Posting restricted by admin / muted ({type(e).__name__})", group_name)
+            blacklisted_count += 1
+            await asyncio.sleep(2)
+        except (ChannelPrivateError, ChannelInvalidError, UsernameInvalidError, UsernameNotOccupiedError) as e:
+            add_to_blacklist(group_target, f"Chat invalid or private ({type(e).__name__})", group_name)
+            blacklisted_count += 1
             await asyncio.sleep(2)
         except Exception as e:
             err_str = str(e)
             if "ALLOW_PAYMENT_REQUIRED" in err_str or "BALANCE_TOO_LOW" in err_str:
-                print(f"  ⚠️ @{group_target}: Requires Telegram Stars fee. Skipping safely.")
+                add_to_blacklist(group_target, "Requires Telegram Stars fee", group_name)
+                blacklisted_count += 1
+            elif "ChatWriteForbidden" in err_str or "banned" in err_str.lower():
+                add_to_blacklist(group_target, f"Write forbidden: {err_str}", group_name)
+                blacklisted_count += 1
             else:
                 print(f"  ❌ Note for @{group_target}: {e}")
-            skip_count += 1
             await asyncio.sleep(2)
 
     print("────────────────────────────────────────────────────────────")
-    print(f"📊 Cycle #{cycle_num} Summary: ✅ Posted: {success_count} | ⚠️ Skipped: {skip_count}")
+    print(f"📊 Cycle #{cycle_num} Summary: ✅ Posted: {success_count} | 🚫 Blacklisted/Purged: {blacklisted_count}")
     print("────────────────────────────────────────────────────────────\n")
 
 
@@ -256,6 +332,7 @@ async def main():
 
     print("╔════════════════════════════════════════════════════════════╗")
     print("║   🚀 UpStore 24/7 Smart Autonomous Promotion Engine        ║")
+    print("║   🛡️ Self-Healing Auto-Blacklist System: ACTIVE            ║")
     print("║   📌 Referral Link: " + BOT_REF_LINK[:32] + "...   ║")
     print("╚════════════════════════════════════════════════════════════╝\n")
 
@@ -264,13 +341,18 @@ async def main():
     
     me = await client.get_me()
     print(f"👤 Authenticated as: {me.first_name} (@{me.username or 'NoUsername'}) [ID: {me.id}]")
-    print(f"📋 Target Pool: {len(TARGET_GROUPS)} verified active open chats configured.")
-    print(f"⚡ Mode: Perpetual 24/7 Autonomous Looping Enabled.\n")
+    
+    blacklist = load_blacklist()
+    print(f"🛡️ Current Blacklist: {len(blacklist)} groups permanently quarantined.")
+    
+    active_pool = [t for t in INITIAL_TARGET_GROUPS if not is_blacklisted(t["username"], blacklist)]
+    print(f"📋 Verified Target Pool: {len(active_pool)} active open chats.")
+    print(f"⚡ Mode: Perpetual 24/7 Autonomous Looping with Auto-Purge.\n")
 
     cycle = 1
     while True:
         try:
-            await run_promoter_cycle(client, cycle)
+            await run_promoter_cycle(client, INITIAL_TARGET_GROUPS, cycle)
             
             # Calculate rest time between cycles (45 to 75 minutes)
             rest_minutes = random.randint(ROUND_REST_MINUTES_MIN, ROUND_REST_MINUTES_MAX)

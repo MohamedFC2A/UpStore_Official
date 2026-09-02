@@ -1,0 +1,54 @@
+{
+  "description": "Persistent blacklist of unusable, restricted, paid, or dead Telegram groups.",
+  "updated_at": "2026-09-02T07:45:00Z",
+  "blacklisted_groups": {
+    "gemini12pro": {
+      "reason": "Requires 2 Telegram Stars fee per message (ALLOW_PAYMENT_REQUIRED)",
+      "added_at": "2026-09-02 07:45:00 AM"
+    },
+    "BassamtalksAI": {
+      "reason": "Posting restricted by admin (ChatWriteForbiddenError)",
+      "added_at": "2026-09-02 07:45:00 AM"
+    },
+    "lrnai": {
+      "reason": "Broadcast channel with admin-only posting",
+      "added_at": "2026-09-02 07:45:00 AM"
+    },
+    "jor294": {
+      "reason": "Admin-only posting in supergroup",
+      "added_at": "2026-09-02 07:45:00 AM"
+    },
+    "jor7070": {
+      "reason": "Admin-only posting in supergroup",
+      "added_at": "2026-09-02 07:45:00 AM"
+    },
+    "signals_crypto_arabic_chat": {
+      "reason": "Admin-only posting in supergroup",
+      "added_at": "2026-09-02 07:45:00 AM"
+    },
+    "Shawxvip2": {
+      "reason": "Admin-only posting in supergroup",
+      "added_at": "2026-09-02 07:45:00 AM"
+    },
+    "sezar_apk_chat": {
+      "reason": "Admin-only posting in supergroup",
+      "added_at": "2026-09-02 07:45:00 AM"
+    },
+    "FV_MM": {
+      "reason": "Admin-only posting in supergroup",
+      "added_at": "2026-09-02 07:45:00 AM"
+    },
+    "cfvdvhbsn": {
+      "reason": "Inactive group",
+      "added_at": "2026-09-02 07:45:00 AM"
+    },
+    "X4JJJ": {
+      "reason": "Admin-only posting in supergroup",
+      "added_at": "2026-09-02 07:45:00 AM"
+    },
+    "AIAgentsEngineersSociety": {
+      "reason": "Admin-only posting in supergroup",
+      "added_at": "2026-09-02 07:45:00 AM"
+    }
+  }
+}
