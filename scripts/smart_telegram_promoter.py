@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 """
 ═══════════════════════════════════════════════════════════════════════════════
-🚀 UpStore 24/7 Autonomous Growth Engine + Self-Healing Blacklist Quarantine
+🚀 UpStore 24/7 Autonomous Growth Engine (100+ Verified Open Chats Edition)
 ═══════════════════════════════════════════════════════════════════════════════
+- 100+ Verified Open Supergroups: Crawled & validated for free public chatting.
 - 24/7 Perpetual Intelligent Loop: Runs continuous cycles with smart rest periods.
 - Self-Healing Auto-Blacklist: Automatically kills & permanently quarantines dead/restricted groups.
 - Persistent JSON Storage: Saves blacklisted groups to scripts/promoter_blacklist.json.
@@ -34,7 +35,6 @@ try:
         UsernameNotOccupiedError
     )
     from telethon.tl.functions.channels import JoinChannelRequest
-    from telethon.tl.functions.messages import SendMessageRequest
 except ImportError:
     print("❌ Telethon is not installed! Please run: pip install telethon")
     sys.exit(1)
@@ -46,9 +46,10 @@ API_ID = int(os.getenv("TG_API_ID", 31577730))
 API_HASH = os.getenv("TG_API_HASH", "42d6fcd39c9e724428133de55ab0fe21")
 SESSION_NAME = "upstore_promoter_session"
 
-# Blacklist file path
+# Paths
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 BLACKLIST_FILE = os.path.join(BASE_DIR, "promoter_blacklist.json")
+VERIFIED_TARGETS_FILE = os.path.join(BASE_DIR, "promoter_verified_100.json")
 
 # Direct official referral link with user ID 8495121463
 BOT_REF_LINK = "https://t.me/upstore_one_bot?start=ref_8495121463"
@@ -101,32 +102,47 @@ def add_to_blacklist(username, reason, title=""):
 
 def is_blacklisted(username, blacklist_dict):
     """Checks if a username is in the blacklist."""
-    return username.lstrip("@").strip() in blacklist_dict
+    return username.lstrip("@").strip().lower() in [k.lower() for k in blacklist_dict.keys()]
 
 # ─────────────────────────────────────────────────────────────────────────────
-# 3. TARGET TELEGRAM COMMUNITIES (Filtered against blacklist)
+# 3. TARGET TELEGRAM COMMUNITIES (100+ Verified Open Supergroups)
 # ─────────────────────────────────────────────────────────────────────────────
-INITIAL_TARGET_GROUPS = [
-    # Top Arabic Active Design, AI & Developer Chats
-    {"username": "akkffh", "lang": "ar", "name": "قروب مصممي الجرافيك وكانفا (2.6K)"},
-    {"username": "A1_des", "lang": "ar", "name": "قروب مصممي الجرافيك (1.2K)"},
-    {"username": "modmentadawulgroups", "lang": "ar", "name": "جروب نقاشات عامة وعروض (3.3K)"},
-    {"username": "designerssoftwear", "lang": "ar", "name": "ملتقى برمجيات المصممين (857)"},
-    {"username": "AIApproachClub", "lang": "ar", "name": "نادي نهج الذكاء الاصطناعي (789)"},
-    {"username": "maryamalbatoulofficielle", "lang": "ar", "name": "خدمات رقمية واشتراكات (536)"},
-    {"username": "progAi2", "lang": "ar", "name": "مبرمجين الذكاء الاصطناعي (457)"},
-    {"username": "Arabdesign21", "lang": "ar", "name": "ملتقى المصممين العرب (370)"},
-    {"username": "blackarkchat", "lang": "ar", "name": "قروب مطورين ومبرمجين (140)"},
-    {"username": "ALULYAAi1", "lang": "ar", "name": "نقاشات عالم الذكاء الاصطناعي (123)"},
-    {"username": "csAlit22", "lang": "ar", "name": "حاسبات وذكاء اصطناعي (117)"},
-    {"username": "areejdi", "lang": "ar", "name": "قروب مصممي الجرافيك (91)"},
-    
-    # International Active Open Chats (English & Russian)
-    {"username": "digital_marketing_chat01", "lang": "ru", "name": "Digital Marketing Chat (7K)"},
-    {"username": "digital_chat1", "lang": "ru", "name": "Digital Chat RU (856)"},
-    {"username": "DigitalMarketing_AC", "lang": "en", "name": "Digital Marketing Global (243)"},
-    {"username": "AI_Tools_Group", "lang": "en", "name": "AI Tools Discussion Group (194)"}
+INITIAL_FALLBACK_GROUPS = [
+    {"username": "akkffh", "lang": "ar", "title": "قروب مصممي الجرافيك وكانفا"},
+    {"username": "A1_des", "lang": "ar", "title": "قروب مصممي الجرافيك"},
+    {"username": "desinhome", "lang": "ar", "title": "مجتمع مصممين"},
+    {"username": "ssss9999ssss", "lang": "ar", "title": "تجمع مصممين كانفا canva"},
+    {"username": "AiPsGroup", "lang": "ar", "title": "جروب اليستريتور & فوتوشوب"},
+    {"username": "FreeLancerArabs", "lang": "ar", "title": "ملتقى فريلانسر العرب"},
+    {"username": "wecodeone_chat", "lang": "ar", "title": "مبرمجين محترفين | WeCodeOne"},
+    {"username": "Programmers_1_Community_1", "lang": "ar", "title": "مجتمع مبرمجين | ADC"},
+    {"username": "mobarmegeen", "lang": "ar", "title": "قعدة مبرمجين"},
+    {"username": "NaqashatDev", "lang": "ar", "title": "نقاشات مبرمجين"},
+    {"username": "blackarkchat", "lang": "ar", "title": "قروب مطورين مبرمجين"},
+    {"username": "DigitalMarketing443", "lang": "ar", "title": "تسويق رقمي"},
+    {"username": "Ecommerce5x", "lang": "ar", "title": "تجارة الكترونية ودروپ شيبنج"},
+    {"username": "mjtmmjtj", "lang": "ar", "title": "دردشة العراق | تعارف وسوالف"},
+    {"username": "nsrpro2", "lang": "ar", "title": "أهل الوناسة | دردشة وسوالف"},
+    {"username": "soalvdid", "lang": "ar", "title": "قروب تعارف وسوالف سعوديه"},
+    {"username": "tala_groub", "lang": "ar", "title": "دردشة شباب وبنات العرب"},
+    {"username": "digital_marketing_chat01", "lang": "ru", "title": "Digital Marketing Chat (7K)"},
+    {"username": "digital_chat1", "lang": "ru", "title": "Digital Chat RU (856)"},
+    {"username": "DigitalMarketing_AC", "lang": "en", "title": "Digital Marketing Global (243)"},
+    {"username": "AI_Tools_Group", "lang": "en", "title": "AI Tools Discussion Group"}
 ]
+
+def load_target_groups():
+    """Loads all verified open chat groups from promoter_verified_100.json or fallback list."""
+    if os.path.exists(VERIFIED_TARGETS_FILE):
+        try:
+            with open(VERIFIED_TARGETS_FILE, "r", encoding="utf-8") as f:
+                data = json.load(f)
+                groups = data.get("groups", [])
+                if groups and len(groups) > 0:
+                    return groups
+        except Exception:
+            pass
+    return INITIAL_FALLBACK_GROUPS
 
 # ─────────────────────────────────────────────────────────────────────────────
 # 4. HIGH-TRUST, AUTHENTIC & NATURAL COPYWRITING TEMPLATES
@@ -233,11 +249,11 @@ async def live_countdown(seconds, label="Safety Cooldown"):
     sys.stdout.flush()
 
 
-async def run_promoter_cycle(client, active_target_list, cycle_num):
+async def run_promoter_cycle(client, cycle_num):
     """Executes a single full round across all currently active target groups."""
-    # Filter against live blacklist
+    all_targets = load_target_groups()
     blacklist = load_blacklist()
-    clean_targets = [t for t in active_target_list if not is_blacklisted(t["username"], blacklist)]
+    clean_targets = [t for t in all_targets if not is_blacklisted(t["username"], blacklist)]
 
     print("════════════════════════════════════════════════════════════")
     print(f"🔄 Starting Promotion Cycle #{cycle_num}")
@@ -253,7 +269,7 @@ async def run_promoter_cycle(client, active_target_list, cycle_num):
 
     for index, target_info in enumerate(clean_targets, 1):
         group_target = target_info["username"]
-        group_name = target_info.get("name", group_target)
+        group_title = target_info.get("title", group_target)
         group_lang = target_info.get("lang", "ar").upper()
 
         # Double check blacklist
@@ -261,13 +277,13 @@ async def run_promoter_cycle(client, active_target_list, cycle_num):
             continue
 
         try:
-            print(f"[{index:02d}/{len(clean_targets):02d}] 🔍 Target: @{group_target} ({group_name}) [Lang: {group_lang}]")
+            print(f"[{index:03d}/{len(clean_targets):03d}] 🔍 Target: @{group_target} ({group_title}) [Lang: {group_lang}]")
             entity = await client.get_entity(group_target)
             
             # Check if group requires paid Telegram Stars
             stars = getattr(entity, 'send_paid_messages_stars', None)
             if stars and stars > 0:
-                add_to_blacklist(group_target, f"Requires {stars} paid Telegram Stars", getattr(entity, 'title', group_name))
+                add_to_blacklist(group_target, f"Requires {stars} paid Telegram Stars", getattr(entity, 'title', group_title))
                 blacklisted_count += 1
                 continue
 
@@ -301,20 +317,20 @@ async def run_promoter_cycle(client, active_target_list, cycle_num):
             print(f"  ⚠️ Telegram FloodWait triggered! Waiting {e.seconds}s safely...")
             await asyncio.sleep(e.seconds + 5)
         except (UserBannedInChannelError, ChatWriteForbiddenError, ChatAdminRequiredError) as e:
-            add_to_blacklist(group_target, f"Posting restricted by admin / muted ({type(e).__name__})", group_name)
+            add_to_blacklist(group_target, f"Posting restricted by admin / muted ({type(e).__name__})", group_title)
             blacklisted_count += 1
             await asyncio.sleep(2)
         except (ChannelPrivateError, ChannelInvalidError, UsernameInvalidError, UsernameNotOccupiedError) as e:
-            add_to_blacklist(group_target, f"Chat invalid or private ({type(e).__name__})", group_name)
+            add_to_blacklist(group_target, f"Chat invalid or private ({type(e).__name__})", group_title)
             blacklisted_count += 1
             await asyncio.sleep(2)
         except Exception as e:
             err_str = str(e)
             if "ALLOW_PAYMENT_REQUIRED" in err_str or "BALANCE_TOO_LOW" in err_str:
-                add_to_blacklist(group_target, "Requires Telegram Stars fee", group_name)
+                add_to_blacklist(group_target, "Requires Telegram Stars fee", group_title)
                 blacklisted_count += 1
             elif "ChatWriteForbidden" in err_str or "banned" in err_str.lower():
-                add_to_blacklist(group_target, f"Write forbidden: {err_str}", group_name)
+                add_to_blacklist(group_target, f"Write forbidden: {err_str}", group_title)
                 blacklisted_count += 1
             else:
                 print(f"  ❌ Note for @{group_target}: {e}")
@@ -345,14 +361,15 @@ async def main():
     blacklist = load_blacklist()
     print(f"🛡️ Current Blacklist: {len(blacklist)} groups permanently quarantined.")
     
-    active_pool = [t for t in INITIAL_TARGET_GROUPS if not is_blacklisted(t["username"], blacklist)]
-    print(f"📋 Verified Target Pool: {len(active_pool)} active open chats.")
+    all_targets = load_target_groups()
+    active_pool = [t for t in all_targets if not is_blacklisted(t["username"], blacklist)]
+    print(f"📋 Verified Target Pool: {len(active_pool)} active open chats loaded.")
     print(f"⚡ Mode: Perpetual 24/7 Autonomous Looping with Auto-Purge.\n")
 
     cycle = 1
     while True:
         try:
-            await run_promoter_cycle(client, INITIAL_TARGET_GROUPS, cycle)
+            await run_promoter_cycle(client, cycle)
             
             # Calculate rest time between cycles (45 to 75 minutes)
             rest_minutes = random.randint(ROUND_REST_MINUTES_MIN, ROUND_REST_MINUTES_MAX)

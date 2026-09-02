@@ -8,7 +8,7 @@ from smart_telegram_promoter import (
     load_blacklist,
     add_to_blacklist,
     is_blacklisted,
-    INITIAL_TARGET_GROUPS,
+    load_target_groups,
     BLACKLIST_FILE
 )
 
@@ -27,10 +27,11 @@ def test_blacklist_system():
     assert "areejdi" in blacklist, "Expected 'areejdi' to be present in blacklist"
     print(f"   🔍 Verified auto-quarantined group: @areejdi -> Reason: '{blacklist['areejdi']['reason']}'")
 
-    # 2. Test filtering INITIAL_TARGET_GROUPS
-    active_pool = [t for t in INITIAL_TARGET_GROUPS if not is_blacklisted(t["username"], blacklist)]
+    # 2. Test filtering targets
+    all_targets = load_target_groups()
+    active_pool = [t for t in all_targets if not is_blacklisted(t["username"], blacklist)]
     print(f"\n✅ Step 2: Live Target Filtering Check:")
-    print(f"   Initial target definitions: {len(INITIAL_TARGET_GROUPS)}")
+    print(f"   Initial target definitions: {len(all_targets)}")
     print(f"   Active targets after blacklist filtering: {len(active_pool)}")
     
     # Ensure no blacklisted group exists in active_pool
