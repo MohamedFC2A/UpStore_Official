@@ -1,25 +1,25 @@
 {
   "description": "High-Engagement Gold/VIP Target Registry with dynamic ranking, interaction scores, and specialized VIP copywriting delivery.",
-  "updated_at": "2026-09-02T11:59:06.517530",
+  "updated_at": "2026-09-02T12:03:02.577062",
   "total_vip_groups": 22,
   "vip_groups": {
     "vlada_shu_o": {
       "title": "Graphic Designer|Vladislava Shu Chat",
       "lang": "en",
-      "successful_posts_count": 1,
+      "successful_posts_count": 2,
       "first_seen": "2026-09-02 09:39:14 AM",
-      "last_posted_at": "2026-09-02 09:39:14 AM",
-      "engagement_score": 15.0,
-      "vip_tier": "⭐ SILVER_ACTIVE"
+      "last_posted_at": "2026-09-02 12:02:22 PM",
+      "engagement_score": 30.0,
+      "vip_tier": "🥇 GOLD_VIP"
     },
     "claudec_ai": {
       "title": "claudec中转交流群",
       "lang": "en",
-      "successful_posts_count": 1,
+      "successful_posts_count": 2,
       "first_seen": "2026-09-02 09:39:43 AM",
-      "last_posted_at": "2026-09-02 09:39:43 AM",
-      "engagement_score": 15.0,
-      "vip_tier": "⭐ SILVER_ACTIVE"
+      "last_posted_at": "2026-09-02 12:01:29 PM",
+      "engagement_score": 30.0,
+      "vip_tier": "🥇 GOLD_VIP"
     },
     "chat_techn": {
       "title": "Technology chat",
@@ -42,11 +42,11 @@
     "Ecommerce5x": {
       "title": "💰Dropshipping-E-commerce/💰التجارة/ الإلكترونية",
       "lang": "ar",
-      "successful_posts_count": 1,
+      "successful_posts_count": 2,
       "first_seen": "2026-09-02 09:41:43 AM",
-      "last_posted_at": "2026-09-02 09:41:43 AM",
-      "engagement_score": 15.0,
-      "vip_tier": "⭐ SILVER_ACTIVE"
+      "last_posted_at": "2026-09-02 12:00:38 PM",
+      "engagement_score": 30.0,
+      "vip_tier": "🥇 GOLD_VIP"
     },
     "CryptoNewsChat5": {
       "title": "CRYPTO NEWS CHAT🔥🔥",
@@ -60,11 +60,11 @@
     "digital_marketing_chat01": {
       "title": "Чат | digital маркетологов",
       "lang": "ru",
-      "successful_posts_count": 1,
+      "successful_posts_count": 2,
       "first_seen": "2026-09-02 09:42:44 AM",
-      "last_posted_at": "2026-09-02 09:42:44 AM",
-      "engagement_score": 15.0,
-      "vip_tier": "⭐ SILVER_ACTIVE"
+      "last_posted_at": "2026-09-02 12:02:06 PM",
+      "engagement_score": 30.0,
+      "vip_tier": "🥇 GOLD_VIP"
     },
     "videographersnotes": {
       "title": "Videographers’s notes | for creators Chat",
@@ -87,11 +87,11 @@
     "galsen_graphique_designers": {
       "title": "Galsen Graphic Designers Chat",
       "lang": "en",
-      "successful_posts_count": 1,
+      "successful_posts_count": 2,
       "first_seen": "2026-09-02 09:44:22 AM",
-      "last_posted_at": "2026-09-02 09:44:22 AM",
-      "engagement_score": 15.0,
-      "vip_tier": "⭐ SILVER_ACTIVE"
+      "last_posted_at": "2026-09-02 12:02:41 PM",
+      "engagement_score": 30.0,
+      "vip_tier": "🥇 GOLD_VIP"
     },
     "moooon_chatt": {
       "title": "Graphic designer xizmati chati",
@@ -105,20 +105,20 @@
     "statsguruji_design": {
       "title": "Graphic Designer chat",
       "lang": "en",
-      "successful_posts_count": 1,
+      "successful_posts_count": 2,
       "first_seen": "2026-09-02 09:45:50 AM",
-      "last_posted_at": "2026-09-02 09:45:50 AM",
-      "engagement_score": 15.0,
-      "vip_tier": "⭐ SILVER_ACTIVE"
+      "last_posted_at": "2026-09-02 12:03:02 PM",
+      "engagement_score": 30.0,
+      "vip_tier": "🥇 GOLD_VIP"
     },
     "fgajah": {
       "title": "نقاشات متظاهرين مستقلين",
       "lang": "ar",
-      "successful_posts_count": 1,
+      "successful_posts_count": 2,
       "first_seen": "2026-09-02 09:46:26 AM",
-      "last_posted_at": "2026-09-02 09:46:26 AM",
-      "engagement_score": 15.0,
-      "vip_tier": "⭐ SILVER_ACTIVE"
+      "last_posted_at": "2026-09-02 12:01:02 PM",
+      "engagement_score": 30.0,
+      "vip_tier": "🥇 GOLD_VIP"
     },
     "techweekchat": {
       "title": "Tech Week Chat",

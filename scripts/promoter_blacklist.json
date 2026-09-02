@@ -1,7 +1,7 @@
 {
   "description": "Persistent blacklist of unusable, restricted, paid, or dead Telegram groups.",
-  "updated_at": "2026-09-02T09:52:00.032678",
-  "total_blacklisted": 177,
+  "updated_at": "2026-09-02T12:02:01.935638",
+  "total_blacklisted": 179,
   "blacklisted_groups": {
     "gemini12pro": {
       "reason": "Requires 2 Telegram Stars fee per message (ALLOW_PAYMENT_REQUIRED)",
@@ -875,6 +875,16 @@
       "title": "🚀 Free Airdrops | GPT-4 Tools | ETH BTC XRP TON | NFT Mint | Passive Income | 投资赚钱 | 网赚机器人 chat",
       "reason": "Inactive / Dead Group (Only 1 poster)",
       "added_at": "2026-09-02 09:52:00 AM"
+    },
+    "techweekchat": {
+      "title": "Tech Week Chat",
+      "reason": "Chat invalid or private (ChannelPrivateError)",
+      "added_at": "2026-09-02 12:01:56 PM"
+    },
+    "Lego_Editor_Photo_Chat": {
+      "title": "Lego_Editor_Photo_Chat🔵",
+      "reason": "Chat invalid or private (ChannelPrivateError)",
+      "added_at": "2026-09-02 12:02:01 PM"
     }
   }
 }
