@@ -9,7 +9,9 @@ World-Class Autonomous Marketing Engine with:
 2. 💀 Instant Dead-Group Execution & Blacklist Quarantining: Auto-purges dead/restricted chats.
 3. ⭐ VIP Golden Registry Intelligence: Tracks and ranks top-performing communities.
 4. 🛡️ Infinite Self-Healing Supervisor:
-   - Windows QuickEdit Freeze Protection (prevents accidental console pausing).
+   - Clean PM2 Logging & Non-TTY Optimization.
+   - Auto-joins discussion groups and quarantines unjoinable channels.
+   - Windows QuickEdit Freeze Protection.
    - BaseException / Network Drop Resilience (auto-reconnects & never terminates).
    - Direct InputPeerChannel Execution (zero username resolve rate-limits).
 5. 🎯 Laser-Focused Conversion Offer:
@@ -40,6 +42,7 @@ try:
         UsernameNotOccupiedError
     )
     from telethon.tl.types import InputPeerChannel
+    from telethon.tl.functions.channels import JoinChannelRequest
     from telethon.tl.functions.contacts import SearchRequest
 except ImportError:
     print("❌ Telethon is not installed! Please run: pip install telethon")
@@ -397,6 +400,13 @@ async def simulate_human_typing(client, entity, duration_sec):
 
 
 async def live_countdown(seconds, label="Safety Cooldown"):
+    # Clean output for background PM2 log files
+    if not sys.stdout.isatty():
+        print(f"  ⏳ {label} ({seconds}s)...", flush=True)
+        await asyncio.sleep(seconds)
+        print(f"  ✅ {label} completed. Proceeding.", flush=True)
+        return
+
     for remaining in range(seconds, 0, -1):
         mins = remaining // 60
         secs = remaining % 60
@@ -520,6 +530,17 @@ async def run_promoter_cycle(client, cycle_num):
             elif "ChatWriteForbidden" in err_str or "banned" in err_str.lower():
                 add_to_blacklist(group_target, f"Write forbidden: {err_str}", group_title)
                 blacklisted_count += 1
+            elif "join the discussion group" in err_str.lower() or "discussion group before commenting" in err_str.lower():
+                # Attempt automatic joining once
+                try:
+                    await client(JoinChannelRequest(entity))
+                    await client.send_message(entity, message_text)
+                    print(f"  🎉 Message posted after auto-joining @{group_target}!")
+                    tier, score = record_vip_success(target_info)
+                    success_count += 1
+                except Exception as join_err:
+                    add_to_blacklist(group_target, f"Discussion join restricted: {join_err}", group_title)
+                    blacklisted_count += 1
             else:
                 print(f"  ⚠️ Note for @{group_target}: {e} -> Continuing.")
             await asyncio.sleep(1)
