@@ -45,7 +45,7 @@ async function main() {
       host: '104.207.77.162',
       port: 22022,
       username: 'root',
-      password: 'Mohamedgg2008#',
+      password: process.env.VPS_PASS || process.env.VPS_PASSWORD || 'Mohamedgg2008#',
     });
   });
 

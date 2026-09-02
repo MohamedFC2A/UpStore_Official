@@ -219,7 +219,7 @@ const REVIEWS_TRANSLATIONS: Record<Language, Array<{ name: string; text: string;
     { name: 'Chloe_S', text: 'Legit and cheap. Working completely fine.', rating: 5 },
   ],
   ar: [
-    { name: 'محمد العتيبي', text: 'استلمت الحساب في دقيقتين ونتفليكس شغال كويس وبدون تقطيع', rating: 5 },
+    { name: 'سلطان العتيبي', text: 'استلمت الحساب في دقيقتين ونتفليكس شغال كويس وبدون تقطيع', rating: 5 },
     { name: 'سارة المنصور', text: 'شات جي بي تي شغال تمام والدعم تليجرام ساعدني علطول', rating: 5 },
     { name: 'كريم الشناوي', text: 'دفعت فودافون كاش ووصلني الحساب في ثواني، شكرا ليكم', rating: 5 },
     { name: 'يوسف بن خالد', text: 'كود اكس بوكس اشتغل على حسابي وفرت كتير الصراحه', rating: 5 },

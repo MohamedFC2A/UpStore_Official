@@ -1421,7 +1421,7 @@ async function renderPaymentMethodsScreen(chatId, messageId, callbackQueryId, bu
     '──────────────────',
     '• ⚡ <b>Bybit UID:</b> <code>47183921</code>',
     '• 🟡 <b>Binance Pay ID:</b> <code>764476139</code>',
-    '• 📱 <b>طرق الدفع المحلية:</b> عبر التواصل مع الدعم الفني @UPSTORE_HELP',
+    '• 👨‍💻 <b>خدمة العملاء الرسمية:</b> @UPSTORE_HELP متواجد 24/7',
     `<i>(${t('btn_copy_hint', lang)})</i>`,
     '──────────────────',
     t('local_step', lang),

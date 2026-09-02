@@ -5,7 +5,7 @@ import { generateStructuredAIResponse } from '@/utils/ai';
 import { execSync } from 'child_process';
 import { calculateNextVersion, sortChangelogs } from '@/utils/semver';
 
-const DEFAULT_REPO = 'MohamedFC2A/UpStore';
+const DEFAULT_REPO = process.env.GITHUB_REPO || 'UpStore_Official/UpStore';
 
 interface ParsedCommit {
   sha: string;

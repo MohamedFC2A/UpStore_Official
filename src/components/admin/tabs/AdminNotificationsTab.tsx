@@ -248,7 +248,7 @@ export const AdminNotificationsTab: React.FC<AdminNotificationsTabProps> = ({
               type="text"
               value={githubRepo}
               onChange={(e) => setGithubRepo(e.target.value)}
-              placeholder="username/repository (e.g. MohamedFC2A/UpStore)"
+              placeholder="username/repository (e.g. UpStore_Official/UpStore)"
               className="w-full px-3.5 py-2.5 bg-[#FFFDF9] border-2 border-black rounded-xl text-black outline-none font-bold text-xs font-mono shadow-[2px_2px_0px_0px_#000]"
             />
           </div>

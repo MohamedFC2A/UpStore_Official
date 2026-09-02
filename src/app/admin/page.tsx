@@ -167,7 +167,7 @@ export default function AdminPage() {
     }
   }, [activeTab]);
   const [githubSyncing, setGithubSyncing] = useState(false);
-  const [githubRepo, setGithubRepo] = useState('MohamedFC2A/UpStore');
+  const [githubRepo, setGithubRepo] = useState('UpStore_Official/UpStore');
   const [githubSyncResult, setGithubSyncResult] = useState<any>(null);
 
   // Data lists

@@ -201,7 +201,7 @@ function getMockReviewsForSlug(slug: string, lang: string) {
       },
       {
         id: 'mock-canva-2',
-        username: isAr ? 'محمد إبراهيم' : 'Mohamed_Ibrahim',
+        username: isAr ? 'كريم أحمد' : 'Karim_A',
         avatar: 'MI',
         rating: 5,
         title: isAr ? 'إزالة الخلفيات بضغطة زر' : 'Magic eraser is instant',

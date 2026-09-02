@@ -16,7 +16,7 @@ export function heuristicExtractFirstName(input?: string | null): string {
   // 1. If input is email, extract the local part
   let namePart = input.includes('@') ? input.split('@')[0] : input;
 
-  // 2. Clean out Arabic brackets or extraneous parts e.g. "Mohamed (محمد)" -> "Mohamed"
+  // 2. Clean out Arabic brackets or extraneous parts e.g. "Omar (عمر)" -> "Omar"
   namePart = namePart.replace(/\([^)]*\)/g, '').trim();
 
   // 3. Remove non-alphanumeric separators (dots, underscores, dashes, numbers)
@@ -32,7 +32,7 @@ export function heuristicExtractFirstName(input?: string | null): string {
   const tokens = namePart.split(/[._\-\+\d\s]+/).filter(Boolean);
   if (tokens.length > 0) {
     const firstToken = tokens[0];
-    // Check if camelCase e.g. "MohamedAhmed" -> "Mohamed"
+    // Check if camelCase e.g. "AlexSmith" -> "Alex"
     const camelMatch = firstToken.match(/^[A-Z][a-z]+/);
     if (camelMatch) {
       return camelMatch[0];

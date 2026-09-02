@@ -21,7 +21,7 @@ export async function smartExtractFirstName(
   }
 
   try {
-    const systemPrompt = `You are an expert name extractor. Your job is to extract the single cleanest, most natural first name (in Latin alphabet, properly capitalized, e.g. "Mohamed", "Ahmed", "Sarah", "Alex") from a user's email address or username string. Return ONLY a single JSON object adhering to this schema: {"firstName": string}.`;
+    const systemPrompt = `You are an expert name extractor. Your job is to extract the single cleanest, most natural first name (in Latin alphabet, properly capitalized, e.g. "Alex", "Sarah", "Omar", "David") from a user's email address or username string. Return ONLY a single JSON object adhering to this schema: {"firstName": string}.`;
     const userPrompt = `Extract first name from: "${target}". Return valid JSON only.`;
 
     const { data } = await generateStructuredAIResponse<{ firstName?: string }>(

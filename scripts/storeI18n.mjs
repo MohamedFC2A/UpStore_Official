@@ -194,7 +194,7 @@ export const I18N_STRINGS = {
   "ar": {
     "btn_submit_txid": "✍️ إرسال معرّف الدفع (TXID / رقم التحويل)",
     "submit_txid_prompt_title": "✍️ <b>يرجى إرسال معرّف أو تفاصيل عملية التحويل:</b>",
-    "submit_txid_prompt_desc": "📝 اكتب في رسالة هنا أي من البيانات التالية:\n• <b>معرف التحويل / Order ID / Bybit Transfer ID</b>\n• <b>رقم المحفظة أو الحساب الذي قمت بالتحويل منه</b>\n• <b>أو رمز المعاملة (TXID / Hash)</b>\n• <b>أو رقم الهاتف (في حال الدفع المحلي كفودافون كاش أو إنستاباي)</b>",
+    "submit_txid_prompt_desc": "📝 اكتب في رسالة هنا أي من البيانات التالية:\n• <b>معرف التحويل / Order ID / Bybit Transfer ID</b>\n• <b>رقم المحفظة أو الحساب الذي قمت بالتحويل منه</b>\n• <b>أو رمز المعاملة (TXID / Hash)</b>\n• <b>أو معرّف التحويل / رمز المعاملة في منصتك المعتمدة</b>",
     "submit_txid_prompt_hint": "💡 بمجرد إرسال المعرف، سيصل فوراً إلى شاشة الإدارة للمطابقة واعتماد رصيدك فوراً في غضون دقائق ⚡",
     "txid_received_title": "✅ <b>تم استلام معرّف الدفع بنجاح! 🤍</b>",
     "payment_id_label": "معرّف الدفع المرسل:",
@@ -293,7 +293,7 @@ export const I18N_STRINGS = {
     "instapay_label": "الدعم الفني المباشر:",
     "vfcash_label": "معرف الدعم:",
     "local_amount_label": "المبلغ المطلوب:",
-    "local_step": "لإتمام الدفع بالعملات أو المحافظ المحلية (فودافون كاش، إنستاباي، وغيرها)، يرجى التواصل مع فريق الدعم @UPSTORE_HELP لتزويدك ببيانات التحويل المباشرة 🤍.",
+    "local_step": "لإتمام الدفع عبر القنوات المعتمدة، يرجى التواصل مع فريق الدعم الرسمي @UPSTORE_HELP لتزويدك بالتفاصيل المباشرة 🤍.",
     "referral_title": "<b>رصيد المحفظة والمكافآت</b>",
     "referral_desc": "شارك رابط دعوتك واكسب رصيد محفظة مجاني لشراء الاشتراكات.",
     "referral_formula": "• كل صديق ينضم = 1 نقطة\n• كل 5 نقاط = $1.00 دولار يضاف تلقائياً لمحفظتك",
@@ -402,7 +402,7 @@ export const I18N_STRINGS = {
   "en": {
     "btn_submit_txid": "✍️ Submit Payment ID (TXID / Transfer No)",
     "submit_txid_prompt_title": "✍️ <b>Please Send Your Payment ID or Transfer Details:</b>",
-    "submit_txid_prompt_desc": "📝 Type any of the following details in a message here:\n• <b>Transfer ID / Order ID / Bybit Internal Transfer ID</b>\n• <b>Sender Wallet Address or Account Name/Number</b>\n• <b>Transaction Hash (TXID / Ref Code)</b>\n• <b>Sender Phone Number (for local payment methods)</b>",
+    "submit_txid_prompt_desc": "📝 Type any of the following details in a message here:\n• <b>Transfer ID / Order ID / Bybit Internal Transfer ID</b>\n• <b>Sender Wallet Address or Account Name/Number</b>\n• <b>Transaction Hash (TXID / Ref Code)</b>\n• <b>Sender Transfer ID / Transaction Hash</b>",
     "submit_txid_prompt_hint": "💡 Once submitted, it will instantly reach our Admin live panel for verification and crediting within minutes ⚡",
     "txid_received_title": "✅ <b>Payment ID Received Successfully! 🤍</b>",
     "payment_id_label": "Submitted Payment ID:",
@@ -610,7 +610,7 @@ export const I18N_STRINGS = {
   "es": {
     "btn_submit_txid": "✍️ Enviar ID de pago (TXID / Nº de transferencia)",
     "submit_txid_prompt_title": "✍️ <b>Por favor envía tu ID de pago o detalles de la transferencia:</b>",
-    "submit_txid_prompt_desc": "📝 Escribe cualquiera de los siguientes datos en un mensaje aquí:\n• <b>ID de transferencia / Order ID / ID de Bybit</b>\n• <b>Dirección de billetera o cuenta remitente</b>\n• <b>Hash de transacción (TXID / Código de referencia)</b>\n• <b>Número de teléfono remitente (para pagos locales)</b>",
+    "submit_txid_prompt_desc": "📝 Escribe cualquiera de los siguientes datos en un mensaje aquí:\n• <b>ID de transferencia / Order ID / ID de Bybit</b>\n• <b>Dirección de billetera o cuenta remitente</b>\n• <b>Hash de transacción (TXID / Código de referencia)</b>\n• <b>ID de transferencia o hash del remitente</b>",
     "submit_txid_prompt_hint": "💡 Una vez enviado, llegará al instante a nuestro panel de administración para acreditar tu saldo en minutos ⚡",
     "txid_received_title": "✅ <b>¡ID de pago recibido con éxito! 🤍</b>",
     "payment_id_label": "ID de pago enviado:",
@@ -818,7 +818,7 @@ export const I18N_STRINGS = {
   "fr": {
     "btn_submit_txid": "✍️ Envoyer l'ID de paiement (TXID / Nº de virement)",
     "submit_txid_prompt_title": "✍️ <b>Veuillez envoyer votre identifiant de paiement ou détails du virement :</b>",
-    "submit_txid_prompt_desc": "📝 Écrivez l'un des détails suivants dans un message ici :\n• <b>ID de transfert / Order ID / ID de virement Bybit</b>\n• <b>Adresse du portefeuille ou numéro de compte expéditeur</b>\n• <b>Hash de transaction (TXID / Code de référence)</b>\n• <b>Numéro de téléphone expéditeur (pour paiements locaux)</b>",
+    "submit_txid_prompt_desc": "📝 Écrivez l'un des détails suivants dans un message ici :\n• <b>ID de transfert / Order ID / ID de virement Bybit</b>\n• <b>Adresse du portefeuille ou numéro de compte expéditeur</b>\n• <b>Hash de transaction (TXID / Code de référence)</b>\n• <b>ID de virement ou hash de transaction</b>",
     "submit_txid_prompt_hint": "💡 Une fois envoyé, il parviendra instantanément au panneau d'administration pour créditer votre solde en quelques minutes ⚡",
     "txid_received_title": "✅ <b>Identifiant de paiement reçu avec succès ! 🤍</b>",
     "payment_id_label": "ID de paiement soumis :",
@@ -1026,7 +1026,7 @@ export const I18N_STRINGS = {
   "ru": {
     "btn_submit_txid": "✍️ Отправить ID платежа (TXID / Номер перевода)",
     "submit_txid_prompt_title": "✍️ <b>Пожалуйста, отправьте ID платежа или детали перевода:</b>",
-    "submit_txid_prompt_desc": "📝 Напишите любые из следующих данных в сообщении здесь:\n• <b>ID перевода / Номер заказа / Bybit Transfer ID</b>\n• <b>Адрес кошелька или номер счета отправителя</b>\n• <b>Хеш транзакции (TXID / Код операции)</b>\n• <b>Номер телефона отправителя (для локальных платежей)</b>",
+    "submit_txid_prompt_desc": "📝 Напишите любые из следующих данных в сообщении здесь:\n• <b>ID перевода / Номер заказа / Bybit Transfer ID</b>\n• <b>Адрес кошелька или номер счета отправителя</b>\n• <b>Хеш транзакции (TXID / Код операции)</b>\n• <b>ID перевода или хеш транзакции отправителя</b>",
     "submit_txid_prompt_hint": "💡 После отправки данные мгновенно поступят администраторам для проверки и начисления баланса за считанные минуты ⚡",
     "txid_received_title": "✅ <b>ID платежа успешно получен! 🤍</b>",
     "payment_id_label": "Отправленный ID платежа:",
@@ -1234,7 +1234,7 @@ export const I18N_STRINGS = {
   "tr": {
     "btn_submit_txid": "✍️ Ödeme Kimliğini Gönder (TXID / Transfer No)",
     "submit_txid_prompt_title": "✍️ <b>Lütfen Ödeme Kimliğinizi veya Transfer Bilgilerini Gönderin:</b>",
-    "submit_txid_prompt_desc": "📝 Buraya göndereceğiniz mesajda şunlardan birini belirtin:\n• <b>Transfer Kimliği / Sipariş No / Bybit Transfer ID</b>\n• <b>Gönderen cüzdan adresi veya hesap numarası</b>\n• <b>İşlem Kodu (TXID / Referans Kodu)</b>\n• <b>Gönderen telefon numarası (yerel ödemeler için)</b>",
+    "submit_txid_prompt_desc": "📝 Buraya göndereceğiniz mesajda şunlardan birini belirtin:\n• <b>Transfer Kimliği / Sipariş No / Bybit Transfer ID</b>\n• <b>Gönderen cüzdan adresi veya hesap numarası</b>\n• <b>İşlem Kodu (TXID / Referans Kodu)</b>\n• <b>Gönderen transfer kimliği veya işlem hash kodu</b>",
     "submit_txid_prompt_hint": "💡 Gönderildikten sonra, bakiyenizin dakikalar içinde yüklenmesi için canlı yönetim paneline anında iletilecektir ⚡",
     "txid_received_title": "✅ <b>Ödeme Kimliği Başarıyla Alındı! 🤍</b>",
     "payment_id_label": "Gönderilen Ödeme Kimliği:",
@@ -1442,7 +1442,7 @@ export const I18N_STRINGS = {
   "de": {
     "btn_submit_txid": "✍️ Zahlungs-ID senden (TXID / Überweisungs-Nr.)",
     "submit_txid_prompt_title": "✍️ <b>Bitte senden Sie Ihre Zahlungs-ID oder Überweisungsdetails:</b>",
-    "submit_txid_prompt_desc": "📝 Schreiben Sie eines der folgenden Details in einer Nachricht hier:\n• <b>Überweisungs-ID / Bestell-ID / Bybit Transfer ID</b>\n• <b>Absender-Wallet-Adresse oder Kontonummer</b>\n• <b>Transaktions-Hash (TXID / Referenzcode)</b>\n• <b>Telefonnummer des Absenders (für lokale Zahlungsmethoden)</b>",
+    "submit_txid_prompt_desc": "📝 Schreiben Sie eines der folgenden Details in einer Nachricht hier:\n• <b>Überweisungs-ID / Bestell-ID / Bybit Transfer ID</b>\n• <b>Absender-Wallet-Adresse oder Kontonummer</b>\n• <b>Transaktions-Hash (TXID / Referenzcode)</b>\n• <b>Absender-Transfer-ID oder Transaktions-Hash</b>",
     "submit_txid_prompt_hint": "💡 Nach dem Absenden wird es sofort an unser Live-Admin-Panel zur schnellen Gutschrift innerhalb weniger Minuten weitergeleitet ⚡",
     "txid_received_title": "✅ <b>Zahlungs-ID erfolgreich empfangen! 🤍</b>",
     "payment_id_label": "Übermittelte Zahlungs-ID:",

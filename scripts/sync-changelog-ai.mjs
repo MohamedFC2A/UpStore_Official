@@ -8,7 +8,7 @@ const __dirname = path.dirname(__filename);
 const rootDir = path.resolve(__dirname, '..');
 const changelogsFilePath = path.join(rootDir, 'src', 'data', 'changelogs.json');
 
-const DEFAULT_REPO = 'MohamedFC2A/UpStore';
+const DEFAULT_REPO = process.env.GITHUB_REPO || 'UpStore_Official/UpStore';
 
 /**
  * Parses semver string into [major, minor, patch]

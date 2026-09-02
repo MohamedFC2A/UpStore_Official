@@ -468,7 +468,7 @@ export default function AdShowcaseClient() {
   // Simulated live customer sales notifications
   const LIVE_SALES = useMemo(
     () => [
-      { name: 'محمد ع.', city: 'القاهرة', item: 'Gemini Pro 18 شهر' },
+      { name: 'سعد القحطاني', city: 'القاهرة', item: 'Gemini Pro 18 شهر' },
       { name: 'خالد س.', city: 'الرياض', item: 'ChatGPT Plus 4.0' },
       { name: 'عمر ف.', city: 'دبي', item: 'YouTube Premium سنة' },
       { name: 'سارة م.', city: 'الإسكندرية', item: 'Netflix 4K UHD' },
