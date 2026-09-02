@@ -416,6 +416,11 @@ export async function notifyPendingPaymentApproval(user, amount, method, refOrTx
     ];
   }
 
+  const isInternalRefOrMissing = !refOrTxId || refOrTxId === reqId || /^#(?:TOPUP|UP|REQ|DOC|IMG)-/i.test(refOrTxId) || /^(?:TOPUP|UP|REQ|DOC|IMG)-/i.test(refOrTxId);
+  const txidDisplay = isInternalRefOrMissing
+    ? '<i>(طلب فحص تلقائي - بانتظار إدخال العميل لمعرف الدفع)</i>'
+    : `<code>${refOrTxId}</code>`;
+
   const html = [
     title,
     '━━━━━━━━━━━━━━━━━━━━━━',
@@ -423,8 +428,8 @@ export async function notifyPendingPaymentApproval(user, amount, method, refOrTx
     `🆔 <b>User ID:</b> <code>${u.id}</code> <a href="tg://user?id=${u.id}">[فتح الدردشة 💬]</a>`,
     `💵 <b>المبلغ:</b> <code>$${numAmount.toFixed(2)} USDT</code> (~${Math.round(numAmount * 50)} EGP)`,
     `🏦 <b>طريقة الدفع:</b> <b>${method}</b>`,
-    `🧾 <b>معرّف الدفع / TXID من العميل:</b> <code>${refOrTxId}</code>`,
-    meta.senderAccount ? `📱 <b>حساب/رقم المحول:</b> <code>${meta.senderAccount}</code>` : '',
+    `🧾 <b>معرّف الدفع / TXID من العميل:</b> ${txidDisplay}`,
+    meta.senderAccount && meta.senderAccount !== refOrTxId ? `📱 <b>حساب/رقم المحول:</b> <code>${meta.senderAccount}</code>` : '',
     `🆔 <b>رقم المرجع:</b> <code>#${reqId}</code>`,
     meta.rawMessage ? `💬 <b>نص رسالة العميل:</b>\n<blockquote>${meta.rawMessage}</blockquote>` : (meta.note ? `📝 <b>ملاحظة:</b> <code>${meta.note}</code>` : ''),
     `⏱ <b>التوقيت:</b> <code>${time}</code>`,

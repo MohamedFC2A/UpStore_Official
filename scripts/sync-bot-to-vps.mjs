@@ -71,6 +71,7 @@ async function main() {
     { local: path.resolve('./scripts/test-i18n.mjs'), remote: `${REMOTE_APP_DIR}/scripts/test-i18n.mjs` },
     { local: path.resolve('./scripts/test-wallet.mjs'), remote: `${REMOTE_APP_DIR}/scripts/test-wallet.mjs` },
     { local: path.resolve('./scripts/test-approval-and-serials.mjs'), remote: `${REMOTE_APP_DIR}/scripts/test-approval-and-serials.mjs` },
+    { local: path.resolve('./scripts/test-bot-interactive-pump.mjs'), remote: `${REMOTE_APP_DIR}/scripts/test-bot-interactive-pump.mjs` },
   ];
 
   for (const f of files) {
@@ -85,6 +86,9 @@ async function main() {
 
   console.log('\n🧪 Running test-i18n.mjs on VPS...');
   await execCommand(conn, `cd ${REMOTE_APP_DIR} && node scripts/test-i18n.mjs`);
+
+  console.log('\n🧪 Running test-bot-interactive-pump.mjs on VPS...');
+  await execCommand(conn, `cd ${REMOTE_APP_DIR} && node scripts/test-bot-interactive-pump.mjs`);
 
   console.log('\n🔄 Restarting PM2 process upstore-bot on VPS...');
   await execCommand(conn, `pm2 restart upstore-bot`);

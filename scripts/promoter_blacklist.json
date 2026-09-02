@@ -1,7 +1,7 @@
 {
   "description": "Persistent blacklist of unusable, restricted, paid, or dead Telegram groups.",
-  "updated_at": "2026-09-02T09:26:48.267636",
-  "total_blacklisted": 83,
+  "updated_at": "2026-09-02T09:52:00.032678",
+  "total_blacklisted": 177,
   "blacklisted_groups": {
     "gemini12pro": {
       "reason": "Requires 2 Telegram Stars fee per message (ALLOW_PAYMENT_REQUIRED)",
@@ -405,6 +405,476 @@
       "title": "Upwork sellers || Payoneer accounts 🇺🇸",
       "reason": "Posting restricted by admin / muted (ChatWriteForbiddenError)",
       "added_at": "2026-09-02 09:26:48 AM"
+    },
+    "chat_video_creators": {
+      "title": "Creators Chat Tiktok, Reels, Shorts Короткие видео чат",
+      "reason": "Posting restricted by admin / muted (ChatWriteForbiddenError)",
+      "added_at": "2026-09-02 09:40:08 AM"
+    },
+    "AffZone_Affiliate_Marketing_Chat": {
+      "title": "AffZone | Affiliate Marketing Chat",
+      "reason": "Posting restricted by admin / muted (ChatWriteForbiddenError)",
+      "added_at": "2026-09-02 09:40:22 AM"
+    },
+    "pm_ap": {
+      "title": "جروب تجمع المبرمجين السعوديين مناقشة اكواد تبادل خبرات برمجية برمجه و تطوير برامج و مواقع ويب",
+      "reason": "Posting restricted by admin / muted (ChatWriteForbiddenError)",
+      "added_at": "2026-09-02 09:40:35 AM"
+    },
+    "BinanceChinese": {
+      "title": "币安官方中文群",
+      "reason": "Chat invalid or private (ChannelPrivateError)",
+      "added_at": "2026-09-02 09:41:02 AM"
+    },
+    "WebDevelopersDiscussionAndJobs": {
+      "title": "Web Developers Discussion And Jobs",
+      "reason": "Posting restricted by admin / muted (ChatWriteForbiddenError)",
+      "added_at": "2026-09-02 09:43:16 AM"
+    },
+    "nu_gda_public": {
+      "title": "Graphic Designers Association [PUBLIC CHAT]",
+      "reason": "Posting restricted by admin / muted (ChatWriteForbiddenError)",
+      "added_at": "2026-09-02 09:44:56 AM"
+    },
+    "it_center_python": {
+      "title": "Python Developers group - 4",
+      "reason": "Posting restricted by admin / muted (ChatWriteForbiddenError)",
+      "added_at": "2026-09-02 09:46:56 AM"
+    },
+    "groupmandi": {
+      "title": "Python Developers",
+      "reason": "Posting restricted by admin / muted (ChatWriteForbiddenError)",
+      "added_at": "2026-09-02 09:47:26 AM"
+    },
+    "z7_vl": {
+      "title": "ملخصات ثانوية عامة وجامعات 2027 🎓",
+      "reason": "Member Posting Forbidden by Admin",
+      "added_at": "2026-09-02 09:51:04 AM"
+    },
+    "secondary3eg": {
+      "title": "ثانوية عامة 2027",
+      "reason": "Broadcast Channel (Not an open group)",
+      "added_at": "2026-09-02 09:51:04 AM"
+    },
+    "daily_biso": {
+      "title": "ملخصات ثانوية عامة 2027",
+      "reason": "Broadcast Channel (Not an open group)",
+      "added_at": "2026-09-02 09:51:04 AM"
+    },
+    "thanawya202": {
+      "title": "ثانوية عامة قطرية 2026/2027",
+      "reason": "Broadcast Channel (Not an open group)",
+      "added_at": "2026-09-02 09:51:04 AM"
+    },
+    "coursatk_2027": {
+      "title": "ثانوية عامة 2027",
+      "reason": "Member Posting Forbidden by Admin",
+      "added_at": "2026-09-02 09:51:05 AM"
+    },
+    "alawael_fe_ala7yaaa": {
+      "title": "ثانوية عامة 2027",
+      "reason": "Broadcast Channel (Not an open group)",
+      "added_at": "2026-09-02 09:51:05 AM"
+    },
+    "el1nogoum1": {
+      "title": "دفعة تالتة ثانوي 2027",
+      "reason": "Broadcast Channel (Not an open group)",
+      "added_at": "2026-09-02 09:51:05 AM"
+    },
+    "nadine4561": {
+      "title": "دفعة تالتة ثانوي 2027",
+      "reason": "Broadcast Channel (Not an open group)",
+      "added_at": "2026-09-02 09:51:05 AM"
+    },
+    "three3secondary": {
+      "title": "دفعة تالتة ثانوي 2027",
+      "reason": "Broadcast Channel (Not an open group)",
+      "added_at": "2026-09-02 09:51:05 AM"
+    },
+    "ss111l": {
+      "title": "⏎ دفعة تالتة ثانوي 2027",
+      "reason": "Member Posting Forbidden by Admin",
+      "added_at": "2026-09-02 09:51:05 AM"
+    },
+    "c6_q3": {
+      "title": "تانيه بكالوريا 2027",
+      "reason": "Broadcast Channel (Not an open group)",
+      "added_at": "2026-09-02 09:51:07 AM"
+    },
+    "u_y_all": {
+      "title": "منصة التفوق الدراسية📚 | ٢ بكالوريا |«2027»",
+      "reason": "Broadcast Channel (Not an open group)",
+      "added_at": "2026-09-02 09:51:07 AM"
+    },
+    "olathanoy12345": {
+      "title": "دفعه تانيه بكالوريا وثانوي 2027",
+      "reason": "Broadcast Channel (Not an open group)",
+      "added_at": "2026-09-02 09:51:07 AM"
+    },
+    "talta3dady": {
+      "title": "أبطال أولي بكالوريا وثانوي 2027",
+      "reason": "Broadcast Channel (Not an open group)",
+      "added_at": "2026-09-02 09:51:07 AM"
+    },
+    "yd_dl": {
+      "title": "طلاب 2 بكالوريا 2027",
+      "reason": "Join Request Approval Wall",
+      "added_at": "2026-09-02 09:51:07 AM"
+    },
+    "thanwya6666": {
+      "title": "ثانوية عامه دفعة التابلت 2025",
+      "reason": "Member Posting Forbidden by Admin",
+      "added_at": "2026-09-02 09:51:09 AM"
+    },
+    "physics20222": {
+      "title": "فيزياء ثانوية عامة دفعة التابلت",
+      "reason": "Member Posting Forbidden by Admin",
+      "added_at": "2026-09-02 09:51:09 AM"
+    },
+    "a7med_b3lo18": {
+      "title": "ثانوية عامة دفعة التابلت 💔",
+      "reason": "Broadcast Channel (Not an open group)",
+      "added_at": "2026-09-02 09:51:09 AM"
+    },
+    "tnawegruop8": {
+      "title": "تَجمُع طُلاب الشهادة الثانوية | 2008.",
+      "reason": "Broadcast Channel (Not an open group)",
+      "added_at": "2026-09-02 09:51:11 AM"
+    },
+    "tjjma": {
+      "title": "- تجمع طلاب الثانوية العامة",
+      "reason": "Dead Group (< 3 total messages)",
+      "added_at": "2026-09-02 09:51:11 AM"
+    },
+    "accountants2forum2": {
+      "title": "قروب نقاش دفعة 2026/2027 (موازي)\" 🎓",
+      "reason": "Join Request Approval Wall",
+      "added_at": "2026-09-02 09:51:12 AM"
+    },
+    "tawjihi2006spts": {
+      "title": "قناة توجيهي 2006 ، علمي وأدبي ❤️",
+      "reason": "Broadcast Channel (Not an open group)",
+      "added_at": "2026-09-02 09:51:13 AM"
+    },
+    "palestine2005guideline": {
+      "title": "توجيهي علمي وادبي 2005",
+      "reason": "Join Request Approval Wall",
+      "added_at": "2026-09-02 09:51:13 AM"
+    },
+    "tawjihi24": {
+      "title": "توجيهي علمي وادبي 2024 (2006)",
+      "reason": "Broadcast Channel (Not an open group)",
+      "added_at": "2026-09-02 09:51:13 AM"
+    },
+    "eastsouthwesthomeisthebest2030": {
+      "title": "مجموعة توجيهي علمي وأدبي للأستاذ محمد شطارة .",
+      "reason": "Member Posting Forbidden by Admin",
+      "added_at": "2026-09-02 09:51:13 AM"
+    },
+    "sohagsciences2026": {
+      "title": "وحدة الارشاد الأكاديمي _طلاب كلية العلوم",
+      "reason": "Member Posting Forbidden by Admin",
+      "added_at": "2026-09-02 09:51:25 AM"
+    },
+    "tollabdaralaulom": {
+      "title": "جروب\"طلاب كلية دار العلوم جامعة القاهرةCU\" فرقة رابعة\"",
+      "reason": "Broadcast Channel (Not an open group)",
+      "added_at": "2026-09-02 09:51:26 AM"
+    },
+    "darcu": {
+      "title": "جروب طلاب كلية دار العلوم جامعة القاهرة cu \"فرقة تالتة\"",
+      "reason": "Broadcast Channel (Not an open group)",
+      "added_at": "2026-09-02 09:51:26 AM"
+    },
+    "s1cairouni": {
+      "title": "جروب طلاب كلية دار العلوم جامعة القاهرة Cu الفرقة الرابعه",
+      "reason": "Broadcast Channel (Not an open group)",
+      "added_at": "2026-09-02 09:51:26 AM"
+    },
+    "lslamislam": {
+      "title": "دردشة طلاب كلية العلوم الإسلامية",
+      "reason": "Member Posting Forbidden by Admin",
+      "added_at": "2026-09-02 09:51:26 AM"
+    },
+    "eudsc": {
+      "title": "طلاب الجامعات المصرية",
+      "reason": "Broadcast Channel (Not an open group)",
+      "added_at": "2026-09-02 09:51:26 AM"
+    },
+    "plaestina": {
+      "title": "طلاب غزة العالقين ـ الجامعات المصرية",
+      "reason": "Member Posting Forbidden by Admin",
+      "added_at": "2026-09-02 09:51:26 AM"
+    },
+    "zakroooly": {
+      "title": "خدمات طلاب الجامعات المصرية والأهلية والخاصة",
+      "reason": "Member Posting Forbidden by Admin",
+      "added_at": "2026-09-02 09:51:26 AM"
+    },
+    "jamieat_misr": {
+      "title": "طلاب الجامعات المصرية",
+      "reason": "Member Posting Forbidden by Admin",
+      "added_at": "2026-09-02 09:51:26 AM"
+    },
+    "ahlny1": {
+      "title": "مبادرة أهلني لتدريب وتأهيل طلاب الجامعات والمعاهد المصرية - Ahlny",
+      "reason": "Broadcast Channel (Not an open group)",
+      "added_at": "2026-09-02 09:51:27 AM"
+    },
+    "medcine_d": {
+      "title": "ملتقى طلاب الطب",
+      "reason": "Broadcast Channel (Not an open group)",
+      "added_at": "2026-09-02 09:51:27 AM"
+    },
+    "moltagatib": {
+      "title": "❤ملتقى طلاب الطب❤ (السودان)",
+      "reason": "Broadcast Channel (Not an open group)",
+      "added_at": "2026-09-02 09:51:27 AM"
+    },
+    "medical_forum": {
+      "title": "ملتقى طلاب الطب الدولي",
+      "reason": "Broadcast Channel (Not an open group)",
+      "added_at": "2026-09-02 09:51:27 AM"
+    },
+    "f5b_12": {
+      "title": "YemMed | ملتقى طلاب الطب",
+      "reason": "Broadcast Channel (Not an open group)",
+      "added_at": "2026-09-02 09:51:27 AM"
+    },
+    "mmmdmh": {
+      "title": "ملتقى طلاب الطب البشري👨‍⚕",
+      "reason": "Member Posting Forbidden by Admin",
+      "added_at": "2026-09-02 09:51:27 AM"
+    },
+    "ideas_project_graduatio": {
+      "title": "افكار مشاريع تخرج ، علوم حاسوب ، تقنية معلومات ، تحليل بيانات ، هندسة برمجيات ، أمن سيبراني",
+      "reason": "Member Posting Forbidden by Admin",
+      "added_at": "2026-09-02 09:51:28 AM"
+    },
+    "biomedca": {
+      "title": "أفكار مشاريع تخرج👨‍🎓🎓🎓 هندسة طبية حيوية❤🎓",
+      "reason": "Broadcast Channel (Not an open group)",
+      "added_at": "2026-09-02 09:51:28 AM"
+    },
+    "make_projects_up": {
+      "title": "مشاريع تخرج هندسة معمارية Graduation Project",
+      "reason": "Broadcast Channel (Not an open group)",
+      "added_at": "2026-09-02 09:51:28 AM"
+    },
+    "universit7_students": {
+      "title": "تجمع طلاب الجامعات",
+      "reason": "Member Posting Forbidden by Admin",
+      "added_at": "2026-09-02 09:51:29 AM"
+    },
+    "studentsgroup0000": {
+      "title": "تجمع طلاب الجامعات السعوديه",
+      "reason": "Member Posting Forbidden by Admin",
+      "added_at": "2026-09-02 09:51:29 AM"
+    },
+    "syrian_university2021": {
+      "title": "تجمع طلاب الجامعات السورية",
+      "reason": "Broadcast Channel (Not an open group)",
+      "added_at": "2026-09-02 09:51:29 AM"
+    },
+    "fullmarks2030": {
+      "title": "بحوث جامعية ومشاريع تخرج",
+      "reason": "Broadcast Channel (Not an open group)",
+      "added_at": "2026-09-02 09:51:31 AM"
+    },
+    "mof67": {
+      "title": "تعلم البرمجة من الصفر (أكتوكود)",
+      "reason": "Broadcast Channel (Not an open group)",
+      "added_at": "2026-09-02 09:51:33 AM"
+    },
+    "noufkh96": {
+      "title": "Learn programming ||تعلم لغات البرمجة من الصفر",
+      "reason": "Broadcast Channel (Not an open group)",
+      "added_at": "2026-09-02 09:51:33 AM"
+    },
+    "shazamohmmed8": {
+      "title": "تعلم البرمجة من الصفر",
+      "reason": "Inactive / Dead Group (Only 1 poster)",
+      "added_at": "2026-09-02 09:51:34 AM"
+    },
+    "zzhheerr_5_2": {
+      "title": "رحلة تعلم البرمجة من الصفر وتعلم الكمبيوتر",
+      "reason": "Broadcast Channel (Not an open group)",
+      "added_at": "2026-09-02 09:51:34 AM"
+    },
+    "learncoding7": {
+      "title": "تعلم البرمجة من الصفر",
+      "reason": "Member Posting Forbidden by Admin",
+      "added_at": "2026-09-02 09:51:34 AM"
+    },
+    "hfhvvxbdke": {
+      "title": "تعلم البرمجة من الصفر إلى الاحتراف",
+      "reason": "Broadcast Channel (Not an open group)",
+      "added_at": "2026-09-02 09:51:34 AM"
+    },
+    "masardesgin": {
+      "title": "قناة مَسار | تجمع المصممين العرب",
+      "reason": "Broadcast Channel (Not an open group)",
+      "added_at": "2026-09-02 09:51:36 AM"
+    },
+    "studdy_forest": {
+      "title": "Study with me 📚🌲 - chat",
+      "reason": "Inactive / Dead Group (Only 1 poster)",
+      "added_at": "2026-09-02 09:51:47 AM"
+    },
+    "stdy_with_group": {
+      "title": "𝗦𝘁𝘂𝗱𝘆 𝗪𝗶𝘁𝗵 𝗠𝗲🤍.. Chat",
+      "reason": "Inactive / Dead Group (Only 1 poster)",
+      "added_at": "2026-09-02 09:51:48 AM"
+    },
+    "bahtiyorovnam_1": {
+      "title": "Study with me 📚 chati",
+      "reason": "Join Request Approval Wall",
+      "added_at": "2026-09-02 09:51:48 AM"
+    },
+    "study_with_me_chatt": {
+      "title": "study with me (chat)",
+      "reason": "Inactive / Dead Group (Only 1 poster)",
+      "added_at": "2026-09-02 09:51:48 AM"
+    },
+    "study_with_me_together_chat": {
+      "title": "Study",
+      "reason": "Inactive / Dead Group (Only 1 poster)",
+      "added_at": "2026-09-02 09:51:48 AM"
+    },
+    "unity_university_students": {
+      "title": "Unity University Students Official Group",
+      "reason": "Member Posting Forbidden by Admin",
+      "added_at": "2026-09-02 09:51:49 AM"
+    },
+    "mu_university_it_students": {
+      "title": "MU University IT Students group",
+      "reason": "Member Posting Forbidden by Admin",
+      "added_at": "2026-09-02 09:51:49 AM"
+    },
+    "iraq_group_university_students": {
+      "title": "شؤون طلاب جامعات العراق",
+      "reason": "Broadcast Channel (Not an open group)",
+      "added_at": "2026-09-02 09:51:50 AM"
+    },
+    "agri_discussions": {
+      "title": "📚Agri. Exam Preparation 📚 chat",
+      "reason": "Paid Stars Required (100 stars)",
+      "added_at": "2026-09-02 09:51:51 AM"
+    },
+    "examprep4hp": {
+      "title": "Himachali (Discussion) -HP Sub Inspector|Allied|Police|Patwari |Clerk | JOA IT Exam Prep Chat",
+      "reason": "Join Request Approval Wall",
+      "added_at": "2026-09-02 09:51:51 AM"
+    },
+    "academichubet": {
+      "title": "STUDENTS HUB ETHIOPIA",
+      "reason": "Broadcast Channel (Not an open group)",
+      "added_at": "2026-09-02 09:51:51 AM"
+    },
+    "academichubforstudents": {
+      "title": "Academic Hub for Students 📚",
+      "reason": "Broadcast Channel (Not an open group)",
+      "added_at": "2026-09-02 09:51:51 AM"
+    },
+    "studentsinsg": {
+      "title": "🇸🇬 2025 - International and Exchange students group chat",
+      "reason": "Member Posting Forbidden by Admin",
+      "added_at": "2026-09-02 09:51:52 AM"
+    },
+    "internationalstudenty": {
+      "title": "international students (chat)",
+      "reason": "Broadcast Channel (Not an open group)",
+      "added_at": "2026-09-02 09:51:52 AM"
+    },
+    "students_group1": {
+      "title": "Engineering students ( Btech, diploma,BE )",
+      "reason": "Join Request Approval Wall",
+      "added_at": "2026-09-02 09:51:53 AM"
+    },
+    "v_t_u_engineering": {
+      "title": "2021-2022 Engineering Students group",
+      "reason": "Broadcast Channel (Not an open group)",
+      "added_at": "2026-09-02 09:51:53 AM"
+    },
+    "eaij6vrkn84xzwzl": {
+      "title": "Excellentvision Civil Engineering Students Doubt Group 2026",
+      "reason": "Paid Stars Required (10 stars)",
+      "added_at": "2026-09-02 09:51:53 AM"
+    },
+    "aistudenttools": {
+      "title": "AI Tools for Students",
+      "reason": "Broadcast Channel (Not an open group)",
+      "added_at": "2026-09-02 09:51:57 AM"
+    },
+    "student_ai_tools": {
+      "title": "AI Tools for Students",
+      "reason": "Broadcast Channel (Not an open group)",
+      "added_at": "2026-09-02 09:51:57 AM"
+    },
+    "student_ai_tool": {
+      "title": "AI Tools for Students",
+      "reason": "Broadcast Channel (Not an open group)",
+      "added_at": "2026-09-02 09:51:57 AM"
+    },
+    "promptsai": {
+      "title": "ChatGPT • Нейросети • Prompt engineering",
+      "reason": "Broadcast Channel (Not an open group)",
+      "added_at": "2026-09-02 09:51:57 AM"
+    },
+    "prompts4gpt": {
+      "title": "ChatGPT / Midjourney Prompts & Images",
+      "reason": "Broadcast Channel (Not an open group)",
+      "added_at": "2026-09-02 09:51:57 AM"
+    },
+    "chatgptme": {
+      "title": "DeepSeek | Nano Banana | ChatGPT prompts",
+      "reason": "Broadcast Channel (Not an open group)",
+      "added_at": "2026-09-02 09:51:57 AM"
+    },
+    "promptsarabic": {
+      "title": "برومبتات ذكاء اصطناعي | Prompt ChatGPT • Grok • Claude",
+      "reason": "Broadcast Channel (Not an open group)",
+      "added_at": "2026-09-02 09:51:57 AM"
+    },
+    "chatgptprompts_1": {
+      "title": "Chat GPT prompts",
+      "reason": "Broadcast Channel (Not an open group)",
+      "added_at": "2026-09-02 09:51:57 AM"
+    },
+    "neuro_trip": {
+      "title": "NeuroTrip | Stable Diffusion | ChatGPT-4 | Txt2img | Prompts",
+      "reason": "Broadcast Channel (Not an open group)",
+      "added_at": "2026-09-02 09:51:57 AM"
+    },
+    "prompts_chatgpt": {
+      "title": "Jaibreak prompts",
+      "reason": "Broadcast Channel (Not an open group)",
+      "added_at": "2026-09-02 09:51:57 AM"
+    },
+    "chatgpt_prompts1": {
+      "title": "Editing resources ✨",
+      "reason": "Broadcast Channel (Not an open group)",
+      "added_at": "2026-09-02 09:51:57 AM"
+    },
+    "chatgptai_prompts": {
+      "title": "Chatgpt Ai prompts ❤️",
+      "reason": "Broadcast Channel (Not an open group)",
+      "added_at": "2026-09-02 09:51:57 AM"
+    },
+    "prompts_chatgpt_ai": {
+      "title": "ChatGPT Tips | Ai | Prompts",
+      "reason": "Broadcast Channel (Not an open group)",
+      "added_at": "2026-09-02 09:51:57 AM"
+    },
+    "machinelearning_course": {
+      "title": "Machine Learning A-Z™: AI, Python & Machine Learning A-Z™: AI, Python & R + ChatGPT Bonus [2023]",
+      "reason": "Broadcast Channel (Not an open group)",
+      "added_at": "2026-09-02 09:51:59 AM"
+    },
+    "freedrop_gpt_ai_eth_btc_group": {
+      "title": "🚀 Free Airdrops | GPT-4 Tools | ETH BTC XRP TON | NFT Mint | Passive Income | 投资赚钱 | 网赚机器人 chat",
+      "reason": "Inactive / Dead Group (Only 1 poster)",
+      "added_at": "2026-09-02 09:52:00 AM"
     }
   }
 }

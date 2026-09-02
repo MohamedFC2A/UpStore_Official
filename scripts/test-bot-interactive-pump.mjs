@@ -142,24 +142,52 @@ async function runInteractiveSimulation() {
   console.log('  ✅ Bybit payment checkout screen with UID 47183921 rendered cleanly');
 
   // 9. User clicks "Submit Payment ID / TXID"
-  logStep('User clicks Submit TXID (callback_data: "submit_txid_TOPUP-123456")');
+  logStep('User clicks Submit TXID (callback_data: "submit_txid_bybit_15.00_TOPUP-123456")');
   await handleUpdate({
     update_id: 10009,
     callback_query: {
       id: 'cb_10009',
       from: simulatedUser,
       message: { message_id: 2, chat: { id: simulatedChatId, type: 'private' } },
-      data: 'submit_txid_TOPUP-123456'
+      data: 'submit_txid_bybit_15.00_TOPUP-123456'
     }
   });
   console.log('  ✅ Session listener activated for customer payment ID');
 
-  // 10. User sends their transfer ID / Bybit Order ID
-  logStep('User types their Payment ID text: "BYBIT-TRANSFER-992817346"');
+  // 9a. Test User mistakenly sends store reference number "TOPUP-123456"
+  logStep('User mistakenly types store reference: "TOPUP-123456"');
+  await handleUpdate({
+    update_id: 100091,
+    message: {
+      message_id: 31,
+      from: simulatedUser,
+      chat: { id: simulatedChatId, type: 'private' },
+      date: Math.floor(Date.now() / 1000),
+      text: 'TOPUP-123456'
+    }
+  });
+  console.log('  ✅ Store reference caught and rejected cleanly with helpful instructions');
+
+  // 9b. Test User sends vague conversational text: "تم التحويل يا غالي"
+  logStep('User types vague chat: "تم التحويل يا غالي"');
+  await handleUpdate({
+    update_id: 100092,
+    message: {
+      message_id: 32,
+      from: simulatedUser,
+      chat: { id: simulatedChatId, type: 'private' },
+      date: Math.floor(Date.now() / 1000),
+      text: 'تم التحويل يا غالي'
+    }
+  });
+  console.log('  ✅ Vague chat text caught and rejected cleanly requesting valid numeric ID');
+
+  // 10. User sends their genuine transfer ID / Bybit Order ID
+  logStep('User types their genuine Payment ID: "BYBIT-TRANSFER-992817346"');
   await handleUpdate({
     update_id: 10010,
     message: {
-      message_id: 3,
+      message_id: 33,
       from: simulatedUser,
       chat: { id: simulatedChatId, type: 'private' },
       date: Math.floor(Date.now() / 1000),

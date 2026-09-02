@@ -44,7 +44,7 @@ def test_vip_and_blacklist_system():
 
     # 3. Test VIP Golden Registry & Engagement Scoring
     test_vip_group = {
-        "username": "test_high_engagement_group_101",
+        "username": "test_fresh_vip_group_999",
         "title": "VIP Test Community",
         "lang": "ar"
     }
@@ -70,8 +70,8 @@ def test_vip_and_blacklist_system():
 
     # Check persistence to JSON file
     vip_db_reloaded = load_vip_database()
-    assert "test_high_engagement_group_101" in vip_db_reloaded
-    assert vip_db_reloaded["test_high_engagement_group_101"]["vip_tier"] == "💎 ELITE_VIP"
+    assert "test_fresh_vip_group_999" in vip_db_reloaded
+    assert vip_db_reloaded["test_fresh_vip_group_999"]["vip_tier"] == "💎 ELITE_VIP"
     print("   💾 VIP JSON Database Persistence: PASS.")
 
     # 4. Test VIP Specialized Copywriting Delivery
@@ -82,8 +82,8 @@ def test_vip_and_blacklist_system():
     print("\n✅ Step 4: VIP Customized Copywriting Check: PASS (Direct ref link verified).")
 
     # Clean up test entry from VIP database
-    if "test_high_engagement_group_101" in vip_db_reloaded:
-        del vip_db_reloaded["test_high_engagement_group_101"]
+    if "test_fresh_vip_group_999" in vip_db_reloaded:
+        del vip_db_reloaded["test_fresh_vip_group_999"]
         save_vip_database(vip_db_reloaded)
     print("   🧹 Test cleanup completed.\n")
 

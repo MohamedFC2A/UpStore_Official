@@ -1,16 +1,16 @@
 #!/usr/bin/env python3
 """
 ═══════════════════════════════════════════════════════════════════════════════
-🚀 UpStore 24/7 Autonomous Promotion Engine & VIP Engagement Intelligence
+🚀 UpStore Viral Mitotic Growth Engine — High-Converting AI Subscriptions
 ═══════════════════════════════════════════════════════════════════════════════
-- Dual Intelligence Systems:
-    1. 🛡️ Blacklist Quarantine (promoter_blacklist.json): Zero-delay instant skip.
-    2. ⭐ VIP Golden Registry (promoter_vip_groups.json): Ranks, tracks, and delivers
-       specialized high-conversion copywriting to top-performing high-activity groups.
-- Direct InputPeerChannel: Zero username resolution rate-limits via direct numeric IDs & hashes.
-- Intelligent FloodWait Immunity: Caps/skips long flood waits immediately without freezing.
-- Dynamic Niche Copywriting: Custom VIP copy for Designers, Developers, AI users & Marketers.
-- 24/7 Perpetual Indestructible Supervisor: Runs continuous cycles indefinitely.
+- Dual Laser-Focused Offer:
+    1. Gemini Advanced (18 Months + 2TB Google One) — Only $0.25
+    2. ChatGPT Plus (Official Wholesale Pricing & Instant Delivery)
+- Dead Group Killer: Auto-detects zero-activity/dead groups & kills to blacklist.
+- Instant Blacklist Bypass: Zero-latency skip for quarantined groups.
+- VIP Golden Registry: Ranks & prioritizes top-performing high-activity communities.
+- Mitotic Expansion Engine: 100+ High-yield groups across High School, Universities, Engineering & Global Students.
+- Indestructible 24/7 Supervisor: Runs continuous cycles indefinitely.
 - Exact Referral Attribution: Direct ref link with ID 8495121463.
 ═══════════════════════════════════════════════════════════════════════════════
 """
@@ -155,16 +155,13 @@ def record_vip_success(target_info):
         "vip_tier": "ACTIVE_VERIFIED"
     })
 
-    # Increment stats
     current_record["successful_posts_count"] += 1
     current_record["last_posted_at"] = datetime.now().strftime("%Y-%m-%d %I:%M:%S %p")
     
-    # Calculate Engagement Score: 15 pts per successful delivery + activity points
     posts = current_record["successful_posts_count"]
     score = round(posts * 15.0, 1)
     current_record["engagement_score"] = score
 
-    # Classify VIP Tier
     if posts >= 5:
         tier = "💎 ELITE_VIP"
     elif posts >= 2:
@@ -224,83 +221,81 @@ def load_target_groups():
     return clean_targets
 
 # ─────────────────────────────────────────────────────────────────────────────
-# 5. HIGH-TRUST, AUTHENTIC & VIP NICHE COPYWRITING
+# 5. HYPER-PERSUASIVE, REALISTIC & LASER-FOCUSED COPYWRITING (GEMINI & CHATGPT ONLY)
 # ─────────────────────────────────────────────────────────────────────────────
-TEMPLATES_AR_VIP = [
-    # VIP Template: نصيحة وتجربة فريلانسر موثوقة ومفيدة للشاتات النشطة
-    f"""يا شباب حبيت أشارككم خيار ممتاز ومجرب هيوفر عليكم مصاريف الاشتراكات بشكل كبير..
-متجر وبوت رسمي بيوفر حسابات وتراخيص الأدوات الرقمية بأسعار الجملة المباشرة مع تفعيل فوري وضمان كامل.
+TEMPLATES_AR = [
+    # Template 1: مشاركة حقيقية ومفيدة لطلاب الثانوية والجامعات والباحثين
+    f"""يا شباب حبيت أشارككم حل عملي ومجرب هيوفر عليكم مصاريف باهظة في المذاكرة والشغل..
+لو محتاج أدوات الذكاء الاصطناعي الرسمية ومش حابب تدفع الأسعار الشهرية العالية، في بوت معتمد بيوفر الاشتراكات بتفعيل رسمي وفوري وبسعر رمزي:
 
-💎 أبرز الأدوات المتاحة للتفعيل المباشر:
-• Gemini Advanced (18 شهر كاملة + 2TB سحابي) — $0.25
-• Canva Pro (مدى الحياة تفعيل رسمي) — $0.49
-• CapCut Pro (سنة كاملة للمونتاج) — $0.79
-• Claude 3.7 Sonnet & ChatGPT Plus
-• تراخيص ويندوز 11 برو وأوفيس 365 أصلية
+💎 العروض الأساسية المتاحة:
+1️⃣ Gemini Advanced (اشتراك 18 شهر كاملة + مساحة سحابية 2TB على حسابك) — بسعر 0.25$ بس (ربع دولار)!
+2️⃣ ChatGPT Plus (النسخة المدفوعة الرسمية مع ميزات التحليل وحل المسائل) — بأسعار الجملة المباشرة وتفعيل فوري.
 
-📌 رابط التصفح والتفعيل التلقائي الفوري:
+المميز إنه تسليم آلي لحظي بضمان كامل وبدون أي تعقيد.
+🔗 رابط البوت المباشر للتفعيل والاستفادة:
 👉 {BOT_REF_LINK}""",
 
-    # VIP Template 2: عرض راقي ومباشر للمصممين والمطورين
-    f"""لكل المهتمين بأدوات التصميم والبرمجة والذكاء الاصطناعي..
-ده متجر معتمد بيوفر الاشتراكات الرسمية بأسعار رمزية ومناسبة جداً مع تسليم فوري ودفع آمن.
-أنا بستخدمه شخصياً لشغلي وشغال تمام وبضمان.
+    # Template 2: عرض واقعي ومباشر لطلاب الثانوية 2026/2027 وكليات الهندسة والطب
+    f"""لكل طلاب الثانوية العامة والجامعات والمهندسين اللي بيعتمدوا على الذكاء الاصطناعي في المذاكرة وحل المسائل والأبحاث..
+بدل ما تشتري باشتراكات شهرية مكلفة، المتجر ده بيوفرلك:
 
-رابط المتجر للاطلاع على الباقات:
-👉 {BOT_REF_LINK}"""
-]
+🔥 Gemini Advanced (18 شهر + 2000GB مساحة Google One) 👈 بـ 0.25$ فقط
+🔥 ChatGPT Plus 4o (أحدث نماذج الذكاء الاصطناعي الرسمية) 👈 بأسعار الجملة المباشرة
 
-TEMPLATES_AR_STANDARD = [
-    f"""مساء الخير يا شباب.. لو بتستخدموا أدوات التصميم أو الذكاء الاصطناعي (Gemini / Canva / ChatGPT / Cursor)، البوت ده بيقدم عروض رسمية ممتازة جداً بتسليم لحظي وأسعار جملة.
-
-رابط البوت المباشر:
+✨ التفعيل رسمي وفوري وبضمان كامل مع دعم وسائل دفع متعددة.
+📌 رابط الدخول والتفعيل:
 👉 {BOT_REF_LINK}""",
 
-    f"""مشاركة مفيدة للجميع: بوت موثوق بيوفر اشتراكات الذكاء الاصطناعي والبرمجيات الأصلية بضمان كامل وأسعار تبدأ من 0.25$ بتسليم آلي فوري:
+    # Template 3: توصية خفيفة وقصيرة وسريعة
+    f"""مساء الخير يا شباب.. للي محتاج حسابات ذكاء اصطناعي رسمية للمذاكرة والشغل:
+• اشتراك Gemini Advanced رسمي (18 شهر كاملة مع 2TB) بـ 0.25$ بس
+• اشتراك ChatGPT Plus الرسمي بأسعار الجملة المباشرة
+
+تسليم لحظي وتفعيل مضمون 100%:
 👉 {BOT_REF_LINK}"""
 ]
 
 TEMPLATES_EN = [
-    f"""Sharing a really useful verified resource for freelancers, designers, and developers:
-Found a wholesale digital distribution bot providing genuine AI & productivity subscriptions with instant automated delivery and full warranty.
+    # Template 1: Genuine recommendation for students & researchers
+    f"""A genuine recommendation for students, researchers, and developers looking for cost-effective AI subscriptions:
+Found a trusted wholesale automated distribution bot providing official AI licenses with instant delivery and full warranty:
 
-Key tools available:
-• Gemini Advanced (18 Months + 2TB Cloud) — $0.25
-• Canva Pro (Lifetime) — $0.49
-• CapCut Pro (1 Year) — $0.79
-• ChatGPT Plus & Claude 3.7 Pro
-• Genuine Windows 11 & Office 365 keys
+⭐ Gemini Advanced (Full 18-Month Plan + 2TB Google One Cloud) — Only $0.25
+⭐ ChatGPT Plus (Official Access with Advanced Data Analysis & Reasoning) — Direct Wholesale Pricing
 
-Direct link for instant activation:
+Instant automated activation link:
 👉 {BOT_REF_LINK}""",
 
-    f"""If you need genuine, cost-effective subscriptions for AI & design tools (Gemini 18m, ChatGPT Plus, Canva Pro, Cursor), this automated bot delivers authentic keys instantly:
+    # Template 2: Value proposition for exams & homework prep
+    f"""If you're studying for exams or working on projects and need official AI power:
+• Gemini Advanced 18 Months + 2TB Cloud: $0.25
+• ChatGPT Plus: Direct Wholesale Price & Instant Setup
+
+Get your official access key instantly:
 👉 {BOT_REF_LINK}"""
 ]
 
 TEMPLATES_RU = [
-    f"""Привет всем! Делюсь проверенным ботом с оптовыми ценами на официальные подписки ИИ и софт для работы и учебы. Мгновенная автоматическая выдача и гарантия:
+    f"""Полезная проверенная рекомендация для учебы и работы:
+Официальные подписки ИИ по оптовым ценам с моментальной автоматической выдачей и гарантией:
 
-• Gemini Advanced (18 месяцев + 2ТБ) — $0.25
-• Canva Pro (Навсегда) — $0.49
-• CapCut Pro (1 год) — $0.79
-• ChatGPT Plus / Claude 3.7 / Windows 11 Pro
+• Gemini Advanced (18 месяцев + 2ТБ облако Google One) — всего $0.25
+• ChatGPT Plus (Официальный доступ) — по оптовой цене
 
-Официальный бот:
+Ссылка на бот:
 👉 {BOT_REF_LINK}"""
 ]
 
 def get_copywriting_for_target(target_info, is_vip=False):
-    """Selects the best language and VIP-tier specific copy for the target group."""
+    """Selects the best language-specific copy for the target group."""
     lang = target_info.get("lang", "ar")
     if lang == "ru":
         return random.choice(TEMPLATES_RU)
     elif lang == "en":
         return random.choice(TEMPLATES_EN)
     else:
-        if is_vip:
-            return random.choice(TEMPLATES_AR_VIP)
-        return random.choice(TEMPLATES_AR_STANDARD)
+        return random.choice(TEMPLATES_AR)
 
 # ─────────────────────────────────────────────────────────────────────────────
 # 6. CORE ENGINE & LIVE VISUAL FEEDBACK
@@ -341,12 +336,12 @@ async def run_promoter_cycle(client, cycle_num):
 
     print("════════════════════════════════════════════════════════════")
     print(f"🔄 Starting Promotion Cycle #{cycle_num}")
-    print(f"📋 Active Clean Target Pool: {len(clean_targets)} verified open chats")
-    print(f"⭐ VIP High-Engagement Groups: {len(vip_db)} | 🛡️ Quarantined Blacklist: {len(blacklist)}")
+    print(f"📋 Active Clean Target Pool: {len(clean_targets)} verified open supergroups")
+    print(f"⭐ VIP Golden Groups: {len(vip_db)} | 🛡️ Quarantined Blacklist: {len(blacklist)}")
     print(f"⏰ Cycle Start Time: {datetime.now().strftime('%Y-%m-%d %I:%M:%S %p')}")
     print("════════════════════════════════════════════════════════════\n")
 
-    # Prioritize VIP groups first in cycle, then shuffle the rest
+    # Prioritize VIP groups first in cycle, then shuffle standard targets
     vip_targets = [t for t in clean_targets if is_vip_target(t["username"])]
     standard_targets = [t for t in clean_targets if not is_vip_target(t["username"])]
     random.shuffle(vip_targets)
@@ -380,8 +375,24 @@ async def run_promoter_cycle(client, cycle_num):
             else:
                 entity = await client.get_entity(group_target)
 
-            # Select native copywriting based on group language & VIP status
-            message_text = get_copywriting_for_target(target_info, is_vip=is_vip)
+            # ⚡ DEAD GROUP KILLER: Verify recent human activity in the group
+            try:
+                msgs = await client.get_messages(entity, limit=6)
+                if not msgs or len(msgs) < 2:
+                    add_to_blacklist(group_target, "Dead Group (< 2 messages found)", group_title)
+                    blacklisted_count += 1
+                    continue
+                
+                senders = set(m.sender_id for m in msgs if m.sender_id)
+                if len(senders) < 2:
+                    add_to_blacklist(group_target, "Inactive / Dead Group (Only 1 poster/bot)", group_title)
+                    blacklisted_count += 1
+                    continue
+            except Exception:
+                pass # If get_messages fails, attempt sending safely
+
+            # Select native copywriting based on group language
+            message_text = get_copywriting_for_target(target_info)
             
             # Simulate realistic fast human typing (2s - 4s)
             typing_duration = random.randint(TYPING_DURATION_MIN, TYPING_DURATION_MAX)
@@ -436,7 +447,7 @@ async def run_promoter_cycle(client, cycle_num):
             await asyncio.sleep(1)
 
     print("────────────────────────────────────────────────────────────")
-    print(f"📊 Cycle #{cycle_num} Summary: ✅ Posted: {success_count} (💎 VIP Deliveries: {vip_success_count}) | 🚫 Blacklisted: {blacklisted_count}")
+    print(f"📊 Cycle #{cycle_num} Summary: ✅ Posted: {success_count} (💎 VIP Deliveries: {vip_success_count}) | 🚫 Blacklisted/Purged: {blacklisted_count}")
     print("────────────────────────────────────────────────────────────\n")
 
 
@@ -448,7 +459,8 @@ async def supervisor_main():
 
     print("╔════════════════════════════════════════════════════════════╗")
     print("║   🚀 UpStore 24/7 Smart Autonomous Promotion Engine        ║")
-    print("║   ⭐ VIP Golden Registry & Engagement Intelligence: ACTIVE ║")
+    print("║   🎯 Offer: Gemini Advanced 18M ($0.25) & ChatGPT Plus     ║")
+    print("║   💀 Dead Group Killer + VIP Golden Registry: ACTIVE       ║")
     print("║   🛡️ Instant Blacklist Filtration: ACTIVE                  ║")
     print("║   📌 Referral Link: " + BOT_REF_LINK[:32] + "...   ║")
     print("╚════════════════════════════════════════════════════════════╝\n")
@@ -463,9 +475,9 @@ async def supervisor_main():
     vip_db = load_vip_database()
     active_pool = load_target_groups()
     
-    print(f"🛡️ Active Blacklist: {len(blacklist)} groups permanently quarantined (Auto-Skipped).")
+    print(f"🛡️ Active Blacklist: {len(blacklist)} dead/restricted groups permanently quarantined.")
     print(f"⭐ VIP Golden Groups: {len(vip_db)} high-engagement groups registered.")
-    print(f"📋 Verified Target Pool: {len(active_pool)} active open chats loaded.")
+    print(f"📋 Verified Target Pool: {len(active_pool)} active open supergroups loaded.")
     print(f"⚡ Mode: 24/7 Perpetual Autonomous Execution (Will run forever until Ctrl+C).\n")
 
     cycle = 1

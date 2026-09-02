@@ -1,6 +1,205 @@
 {
   "description": "High-Engagement Gold/VIP Target Registry with dynamic ranking, interaction scores, and specialized VIP copywriting delivery.",
-  "updated_at": "2026-09-02T09:37:26.456663",
-  "total_vip_groups": 0,
-  "vip_groups": {}
+  "updated_at": "2026-09-02T09:53:11.787134",
+  "total_vip_groups": 22,
+  "vip_groups": {
+    "vlada_shu_o": {
+      "title": "Graphic Designer|Vladislava Shu Chat",
+      "lang": "en",
+      "successful_posts_count": 1,
+      "first_seen": "2026-09-02 09:39:14 AM",
+      "last_posted_at": "2026-09-02 09:39:14 AM",
+      "engagement_score": 15.0,
+      "vip_tier": "⭐ SILVER_ACTIVE"
+    },
+    "claudec_ai": {
+      "title": "claudec中转交流群",
+      "lang": "en",
+      "successful_posts_count": 1,
+      "first_seen": "2026-09-02 09:39:43 AM",
+      "last_posted_at": "2026-09-02 09:39:43 AM",
+      "engagement_score": 15.0,
+      "vip_tier": "⭐ SILVER_ACTIVE"
+    },
+    "chat_techn": {
+      "title": "Technology chat",
+      "lang": "en",
+      "successful_posts_count": 1,
+      "first_seen": "2026-09-02 09:40:38 AM",
+      "last_posted_at": "2026-09-02 09:40:38 AM",
+      "engagement_score": 15.0,
+      "vip_tier": "⭐ SILVER_ACTIVE"
+    },
+    "digital_chat1": {
+      "title": "Чат Digital Marketing",
+      "lang": "ru",
+      "successful_posts_count": 1,
+      "first_seen": "2026-09-02 09:41:06 AM",
+      "last_posted_at": "2026-09-02 09:41:06 AM",
+      "engagement_score": 15.0,
+      "vip_tier": "⭐ SILVER_ACTIVE"
+    },
+    "Ecommerce5x": {
+      "title": "💰Dropshipping-E-commerce/💰التجارة/ الإلكترونية",
+      "lang": "ar",
+      "successful_posts_count": 1,
+      "first_seen": "2026-09-02 09:41:43 AM",
+      "last_posted_at": "2026-09-02 09:41:43 AM",
+      "engagement_score": 15.0,
+      "vip_tier": "⭐ SILVER_ACTIVE"
+    },
+    "CryptoNewsChat5": {
+      "title": "CRYPTO NEWS CHAT🔥🔥",
+      "lang": "en",
+      "successful_posts_count": 1,
+      "first_seen": "2026-09-02 09:42:20 AM",
+      "last_posted_at": "2026-09-02 09:42:20 AM",
+      "engagement_score": 15.0,
+      "vip_tier": "⭐ SILVER_ACTIVE"
+    },
+    "digital_marketing_chat01": {
+      "title": "Чат | digital маркетологов",
+      "lang": "ru",
+      "successful_posts_count": 1,
+      "first_seen": "2026-09-02 09:42:44 AM",
+      "last_posted_at": "2026-09-02 09:42:44 AM",
+      "engagement_score": 15.0,
+      "vip_tier": "⭐ SILVER_ACTIVE"
+    },
+    "videographersnotes": {
+      "title": "Videographers’s notes | for creators Chat",
+      "lang": "en",
+      "successful_posts_count": 1,
+      "first_seen": "2026-09-02 09:43:19 AM",
+      "last_posted_at": "2026-09-02 09:43:19 AM",
+      "engagement_score": 15.0,
+      "vip_tier": "⭐ SILVER_ACTIVE"
+    },
+    "akkffh": {
+      "title": "قروب مصممين √",
+      "lang": "ar",
+      "successful_posts_count": 1,
+      "first_seen": "2026-09-02 09:43:55 AM",
+      "last_posted_at": "2026-09-02 09:43:55 AM",
+      "engagement_score": 15.0,
+      "vip_tier": "⭐ SILVER_ACTIVE"
+    },
+    "galsen_graphique_designers": {
+      "title": "Galsen Graphic Designers Chat",
+      "lang": "en",
+      "successful_posts_count": 1,
+      "first_seen": "2026-09-02 09:44:22 AM",
+      "last_posted_at": "2026-09-02 09:44:22 AM",
+      "engagement_score": 15.0,
+      "vip_tier": "⭐ SILVER_ACTIVE"
+    },
+    "moooon_chatt": {
+      "title": "Graphic designer xizmati chati",
+      "lang": "en",
+      "successful_posts_count": 1,
+      "first_seen": "2026-09-02 09:45:04 AM",
+      "last_posted_at": "2026-09-02 09:45:04 AM",
+      "engagement_score": 15.0,
+      "vip_tier": "⭐ SILVER_ACTIVE"
+    },
+    "statsguruji_design": {
+      "title": "Graphic Designer chat",
+      "lang": "en",
+      "successful_posts_count": 1,
+      "first_seen": "2026-09-02 09:45:50 AM",
+      "last_posted_at": "2026-09-02 09:45:50 AM",
+      "engagement_score": 15.0,
+      "vip_tier": "⭐ SILVER_ACTIVE"
+    },
+    "fgajah": {
+      "title": "نقاشات متظاهرين مستقلين",
+      "lang": "ar",
+      "successful_posts_count": 1,
+      "first_seen": "2026-09-02 09:46:26 AM",
+      "last_posted_at": "2026-09-02 09:46:26 AM",
+      "engagement_score": 15.0,
+      "vip_tier": "⭐ SILVER_ACTIVE"
+    },
+    "techweekchat": {
+      "title": "Tech Week Chat",
+      "lang": "en",
+      "successful_posts_count": 1,
+      "first_seen": "2026-09-02 09:47:00 AM",
+      "last_posted_at": "2026-09-02 09:47:00 AM",
+      "engagement_score": 15.0,
+      "vip_tier": "⭐ SILVER_ACTIVE"
+    },
+    "wecodeone_chat": {
+      "title": "مبرمجين محترفين | WeCodeOne",
+      "lang": "ar",
+      "successful_posts_count": 1,
+      "first_seen": "2026-09-02 09:47:31 AM",
+      "last_posted_at": "2026-09-02 09:47:31 AM",
+      "engagement_score": 15.0,
+      "vip_tier": "⭐ SILVER_ACTIVE"
+    },
+    "Lego_Editor_Photo_Chat": {
+      "title": "Lego_Editor_Photo_Chat🔵",
+      "lang": "en",
+      "successful_posts_count": 1,
+      "first_seen": "2026-09-02 09:48:01 AM",
+      "last_posted_at": "2026-09-02 09:48:01 AM",
+      "engagement_score": 15.0,
+      "vip_tier": "⭐ SILVER_ACTIVE"
+    },
+    "prompts_ai_chat": {
+      "title": "Промты чат",
+      "lang": "ru",
+      "successful_posts_count": 1,
+      "first_seen": "2026-09-02 09:48:37 AM",
+      "last_posted_at": "2026-09-02 09:48:37 AM",
+      "engagement_score": 15.0,
+      "vip_tier": "⭐ SILVER_ACTIVE"
+    },
+    "PhotoandvideoeditorfromKEChat": {
+      "title": "Photo and video editor from K.E Chat",
+      "lang": "en",
+      "successful_posts_count": 1,
+      "first_seen": "2026-09-02 09:49:10 AM",
+      "last_posted_at": "2026-09-02 09:49:10 AM",
+      "engagement_score": 15.0,
+      "vip_tier": "⭐ SILVER_ACTIVE"
+    },
+    "chatgpt_discussion": {
+      "title": "Chatgpt for business",
+      "lang": "en",
+      "successful_posts_count": 1,
+      "first_seen": "2026-09-02 09:49:47 AM",
+      "last_posted_at": "2026-09-02 09:49:47 AM",
+      "engagement_score": 15.0,
+      "vip_tier": "⭐ SILVER_ACTIVE"
+    },
+    "CryptoDenisNFT_chat": {
+      "title": "DENIS | Crypto & NFT | Chat",
+      "lang": "en",
+      "successful_posts_count": 1,
+      "first_seen": "2026-09-02 09:50:19 AM",
+      "last_posted_at": "2026-09-02 09:50:19 AM",
+      "engagement_score": 15.0,
+      "vip_tier": "⭐ SILVER_ACTIVE"
+    },
+    "AI_Tools_Group": {
+      "title": "AI Tools by Sagar",
+      "lang": "en",
+      "successful_posts_count": 1,
+      "first_seen": "2026-09-02 09:50:44 AM",
+      "last_posted_at": "2026-09-02 09:50:44 AM",
+      "engagement_score": 15.0,
+      "vip_tier": "⭐ SILVER_ACTIVE"
+    },
+    "test_high_engagement_group_101": {
+      "title": "VIP Test Community",
+      "lang": "ar",
+      "successful_posts_count": 6,
+      "first_seen": "2026-09-02 09:52:42 AM",
+      "last_posted_at": "2026-09-02 09:52:51 AM",
+      "engagement_score": 90.0,
+      "vip_tier": "💎 ELITE_VIP"
+    }
+  }
 }

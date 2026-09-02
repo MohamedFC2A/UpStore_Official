@@ -1901,8 +1901,9 @@ async function handleUpdate(update) {
           t('bybit_pending_message', lang, { amount: product.our_price.toFixed(2) }),
           {
             inline_keyboard: [
+              [{ text: t('btn_submit_txid', lang), callback_data: `submit_txid_bybit_${product.our_price}_${orderRef}` }],
               [{ text: t('bybit_recheck_btn', lang), callback_data: `check_bybit_${product.short_id}_${orderRef}` }],
-              [{ text: `👨‍💻 ${t('btn_support', lang)}`, callback_data: 'support' }],
+              [{ text: `👨‍💻 ${t('btn_support', lang)} (@UPSTORE_HELP)`, url: 'https://t.me/UPSTORE_HELP' }],
               [{ text: t('btn_back_to_product', lang), callback_data: `prod_${product.short_id}` }],
             ],
           },
@@ -1970,15 +1971,15 @@ async function handleUpdate(update) {
         } catch (err) {}
       }
 
-      // Dispatch approval ticket directly to @upstorelive_bot
+      // Dispatch approval ticket directly to @upstorelive_bot (awaiting TXID submission)
       try {
         notifyPendingPaymentApproval(
           cb.from,
           product.our_price,
           'Binance Pay (ID: 764476139)',
-          orderRef,
+          null,
           'PRODUCT_PURCHASE',
-          { shortId: product.short_id, reqId: orderRef }
+          { shortId: product.short_id, reqId: orderRef, note: 'User clicked check before submitting TXID' }
         );
       } catch (err) {}
 
@@ -1986,7 +1987,7 @@ async function handleUpdate(update) {
         t('verification_in_progress_title', lang),
         '━━━━━━━━━━━━━━━━━━━━━━',
         `📦 <b>${t('order_product_label', lang)}</b> ${product.name_ar}`,
-        `🆔 <b>${t('order_ref_label', lang)}</b> <code>#${orderRef}</code>`,
+        `🔖 <b>${t('txid_store_ref_label', lang) || 'رقم المرجع بالمتجر:'}</b> <code>#${orderRef}</code>`,
         `💎 <b>${t('product_price', lang)}:</b> <code>${product.our_price.toFixed(2)}$ USDT</code>`,
         `⏱️ <b>${t('verification_eta_label', lang)}</b> <code>${t('verification_eta_value', lang)}</code>`,
         '━━━━━━━━━━━━━━━━━━━━━━',
@@ -1997,8 +1998,9 @@ async function handleUpdate(update) {
 
       const kbd = {
         inline_keyboard: [
+          [{ text: t('btn_submit_txid', lang), callback_data: `submit_txid_binance_${product.our_price}_${orderRef}` }],
           [{ text: `📦 ${t('btn_orders', lang)}`, callback_data: 'my_orders' }],
-          [{ text: `👨‍💻 ${t('btn_support', lang)}`, callback_data: 'support' }],
+          [{ text: `👨‍💻 ${t('btn_support', lang)} (@UPSTORE_HELP)`, url: 'https://t.me/UPSTORE_HELP' }],
           [{ text: `🏠 ${t('btn_main_menu', lang)}`, callback_data: 'main_menu' }],
         ],
       };
@@ -2146,15 +2148,15 @@ async function handleUpdate(update) {
           } catch (err) {}
         }
 
-        // Dispatch pending topup confirmation request to @upstorelive_bot with Action Buttons!
+        // Dispatch pending topup confirmation request to @upstorelive_bot (awaiting TXID)
         try {
           notifyPendingPaymentApproval(
             cb.from,
             amount,
             method === 'binance' ? 'Binance Pay (ID: 764476139)' : (method === 'bybit' ? 'Bybit Internal UID (47183921)' : 'Local Payment (Via Support)'),
-            orderRef,
+            null,
             'WALLET_TOPUP',
-            { reqId: orderRef }
+            { reqId: orderRef, note: 'User clicked check before submitting TXID' }
           );
         } catch (err) {}
 
@@ -2162,7 +2164,7 @@ async function handleUpdate(update) {
           t('verification_in_progress_title', lang),
           '━━━━━━━━━━━━━━━━━━━━━━',
           `💵 <b>${t('required_amount_label', lang)}</b> <code>$${amount.toFixed(2)} USDT</code>`,
-          `🆔 <b>${t('order_ref_label', lang)}</b> <code>#${orderRef}</code>`,
+          `🔖 <b>${t('txid_store_ref_label', lang) || 'رقم المرجع بالمتجر:'}</b> <code>#${orderRef}</code>`,
           `⏱️ <b>${t('verification_eta_label', lang)}</b> <code>${t('verification_eta_value', lang)}</code>`,
           '━━━━━━━━━━━━━━━━━━━━━━',
           `🛡️ <b>${t('verification_status_label', lang)}</b> <i>${t('verification_pending_desc', lang)}</i>`,
@@ -2174,7 +2176,7 @@ async function handleUpdate(update) {
           inline_keyboard: [
             [{ text: t('btn_submit_txid', lang), callback_data: `submit_txid_${method}_${amount}_${orderRef}` }],
             [{ text: t('bybit_recheck_btn', lang), callback_data: data }],
-            [{ text: `👨‍💻 ${t('btn_support', lang)}`, callback_data: 'support' }],
+            [{ text: `👨‍💻 ${t('btn_support', lang)} (@UPSTORE_HELP)`, url: 'https://t.me/UPSTORE_HELP' }],
             [{ text: `🔙 ${t('btn_back', lang)}`, callback_data: 'payment_methods' }],
           ],
         };
@@ -2204,21 +2206,35 @@ async function handleUpdate(update) {
         timestamp: Date.now(),
       });
 
+      let promptTitle = t('submit_txid_prompt_title', lang);
+      let promptDesc = t('submit_txid_prompt_desc', lang);
+
+      if (method === 'binance') {
+        promptTitle = t('submit_txid_binance_title', lang) || promptTitle;
+        promptDesc = t('submit_txid_binance_desc', lang) || promptDesc;
+      } else if (method === 'bybit') {
+        promptTitle = t('submit_txid_bybit_title', lang) || promptTitle;
+        promptDesc = t('submit_txid_bybit_desc', lang) || promptDesc;
+      } else if (method === 'local') {
+        promptTitle = t('submit_txid_local_title', lang) || promptTitle;
+        promptDesc = t('submit_txid_local_desc', lang) || promptDesc;
+      }
+
       const promptMsg = [
-        t('submit_txid_prompt_title', lang),
+        promptTitle,
         '━━━━━━━━━━━━━━━━━━━━━━',
         `💵 <b>${t('required_amount_label', lang)}</b> <code>$${amount.toFixed(2)} USDT</code>`,
-        `🆔 <b>${t('order_ref_label', lang)}</b> <code>#${orderRef}</code>`,
+        `🔖 <b>${t('txid_store_ref_label', lang) || 'رقم المرجع بالمتجر:'}</b> <code>#${orderRef}</code>`,
         '━━━━━━━━━━━━━━━━━━━━━━',
-        t('submit_txid_prompt_desc', lang),
+        promptDesc,
         '',
         t('submit_txid_prompt_hint', lang),
       ].join('\n');
 
       const kbd = {
         inline_keyboard: [
-          [{ text: `👨‍💻 ${t('btn_support', lang)}`, callback_data: 'support' }],
-          [{ text: `🔙 ${t('btn_back', lang)}`, callback_data: 'payment_methods' }],
+          [{ text: `👨‍💻 ${t('btn_support', lang)} (@UPSTORE_HELP)`, url: 'https://t.me/UPSTORE_HELP' }],
+          [{ text: `${t('btn_cancel_topup', lang) || t('btn_back', lang)}`, callback_data: 'payment_methods' }],
         ],
       };
 
@@ -2680,32 +2696,127 @@ async function handleUpdate(update) {
 
   // ── SMART TRANSACTION ID / TRANSFER ID VERIFIER & APPROVAL DISPATCHER ──
   const pendingSession = userPendingPaymentSessions.get(String(chatId));
-  const isLikelyTransferId = pendingSession?.waitingTxid ||
-    /^\d{4,25}$/.test(text) ||
-    /^(0x)?[a-fA-F0-9]{32,66}$/.test(text) ||
-    text.toLowerCase().includes('txid') ||
-    text.toLowerCase().includes('transfer') ||
-    text.toLowerCase().includes('order') ||
-    text.toLowerCase().includes('uid') ||
-    text.toLowerCase().includes('hash') ||
-    text.includes('معرف') ||
-    text.includes('العملية') ||
-    text.includes('رقم التحويل') ||
-    text.includes('رقم الحوالة') ||
-    text.includes('تم التحويل') ||
-    text.includes('حولتها') ||
-    text.includes('دفعت') ||
-    text.includes('فودافون') ||
-    text.includes('انستاباي') ||
-    text.includes('إنستاباي') ||
-    text.includes('كاش');
+  const isWaitingTxid = Boolean(pendingSession?.waitingTxid);
 
-  if (isLikelyTransferId) {
+  // Helper: check if a text is the internal store reference (e.g. TOPUP-123456, UP-123456, #TOPUP-123456)
+  const isStoreInternalReference = (str) => {
+    if (!str || typeof str !== 'string') return false;
+    const clean = str.trim().replace(/^#/, '').toUpperCase();
+    const sessionRef = (pendingSession?.orderRef || '').trim().replace(/^#/, '').toUpperCase();
+    return (
+      (sessionRef && clean === sessionRef) ||
+      /^TOPUP-\d+$/i.test(clean) ||
+      /^UP-\d+$/i.test(clean) ||
+      /^REQ-\d+$/i.test(clean) ||
+      /^IMG-\d+$/i.test(clean) ||
+      /^DOC-\d+$/i.test(clean)
+    );
+  };
+
+  // Helper: extract a genuine payment identifier or transfer code from text
+  const extractGenuinePaymentId = (str) => {
+    if (!str || typeof str !== 'string') return null;
+    const trimmed = str.trim();
+
+    // Never treat internal reference as payment ID
+    if (isStoreInternalReference(trimmed)) return null;
+
+    // 1. Pure numbers (5 to 30 digits e.g. Binance Order ID, Bybit UID, Bybit Transfer ID, phone number)
+    if (/^\d{5,30}$/.test(trimmed)) {
+      return trimmed;
+    }
+
+    // 2. Crypto transaction hash
+    if (/^(?:0x)?[a-fA-F0-9]{32,66}$/.test(trimmed)) {
+      return trimmed;
+    }
+
+    // 3. InstaPay username/handle
+    if (/^[a-zA-Z0-9._-]+@(instapay|ipn)$/i.test(trimmed)) {
+      return trimmed;
+    }
+
+    // 4. Explicit prefixed format e.g. BYBIT-12345678, BINANCE-99887766, TXID-123456
+    if (/^(?:bybit|binance|txid|order|transfer|trx|hash)[-_:\s]?[a-zA-Z0-9_-]{4,40}$/i.test(trimmed)) {
+      const cleaned = trimmed.replace(/^(?:bybit|binance|txid|order|transfer|trx|hash)[-_:\s]*/i, '').trim();
+      if (cleaned && !isStoreInternalReference(cleaned) && cleaned.length >= 4) {
+        return cleaned;
+      }
+    }
+
+    // 5. Embedded long digit string in sentence (e.g. "Order ID: 1234567890123" or "رقم التحويل 9988776655")
+    const digitsMatch = trimmed.match(/\b\d{5,30}\b/);
+    if (digitsMatch && !isStoreInternalReference(digitsMatch[0])) {
+      return digitsMatch[0];
+    }
+
+    // 6. Embedded hash in sentence
+    const hashMatch = trimmed.match(/\b(?:0x)?[a-fA-F0-9]{32,66}\b/);
+    if (hashMatch) {
+      return hashMatch[0];
+    }
+
+    // 7. Alphanumeric transaction code with at least 2 digits (e.g. 29F8A7D1, BYBIT9988)
+    const alnumMatch = trimmed.match(/\b(?=.*\d{2,})(?=.*[a-zA-Z])[a-zA-Z0-9_-]{6,40}\b/);
+    if (alnumMatch && !isStoreInternalReference(alnumMatch[0])) {
+      return alnumMatch[0];
+    }
+
+    return null;
+  };
+
+  // Determine method title for context
+  let methodTitle = 'Bybit Internal UID (47183921)';
+  if (pendingSession?.method === 'binance') {
+    methodTitle = 'Binance Pay (ID: 764476139)';
+  } else if (pendingSession?.method === 'local') {
+    methodTitle = 'Local Payment';
+  }
+
+  // CASE 1: User is currently on the "Submit TXID" screen
+  if (isWaitingTxid) {
+    // Check if user accidentally submitted the store reference number
+    if (isStoreInternalReference(text)) {
+      const errorRefMsg = t('txid_error_sent_order_ref', lang, {
+        ref: text.trim(),
+        method: pendingSession?.method === 'binance' ? 'Binance Pay' : (pendingSession?.method === 'bybit' ? 'Bybit' : 'المحفظة'),
+      });
+      const errorKbd = {
+        inline_keyboard: [
+          [{ text: `👨‍💻 ${t('btn_support', lang)} (@UPSTORE_HELP)`, url: 'https://t.me/UPSTORE_HELP' }],
+          [{ text: `${t('btn_cancel_topup', lang) || t('btn_back', lang)}`, callback_data: 'payment_methods' }],
+        ],
+      };
+      await sendMessage(chatId, errorRefMsg, errorKbd, businessConnectionId);
+      return;
+    }
+
+    const validExtractedId = extractGenuinePaymentId(text);
+    // Check if user sent chat words / vague text without a valid ID
+    if (!validExtractedId) {
+      const errorInvalidMsg = t('txid_error_invalid_text', lang, {
+        text: text.trim().slice(0, 45),
+        method: pendingSession?.method === 'binance' ? 'Binance Pay' : (pendingSession?.method === 'bybit' ? 'Bybit' : 'الدفع'),
+      });
+      const errorKbd = {
+        inline_keyboard: [
+          [{ text: `👨‍💻 ${t('btn_support', lang)} (@UPSTORE_HELP)`, url: 'https://t.me/UPSTORE_HELP' }],
+          [{ text: `${t('btn_cancel_topup', lang) || t('btn_back', lang)}`, callback_data: 'payment_methods' }],
+        ],
+      };
+      await sendMessage(chatId, errorInvalidMsg, errorKbd, businessConnectionId);
+      return;
+    }
+  }
+
+  // CASE 2: User provided a valid Payment ID (either in waitingTxid mode or independently)
+  const extractedPaymentId = extractGenuinePaymentId(text);
+  const shouldProcessPaymentId = Boolean(extractedPaymentId && (isWaitingTxid || pendingSession || text.toLowerCase().includes('txid') || text.toLowerCase().includes('transfer') || text.includes('معرف') || text.includes('العملية') || /^\d{6,30}$/.test(text.trim())));
+
+  if (shouldProcessPaymentId && extractedPaymentId) {
     await sendChatAction(chatId, 'typing', businessConnectionId);
 
-    // Extract potential ID from text
-    const cleanWordMatch = text.replace(/[^a-zA-Z0-9_-]/g, ' ').trim().split(/\s+/).find(w => w.length >= 4);
-    const displayId = cleanWordMatch && cleanWordMatch.length >= 4 ? cleanWordMatch : text.trim();
+    const displayId = extractedPaymentId;
     const extractedId = displayId;
 
     // Fetch user's latest pending order from Supabase if not in active session
@@ -2732,7 +2843,6 @@ async function handleUpdate(update) {
     let expectedAmount = 5.0;
     let orderRef = `TX-${Date.now().toString().slice(-6)}`;
     let product = STORE_CATALOG[0];
-    let methodTitle = 'Bybit Internal UID (47183921)';
 
     if (pendingSession) {
       expectedAmount = pendingSession.amount || 5.0;
@@ -2774,7 +2884,7 @@ async function handleUpdate(update) {
           '──────────────────',
           ...bonusMsg,
           `💳 <b>${t('wallet_new_balance_label', lang)}</b> <code>$${creditedWallet.balance.toFixed(2)} USDT</code>`,
-          `🆔 <b>${t('order_ref_label', lang)}</b> <code>#${orderRef}</code>`,
+          `🔖 <b>${t('txid_store_ref_label', lang) || 'رقم المرجع بالمتجر:'}</b> <code>#${orderRef}</code>`,
           '──────────────────',
           t('wallet_topup_ready_hint', lang),
         ].join('\n');
@@ -2826,8 +2936,8 @@ async function handleUpdate(update) {
         t('txid_received_title', lang),
         '━━━━━━━━━━━━━━━━━━━━━━',
         `🧾 <b>${t('payment_id_label', lang)}</b> <code>${displayId}</code>`,
-        `🆔 <b>${t('order_ref_label', lang)}</b> <code>#${orderRef}</code>`,
         `💵 <b>${t('required_amount_label', lang)}</b> <code>$${expectedAmount.toFixed(2)} USDT</code>`,
+        `🔖 <b>${t('txid_store_ref_label', lang) || 'رقم المرجع بالمتجر:'}</b> <code>#${orderRef}</code>`,
         `⏱️ <b>${t('verification_eta_label', lang)}</b> <code>${t('verification_eta_value', lang)}</code>`,
         '━━━━━━━━━━━━━━━━━━━━━━',
         `🛡️ <b>${t('verification_status_label', lang)}</b> <i>${t('txid_forwarded_to_admin_desc', lang)}</i>`,
@@ -2841,7 +2951,7 @@ async function handleUpdate(update) {
         {
           inline_keyboard: [
             [{ text: `🛍️ ${t('btn_catalog', lang)}`, callback_data: 'catalog' }, { text: `💳 ${t('btn_wallet', lang)}`, callback_data: 'payment_methods' }],
-            [{ text: `👨‍💻 ${t('btn_support', lang)}`, callback_data: 'support' }],
+            [{ text: `👨‍💻 ${t('btn_support', lang)} (@UPSTORE_HELP)`, url: 'https://t.me/UPSTORE_HELP' }],
           ],
         },
         businessConnectionId
