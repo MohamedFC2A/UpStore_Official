@@ -48,28 +48,33 @@ BOT_REF_LINK = "https://t.me/upstore_one_bot"
 # 3. TARGET TELEGRAM GROUPS / CHANNELS (Public links or usernames)
 # ─────────────────────────────────────────────────────────────────────────────
 TARGET_GROUPS = [
-    # --- Open Discussion Groups & Supergroups (شاتات ومجموعات مفتوحة) ---
-    "digital_marketing_chat01",   # 7,048 members (336 online) - Digital Marketing Chat
-    "designerssoftwear",          # 857 members - ملتقى برمجيات المصممين
-    "digital_chat1",              # 856 members - چات ديجيتال ماركتنج
+    # --- كبرى مجموعات وشاتات النقاش المفتوحة (Verified High-Traffic Open Supergroups) ---
+    "jor294",                     # 9,282 members (284 online) - تبادل خبرات المهارات الرقمية
+    "digital_marketing_chat01",   # 7,048 members (336 online) - Digital Marketing Community Chat
+    "jor7070",                    # 6,914 members (146 online) - تبادل خبرات المعلمين والتقنية
+    "signals_crypto_arabic_chat", # 6,264 members (107 online) - مجتمع التداول والكريبتو
+    "Shawxvip2",                  # 3,846 members (18 online) - مجتمع رواد الذكاء الاصطناعي
+    "modmentadawulgroups",        # 3,333 members (30 online) - جروب نقاشات عامة
+    "akkffh",                     # 2,617 members - قروب مصممي الجرافيك
+    "O7nkKzTJfDA3OGQ0",           # 2,055 members (29 online) - تبادل خبرات المجتمعات المهنية
+    "A1_des",                     # 1,186 members (19 online) - قروب مصممين جرافيك وكانفا
+    "designerssoftwear",          # 857 members (11 online) - ملتقى برمجيات المصممين
+    "digital_chat1",              # 856 members (6 online) - چات ديجيتال ماركتنج
+    "AIApproachClub",             # 789 members (10 online) - مجتمع نادي نهج الذكاء الاصطناعي
+    "maryamalbatoulofficielle",   # 536 members - خدمات رقمية واشتراكات
+    "progAi2",                    # 457 members - قروب مبرمجين الذكاء الاصطناعي
     "Arabdesign21",               # 370 members - ملتقى المصممين العرب
+    "sezar_apk_chat",             # 325 members - شات عالم التقنية والتطبيقات
     "FV_MM",                      # 325 members - مجتمع نقاشات عامة
     "cfvdvhbsn",                  # 278 members - ملتقى عالم المصممين
-    "DigitalMarketing_AC",        # 243 members - ADVERTISING & DIGITAL MARKETING Chat
+    "DigitalMarketing_AC",        # 243 members (12 online) - ADVERTISING & DIGITAL MARKETING Chat
+    "X4JJJ",                      # 236 members - مجتمع مطوري البوتات والمبرمجين
     "AI_Tools_Group",             # 194 members - AI Tools Discussion Group
+    "AIAgentsEngineersSociety",   # 167 members - مجتمع مهندسي وكلاء الذكاء الاصطناعي
+    "blackarkchat",               # 140 members (12 online) - قروب مطورين ومبرمجين
     "ALULYAAi1",                  # 123 members - نقاشات عالم الذكاء الاصطناعي
-    "galsen_graphique_designers", # 101 members - Graphic Designers Chat
-    "areejdi",                    # 91 members - قروب مصممي الجرافيك
-    
-    # --- High-Traffic Channels with Comments & Discussions (قنوات بتعليقات نشطة) ---
+    "csAlit22",                   # 117 members - مجتمع كلية حاسبات والذكاء الاصطناعي
     "chatgpt_arabic",             # مجتمع شات جي بي تي بالعربي (Verified working)
-    "Ai_Arabic1",                 # 57,704 members - الذكاء الاصطناعي بالعربية
-    "lrnai",                      # 27,333 members - ادوات الذكاء الاصطناعي
-    "HAMDYtutorial",              # 23,202 members - موارد وملحقات التصميم
-    "AItaker",                    # 15,250 members - الذكاء الاصطناعي
-    "BassamtalksAI",              # 5,420 members - الذكاء الاصطناعي وأخباره
-    "toolsai4arab",               # 3,014 members - أدوات الذكاء الاصطناعي
-    "gemini12pro",                # 137,063 members (4,903 online) - Gemini GPT Upgrade
 ]
 
 # ─────────────────────────────────────────────────────────────────────────────
