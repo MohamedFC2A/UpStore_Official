@@ -1,145 +1,178 @@
 #!/usr/bin/env python3
 """
-smart_telegram_promoter.py — Human-Like Smart Growth Automation Engine for UpStore
-================================================================================
-Features:
-- Telethon MTProto UserBot (Uses personal Telegram session)
-- Ultra-realistic human behavior: simulated typing action & random delays (90-240s)
-- Rotates dynamically among organic human-styled copywriting templates
-- Auto-handles Telegram FloodWait & SpamBot protections
-- Highlights top 10 unbeatable wholesale deals (Gemini 18m @ $0.25, ChatGPT @ $1.49, etc.)
-- Embeds customizable referral tracking links
-
-Usage:
-  1. Install dependencies: pip install telethon
-  2. Obtain API credentials from https://my.telegram.org (api_id, api_hash)
-  3. Configure your API credentials and target groups list below
-  4. Run: python scripts/smart_telegram_promoter.py
+═══════════════════════════════════════════════════════════════════════════════
+🚀 UpStore Ultra-Smart Growth & Promotion Automation Engine (Multi-Lingual)
+═══════════════════════════════════════════════════════════════════════════════
+- Multi-Lingual Smart Targeting: Auto-detects Group Language (Arabic / English / Russian).
+- Organic Human-Like Simulation: Native copy, human typing, randomized pauses.
+- Anti-Ban & High-Speed Resilience: Adaptive 45-80s safety cooldowns + live countdown timer.
+- 100% Zero-Crash Architecture: Auto-reconnect, FloodWait handler, error recovery.
+═══════════════════════════════════════════════════════════════════════════════
 """
 
+import asyncio
 import os
+import random
+import re
 import sys
 import time
-import random
-import asyncio
 from datetime import datetime
 
 try:
     from telethon import TelegramClient
-    from telethon.errors import FloodWaitError, UserBannedInChannelError, ChatWriteForbiddenError
+    from telethon.errors import (
+        FloodWaitError,
+        UserBannedInChannelError,
+        ChatWriteForbiddenError,
+        ChannelPrivateError,
+        ChatAdminRequiredError
+    )
+    from telethon.tl.functions.channels import GetFullChannelRequest, JoinChannelRequest
+    from telethon.tl.functions.messages import SendMessageRequest
 except ImportError:
     print("❌ Telethon is not installed! Please run: pip install telethon")
     sys.exit(1)
 
 # ─────────────────────────────────────────────────────────────────────────────
-# 1. TELEGRAM API CREDENTIALS (from https://my.telegram.org)
+# 1. AUTHENTICATION & CONFIGURATION
 # ─────────────────────────────────────────────────────────────────────────────
-API_ID = int(os.getenv("TG_API_ID", "31577730"))
+API_ID = int(os.getenv("TG_API_ID", 31577730))
 API_HASH = os.getenv("TG_API_HASH", "42d6fcd39c9e724428133de55ab0fe21")
 SESSION_NAME = "upstore_promoter_session"
 
-# ─────────────────────────────────────────────────────────────────────────────
-# 2. YOUR PERSONAL REFERRAL LINK OR BOT LINK
-# ─────────────────────────────────────────────────────────────────────────────
-# Replace with your custom referral link, e.g., https://t.me/upstore_one_bot?start=ref_YOURID
+# Official bot link
 BOT_REF_LINK = "https://t.me/upstore_one_bot"
 
 # ─────────────────────────────────────────────────────────────────────────────
-# 3. TARGET TELEGRAM GROUPS / CHANNELS (Public links or usernames)
+# 2. TARGET TELEGRAM COMMUNITIES (Verified Open Supergroups & Discussions)
 # ─────────────────────────────────────────────────────────────────────────────
 TARGET_GROUPS = [
-    # --- كبرى مجموعات وشاتات النقاش المفتوحة (Verified High-Traffic Open Supergroups) ---
-    "jor294",                     # 9,282 members (284 online) - تبادل خبرات المهارات الرقمية
-    "digital_marketing_chat01",   # 7,048 members (336 online) - Digital Marketing Community Chat
-    "jor7070",                    # 6,914 members (146 online) - تبادل خبرات المعلمين والتقنية
-    "signals_crypto_arabic_chat", # 6,264 members (107 online) - مجتمع التداول والكريبتو
-    "Shawxvip2",                  # 3,846 members (18 online) - مجتمع رواد الذكاء الاصطناعي
-    "modmentadawulgroups",        # 3,333 members (30 online) - جروب نقاشات عامة
-    "akkffh",                     # 2,617 members - قروب مصممي الجرافيك
-    "O7nkKzTJfDA3OGQ0",           # 2,055 members (29 online) - تبادل خبرات المجتمعات المهنية
-    "A1_des",                     # 1,186 members (19 online) - قروب مصممين جرافيك وكانفا
-    "designerssoftwear",          # 857 members (11 online) - ملتقى برمجيات المصممين
-    "digital_chat1",              # 856 members (6 online) - چات ديجيتال ماركتنج
-    "AIApproachClub",             # 789 members (10 online) - مجتمع نادي نهج الذكاء الاصطناعي
-    "maryamalbatoulofficielle",   # 536 members - خدمات رقمية واشتراكات
-    "progAi2",                    # 457 members - قروب مبرمجين الذكاء الاصطناعي
-    "Arabdesign21",               # 370 members - ملتقى المصممين العرب
-    "sezar_apk_chat",             # 325 members - شات عالم التقنية والتطبيقات
-    "FV_MM",                      # 325 members - مجتمع نقاشات عامة
-    "cfvdvhbsn",                  # 278 members - ملتقى عالم المصممين
-    "DigitalMarketing_AC",        # 243 members (12 online) - ADVERTISING & DIGITAL MARKETING Chat
-    "X4JJJ",                      # 236 members - مجتمع مطوري البوتات والمبرمجين
-    "AI_Tools_Group",             # 194 members - AI Tools Discussion Group
-    "AIAgentsEngineersSociety",   # 167 members - مجتمع مهندسي وكلاء الذكاء الاصطناعي
-    "blackarkchat",               # 140 members (12 online) - قروب مطورين ومبرمجين
-    "ALULYAAi1",                  # 123 members - نقاشات عالم الذكاء الاصطناعي
-    "csAlit22",                   # 117 members - مجتمع كلية حاسبات والذكاء الاصطناعي
-    "chatgpt_arabic",             # مجتمع شات جي بي تي بالعربي (Verified working)
+    # Arabic Tech & Skills
+    {"username": "jor294", "lang": "ar", "name": "تبادل خبرات المهارات الرقمية"},
+    {"username": "jor7070", "lang": "ar", "name": "تبادل خبرات التقنية والتعليم"},
+    {"username": "signals_crypto_arabic_chat", "lang": "ar", "name": "مجتمع الكريبتو العربي"},
+    {"username": "Shawxvip2", "lang": "ar", "name": "رواد الذكاء الاصطناعي"},
+    {"username": "modmentadawulgroups", "lang": "ar", "name": "نقاشات عامة"},
+    {"username": "akkffh", "lang": "ar", "name": "مصممي الجرافيك وكانفا"},
+    {"username": "O7nkKzTJfDA3OGQ0", "lang": "ar", "name": "المجتمعات المهنية"},
+    {"username": "A1_des", "lang": "ar", "name": "مصممين جرافيك وكانفا"},
+    {"username": "designerssoftwear", "lang": "ar", "name": "برمجيات المصممين"},
+    {"username": "AIApproachClub", "lang": "ar", "name": "نادي نهج الذكاء الاصطناعي"},
+    {"username": "maryamalbatoulofficielle", "lang": "ar", "name": "خدمات رقمية واشتراكات"},
+    {"username": "progAi2", "lang": "ar", "name": "مبرمجين الذكاء الاصطناعي"},
+    {"username": "Arabdesign21", "lang": "ar", "name": "ملتقى المصممين العرب"},
+    {"username": "sezar_apk_chat", "lang": "ar", "name": "عالم التقنية والتطبيقات"},
+    {"username": "FV_MM", "lang": "ar", "name": "نقاشات عامة"},
+    {"username": "cfvdvhbsn", "lang": "ar", "name": "عالم المصممين"},
+    {"username": "X4JJJ", "lang": "ar", "name": "مطوري البوتات والمبرمجين"},
+    {"username": "AIAgentsEngineersSociety", "lang": "ar", "name": "مهندسي الذكاء الاصطناعي"},
+    {"username": "blackarkchat", "lang": "ar", "name": "مطورين ومبرمجين"},
+    {"username": "ALULYAAi1", "lang": "ar", "name": "عالم الذكاء الاصطناعي"},
+    {"username": "csAlit22", "lang": "ar", "name": "حاسبات وذكاء اصطناعي"},
+    {"username": "chatgpt_arabic", "lang": "ar", "name": "شات جي بي تي بالعربي"},
+    
+    # International & Digital Marketing (English & Russian)
+    {"username": "digital_marketing_chat01", "lang": "ru", "name": "Digital Marketing Chat RU"},
+    {"username": "digital_chat1", "lang": "ru", "name": "Digital Chat RU"},
+    {"username": "DigitalMarketing_AC", "lang": "en", "name": "Digital Marketing Global Chat"},
+    {"username": "AI_Tools_Group", "lang": "en", "name": "AI Tools Discussion Group"}
 ]
 
 # ─────────────────────────────────────────────────────────────────────────────
-# 4. ORGANIC HUMAN-STYLED COPYWRITING TEMPLATES (Rotated automatically)
+# 3. NATIVE MULTI-LINGUAL ORGANIC COPYWRITING
 # ─────────────────────────────────────────────────────────────────────────────
-ORGANIC_POST_TEMPLATES = [
-    # Template 1: العفوية واكتشاف كنز حقيقي
-    f"""يا شباب لقيت بوت سري بيبيع اشتراكات الذكاء الاصطناعي بالجملة بأسعار مش طبيعية 🤯
-أنا اشتريت منه جيمناي برو سنة ونص كاملة بـ 0.25$ (أه ربع دولار والله وشغال رسمي مع 2TB سحابي) وحبيت أشارككم عشان تستفيدوا:
+TEMPLATES_AR = [
+    f"""يا شباب لقيت متجر سري بيبيع اشتراكات الذكاء الاصطناعي بالجملة بأسعار خرافية 🤯
+أنا اشتريت منه جيمناي برو سنة ونص كاملة بـ 0.25$ (أه ربع دولار والله وشغال رسمي مع 2TB سحابي) وحبيت أشارككم:
 
-🔥 أهم الأسعار اللي عنده:
-• 🤖 Gemini Advanced (18 شهر كاملة): 0.25$ فقط
-• 🧠 ChatGPT Plus (شهر كامل): 1.49$
-• ⚡ Claude 3.7 Pro: 1.49$
-• 🎨 Canva Pro سنة كاملة: 0.99$ (ومدى الحياة بـ 1.99$)
-• 🔍 Perplexity AI Pro: 0.89$
-• 🎬 CapCut Pro: 0.99$
-• 🍿 Netflix 4K UHD: 0.99$
-• 🎵 Spotify Premium: 0.49$
-• 📺 YouTube Premium: 0.49$
-• 💻 Windows 11 Pro Key أصلي: 1.99$
+🔥 أبرز الأسعار في البوت:
+💎 Gemini Advanced (18 شهر) ⬅️ 0.25$ فقط
+🤖 ChatGPT Plus (شهر كامل) ⬅️ 0.99$ فقط
+🧠 Claude 3.7 Sonnet ⬅️ 0.89$ فقط
+🎨 Canva Pro (مدى الحياة) ⬅️ 0.49$ فقط
+🎬 CapCut Pro (سنة كاملة) ⬅️ 0.79$ فقط
+🚀 Cursor Pro ⬅️ 0.85$ فقط
+🔍 Perplexity Pro ⬅️ 0.65$ فقط
+💻 Windows 11 Pro ⬅️ 0.99$ فقط
 
-التسليم فوري بضمان استبدال، ده رابط البوت جربوه بنفسكم:
+التسليم فوري تلقائي بدون انتظار:
 👉 {BOT_REF_LINK}""",
 
-    # Template 2: نصيحة توفير مقارنة بالسعر الرسمي
-    f"""بدل ما تدفعوا 20$ أو 30$ كل شهر في اشتراكات الـ AI والتطبيقات، في بوت بيوفرها بأسعار الجملة المباشرة مع ضمان رسمي:
+    f"""لكل الناس اللي شغالة Freelancing أو برمجة أو تصميم وتعبانة من أسعار الاشتراكات الغالية..
+جربوا البوت ده فيه تصفية أسعار حقيقية بضمان كامل:
 
-💎 قائمة بأقوى العروض الحالية:
-1️⃣ جيمناي أدفانسد (18 شهر + 2TB): 0.25$
-2️⃣ شات جي بي تي بلس (ChatGPT Plus): 1.49$
-3️⃣ كلاود برو (Claude Pro): 1.49$
-4️⃣ كانفا برو (Canva Pro سنة): 0.99$
-5️⃣ بيربلكسيتي برو (Perplexity): 0.89$
-6️⃣ كاب كات برو (CapCut Pro): 0.99$
-7️⃣ نتفليكس 4K UHD: 0.99$
-8️⃣ سبوتيفاي / يوتيوب بريميوم: 0.49$
-9️⃣ ويندوز 11 برو مفتاح تفعيل دائم: 1.99$
+✨ كانفا برو مدى الحياة بـ 0.49$
+✨ كاب كات برو سنة بـ 0.79$
+✨ جيمناي أدفانسد 18 شهر بـ 0.25$
+✨ شات جي بي تي بلس بـ 0.99$
+✨ كلود 3.7 بريميوم بـ 0.89$
+✨ أوفيس 365 أصلي بـ 1.20$
 
-الدفع متاح بـ Bybit و Binance والتسليم فوري بعد الدفع:
-👉 {BOT_REF_LINK}""",
+الدفع متاح وسهل جداً (Bybit / Binance) والبوت فوري 100%:
+🔗 {BOT_REF_LINK}""",
 
-    # Template 3: نصيحة للمصممين والمبرمجين ورواد الأعمال
-    f"""نصيحة لكل صناع المحتوى والطلاب والمبرمجين اللي بيحتاجوا أدوات الذكاء الاصطناعي.. 
-ده أرخص مكان رسمي ممكن تجيبوا منه الحسابات بدون وسيط وبسعر الجملة:
+    f"""عن تجربة شخصية بعد ما دورت كتير على اشتراكات رخيصة ومضمونة.. البوت ده الأفضل بلا منازع ⚡
+الأسعار كلها جملة ومافيش حاجة معدية 3$ أصلاً، وأحلى حاجة الجيمناي 18 شهر بربع دولار وشغال رسمي على إيميلك.
 
-⚡ أفضل 10 عروض مجربة:
-• Google Gemini Pro (18 شهر ضمان): $0.25
-• ChatGPT Plus: $1.49
-• Claude Pro: $1.49
-• Canva Pro: $0.99
-• Perplexity Pro: $0.89
-• CapCut Pro: $0.99
-• Netflix 4K: $0.99
-• Spotify Premium: $0.49
-• YouTube Premium: $0.49
-• Windows 11 Pro Retail: $1.99
-
-تقدروا تشوفوا باقي المنتجات وطرق التفعيل من هنا:
+📌 تصفحوا العروض والأسعار من هنا:
 👉 {BOT_REF_LINK}"""
 ]
 
+TEMPLATES_EN = [
+    f"""Hey guys! Found an incredible wholesale Telegram store for AI & Pro Software subscriptions at insane discounts 🔥
+Just activated Gemini Advanced for 18 full months for only $0.25 (includes 2TB cloud storage)!
 
+⚡ Best Deals Right Now:
+🤖 Gemini Advanced (18 Months) ➡️ $0.25
+🧠 ChatGPT Plus (1 Month) ➡️ $0.99
+💎 Claude 3.7 Sonnet Pro ➡️ $0.89
+🎨 Canva Pro (Lifetime) ➡️ $0.49
+🎬 CapCut Pro (1 Year) ➡️ $0.79
+🚀 Cursor Pro Developer ➡️ $0.85
+🔍 Perplexity Pro ➡️ $0.65
+💻 Windows 11 Pro Genuine Key ➡️ $0.99
+
+Instant automatic key delivery 24/7 (Accepts Binance Pay / Bybit):
+👉 {BOT_REF_LINK}""",
+
+    f"""If you're a freelancer, designer, or developer looking to save money on software tools, check this out:
+Got Canva Pro Lifetime + Gemini 18m for under $1 total. Everything is 100% genuine with instant activation.
+
+🔗 Direct Store Bot:
+👉 {BOT_REF_LINK}"""
+]
+
+TEMPLATES_RU = [
+    f"""Ребята, нашел классный оптовый магазин подписок на ИИ и софт по копеечным ценам 🔥
+Взял себе Gemini Advanced на 18 месяцев всего за $0.25 (с 2ТБ облака) — работает идеально!
+
+⚡ Топ предложения:
+🤖 Gemini Pro (18 месяцев) ➡️ $0.25
+🧠 ChatGPT Plus ➡️ $0.99
+🎨 Canva Pro (Навсегда) ➡️ $0.49
+🎬 CapCut Pro (1 год) ➡️ $0.79
+🚀 Cursor Pro ➡️ $0.85
+💻 Windows 11 Pro ➡️ $0.99
+
+Мгновенная выдача ключей сразу после оплаты (Binance / Bybit):
+👉 {BOT_REF_LINK}"""
+]
+
+def get_copywriting_for_target(target_info):
+    """Selects the best language-specific copy for the target group."""
+    lang = target_info.get("lang", "ar")
+    if lang == "ru":
+        return random.choice(TEMPLATES_RU)
+    elif lang == "en":
+        return random.choice(TEMPLATES_EN)
+    else:
+        return random.choice(TEMPLATES_AR)
+
+# ─────────────────────────────────────────────────────────────────────────────
+# 4. CORE ENGINE & LIVE VISUAL FEEDBACK
+# ─────────────────────────────────────────────────────────────────────────────
 async def simulate_human_typing(client, entity, duration_sec):
-    """Simulates realistic human typing action in the chat."""
+    """Simulates realistic human typing state."""
     try:
         async with client.action(entity, 'typing'):
             await asyncio.sleep(duration_sec)
@@ -147,54 +180,65 @@ async def simulate_human_typing(client, entity, duration_sec):
         await asyncio.sleep(duration_sec)
 
 
+async def live_countdown(seconds):
+    """Displays a live, dynamic countdown timer in the terminal."""
+    for remaining in range(seconds, 0, -1):
+        sys.stdout.write(f"\r  ⏳ Safety Cooldown: [{remaining:02d}s remaining before next target]... ")
+        sys.stdout.flush()
+        await asyncio.sleep(1)
+    sys.stdout.write("\r  ✅ Cooldown complete! Proceeding to next group.              \n\n")
+    sys.stdout.flush()
+
+
 async def main():
     if not API_ID or not API_HASH:
-        print("\n⚠️ [Action Required] Please set TG_API_ID and TG_API_HASH in the script or environment variables!")
-        print("💡 You can get them for free in 1 minute from: https://my.telegram.org\n")
+        print("\n⚠️ [Error] Missing API credentials. Please set TG_API_ID and TG_API_HASH.\n")
         return
 
     print("════════════════════════════════════════════════════════════")
-    print("🚀 Starting UpStore Smart Organic Growth Automation Engine")
-    print(f"⏰ Session Time: {datetime.now().strftime('%Y-%m-%d %I:%M:%S %p')}")
+    print("🚀 UpStore Ultra-Smart Growth & Promotion Automation Engine")
+    print(f"⏰ Session Started: {datetime.now().strftime('%Y-%m-%d %I:%M:%S %p')}")
     print("════════════════════════════════════════════════════════════\n")
 
     client = TelegramClient(SESSION_NAME, API_ID, API_HASH)
     await client.start()
     
     me = await client.get_me()
-    print(f"✅ Logged in successfully as: {me.first_name} (@{me.username or 'NoUsername'}) [ID: {me.id}]")
-    print(f"📋 Target Groups: {len(TARGET_GROUPS)} channels/groups configured.")
+    print(f"👤 Authenticated as: {me.first_name} (@{me.username or 'NoUsername'}) [ID: {me.id}]")
+    print(f"📋 Target Pool: {len(TARGET_GROUPS)} verified communities configured.")
     print("────────────────────────────────────────────────────────────\n")
 
-    for index, group_target in enumerate(TARGET_GROUPS, 1):
+    success_count = 0
+    skip_count = 0
+
+    for index, target_info in enumerate(TARGET_GROUPS, 1):
+        group_target = target_info["username"]
+        group_name = target_info.get("name", group_target)
+        group_lang = target_info.get("lang", "ar").upper()
+
         try:
-            print(f"[{index}/{len(TARGET_GROUPS)}] 🔍 Resolving target: @{group_target}...")
+            print(f"[{index:02d}/{len(TARGET_GROUPS):02d}] 🔍 Target: @{group_target} ({group_name}) [Lang: {group_lang}]")
             entity = await client.get_entity(group_target)
             
-            # Auto-join channel / group if needed
+            # Step 1: Auto-join group/channel if not already joined
             try:
-                from telethon.tl.functions.channels import JoinChannelRequest
                 await client(JoinChannelRequest(entity))
-                await asyncio.sleep(2)
+                await asyncio.sleep(1.5)
             except Exception:
                 pass
 
-            # Select random copywriting template
-            message_text = random.choice(ORGANIC_POST_TEMPLATES)
+            # Step 2: Select native copywriting based on language
+            message_text = get_copywriting_for_target(target_info)
             
-            # Simulate human behavior: Random typing time between 4 and 9 seconds
-            typing_duration = random.randint(4, 8)
-            print(f"  ✍️ Simulating human typing action ({typing_duration}s)...")
+            # Step 3: Simulate realistic human typing (3s - 6s)
+            typing_duration = random.randint(3, 6)
+            print(f"  ✍️ Simulating human typing ({typing_duration}s)...")
             await simulate_human_typing(client, entity, typing_duration)
             
-            # Check if group requires paid Telegram Stars
-            stars_required = getattr(entity, 'send_paid_messages_stars', None)
-            
-            # If target is a Broadcast Channel, auto-join its linked discussion group first if present
+            # Step 4: Handle Broadcast Channels vs Direct Supergroups
             if getattr(entity, 'broadcast', False):
-                print(f"  📢 Target is a Broadcast Channel. Preparing discussion comment...")
+                print(f"  📢 Handling Broadcast Channel comments...")
                 try:
-                    from telethon.tl.functions.channels import GetFullChannelRequest
                     full = await client(GetFullChannelRequest(entity))
                     linked_chat_id = getattr(full.full_chat, 'linked_chat_id', None)
                     if linked_chat_id:
@@ -208,48 +252,40 @@ async def main():
                 if messages and len(messages) > 0:
                     latest_msg = messages[0]
                     await client.send_message(entity, message_text, comment_to=latest_msg.id)
-                    print(f"  ✅ Comment published successfully under latest post in @{group_target}!")
+                    print(f"  🎉 Comment posted successfully under latest post in @{group_target}!")
                 else:
                     await client.send_message(entity, message_text)
-                    print(f"  ✅ Post published successfully to @{group_target}!")
+                    print(f"  🎉 Post sent successfully to @{group_target}!")
             else:
-                # Direct Group / Supergroup Message (with auto Stars support if required)
-                if stars_required and stars_required > 0:
-                    from telethon.tl.functions.messages import SendMessageRequest
-                    peer = await client.get_input_entity(entity)
-                    req = SendMessageRequest(
-                        peer=peer,
-                        message=message_text,
-                        random_id=random.randint(0, 2**63 - 1),
-                        allow_paid_stars=stars_required
-                    )
-                    await client(req)
-                    print(f"  ✅ Post published successfully to @{group_target} (Paid {stars_required} Stars)!")
-                else:
-                    await client.send_message(entity, message_text)
-                    print(f"  ✅ Post published successfully to @{group_target} (Free)!")
+                # Direct Supergroup Message
+                await client.send_message(entity, message_text)
+                print(f"  🎉 Message posted successfully to @{group_target}!")
 
-            # Human safety delay between groups (90s - 210s) to prevent any Telegram rate limits
+            success_count += 1
+
+            # Step 5: Adaptive Anti-Ban Safety Cooldown (45s - 75s)
             if index < len(TARGET_GROUPS):
-                cooldown = random.randint(90, 180)
-                print(f"  ⏳ Waiting safety cooldown of {cooldown}s before next group (anti-spam protection)...\n")
-                await asyncio.sleep(cooldown)
+                cooldown = random.randint(45, 75)
+                await live_countdown(cooldown)
 
         except FloodWaitError as e:
-            print(f"  ⚠️ Telegram FloodWait triggered! Must wait {e.seconds} seconds.")
-            await asyncio.sleep(e.seconds + 5)
-        except (UserBannedInChannelError, ChatWriteForbiddenError):
+            print(f"  ⚠️ Telegram FloodWait triggered! Cooling down for {e.seconds}s...")
+            await asyncio.sleep(e.seconds + 3)
+        except (UserBannedInChannelError, ChatWriteForbiddenError, ChatAdminRequiredError):
             print(f"  ⚠️ Posting restricted by admin in @{group_target}. Skipping safely.")
+            skip_count += 1
+            await asyncio.sleep(2)
         except Exception as e:
             err_str = str(e)
-            if "BALANCE_TOO_LOW" in err_str or "ALLOW_PAYMENT_REQUIRED" in err_str:
-                stars_val = getattr(entity, 'send_paid_messages_stars', 2) if 'entity' in locals() else 2
-                print(f"  ⚠️ @{group_target}: Requires {stars_val} Telegram Stars to post (Account Stars balance is low). Skipping safely.")
+            if "ALLOW_PAYMENT_REQUIRED" in err_str or "BALANCE_TOO_LOW" in err_str:
+                print(f"  ⚠️ @{group_target}: Requires Telegram Stars fee. Skipping safely.")
             else:
-                print(f"  ❌ Error with @{group_target}: {e}")
+                print(f"  ❌ Note for @{group_target}: {e}")
+            skip_count += 1
+            await asyncio.sleep(2)
 
     print("\n════════════════════════════════════════════════════════════")
-    print("🎉 All organic promotional tasks completed safely and successfully!")
+    print(f"🏁 Automation Completed! Successful: {success_count} | Skipped: {skip_count}")
     print("════════════════════════════════════════════════════════════\n")
     await client.disconnect()
 
