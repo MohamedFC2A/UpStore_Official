@@ -1,19 +1,19 @@
 #!/usr/bin/env python3
 """
 ═══════════════════════════════════════════════════════════════════════════════
-🚀 UpStore Ultra-Smart Growth & Promotion Automation Engine (Multi-Lingual)
+🚀 UpStore 24/7 Ultra-Smart Growth & Promotion Automation Engine
 ═══════════════════════════════════════════════════════════════════════════════
-- Multi-Lingual Smart Targeting: Auto-detects Group Language (Arabic / English / Russian).
-- Organic Human-Like Simulation: Native copy, human typing, randomized pauses.
-- Anti-Ban & High-Speed Resilience: Adaptive 45-80s safety cooldowns + live countdown timer.
-- 100% Zero-Crash Architecture: Auto-reconnect, FloodWait handler, error recovery.
+- 24/7 Perpetual Intelligent Loop: Runs continuous cycles with smart rest periods.
+- Authentic Trustworthy Copywriting: Peer recommendation, zero-hype, professional tone.
+- Exact Referral Attribution: Direct ref link with ID 8495121463.
+- Multi-Lingual Native Targeting: Auto-switches between Arabic, English, and Russian.
+- Dynamic Anti-Ban Protections: Random order shuffle, human typing, adaptive cooldowns.
 ═══════════════════════════════════════════════════════════════════════════════
 """
 
 import asyncio
 import os
 import random
-import re
 import sys
 import time
 from datetime import datetime
@@ -27,7 +27,7 @@ try:
         ChannelPrivateError,
         ChatAdminRequiredError
     )
-    from telethon.tl.functions.channels import GetFullChannelRequest, JoinChannelRequest
+    from telethon.tl.functions.channels import JoinChannelRequest
     from telethon.tl.functions.messages import SendMessageRequest
 except ImportError:
     print("❌ Telethon is not installed! Please run: pip install telethon")
@@ -40,14 +40,20 @@ API_ID = int(os.getenv("TG_API_ID", 31577730))
 API_HASH = os.getenv("TG_API_HASH", "42d6fcd39c9e724428133de55ab0fe21")
 SESSION_NAME = "upstore_promoter_session"
 
-# Official bot link
-BOT_REF_LINK = "https://t.me/upstore_one_bot"
+# Direct official referral link with user ID 8495121463
+BOT_REF_LINK = "https://t.me/upstore_one_bot?start=ref_8495121463"
+
+# Timing configuration
+INTER_GROUP_COOLDOWN_MIN = 45  # Seconds between groups
+INTER_GROUP_COOLDOWN_MAX = 80  # Seconds between groups
+ROUND_REST_MINUTES_MIN = 45    # Minutes to rest after a full cycle
+ROUND_REST_MINUTES_MAX = 75    # Minutes to rest after a full cycle
 
 # ─────────────────────────────────────────────────────────────────────────────
 # 2. TARGET TELEGRAM COMMUNITIES (100% Verified Pure Open Discussion Chats)
 # ─────────────────────────────────────────────────────────────────────────────
 TARGET_GROUPS = [
-    # Top Arabic Active Design, AI & Developer Chats (شاتات مفتوحة ونشطة)
+    # Top Arabic Active Design, AI & Developer Chats
     {"username": "akkffh", "lang": "ar", "name": "قروب مصممي الجرافيك وكانفا (2.6K)"},
     {"username": "A1_des", "lang": "ar", "name": "قروب مصممي الجرافيك (1.2K)"},
     {"username": "modmentadawulgroups", "lang": "ar", "name": "جروب نقاشات عامة وعروض (3.3K)"},
@@ -69,82 +75,69 @@ TARGET_GROUPS = [
 ]
 
 # ─────────────────────────────────────────────────────────────────────────────
-# 3. NATIVE MULTI-LINGUAL ORGANIC COPYWRITING
+# 3. HIGH-TRUST, AUTHENTIC & NATURAL COPYWRITING TEMPLATES
 # ─────────────────────────────────────────────────────────────────────────────
 TEMPLATES_AR = [
-    f"""يا شباب لقيت متجر سري بيبيع اشتراكات الذكاء الاصطناعي بالجملة بأسعار خرافية 🤯
-أنا اشتريت منه جيمناي برو سنة ونص كاملة بـ 0.25$ (أه ربع دولار والله وشغال رسمي مع 2TB سحابي) وحبيت أشارككم:
+    # Template 1: نصيحة وتجربة فريلانسر حقيقية ومفيدة
+    f"""يا جماعة حبيت أشارككم تجربة سريعة ممكن توفر عليكم كتير..
+كنت بدور على اشتراك رسمي لـ Gemini Advanced و Canva Pro لشغلي، وجربت بوت موثوق بيوفر الاشتراكات الرقمية بأسعار الجملة المباشرة بدون وسيط.
+المميز إنه تسليم فوري وتفعيل رسمي بضمان، والأسعار بتبدأ من 0.25$ بس (جيمناي 18 شهر مع مساحة سحابية 2TB).
 
-🔥 أبرز الأسعار في البوت:
-💎 Gemini Advanced (18 شهر) ⬅️ 0.25$ فقط
-🤖 ChatGPT Plus (شهر كامل) ⬅️ 0.99$ فقط
-🧠 Claude 3.7 Sonnet ⬅️ 0.89$ فقط
-🎨 Canva Pro (مدى الحياة) ⬅️ 0.49$ فقط
-🎬 CapCut Pro (سنة كاملة) ⬅️ 0.79$ فقط
-🚀 Cursor Pro ⬅️ 0.85$ فقط
-🔍 Perplexity Pro ⬅️ 0.65$ فقط
-💻 Windows 11 Pro ⬅️ 0.99$ فقط
-
-التسليم فوري تلقائي بدون انتظار:
+📌 للي حابب يستفيد أو يشوف قائمة الأدوات المتاحة:
 👉 {BOT_REF_LINK}""",
 
-    f"""لكل الناس اللي شغالة Freelancing أو برمجة أو تصميم وتعبانة من أسعار الاشتراكات الغالية..
-جربوا البوت ده فيه تصفية أسعار حقيقية بضمان كامل:
+    # Template 2: عرض ومقارنة أدوات الذكاء الاصطناعي والتصميم
+    f"""للمهتمين بأدوات الذكاء الاصطناعي والبرمجيات (ChatGPT Plus / Claude 3.7 / Canva Pro / Cursor)..
+ده متجر بيوفر اشتراكات أصلية بأسعار رمزية ومناسبة جداً للطلاب والمستقلين، مع دفع آمن وتفعيل تلقائي فوري.
 
-✨ كانفا برو مدى الحياة بـ 0.49$
-✨ كاب كات برو سنة بـ 0.79$
-✨ جيمناي أدفانسد 18 شهر بـ 0.25$
-✨ شات جي بي تي بلس بـ 0.99$
-✨ كلود 3.7 بريميوم بـ 0.89$
-✨ أوفيس 365 أصلي بـ 1.20$
+💎 أبرز الاشتراكات المتوفرة:
+• Gemini Advanced (18 شهر كاملة) — $0.25
+• Canva Pro (مدى الحياة) — $0.49
+• CapCut Pro (سنة كاملة) — $0.79
+• Claude 3.7 Sonnet & ChatGPT Plus
+• تراخيص ويندوز 11 وأوفيس 365 أصلية
 
-الدفع متاح وسهل جداً (Bybit / Binance) والبوت فوري 100%:
-🔗 {BOT_REF_LINK}""",
+🔗 رابط التصفح والتفعيل المباشر:
+👉 {BOT_REF_LINK}""",
 
-    f"""عن تجربة شخصية بعد ما دورت كتير على اشتراكات رخيصة ومضمونة.. البوت ده الأفضل بلا منازع ⚡
-الأسعار كلها جملة ومافيش حاجة معدية 3$ أصلاً، وأحلى حاجة الجيمناي 18 شهر بربع دولار وشغال رسمي على إيميلك.
+    # Template 3: مشاركة كنز تقني بأسلوب بسيط ومهذب
+    f"""مساء الخير يا شباب.. لو بتستخدموا أدوات التصميم أو الذكاء الاصطناعي بشكل يومي، البوت ده بيقدم عروض رسمية ممتازة جداً وبتسليم لحظي.
+أنا مجربه شخصياً في تفعيل أدواتي لشغلي وشغال تمام ومضمون.
 
-📌 تصفحوا العروض والأسعار من هنا:
+رابط البوت للاطلاع على الباقات والأسعار:
 👉 {BOT_REF_LINK}"""
 ]
 
 TEMPLATES_EN = [
-    f"""Hey guys! Found an incredible wholesale Telegram store for AI & Pro Software subscriptions at insane discounts 🔥
-Just activated Gemini Advanced for 18 full months for only $0.25 (includes 2TB cloud storage)!
+    # Template 1: Clean, professional peer recommendation
+    f"""Sharing a really useful resource for freelancers, designers, and developers:
+Found a trusted wholesale digital distribution bot for genuine AI & productivity subscriptions with instant automated delivery.
 
-⚡ Best Deals Right Now:
-🤖 Gemini Advanced (18 Months) ➡️ $0.25
-🧠 ChatGPT Plus (1 Month) ➡️ $0.99
-💎 Claude 3.7 Sonnet Pro ➡️ $0.89
-🎨 Canva Pro (Lifetime) ➡️ $0.49
-🎬 CapCut Pro (1 Year) ➡️ $0.79
-🚀 Cursor Pro Developer ➡️ $0.85
-🔍 Perplexity Pro ➡️ $0.65
-💻 Windows 11 Pro Genuine Key ➡️ $0.99
+Key available tools:
+• Gemini Advanced (18 Months + 2TB Cloud) — $0.25
+• Canva Pro (Lifetime) — $0.49
+• CapCut Pro (1 Year) — $0.79
+• ChatGPT Plus & Claude 3.7 Pro
+• Genuine Windows 11 & Office 365 keys
 
-Instant automatic key delivery 24/7 (Accepts Binance Pay / Bybit):
+Direct link to browse tools & instant activation:
 👉 {BOT_REF_LINK}""",
 
-    f"""If you're a freelancer, designer, or developer looking to save money on software tools, check this out:
-Got Canva Pro Lifetime + Gemini 18m for under $1 total. Everything is 100% genuine with instant activation.
-
-🔗 Direct Store Bot:
+    # Template 2: Direct value proposition
+    f"""If you're looking for genuine, cost-effective subscriptions for AI tools (Gemini 18m, ChatGPT Plus, Canva Pro, Cursor), this automated bot delivers authentic license keys instantly with full warranty:
 👉 {BOT_REF_LINK}"""
 ]
 
 TEMPLATES_RU = [
-    f"""Ребята, нашел классный оптовый магазин подписок на ИИ и софт по копеечным ценам 🔥
-Взял себе Gemini Advanced на 18 месяцев всего за $0.25 (с 2ТБ облака) — работает идеально!
+    # Template 1: Polite, helpful Russian copywriting
+    f"""Привет всем! Делюсь полезным проверенным ботом с оптовыми ценами на официальные подписки ИИ и софт для работы и учебы. Мгновенная автоматическая выдача ключей и полная гарантия:
 
-⚡ Топ предложения:
-🤖 Gemini Pro (18 месяцев) ➡️ $0.25
-🧠 ChatGPT Plus ➡️ $0.99
-🎨 Canva Pro (Навсегда) ➡️ $0.49
-🎬 CapCut Pro (1 год) ➡️ $0.79
-🚀 Cursor Pro ➡️ $0.85
-💻 Windows 11 Pro ➡️ $0.99
+• Gemini Advanced (18 месяцев + 2ТБ) — $0.25
+• Canva Pro (Навсегда) — $0.49
+• CapCut Pro (1 год) — $0.79
+• ChatGPT Plus / Claude 3.7 / Windows 11 Pro
 
-Мгновенная выдача ключей сразу после оплаты (Binance / Bybit):
+Ссылка на официальный бот:
 👉 {BOT_REF_LINK}"""
 ]
 
@@ -170,100 +163,76 @@ async def simulate_human_typing(client, entity, duration_sec):
         await asyncio.sleep(duration_sec)
 
 
-async def live_countdown(seconds):
+async def live_countdown(seconds, label="Safety Cooldown"):
     """Displays a live, dynamic countdown timer in the terminal."""
     for remaining in range(seconds, 0, -1):
-        sys.stdout.write(f"\r  ⏳ Safety Cooldown: [{remaining:02d}s remaining before next target]... ")
+        mins = remaining // 60
+        secs = remaining % 60
+        if mins > 0:
+            time_str = f"{mins:02d}m {secs:02d}s"
+        else:
+            time_str = f"{secs:02d}s"
+        sys.stdout.write(f"\r  ⏳ {label}: [{time_str} remaining]... ")
         sys.stdout.flush()
         await asyncio.sleep(1)
-    sys.stdout.write("\r  ✅ Cooldown complete! Proceeding to next group.              \n\n")
+    sys.stdout.write(f"\r  ✅ {label} completed! Proceeding now.                     \n\n")
     sys.stdout.flush()
 
 
-async def main():
-    if not API_ID or not API_HASH:
-        print("\n⚠️ [Error] Missing API credentials. Please set TG_API_ID and TG_API_HASH.\n")
-        return
-
+async def run_promoter_cycle(client, cycle_num):
+    """Executes a single full round across all configured target groups."""
     print("════════════════════════════════════════════════════════════")
-    print("🚀 UpStore Ultra-Smart Growth & Promotion Automation Engine")
-    print(f"⏰ Session Started: {datetime.now().strftime('%Y-%m-%d %I:%M:%S %p')}")
+    print(f"🔄 Starting Promotion Cycle #{cycle_num}")
+    print(f"⏰ Cycle Time: {datetime.now().strftime('%Y-%m-%d %I:%M:%S %p')}")
     print("════════════════════════════════════════════════════════════\n")
 
-    client = TelegramClient(SESSION_NAME, API_ID, API_HASH)
-    await client.start()
-    
-    me = await client.get_me()
-    print(f"👤 Authenticated as: {me.first_name} (@{me.username or 'NoUsername'}) [ID: {me.id}]")
-    print(f"📋 Target Pool: {len(TARGET_GROUPS)} verified communities configured.")
-    print("────────────────────────────────────────────────────────────\n")
+    # Shuffle target order each cycle for natural variance
+    current_targets = list(TARGET_GROUPS)
+    random.shuffle(current_targets)
 
     success_count = 0
     skip_count = 0
 
-    for index, target_info in enumerate(TARGET_GROUPS, 1):
+    for index, target_info in enumerate(current_targets, 1):
         group_target = target_info["username"]
         group_name = target_info.get("name", group_target)
         group_lang = target_info.get("lang", "ar").upper()
 
         try:
-            print(f"[{index:02d}/{len(TARGET_GROUPS):02d}] 🔍 Target: @{group_target} ({group_name}) [Lang: {group_lang}]")
+            print(f"[{index:02d}/{len(current_targets):02d}] 🔍 Target: @{group_target} ({group_name}) [Lang: {group_lang}]")
             entity = await client.get_entity(group_target)
             
-            # Step 1: Auto-join group/channel ONLY if not already joined
+            # Auto-join group ONLY if account is not already a member
             if getattr(entity, 'left', False):
                 try:
                     await client(JoinChannelRequest(entity))
-                    await asyncio.sleep(1.5)
+                    await asyncio.sleep(2)
                 except Exception:
                     pass
 
-            # Step 2: Select native copywriting based on language
+            # Select native copywriting based on group language
             message_text = get_copywriting_for_target(target_info)
             
-            # Step 3: Simulate realistic human typing (3s - 6s)
+            # Simulate realistic human typing (3s - 6s)
             typing_duration = random.randint(3, 6)
             print(f"  ✍️ Simulating human typing ({typing_duration}s)...")
             await simulate_human_typing(client, entity, typing_duration)
             
-            # Step 4: Handle Broadcast Channels vs Direct Supergroups
-            if getattr(entity, 'broadcast', False):
-                print(f"  📢 Handling Broadcast Channel comments...")
-                try:
-                    full = await client(GetFullChannelRequest(entity))
-                    linked_chat_id = getattr(full.full_chat, 'linked_chat_id', None)
-                    if linked_chat_id:
-                        disc_entity = await client.get_entity(linked_chat_id)
-                        await client(JoinChannelRequest(disc_entity))
-                        await asyncio.sleep(1.5)
-                except Exception:
-                    pass
-
-                messages = await client.get_messages(entity, limit=1)
-                if messages and len(messages) > 0:
-                    latest_msg = messages[0]
-                    await client.send_message(entity, message_text, comment_to=latest_msg.id)
-                    print(f"  🎉 Comment posted successfully under latest post in @{group_target}!")
-                else:
-                    await client.send_message(entity, message_text)
-                    print(f"  🎉 Post sent successfully to @{group_target}!")
-            else:
-                # Direct Supergroup Message
-                await client.send_message(entity, message_text)
-                print(f"  🎉 Message posted successfully to @{group_target}!")
-
+            # Post directly to the open supergroup
+            await client.send_message(entity, message_text)
+            print(f"  🎉 Message posted successfully to @{group_target}!")
             success_count += 1
 
-            # Step 5: Adaptive Anti-Ban Safety Cooldown (45s - 75s)
-            if index < len(TARGET_GROUPS):
-                cooldown = random.randint(45, 75)
-                await live_countdown(cooldown)
+            # Inter-group safety pause (45s - 80s)
+            if index < len(current_targets):
+                cooldown = random.randint(INTER_GROUP_COOLDOWN_MIN, INTER_GROUP_COOLDOWN_MAX)
+                await live_countdown(cooldown, "Inter-Group Cooldown")
 
         except FloodWaitError as e:
-            print(f"  ⚠️ Telegram FloodWait triggered! Cooling down for {e.seconds}s...")
-            await asyncio.sleep(e.seconds + 3)
+            print(f"  ⚠️ Telegram FloodWait triggered! Waiting {e.seconds}s safely...")
+            await asyncio.sleep(e.seconds + 5)
         except (UserBannedInChannelError, ChatWriteForbiddenError, ChatAdminRequiredError):
-            print(f"  ⚠️ Posting restricted by admin in @{group_target}. Skipping safely.")
+            print(f"  ⚠️ Posting restricted in @{group_target}. Skipping safely.")
             skip_count += 1
             await asyncio.sleep(2)
         except Exception as e:
@@ -275,9 +244,52 @@ async def main():
             skip_count += 1
             await asyncio.sleep(2)
 
-    print("\n════════════════════════════════════════════════════════════")
-    print(f"🏁 Automation Completed! Successful: {success_count} | Skipped: {skip_count}")
-    print("════════════════════════════════════════════════════════════\n")
+    print("────────────────────────────────────────────────────────────")
+    print(f"📊 Cycle #{cycle_num} Summary: ✅ Posted: {success_count} | ⚠️ Skipped: {skip_count}")
+    print("────────────────────────────────────────────────────────────\n")
+
+
+async def main():
+    if not API_ID or not API_HASH:
+        print("\n⚠️ [Error] Missing API credentials. Please set TG_API_ID and TG_API_HASH.\n")
+        return
+
+    print("╔════════════════════════════════════════════════════════════╗")
+    print("║   🚀 UpStore 24/7 Smart Autonomous Promotion Engine        ║")
+    print("║   📌 Referral Link: " + BOT_REF_LINK[:32] + "...   ║")
+    print("╚════════════════════════════════════════════════════════════╝\n")
+
+    client = TelegramClient(SESSION_NAME, API_ID, API_HASH)
+    await client.start()
+    
+    me = await client.get_me()
+    print(f"👤 Authenticated as: {me.first_name} (@{me.username or 'NoUsername'}) [ID: {me.id}]")
+    print(f"📋 Target Pool: {len(TARGET_GROUPS)} verified active open chats configured.")
+    print(f"⚡ Mode: Perpetual 24/7 Autonomous Looping Enabled.\n")
+
+    cycle = 1
+    while True:
+        try:
+            await run_promoter_cycle(client, cycle)
+            
+            # Calculate rest time between cycles (45 to 75 minutes)
+            rest_minutes = random.randint(ROUND_REST_MINUTES_MIN, ROUND_REST_MINUTES_MAX)
+            rest_seconds = rest_minutes * 60
+            next_time = datetime.fromtimestamp(time.time() + rest_seconds).strftime('%I:%M:%S %p')
+            
+            print(f"💤 Cycle #{cycle} completed. Entering round rest for {rest_minutes} minutes.")
+            print(f"⏰ Next Cycle (#{cycle + 1}) will start at: {next_time}\n")
+            
+            await live_countdown(rest_seconds, f"Round Rest (Cycle #{cycle} -> #{cycle + 1})")
+            cycle += 1
+
+        except KeyboardInterrupt:
+            print("\n🛑 Promoter stopped safely by user.")
+            break
+        except Exception as e:
+            print(f"\n⚠️ Unexpected cycle error: {e}. Recovering in 60s...")
+            await asyncio.sleep(60)
+
     await client.disconnect()
 
 
