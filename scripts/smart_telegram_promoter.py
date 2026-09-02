@@ -48,12 +48,13 @@ BOT_REF_LINK = "https://t.me/upstore_one_bot"
 # 3. TARGET TELEGRAM GROUPS / CHANNELS (Public links or usernames)
 # ─────────────────────────────────────────────────────────────────────────────
 TARGET_GROUPS = [
-    "gemini12pro",       # https://t.me/gemini12pro
-    # Add more target public group usernames here without @:
-    # "chatgpt_arabic",
-    # "ai_tools_arab",
-    # "freelancers_egypt",
-    # "digital_marketing_mena"
+    "BassamtalksAI",    # 5,420 members (126 online) - Active AI group
+    "lrnai",            # 27,333 members - AI Tools community
+    "AItaker",          # 15,250 members - Artificial Intelligence & Prompts
+    "HAMDYtutorial",    # 23,202 members - Canva & Design Resources
+    "Ai_Arabic1",       # 57,704 members - AI in Arabic
+    "chatgpt_arabic",   # ChatGPT Arabic community
+    "gemini12pro",      # 137,063 members (4,903 online) - Gemini GPT Upgrade (2 Stars)
 ]
 
 # ─────────────────────────────────────────────────────────────────────────────
@@ -147,20 +148,55 @@ async def main():
 
     for index, group_target in enumerate(TARGET_GROUPS, 1):
         try:
-            print(f"[{index}/{len(TARGET_GROUPS)}] 🔍 Resolving target group: @{group_target}...")
+            print(f"[{index}/{len(TARGET_GROUPS)}] 🔍 Resolving target: @{group_target}...")
             entity = await client.get_entity(group_target)
             
+            # Auto-join channel / group if needed
+            try:
+                from telethon.tl.functions.channels import JoinChannelRequest
+                await client(JoinChannelRequest(entity))
+                await asyncio.sleep(2)
+            except Exception:
+                pass
+
             # Select random copywriting template
             message_text = random.choice(ORGANIC_POST_TEMPLATES)
             
-            # Simulate human behavior: Random typing time between 4 and 10 seconds
-            typing_duration = random.randint(4, 9)
+            # Simulate human behavior: Random typing time between 4 and 9 seconds
+            typing_duration = random.randint(4, 8)
             print(f"  ✍️ Simulating human typing action ({typing_duration}s)...")
             await simulate_human_typing(client, entity, typing_duration)
             
-            # Send the organic post
-            await client.send_message(entity, message_text)
-            print(f"  ✅ Post published successfully to @{group_target}!")
+            # Check if group requires paid Telegram Stars
+            stars_required = getattr(entity, 'send_paid_messages_stars', None)
+            
+            # If target is a Broadcast Channel, try commenting on the latest post
+            if getattr(entity, 'broadcast', False):
+                print(f"  📢 Target is a Broadcast Channel. Attempting to comment on the latest post...")
+                messages = await client.get_messages(entity, limit=1)
+                if messages and len(messages) > 0:
+                    latest_msg = messages[0]
+                    await client.send_message(entity, message_text, comment_to=latest_msg.id)
+                    print(f"  ✅ Comment published successfully under latest post in @{group_target}!")
+                else:
+                    await client.send_message(entity, message_text)
+                    print(f"  ✅ Post published successfully to @{group_target}!")
+            else:
+                # Direct Group / Supergroup Message (with auto Stars support if required)
+                if stars_required and stars_required > 0:
+                    from telethon.tl.functions.messages import SendMessageRequest
+                    peer = await client.get_input_entity(entity)
+                    req = SendMessageRequest(
+                        peer=peer,
+                        message=message_text,
+                        random_id=random.randint(0, 2**63 - 1),
+                        allow_paid_stars=stars_required
+                    )
+                    await client(req)
+                    print(f"  ✅ Post published successfully to @{group_target} (Paid {stars_required} Stars)!")
+                else:
+                    await client.send_message(entity, message_text)
+                    print(f"  ✅ Post published successfully to @{group_target} (Free)!")
 
             # Human safety delay between groups (90s - 210s) to prevent any Telegram rate limits
             if index < len(TARGET_GROUPS):
@@ -172,9 +208,14 @@ async def main():
             print(f"  ⚠️ Telegram FloodWait triggered! Must wait {e.seconds} seconds.")
             await asyncio.sleep(e.seconds + 5)
         except (UserBannedInChannelError, ChatWriteForbiddenError):
-            print(f"  ⚠️ Posting restricted in @{group_target}. Skipping safely.")
+            print(f"  ⚠️ Posting restricted by admin in @{group_target}. Skipping safely.")
         except Exception as e:
-            print(f"  ❌ Error with @{group_target}: {e}")
+            err_str = str(e)
+            if "BALANCE_TOO_LOW" in err_str or "ALLOW_PAYMENT_REQUIRED" in err_str:
+                stars_val = getattr(entity, 'send_paid_messages_stars', 2) if 'entity' in locals() else 2
+                print(f"  ⚠️ @{group_target}: Requires {stars_val} Telegram Stars to post (Account Stars balance is low). Skipping safely.")
+            else:
+                print(f"  ❌ Error with @{group_target}: {e}")
 
     print("\n════════════════════════════════════════════════════════════")
     print("🎉 All organic promotional tasks completed safely and successfully!")
