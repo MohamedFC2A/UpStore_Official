@@ -48,13 +48,28 @@ BOT_REF_LINK = "https://t.me/upstore_one_bot"
 # 3. TARGET TELEGRAM GROUPS / CHANNELS (Public links or usernames)
 # ─────────────────────────────────────────────────────────────────────────────
 TARGET_GROUPS = [
-    "BassamtalksAI",    # 5,420 members (126 online) - Active AI group
-    "lrnai",            # 27,333 members - AI Tools community
-    "AItaker",          # 15,250 members - Artificial Intelligence & Prompts
-    "HAMDYtutorial",    # 23,202 members - Canva & Design Resources
-    "Ai_Arabic1",       # 57,704 members - AI in Arabic
-    "chatgpt_arabic",   # ChatGPT Arabic community
-    "gemini12pro",      # 137,063 members (4,903 online) - Gemini GPT Upgrade (2 Stars)
+    # --- Open Discussion Groups & Supergroups (شاتات ومجموعات مفتوحة) ---
+    "digital_marketing_chat01",   # 7,048 members (336 online) - Digital Marketing Chat
+    "designerssoftwear",          # 857 members - ملتقى برمجيات المصممين
+    "digital_chat1",              # 856 members - چات ديجيتال ماركتنج
+    "Arabdesign21",               # 370 members - ملتقى المصممين العرب
+    "FV_MM",                      # 325 members - مجتمع نقاشات عامة
+    "cfvdvhbsn",                  # 278 members - ملتقى عالم المصممين
+    "DigitalMarketing_AC",        # 243 members - ADVERTISING & DIGITAL MARKETING Chat
+    "AI_Tools_Group",             # 194 members - AI Tools Discussion Group
+    "ALULYAAi1",                  # 123 members - نقاشات عالم الذكاء الاصطناعي
+    "galsen_graphique_designers", # 101 members - Graphic Designers Chat
+    "areejdi",                    # 91 members - قروب مصممي الجرافيك
+    
+    # --- High-Traffic Channels with Comments & Discussions (قنوات بتعليقات نشطة) ---
+    "chatgpt_arabic",             # مجتمع شات جي بي تي بالعربي (Verified working)
+    "Ai_Arabic1",                 # 57,704 members - الذكاء الاصطناعي بالعربية
+    "lrnai",                      # 27,333 members - ادوات الذكاء الاصطناعي
+    "HAMDYtutorial",              # 23,202 members - موارد وملحقات التصميم
+    "AItaker",                    # 15,250 members - الذكاء الاصطناعي
+    "BassamtalksAI",              # 5,420 members - الذكاء الاصطناعي وأخباره
+    "toolsai4arab",               # 3,014 members - أدوات الذكاء الاصطناعي
+    "gemini12pro",                # 137,063 members (4,903 online) - Gemini GPT Upgrade
 ]
 
 # ─────────────────────────────────────────────────────────────────────────────
@@ -170,9 +185,20 @@ async def main():
             # Check if group requires paid Telegram Stars
             stars_required = getattr(entity, 'send_paid_messages_stars', None)
             
-            # If target is a Broadcast Channel, try commenting on the latest post
+            # If target is a Broadcast Channel, auto-join its linked discussion group first if present
             if getattr(entity, 'broadcast', False):
-                print(f"  📢 Target is a Broadcast Channel. Attempting to comment on the latest post...")
+                print(f"  📢 Target is a Broadcast Channel. Preparing discussion comment...")
+                try:
+                    from telethon.tl.functions.channels import GetFullChannelRequest
+                    full = await client(GetFullChannelRequest(entity))
+                    linked_chat_id = getattr(full.full_chat, 'linked_chat_id', None)
+                    if linked_chat_id:
+                        disc_entity = await client.get_entity(linked_chat_id)
+                        await client(JoinChannelRequest(disc_entity))
+                        await asyncio.sleep(1.5)
+                except Exception:
+                    pass
+
                 messages = await client.get_messages(entity, limit=1)
                 if messages and len(messages) > 0:
                     latest_msg = messages[0]
