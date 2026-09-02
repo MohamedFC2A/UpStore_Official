@@ -1,7 +1,7 @@
 {
   "description": "Persistent blacklist of unusable, restricted, paid, or dead Telegram groups.",
-  "updated_at": "2026-09-02T09:03:06.002127",
-  "total_blacklisted": 14,
+  "updated_at": "2026-09-02T09:26:48.267636",
+  "total_blacklisted": 83,
   "blacklisted_groups": {
     "gemini12pro": {
       "reason": "Requires 2 Telegram Stars fee per message (ALLOW_PAYMENT_REQUIRED)",
@@ -60,6 +60,351 @@
       "title": "ملتقى برمجيات المصممين (857)",
       "reason": "Posting restricted by admin / muted (ChatWriteForbiddenError)",
       "added_at": "2026-09-02 07:56:13 AM"
+    },
+    "GroupREFreelancersSociety": {
+      "title": "RE Freelancers Community",
+      "reason": "Posting restricted by admin / muted (ChatWriteForbiddenError)",
+      "added_at": "2026-09-02 09:04:47 AM"
+    },
+    "Ahmedvvvvv11111": {
+      "title": "تسويق سوشيال ميديا Vip🐋👑✌",
+      "reason": "Posting restricted by admin / muted (ChatWriteForbiddenError)",
+      "added_at": "2026-09-02 09:04:54 AM"
+    },
+    "desinhome": {
+      "title": "🤩 مجتمع مصممين 🤩",
+      "reason": "Posting restricted by admin / muted (ChatWriteForbiddenError)",
+      "added_at": "2026-09-02 09:05:01 AM"
+    },
+    "mohtrefcom": {
+      "title": "Programmers Forum",
+      "reason": "Posting restricted by admin / muted (ChatWriteForbiddenError)",
+      "added_at": "2026-09-02 09:05:10 AM"
+    },
+    "nvv_96": {
+      "title": "قروب تعارف وسوالف - شباب 💙 وبنات 💗",
+      "reason": "Posting restricted by admin / muted (ChatWriteForbiddenError)",
+      "added_at": "2026-09-02 09:05:18 AM"
+    },
+    "freelancers00": {
+      "title": "Freelancers | المستقلون",
+      "reason": "Posting restricted by admin / muted (ChatWriteForbiddenError)",
+      "added_at": "2026-09-02 09:06:39 AM"
+    },
+    "SW_UD": {
+      "title": "كروب تبادل قنوات مشاهدات اشتراكات",
+      "reason": "Posting restricted by admin / muted (ChatWriteForbiddenError)",
+      "added_at": "2026-09-02 09:07:15 AM"
+    },
+    "kaustAcademy_AI": {
+      "title": "KAUST Academy - Artificial Intelligence Program",
+      "reason": "Posting restricted by admin / muted (ChatWriteForbiddenError)",
+      "added_at": "2026-09-02 09:07:20 AM"
+    },
+    "Crypt0_Teech": {
+      "title": "CRYPTO TECH | Chat",
+      "reason": "Posting restricted by admin / muted (ChatWriteForbiddenError)",
+      "added_at": "2026-09-02 09:07:27 AM"
+    },
+    "AiPsGroup": {
+      "title": "جروب اليستريتور & فوتوشوب",
+      "reason": "Posting restricted by admin / muted (ChatWriteForbiddenError)",
+      "added_at": "2026-09-02 09:08:06 AM"
+    },
+    "arabipython": {
+      "title": "بايثون - Python Language",
+      "reason": "Posting restricted by admin / muted (ChatWriteForbiddenError)",
+      "added_at": "2026-09-02 09:08:53 AM"
+    },
+    "ugccreater": {
+      "title": "للباحثين عن صناع محتوى ugc",
+      "reason": "Posting restricted by admin / muted (ChatWriteForbiddenError)",
+      "added_at": "2026-09-02 09:09:00 AM"
+    },
+    "mobarmegeen": {
+      "title": "قعدة مبرمجين",
+      "reason": "Posting restricted by admin / muted (ChatWriteForbiddenError)",
+      "added_at": "2026-09-02 09:09:05 AM"
+    },
+    "Midoo87560": {
+      "title": "دردشة وسوالف يمانيه",
+      "reason": "Posting restricted by admin / muted (ChatWriteForbiddenError)",
+      "added_at": "2026-09-02 09:10:28 AM"
+    },
+    "elMb4tooroom1": {
+      "title": "دردشة شباب🔥⚔️وبنات ❤️⚔️الوطن العربي",
+      "reason": "Posting restricted by admin / muted (ChatWriteForbiddenError)",
+      "added_at": "2026-09-02 09:10:33 AM"
+    },
+    "br_0m": {
+      "title": "تًٌٍبًٌٍاًٌٍدًٌٍلًٌٍ اًٌٍشًٌٍتًٌٍرًٌٍاكًٌٍاًٌٍتًٌٍ قنًٌٍوًٌٍاًٌٍتًٌٍ مًٌٍشًٌٍاًٌٍهًٌٍداًٌٍتًٌٍ اًٌٍعًٌٍضًٌٍاًٌٍءًٌٍ",
+      "reason": "Posting restricted by admin / muted (ChatWriteForbiddenError)",
+      "added_at": "2026-09-02 09:11:40 AM"
+    },
+    "coinsbit_chat": {
+      "title": "Coinsbit CryptoExchange",
+      "reason": "Posting restricted by admin / muted (ChatWriteForbiddenError)",
+      "added_at": "2026-09-02 09:11:45 AM"
+    },
+    "FreeLancerArabs": {
+      "title": "ملتقى فريلانسر العرب 💻",
+      "reason": "Posting restricted by admin / muted (ChatWriteForbiddenError)",
+      "added_at": "2026-09-02 09:11:54 AM"
+    },
+    "Chat_Tech": {
+      "title": "TechChat",
+      "reason": "Posting restricted by admin / muted (ChatWriteForbiddenError)",
+      "added_at": "2026-09-02 09:12:26 AM"
+    },
+    "Fin5h": {
+      "title": "🇸🇦 سوق الخدمات المحاسبية 🇸🇦",
+      "reason": "Posting restricted by admin / muted (ChatWriteForbiddenError)",
+      "added_at": "2026-09-02 09:13:07 AM"
+    },
+    "smedia047": {
+      "title": "سوشيال ميدياوي 2021",
+      "reason": "Posting restricted by admin / muted (ChatWriteForbiddenError)",
+      "added_at": "2026-09-02 09:13:14 AM"
+    },
+    "BNBChainDevs": {
+      "title": "BNB Chain Developers Hub",
+      "reason": "Posting restricted by admin / muted (ChatWriteForbiddenError)",
+      "added_at": "2026-09-02 09:13:19 AM"
+    },
+    "Upworkaccountsrental": {
+      "title": "Upwork rental",
+      "reason": "Posting restricted by admin / muted (ChatWriteForbiddenError)",
+      "added_at": "2026-09-02 09:13:26 AM"
+    },
+    "HTML_CSS_ARAB": {
+      "title": "Html5 | | CSS ¦¦ لغة تطوير ويب",
+      "reason": "Posting restricted by admin / muted (ChatWriteForbiddenError)",
+      "added_at": "2026-09-02 09:13:35 AM"
+    },
+    "jr_1z": {
+      "title": "برمجة جافا, اندرويد, فلاتر",
+      "reason": "Posting restricted by admin / muted (ChatWriteForbiddenError)",
+      "added_at": "2026-09-02 09:13:40 AM"
+    },
+    "soalvdid": {
+      "title": "قروب تعارف وسوالف سعوديه",
+      "reason": "Posting restricted by admin / muted (ChatWriteForbiddenError)",
+      "added_at": "2026-09-02 09:13:49 AM"
+    },
+    "mjtmmjtj": {
+      "title": "دردشة العراق 🇮🇶 | تعارف وسوالف",
+      "reason": "Posting restricted by admin / muted (ChatWriteForbiddenError)",
+      "added_at": "2026-09-02 09:13:58 AM"
+    },
+    "ssss9999ssss": {
+      "title": "تجمع مصممين كانفا canva",
+      "reason": "Posting restricted by admin / muted (ChatWriteForbiddenError)",
+      "added_at": "2026-09-02 09:14:08 AM"
+    },
+    "fivereviews": {
+      "title": "Review on Fiverr Upwork Freelancer",
+      "reason": "Posting restricted by admin / muted (ChatWriteForbiddenError)",
+      "added_at": "2026-09-02 09:15:48 AM"
+    },
+    "fiverrhelpgroup": {
+      "title": "Freelance || فريلانس",
+      "reason": "Posting restricted by admin / muted (ChatWriteForbiddenError)",
+      "added_at": "2026-09-02 09:16:34 AM"
+    },
+    "socialmediaziad": {
+      "title": "خدمات سوشيال ميديا",
+      "reason": "Posting restricted by admin / muted (ChatWriteForbiddenError)",
+      "added_at": "2026-09-02 09:17:16 AM"
+    },
+    "designers_chatik": {
+      "title": "ВАКАНСИИ ДЛЯ ДИЗАЙНЕРОВ | ЧАТ",
+      "reason": "Posting restricted by admin / muted (ChatWriteForbiddenError)",
+      "added_at": "2026-09-02 09:17:23 AM"
+    },
+    "DigitalMarketing443": {
+      "title": "تسويق رقمي ( عن بعد ) - جامعة القصيم",
+      "reason": "Posting restricted by admin / muted (ChatWriteForbiddenError)",
+      "added_at": "2026-09-02 09:17:30 AM"
+    },
+    "erpnextfreelancers": {
+      "title": "ERPNext Freelancers",
+      "reason": "Posting restricted by admin / muted (ChatWriteForbiddenError)",
+      "added_at": "2026-09-02 09:17:37 AM"
+    },
+    "chatinterfasedesign": {
+      "title": "Interface designers chat",
+      "reason": "Posting restricted by admin / muted (ChatWriteForbiddenError)",
+      "added_at": "2026-09-02 09:17:44 AM"
+    },
+    "A_ss101": {
+      "title": "قروب شباب وبنات اليمن🏅كروب 🍂شباب وبنات العراق دردشة شباب بنات 💚قروب شباب بنات السعودية قروبات تعارف شباب وبنات العرب مجموعة",
+      "reason": "Posting restricted by admin / muted (ChatWriteForbiddenError)",
+      "added_at": "2026-09-02 09:18:57 AM"
+    },
+    "ghotatejari": {
+      "title": "سوق الخدمات في المملكة العربية السعودية",
+      "reason": "Posting restricted by admin / muted (ChatWriteForbiddenError)",
+      "added_at": "2026-09-02 09:19:06 AM"
+    },
+    "hm96ss": {
+      "title": "جروب دردشة وسوالف يمانيه🤞😎",
+      "reason": "Posting restricted by admin / muted (ChatWriteForbiddenError)",
+      "added_at": "2026-09-02 09:19:11 AM"
+    },
+    "GDesigning": {
+      "title": "Hire Graphic Designers",
+      "reason": "Posting restricted by admin / muted (ChatWriteForbiddenError)",
+      "added_at": "2026-09-02 09:19:20 AM"
+    },
+    "fiverr_upwork": {
+      "title": "FIVERR | Upwork | Freelancer | Affiliate Marketing 💰 💻📲",
+      "reason": "Posting restricted by admin / muted (ChatWriteForbiddenError)",
+      "added_at": "2026-09-02 09:19:25 AM"
+    },
+    "GROUP4AI": {
+      "title": "الذكاء الاصطناعي | Artificial Intelligence",
+      "reason": "Posting restricted by admin / muted (ChatWriteForbiddenError)",
+      "added_at": "2026-09-02 09:19:38 AM"
+    },
+    "GPTFreeChats": {
+      "title": "ChatGPT",
+      "reason": "Posting restricted by admin / muted (ChatWriteForbiddenError)",
+      "added_at": "2026-09-02 09:20:46 AM"
+    },
+    "e_commerces": {
+      "title": "E-commerce",
+      "reason": "Posting restricted by admin / muted (ChatWriteForbiddenError)",
+      "added_at": "2026-09-02 09:20:55 AM"
+    },
+    "tech_chat": {
+      "title": "Technology & Consumer Electronics",
+      "reason": "Posting restricted by admin / muted (ChatWriteForbiddenError)",
+      "added_at": "2026-09-02 09:21:40 AM"
+    },
+    "merasushyalmidya": {
+      "title": "سوشيال ميديا",
+      "reason": "Posting restricted by admin / muted (ChatWriteForbiddenError)",
+      "added_at": "2026-09-02 09:21:45 AM"
+    },
+    "nsrpro2": {
+      "title": "أهل الوناسة | دردشة وسوالف",
+      "reason": "Posting restricted by admin / muted (ChatWriteForbiddenError)",
+      "added_at": "2026-09-02 09:21:52 AM"
+    },
+    "fiverrf": {
+      "title": "Fiverr",
+      "reason": "Posting restricted by admin / muted (ChatWriteForbiddenError)",
+      "added_at": "2026-09-02 09:21:59 AM"
+    },
+    "SN_DN": {
+      "title": "كروب تبادل قنوات مشاهدات اشتراكات",
+      "reason": "Posting restricted by admin / muted (ChatWriteForbiddenError)",
+      "added_at": "2026-09-02 09:22:10 AM"
+    },
+    "de44j2iklo7": {
+      "title": "بيع خدمات مصغرة لوسائل التواصل الاجتماعي لدول الخليج",
+      "reason": "Posting restricted by admin / muted (ChatWriteForbiddenError)",
+      "added_at": "2026-09-02 09:22:15 AM"
+    },
+    "geo_gis_word": {
+      "title": "وظائف و فريلانسر",
+      "reason": "Posting restricted by admin / muted (ChatWriteForbiddenError)",
+      "added_at": "2026-09-02 09:22:20 AM"
+    },
+    "aaha_sa": {
+      "title": "سوق الخدمات السعودية",
+      "reason": "Posting restricted by admin / muted (ChatWriteForbiddenError)",
+      "added_at": "2026-09-02 09:22:25 AM"
+    },
+    "coding_ru": {
+      "title": "💻 Coding Ru",
+      "reason": "Posting restricted by admin / muted (ChatWriteForbiddenError)",
+      "added_at": "2026-09-02 09:22:38 AM"
+    },
+    "NaqashatDev": {
+      "title": "نقاشات مبرمجين",
+      "reason": "Posting restricted by admin / muted (ChatWriteForbiddenError)",
+      "added_at": "2026-09-02 09:23:10 AM"
+    },
+    "keinfam": {
+      "title": "Фриланс чат - Kwork | Fiverr | Upwork",
+      "reason": "Posting restricted by admin / muted (ChatWriteForbiddenError)",
+      "added_at": "2026-09-02 09:23:15 AM"
+    },
+    "designers_chat_rus": {
+      "title": "ДИЗАЙНЕРЫ ЧАТ",
+      "reason": "Posting restricted by admin / muted (ChatWriteForbiddenError)",
+      "added_at": "2026-09-02 09:23:20 AM"
+    },
+    "bdjvxeao7": {
+      "title": "مستقلين 🥶 🗿💀..",
+      "reason": "Posting restricted by admin / muted (ChatWriteForbiddenError)",
+      "added_at": "2026-09-02 09:23:26 AM"
+    },
+    "Analysisdesign_systems_databases": {
+      "title": "تحليل وتصميم قواعد بيانات تطوير مواقع ويب وتطبيقات الهواتف",
+      "reason": "Posting restricted by admin / muted (ChatWriteForbiddenError)",
+      "added_at": "2026-09-02 09:23:40 AM"
+    },
+    "chatting_indian_ib": {
+      "title": "Indian singing crypto",
+      "reason": "Posting restricted by admin / muted (ChatWriteForbiddenError)",
+      "added_at": "2026-09-02 09:23:49 AM"
+    },
+    "tala_groub": {
+      "title": "دردشة شباب وبنات العرب ✨🌒",
+      "reason": "Posting restricted by admin / muted (ChatWriteForbiddenError)",
+      "added_at": "2026-09-02 09:23:58 AM"
+    },
+    "fiverr7": {
+      "title": "🏆 Fiverr Best Gigs Freelance Promotion 💻",
+      "reason": "Posting restricted by admin / muted (ChatWriteForbiddenError)",
+      "added_at": "2026-09-02 09:24:07 AM"
+    },
+    "fiverrrgig": {
+      "title": "Freelancers | Fiverr | Up work |",
+      "reason": "Posting restricted by admin / muted (ChatWriteForbiddenError)",
+      "added_at": "2026-09-02 09:24:12 AM"
+    },
+    "salladev": {
+      "title": "</Salla Developers>",
+      "reason": "Posting restricted by admin / muted (ChatWriteForbiddenError)",
+      "added_at": "2026-09-02 09:24:19 AM"
+    },
+    "CryptoMoonShots_Chat": {
+      "title": "CryptoMoonShots Chat 加密月球shots",
+      "reason": "Posting restricted by admin / muted (ChatWriteForbiddenError)",
+      "added_at": "2026-09-02 09:24:32 AM"
+    },
+    "freelancer_learning0": {
+      "title": "Freelancer & Upwork تعلم",
+      "reason": "Posting restricted by admin / muted (ChatWriteForbiddenError)",
+      "added_at": "2026-09-02 09:25:14 AM"
+    },
+    "pb1o8": {
+      "title": "قروب تعارف وسوالف🗿🧃",
+      "reason": "Posting restricted by admin / muted (ChatWriteForbiddenError)",
+      "added_at": "2026-09-02 09:25:19 AM"
+    },
+    "asxctdvhtfbkitvnhfx76": {
+      "title": "دردشة وسوالف",
+      "reason": "Posting restricted by admin / muted (ChatWriteForbiddenError)",
+      "added_at": "2026-09-02 09:25:24 AM"
+    },
+    "chat_py3hone": {
+      "title": "𝘾𝙃𝘼𝙏 𝘿𝙀𝙑 𝙋𝙔𝙏𝙃𝙊𝙉 </> 🔥",
+      "reason": "Posting restricted by admin / muted (ChatWriteForbiddenError)",
+      "added_at": "2026-09-02 09:25:29 AM"
+    },
+    "blockchainfreelancers": {
+      "title": "Blockchain Freelancers",
+      "reason": "Posting restricted by admin / muted (ChatWriteForbiddenError)",
+      "added_at": "2026-09-02 09:26:06 AM"
+    },
+    "upworku": {
+      "title": "Upwork sellers || Payoneer accounts 🇺🇸",
+      "reason": "Posting restricted by admin / muted (ChatWriteForbiddenError)",
+      "added_at": "2026-09-02 09:26:48 AM"
     }
   }
 }

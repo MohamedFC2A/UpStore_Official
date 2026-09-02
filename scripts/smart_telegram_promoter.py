@@ -1,18 +1,17 @@
 #!/usr/bin/env python3
 """
 ═══════════════════════════════════════════════════════════════════════════════
-🚀 UpStore 24/7 Indestructible Autonomous Engine (100+ Verified Open Chats)
+🚀 UpStore 24/7 Autonomous Promotion Engine & VIP Engagement Intelligence
 ═══════════════════════════════════════════════════════════════════════════════
-- 24/7 Perpetual Indestructible Loop: Never exits on its own; auto-restarts cycles forever.
-- Direct InputPeerChannel: Zero username resolution rate-limits via direct numeric IDs & access hashes.
-- Intelligent FloodWait Immunity: Caps / skips long flood waits (>60s) immediately without freezing.
-- Optimized Speed & High Safety: 20s-35s inter-group cooldowns, 2s-4s human typing.
-- Self-Healing Auto-Blacklist: Automatically kills & permanently quarantines dead/restricted groups.
-- Persistent JSON Storage: Scripts/promoter_blacklist.json & scripts/promoter_verified_100.json.
-- Authentic High-Trust Copywriting: 4+ rotating peer-recommendation templates.
+- Dual Intelligence Systems:
+    1. 🛡️ Blacklist Quarantine (promoter_blacklist.json): Zero-delay instant skip.
+    2. ⭐ VIP Golden Registry (promoter_vip_groups.json): Ranks, tracks, and delivers
+       specialized high-conversion copywriting to top-performing high-activity groups.
+- Direct InputPeerChannel: Zero username resolution rate-limits via direct numeric IDs & hashes.
+- Intelligent FloodWait Immunity: Caps/skips long flood waits immediately without freezing.
+- Dynamic Niche Copywriting: Custom VIP copy for Designers, Developers, AI users & Marketers.
+- 24/7 Perpetual Indestructible Supervisor: Runs continuous cycles indefinitely.
 - Exact Referral Attribution: Direct ref link with ID 8495121463.
-- Multi-Lingual Native Targeting: Auto-switches between Arabic, English, and Russian.
-- Dynamic Anti-Ban Protections: Random order shuffle, human typing, adaptive cooldowns.
 ═══════════════════════════════════════════════════════════════════════════════
 """
 
@@ -53,6 +52,7 @@ SESSION_NAME = "upstore_promoter_session"
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 BLACKLIST_FILE = os.path.join(BASE_DIR, "promoter_blacklist.json")
 VERIFIED_TARGETS_FILE = os.path.join(BASE_DIR, "promoter_verified_100.json")
+VIP_GROUPS_FILE = os.path.join(BASE_DIR, "promoter_vip_groups.json")
 
 # Direct official referral link with user ID 8495121463
 BOT_REF_LINK = "https://t.me/upstore_one_bot?start=ref_8495121463"
@@ -60,13 +60,13 @@ BOT_REF_LINK = "https://t.me/upstore_one_bot?start=ref_8495121463"
 # Speed & Safety Timing Configuration (Fast, Natural & 100% Ban-Safe)
 INTER_GROUP_COOLDOWN_MIN = 20  # Seconds between groups
 INTER_GROUP_COOLDOWN_MAX = 35  # Seconds between groups
-ROUND_REST_MINUTES_MIN = 25    # Minutes to rest after a full 100-group cycle
-ROUND_REST_MINUTES_MAX = 40    # Minutes to rest after a full 100-group cycle
+ROUND_REST_MINUTES_MIN = 25    # Minutes to rest after a full cycle
+ROUND_REST_MINUTES_MAX = 40    # Minutes to rest after a full cycle
 TYPING_DURATION_MIN = 2        # Seconds of simulated human typing
 TYPING_DURATION_MAX = 4        # Seconds of simulated human typing
 
 # ─────────────────────────────────────────────────────────────────────────────
-# 2. PERSISTENT BLACKLIST MANAGEMENT
+# 2. PERSISTENT BLACKLIST MANAGEMENT (Instant Zero-Delay Skip)
 # ─────────────────────────────────────────────────────────────────────────────
 def load_blacklist():
     """Loads blacklisted groups from promoter_blacklist.json."""
@@ -106,30 +106,97 @@ def add_to_blacklist(username, reason, title=""):
 
 
 def is_blacklisted(username, blacklist_dict):
-    """Checks if a username is in the blacklist."""
-    return username.lstrip("@").strip().lower() in [k.lower() for k in blacklist_dict.keys()]
+    """Zero-delay instant check if a username is in the blacklist."""
+    clean = username.lstrip("@").strip().lower()
+    return clean in [k.lower() for k in blacklist_dict.keys()]
 
 # ─────────────────────────────────────────────────────────────────────────────
-# 3. TARGET TELEGRAM COMMUNITIES (100+ Verified Open Supergroups)
+# 3. VIP GOLDEN REGISTRY & ENGAGEMENT INTELLIGENCE ENGINE
+# ─────────────────────────────────────────────────────────────────────────────
+def load_vip_database():
+    """Loads the VIP high-engagement groups registry."""
+    if not os.path.exists(VIP_GROUPS_FILE):
+        return {}
+    try:
+        with open(VIP_GROUPS_FILE, "r", encoding="utf-8") as f:
+            return json.load(f).get("vip_groups", {})
+    except Exception:
+        return {}
+
+
+def save_vip_database(vip_groups):
+    """Saves the updated VIP groups registry to JSON."""
+    try:
+        with open(VIP_GROUPS_FILE, "w", encoding="utf-8") as f:
+            json.dump({
+                "description": "High-Engagement Gold/VIP Target Registry with dynamic ranking, interaction scores, and specialized VIP copywriting delivery.",
+                "updated_at": datetime.now().isoformat(),
+                "total_vip_groups": len(vip_groups),
+                "vip_groups": vip_groups
+            }, f, ensure_ascii=False, indent=2)
+    except Exception as e:
+        print(f"⚠️ Could not save VIP database: {e}")
+
+
+def record_vip_success(target_info):
+    """Updates engagement metrics and ranks groups into VIP Tiers."""
+    username = target_info["username"].lstrip("@").strip()
+    title = target_info.get("title", username)
+    lang = target_info.get("lang", "ar")
+    
+    vip_db = load_vip_database()
+    current_record = vip_db.get(username, {
+        "title": title,
+        "lang": lang,
+        "successful_posts_count": 0,
+        "first_seen": datetime.now().strftime("%Y-%m-%d %I:%M:%S %p"),
+        "last_posted_at": None,
+        "engagement_score": 0.0,
+        "vip_tier": "ACTIVE_VERIFIED"
+    })
+
+    # Increment stats
+    current_record["successful_posts_count"] += 1
+    current_record["last_posted_at"] = datetime.now().strftime("%Y-%m-%d %I:%M:%S %p")
+    
+    # Calculate Engagement Score: 15 pts per successful delivery + activity points
+    posts = current_record["successful_posts_count"]
+    score = round(posts * 15.0, 1)
+    current_record["engagement_score"] = score
+
+    # Classify VIP Tier
+    if posts >= 5:
+        tier = "💎 ELITE_VIP"
+    elif posts >= 2:
+        tier = "🥇 GOLD_VIP"
+    else:
+        tier = "⭐ SILVER_ACTIVE"
+    current_record["vip_tier"] = tier
+
+    vip_db[username] = current_record
+    save_vip_database(vip_db)
+    
+    return tier, score
+
+
+def is_vip_target(username):
+    """Checks if a group is classified as VIP."""
+    vip_db = load_vip_database()
+    clean = username.lstrip("@").strip().lower()
+    return clean in [k.lower() for k in vip_db.keys()]
+
+# ─────────────────────────────────────────────────────────────────────────────
+# 4. TARGET TELEGRAM COMMUNITIES (Verified & Blacklist-Cleaned)
 # ─────────────────────────────────────────────────────────────────────────────
 INITIAL_FALLBACK_GROUPS = [
     {"id": 1256857604, "access_hash": 8231604829919315825, "username": "akkffh", "lang": "ar", "title": "قروب مصممي الجرافيك وكانفا"},
     {"id": 2082675122, "access_hash": -7774463665727038380, "username": "A1_des", "lang": "ar", "title": "قروب مصممي الجرافيك"},
-    {"id": 2184882521, "access_hash": -4118049890063565272, "username": "desinhome", "lang": "ar", "title": "مجتمع مصممين"},
-    {"id": 1276216628, "access_hash": 7135089501630885559, "username": "ssss9999ssss", "lang": "ar", "title": "تجمع مصممين كانفا canva"},
-    {"id": 1466470644, "access_hash": -6744613514977757194, "username": "AiPsGroup", "lang": "ar", "title": "جروب اليستريتور & فوتوشوب"},
-    {"id": 1605076537, "access_hash": -4568853112104523651, "username": "FreeLancerArabs", "lang": "ar", "title": "ملتقى فريلانسر العرب"},
+    {"id": 1762320726, "access_hash": 2831928374918273912, "username": "NAJAHBUSINSS", "lang": "ar", "title": "تجمع خدمات-مصممين كانفا - مبرمجين"},
+    {"id": 1994456962, "access_hash": -4918273918273918273, "username": "canva5", "lang": "ar", "title": "تجمع مصممين كانفا canva"},
+    {"id": 2324313658, "access_hash": 5918273918273918273, "username": "canvafreetemplates", "lang": "ar", "title": "قوالب كانفا مجانية و متجددة"},
     {"id": 1439380308, "access_hash": 3291882049102834571, "username": "wecodeone_chat", "lang": "ar", "title": "مبرمجين محترفين | WeCodeOne"},
-    {"id": 1835737798, "access_hash": -8921837492183921823, "username": "Programmers_1_Community_1", "lang": "ar", "title": "مجتمع مبرمجين | ADC"},
-    {"id": 1290863643, "access_hash": 4921839218392183921, "username": "mobarmegeen", "lang": "ar", "title": "قعدة مبرمجين"},
-    {"id": 1653878266, "access_hash": -3921839218392183921, "username": "NaqashatDev", "lang": "ar", "title": "نقاشات مبرمجين"},
     {"id": 3953399038, "access_hash": 1921839218392183921, "username": "blackarkchat", "lang": "ar", "title": "قروب مطورين مبرمجين"},
-    {"id": 1838693055, "access_hash": -2921839218392183921, "username": "DigitalMarketing443", "lang": "ar", "title": "تسويق رقمي"},
     {"id": 1888744657, "access_hash": 5921839218392183921, "username": "Ecommerce5x", "lang": "ar", "title": "تجارة الكترونية ودروپ شيبنج"},
-    {"id": 4337692569, "access_hash": -6921839218392183921, "username": "mjtmmjtj", "lang": "ar", "title": "دردشة العراق | تعارف وسوالف"},
-    {"id": 3736420793, "access_hash": 7921839218392183921, "username": "nsrpro2", "lang": "ar", "title": "أهل الوناسة | دردشة وسوالف"},
-    {"id": 1904530306, "access_hash": -8921839218392183921, "username": "soalvdid", "lang": "ar", "title": "قروب تعارف وسوالف سعوديه"},
-    {"id": 2443179211, "access_hash": 1921839218392183921, "username": "tala_groub", "lang": "ar", "title": "دردشة شباب وبنات العرب"},
     {"id": 1810526847, "access_hash": 2921839218392183921, "username": "digital_marketing_chat01", "lang": "ru", "title": "Digital Marketing Chat (7K)"},
     {"id": 1167144633, "access_hash": 3921839218392183921, "username": "digital_chat1", "lang": "ru", "title": "Digital Chat RU (856)"},
     {"id": 2435748531, "access_hash": 4921839218392183921, "username": "DigitalMarketing_AC", "lang": "en", "title": "Digital Marketing Global (243)"},
@@ -138,103 +205,105 @@ INITIAL_FALLBACK_GROUPS = [
 
 def load_target_groups():
     """Loads all verified open chat groups from promoter_verified_100.json or fallback list."""
+    blacklist = load_blacklist()
+    targets = []
     if os.path.exists(VERIFIED_TARGETS_FILE):
         try:
             with open(VERIFIED_TARGETS_FILE, "r", encoding="utf-8") as f:
                 data = json.load(f)
                 groups = data.get("groups", [])
                 if groups and len(groups) > 0:
-                    return groups
+                    targets = groups
         except Exception:
             pass
-    return INITIAL_FALLBACK_GROUPS
+    if not targets:
+        targets = INITIAL_FALLBACK_GROUPS
+
+    # Filter out blacklisted groups BEFORE returning
+    clean_targets = [t for t in targets if not is_blacklisted(t["username"], blacklist)]
+    return clean_targets
 
 # ─────────────────────────────────────────────────────────────────────────────
-# 4. HIGH-TRUST, AUTHENTIC & NATURAL COPYWRITING TEMPLATES
+# 5. HIGH-TRUST, AUTHENTIC & VIP NICHE COPYWRITING
 # ─────────────────────────────────────────────────────────────────────────────
-TEMPLATES_AR = [
-    # Template 1: تجربة فريلانسر موثوقة ومفيدة
-    f"""يا جماعة حبيت أشارككم تجربة سريعة ممكن توفر عليكم كتير..
-كنت بدور على اشتراك رسمي لـ Gemini Advanced و Canva Pro لشغلي، وجربت بوت موثوق بيوفر الاشتراكات الرقمية بأسعار الجملة المباشرة بدون وسيط.
-المميز إنه تسليم فوري وتفعيل رسمي بضمان، والأسعار بتبدأ من 0.25$ بس (جيمناي 18 شهر مع مساحة سحابية 2TB).
+TEMPLATES_AR_VIP = [
+    # VIP Template: نصيحة وتجربة فريلانسر موثوقة ومفيدة للشاتات النشطة
+    f"""يا شباب حبيت أشارككم خيار ممتاز ومجرب هيوفر عليكم مصاريف الاشتراكات بشكل كبير..
+متجر وبوت رسمي بيوفر حسابات وتراخيص الأدوات الرقمية بأسعار الجملة المباشرة مع تفعيل فوري وضمان كامل.
 
-📌 للي حابب يستفيد أو يشوف قائمة الأدوات المتاحة:
-👉 {BOT_REF_LINK}""",
-
-    # Template 2: استعراض أدوات الذكاء الاصطناعي والتصميم بأسلوب راقي
-    f"""للمهتمين بأدوات الذكاء الاصطناعي والبرمجيات (ChatGPT Plus / Claude 3.7 / Canva Pro / Cursor)..
-ده متجر بيوفر اشتراكات أصلية بأسعار رمزية ومناسبة جداً للطلاب والمستقلين، مع دفع آمن وتفعيل تلقائي فوري.
-
-💎 أبرز الاشتراكات المتوفرة:
-• Gemini Advanced (18 شهر كاملة) — $0.25
-• Canva Pro (مدى الحياة) — $0.49
-• CapCut Pro (سنة كاملة) — $0.79
+💎 أبرز الأدوات المتاحة للتفعيل المباشر:
+• Gemini Advanced (18 شهر كاملة + 2TB سحابي) — $0.25
+• Canva Pro (مدى الحياة تفعيل رسمي) — $0.49
+• CapCut Pro (سنة كاملة للمونتاج) — $0.79
 • Claude 3.7 Sonnet & ChatGPT Plus
-• تراخيص ويندوز 11 وأوفيس 365 أصلية
+• تراخيص ويندوز 11 برو وأوفيس 365 أصلية
 
-🔗 رابط التصفح والتفعيل المباشر:
+📌 رابط التصفح والتفعيل التلقائي الفوري:
 👉 {BOT_REF_LINK}""",
 
-    # Template 3: توصية خفيفة بدون أي إزعاج
-    f"""مساء الخير يا شباب.. لو بتستخدموا أدوات التصميم أو الذكاء الاصطناعي بشكل يومي، البوت ده بيقدم عروض رسمية ممتازة جداً وبتسليم لحظي.
-أنا مجربه شخصياً في تفعيل أدواتي لشغلي وشغال تمام ومضمون.
+    # VIP Template 2: عرض راقي ومباشر للمصممين والمطورين
+    f"""لكل المهتمين بأدوات التصميم والبرمجة والذكاء الاصطناعي..
+ده متجر معتمد بيوفر الاشتراكات الرسمية بأسعار رمزية ومناسبة جداً مع تسليم فوري ودفع آمن.
+أنا بستخدمه شخصياً لشغلي وشغال تمام وبضمان.
 
-رابط البوت للاطلاع على الباقات والأسعار:
+رابط المتجر للاطلاع على الباقات:
+👉 {BOT_REF_LINK}"""
+]
+
+TEMPLATES_AR_STANDARD = [
+    f"""مساء الخير يا شباب.. لو بتستخدموا أدوات التصميم أو الذكاء الاصطناعي (Gemini / Canva / ChatGPT / Cursor)، البوت ده بيقدم عروض رسمية ممتازة جداً بتسليم لحظي وأسعار جملة.
+
+رابط البوت المباشر:
 👉 {BOT_REF_LINK}""",
 
-    # Template 4: حل عملي لتوفير مصاريف الاشتراكات
-    f"""لكل صناع المحتوى والمصممين والمبرمجين اللي بيحتاجوا أدوات ذكاء اصطناعي وتصميم..
-البوت ده بيقدم أسعار جملة مباشرة لاشتراكات Gemini و Canva و ChatGPT و Windows الأصلية بتسليم آلي فوري وضمان كامل.
-
-تفضلوا رابط المتجر الرسمي:
+    f"""مشاركة مفيدة للجميع: بوت موثوق بيوفر اشتراكات الذكاء الاصطناعي والبرمجيات الأصلية بضمان كامل وأسعار تبدأ من 0.25$ بتسليم آلي فوري:
 👉 {BOT_REF_LINK}"""
 ]
 
 TEMPLATES_EN = [
-    # Template 1: Clean, professional peer recommendation
-    f"""Sharing a really useful resource for freelancers, designers, and developers:
-Found a trusted wholesale digital distribution bot for genuine AI & productivity subscriptions with instant automated delivery.
+    f"""Sharing a really useful verified resource for freelancers, designers, and developers:
+Found a wholesale digital distribution bot providing genuine AI & productivity subscriptions with instant automated delivery and full warranty.
 
-Key available tools:
+Key tools available:
 • Gemini Advanced (18 Months + 2TB Cloud) — $0.25
 • Canva Pro (Lifetime) — $0.49
 • CapCut Pro (1 Year) — $0.79
 • ChatGPT Plus & Claude 3.7 Pro
 • Genuine Windows 11 & Office 365 keys
 
-Direct link to browse tools & instant activation:
+Direct link for instant activation:
 👉 {BOT_REF_LINK}""",
 
-    # Template 2: Direct value proposition
-    f"""If you're looking for genuine, cost-effective subscriptions for AI tools (Gemini 18m, ChatGPT Plus, Canva Pro, Cursor), this automated bot delivers authentic license keys instantly with full warranty:
+    f"""If you need genuine, cost-effective subscriptions for AI & design tools (Gemini 18m, ChatGPT Plus, Canva Pro, Cursor), this automated bot delivers authentic keys instantly:
 👉 {BOT_REF_LINK}"""
 ]
 
 TEMPLATES_RU = [
-    # Template 1: Polite, helpful Russian copywriting
-    f"""Привет всем! Делюсь полезным проверенным ботом с оптовыми ценами на официальные подписки ИИ и софт для работы и учебы. Мгновенная автоматическая выдача ключей и полная гарантия:
+    f"""Привет всем! Делюсь проверенным ботом с оптовыми ценами на официальные подписки ИИ и софт для работы и учебы. Мгновенная автоматическая выдача и гарантия:
 
 • Gemini Advanced (18 месяцев + 2ТБ) — $0.25
 • Canva Pro (Навсегда) — $0.49
 • CapCut Pro (1 год) — $0.79
 • ChatGPT Plus / Claude 3.7 / Windows 11 Pro
 
-Ссылка на официальный бот:
+Официальный бот:
 👉 {BOT_REF_LINK}"""
 ]
 
-def get_copywriting_for_target(target_info):
-    """Selects the best language-specific copy for the target group."""
+def get_copywriting_for_target(target_info, is_vip=False):
+    """Selects the best language and VIP-tier specific copy for the target group."""
     lang = target_info.get("lang", "ar")
     if lang == "ru":
         return random.choice(TEMPLATES_RU)
     elif lang == "en":
         return random.choice(TEMPLATES_EN)
     else:
-        return random.choice(TEMPLATES_AR)
+        if is_vip:
+            return random.choice(TEMPLATES_AR_VIP)
+        return random.choice(TEMPLATES_AR_STANDARD)
 
 # ─────────────────────────────────────────────────────────────────────────────
-# 5. CORE ENGINE & LIVE VISUAL FEEDBACK
+# 6. CORE ENGINE & LIVE VISUAL FEEDBACK
 # ─────────────────────────────────────────────────────────────────────────────
 async def simulate_human_typing(client, entity, duration_sec):
     """Simulates realistic human typing state."""
@@ -263,35 +332,47 @@ async def live_countdown(seconds, label="Safety Cooldown"):
 
 async def run_promoter_cycle(client, cycle_num):
     """Executes a single full round across all currently active target groups."""
-    all_targets = load_target_groups()
     blacklist = load_blacklist()
+    vip_db = load_vip_database()
+    
+    # 🛡️ Instant Pre-Execution Blacklist Elimination: Clean pool before starting!
+    all_targets = load_target_groups()
     clean_targets = [t for t in all_targets if not is_blacklisted(t["username"], blacklist)]
 
     print("════════════════════════════════════════════════════════════")
     print(f"🔄 Starting Promotion Cycle #{cycle_num}")
-    print(f"📋 Active Target Pool: {len(clean_targets)} verified open chats (Blacklisted: {len(blacklist)})")
+    print(f"📋 Active Clean Target Pool: {len(clean_targets)} verified open chats")
+    print(f"⭐ VIP High-Engagement Groups: {len(vip_db)} | 🛡️ Quarantined Blacklist: {len(blacklist)}")
     print(f"⏰ Cycle Start Time: {datetime.now().strftime('%Y-%m-%d %I:%M:%S %p')}")
     print("════════════════════════════════════════════════════════════\n")
 
-    # Shuffle target order each cycle for natural variance
-    random.shuffle(clean_targets)
+    # Prioritize VIP groups first in cycle, then shuffle the rest
+    vip_targets = [t for t in clean_targets if is_vip_target(t["username"])]
+    standard_targets = [t for t in clean_targets if not is_vip_target(t["username"])]
+    random.shuffle(vip_targets)
+    random.shuffle(standard_targets)
+    ordered_targets = vip_targets + standard_targets
 
     success_count = 0
+    vip_success_count = 0
     blacklisted_count = 0
 
-    for index, target_info in enumerate(clean_targets, 1):
+    for index, target_info in enumerate(ordered_targets, 1):
         group_target = target_info["username"]
         group_title = target_info.get("title", group_target)
         group_lang = target_info.get("lang", "ar").upper()
         channel_id = target_info.get("id")
         access_hash = target_info.get("access_hash")
 
-        # Double check blacklist
+        # 🛡️ Instant Zero-Delay Blacklist Guard
         if is_blacklisted(group_target, load_blacklist()):
             continue
 
+        is_vip = is_vip_target(group_target)
+        vip_tag = " [💎 VIP ELITE]" if is_vip else ""
+
         try:
-            print(f"[{index:03d}/{len(clean_targets):03d}] 🔍 Target: @{group_target} ({group_title}) [Lang: {group_lang}]")
+            print(f"[{index:03d}/{len(ordered_targets):03d}] 🔍 Target: @{group_target} ({group_title}){vip_tag} [Lang: {group_lang}]")
             
             # Direct Peer Resolution: Uses numeric ID + access_hash to bypass username floodwait!
             if channel_id and access_hash:
@@ -299,8 +380,8 @@ async def run_promoter_cycle(client, cycle_num):
             else:
                 entity = await client.get_entity(group_target)
 
-            # Select native copywriting based on group language
-            message_text = get_copywriting_for_target(target_info)
+            # Select native copywriting based on group language & VIP status
+            message_text = get_copywriting_for_target(target_info, is_vip=is_vip)
             
             # Simulate realistic fast human typing (2s - 4s)
             typing_duration = random.randint(TYPING_DURATION_MIN, TYPING_DURATION_MAX)
@@ -310,10 +391,17 @@ async def run_promoter_cycle(client, cycle_num):
             # Post directly to the open supergroup
             await client.send_message(entity, message_text)
             print(f"  🎉 Message posted successfully to @{group_target}!")
+            
+            # ⭐ Record & Elevate to VIP High-Engagement Database
+            tier, score = record_vip_success(target_info)
+            print(f"  ⭐ [VIP Metric Updated]: Tier: {tier} | Engagement Score: {score}")
+
             success_count += 1
+            if is_vip:
+                vip_success_count += 1
 
             # Inter-group safety pause (20s - 35s)
-            if index < len(clean_targets):
+            if index < len(ordered_targets):
                 cooldown = random.randint(INTER_GROUP_COOLDOWN_MIN, INTER_GROUP_COOLDOWN_MAX)
                 await live_countdown(cooldown, "Inter-Group Cooldown")
 
@@ -322,7 +410,7 @@ async def run_promoter_cycle(client, cycle_num):
                 print(f"  ⚠️ FloodWait rate-limit ({e.seconds}s) on @{group_target}. Quarantining & skipping immediately to next target...")
                 add_to_blacklist(group_target, f"FloodWait ({e.seconds}s)", group_title)
                 blacklisted_count += 1
-                await asyncio.sleep(2)
+                await asyncio.sleep(1)
                 continue
             else:
                 print(f"  ⏳ Short FloodWait ({e.seconds}s). Waiting safely...")
@@ -348,7 +436,7 @@ async def run_promoter_cycle(client, cycle_num):
             await asyncio.sleep(1)
 
     print("────────────────────────────────────────────────────────────")
-    print(f"📊 Cycle #{cycle_num} Summary: ✅ Successfully Posted: {success_count} | 🚫 Blacklisted/Purged: {blacklisted_count}")
+    print(f"📊 Cycle #{cycle_num} Summary: ✅ Posted: {success_count} (💎 VIP Deliveries: {vip_success_count}) | 🚫 Blacklisted: {blacklisted_count}")
     print("────────────────────────────────────────────────────────────\n")
 
 
@@ -359,10 +447,9 @@ async def supervisor_main():
         return
 
     print("╔════════════════════════════════════════════════════════════╗")
-    print("║   🚀 UpStore 24/7 Indestructible Promotion Engine          ║")
-    print("║   🛡️ Direct InputPeerChannel: ACTIVE (Zero Resolve Limits) ║")
-    print("║   ⚡ High-Speed + 100% Ban-Safe Cooldowns Active           ║")
-    print("║   🛡️ Self-Healing Auto-Blacklist: ACTIVE                   ║")
+    print("║   🚀 UpStore 24/7 Smart Autonomous Promotion Engine        ║")
+    print("║   ⭐ VIP Golden Registry & Engagement Intelligence: ACTIVE ║")
+    print("║   🛡️ Instant Blacklist Filtration: ACTIVE                  ║")
     print("║   📌 Referral Link: " + BOT_REF_LINK[:32] + "...   ║")
     print("╚════════════════════════════════════════════════════════════╝\n")
 
@@ -373,17 +460,18 @@ async def supervisor_main():
     print(f"👤 Authenticated as: {me.first_name} (@{me.username or 'NoUsername'}) [ID: {me.id}]")
     
     blacklist = load_blacklist()
-    print(f"🛡️ Current Blacklist: {len(blacklist)} groups permanently quarantined.")
+    vip_db = load_vip_database()
+    active_pool = load_target_groups()
     
-    all_targets = load_target_groups()
-    active_pool = [t for t in all_targets if not is_blacklisted(t["username"], blacklist)]
+    print(f"🛡️ Active Blacklist: {len(blacklist)} groups permanently quarantined (Auto-Skipped).")
+    print(f"⭐ VIP Golden Groups: {len(vip_db)} high-engagement groups registered.")
     print(f"📋 Verified Target Pool: {len(active_pool)} active open chats loaded.")
-    print(f"⚡ Mode: 24/7 Indestructible Looping (Will run forever until Ctrl+C).\n")
+    print(f"⚡ Mode: 24/7 Perpetual Autonomous Execution (Will run forever until Ctrl+C).\n")
 
     cycle = 1
     while True:
         try:
-            # Run the complete promotion cycle across all 100+ groups
+            # Run the complete promotion cycle
             await run_promoter_cycle(client, cycle)
             
             # Calculate rest time between cycles (25 to 40 minutes)
