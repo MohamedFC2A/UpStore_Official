@@ -1,18 +1,18 @@
 #!/usr/bin/env python3
 """
 ═══════════════════════════════════════════════════════════════════════════════
-🌐 UPSTORE AUTONOMOUS SELF-EVOLVING 24/7 PROMOTION & DISCOVERY ENGINE
+🚀 UPSTORE ULTRA-FAST 24/7 AUTONOMOUS VIRAL PROMOTION ENGINE (V3)
 ═══════════════════════════════════════════════════════════════════════════════
-Enterprise Indestructible Architecture:
-1. 🔄 Clean Cycle-Level MTProto Lifecycle: Auto-reconnects cleanly every round.
-2. ⚡ Real-Time Unbuffered Logging (flush=True everywhere).
-3. ⏱️ Strict RPC Timeouts (asyncio.wait_for <= 12s on all network calls).
-4. 🧠 Self-Evolving Group Discovery: Autonomously crawls, discovers & verifies open supergroups.
-5. 💀 Instant Dead-Group Execution & Blacklist Quarantining.
-6. ⭐ VIP Golden Registry Intelligence: Tracks and ranks top-performing communities.
-7. 🛡️ Infinite Self-Healing Supervisor: Runs perpetually 24/7/365 on VPS under PM2.
-8. 🎯 Laser-Focused Conversion Offer:
-   - Gemini Advanced 18 Months ($0.25) + ChatGPT Plus Wholesale.
+High-Velocity Enterprise Edition:
+1. ⚡ Ultra-Fast Continuous Cycling: 8s-14s inter-group cooldown, 2-4m cycle rest.
+2. 🧠 Smart Strike-Based Blacklisting: Only blacklists on confirmed fatal restrictions.
+3. 🔄 Dynamic AI Copywriting: Diverse high-converting variants for maximum deliverability.
+4. 🌐 Continuous Auto-Discovery: Dynamically discovers fresh active groups every round.
+5. ⭐ VIP Golden Registry: Automatically elevates and prioritizes top engaging groups.
+6. 🛡️ Unbreakable Self-Healing: Runs continuously 24/7/365 without freezing.
+7. 🎯 Focused Core Offer:
+   - Gemini Advanced (18 Months + 2TB) — $0.25 (ربع دولار)
+   - ChatGPT Plus Official Wholesale
    - Ref: https://t.me/upstore_one_bot?start=ref_8495121463
 ═══════════════════════════════════════════════════════════════════════════════
 """
@@ -81,14 +81,17 @@ VIP_GROUPS_FILE = os.path.join(BASE_DIR, "promoter_vip_groups.json")
 
 BOT_REF_LINK = "https://t.me/upstore_one_bot?start=ref_8495121463"
 
-# Speed & Safety Timers
-INTER_GROUP_COOLDOWN_MIN = 14  # Seconds
-INTER_GROUP_COOLDOWN_MAX = 24  # Seconds
-ROUND_REST_MINUTES_MIN = 15    # Minutes
-ROUND_REST_MINUTES_MAX = 25    # Minutes
-TYPING_DURATION_MIN = 2        # Seconds
-TYPING_DURATION_MAX = 3        # Seconds
-NETWORK_TIMEOUT_SEC = 12       # Maximum seconds per network RPC call
+# High-Velocity Timers
+INTER_GROUP_COOLDOWN_MIN = 8   # Seconds between groups
+INTER_GROUP_COOLDOWN_MAX = 14  # Seconds between groups
+ROUND_REST_MINUTES_MIN = 2     # Minutes between full rounds
+ROUND_REST_MINUTES_MAX = 4     # Minutes between full rounds
+TYPING_DURATION_MIN = 1        # Seconds of simulated typing
+TYPING_DURATION_MAX = 2        # Seconds of simulated typing
+NETWORK_TIMEOUT_SEC = 10       # Maximum seconds per network RPC call
+
+# In-memory fail strike tracker to avoid premature blacklisting
+FAIL_STRIKES = {}
 
 AUTONOMOUS_SEARCH_CLUSTERS = [
     # High School & Baccalaureate 2026/2027
@@ -104,7 +107,7 @@ AUTONOMOUS_SEARCH_CLUSTERS = [
 ]
 
 # ─────────────────────────────────────────────────────────────────────────────
-# 3. BLACKLIST QUARANTINE ENGINE
+# 3. SMART BLACKLIST QUARANTINE ENGINE
 # ─────────────────────────────────────────────────────────────────────────────
 def load_blacklist():
     if not os.path.exists(BLACKLIST_FILE):
@@ -248,7 +251,7 @@ async def autonomous_discover_new_groups(client, max_discover=10):
     added_count = 0
 
     try:
-        res = await asyncio.wait_for(client(SearchRequest(q=query, limit=30)), timeout=12.0)
+        res = await asyncio.wait_for(client(SearchRequest(q=query, limit=30)), timeout=10.0)
         for chat in res.chats:
             if added_count >= max_discover:
                 break
@@ -280,7 +283,7 @@ async def autonomous_discover_new_groups(client, max_discover=10):
 
             # Verification 4: Dead Group Killer (Multi-user human activity)
             try:
-                msgs = await asyncio.wait_for(client.get_messages(chat, limit=6), timeout=8.0)
+                msgs = await asyncio.wait_for(client.get_messages(chat, limit=6), timeout=6.0)
                 if not msgs or len(msgs) < 2:
                     continue
                 senders = set(m.sender_id for m in msgs if m.sender_id)
@@ -319,9 +322,10 @@ async def autonomous_discover_new_groups(client, max_discover=10):
         print(f"⚠️ Note in discovery: {e}")
 
 # ─────────────────────────────────────────────────────────────────────────────
-# 6. HIGH-CONVERTING PERSUASIVE COPYWRITING (GEMINI & CHATGPT ONLY)
+# 6. DYNAMIC & PERSUASIVE COPYWRITING POOL (GEMINI 18M $0.25 & CHATGPT PLUS)
 # ─────────────────────────────────────────────────────────────────────────────
 TEMPLATES_AR = [
+    # Variant 1: تجربة شخصية ومشاركة مفيدة
     f"""يا شباب حبيت أشارككم حل عملي ومجرب هيوفر عليكم مصاريف باهظة في المذاكرة والشغل..
 لو محتاج أدوات الذكاء الاصطناعي الرسمية ومش حابب تدفع الأسعار الشهرية العالية، في بوت معتمد بيوفر الاشتراكات بتفعيل رسمي وفوري وبسعر رمزي:
 
@@ -333,6 +337,7 @@ TEMPLATES_AR = [
 🔗 رابط البوت المباشر للتفعيل والاستفادة:
 👉 {BOT_REF_LINK}""",
 
+    # Variant 2: مخصص للطلاب والمهندسين
     f"""لكل طلاب الثانوية العامة والجامعات والمهندسين اللي بيعتمدوا على الذكاء الاصطناعي في المذاكرة وحل المسائل والأبحاث..
 بدل ما تشتري باشتراكات شهرية مكلفة، المتجر ده بيوفرلك:
 
@@ -343,11 +348,21 @@ TEMPLATES_AR = [
 📌 رابط الدخول والتفعيل:
 👉 {BOT_REF_LINK}""",
 
+    # Variant 3: سريع ومباشر
     f"""مساء الخير يا شباب.. للي محتاج حسابات ذكاء اصطناعي رسمية للمذاكرة والشغل:
 • اشتراك Gemini Advanced رسمي (18 شهر كاملة مع 2TB) بـ 0.25$ بس
 • اشتراك ChatGPT Plus الرسمي بأسعار الجملة المباشرة
 
 تسليم لحظي وتفعيل مضمون 100%:
+👉 {BOT_REF_LINK}""",
+
+    # Variant 4: توفير مصاريف المذاكرة
+    f"""مشاركة سريعة ومفيدة للجميع 💡
+بوت رسمي لتوزيع اشتراكات الذكاء الاصطناعي بتفعيل لحظي وضمان كامل:
+⭐ Gemini Advanced مع مساحة 2TB لمدة 18 شهر: فقط 0.25$
+⭐ ChatGPT Plus: أسعار الجملة المباشرة
+
+رابط التفعيل الفوري:
 👉 {BOT_REF_LINK}"""
 ]
 
@@ -366,6 +381,14 @@ Instant automated activation link:
 • ChatGPT Plus: Direct Wholesale Price & Instant Setup
 
 Get your official access key instantly:
+👉 {BOT_REF_LINK}""",
+
+    f"""Helpful resource for students and developers:
+Get official AI subscriptions with instant automated key delivery:
+• Gemini Advanced 18M + 2TB: $0.25
+• ChatGPT Plus: Direct wholesale prices
+
+Access the bot here:
 👉 {BOT_REF_LINK}"""
 ]
 
@@ -431,7 +454,7 @@ async def run_promoter_cycle(client, cycle_num):
     clean_targets = [t for t in all_targets if not is_blacklisted(t["username"], blacklist)]
 
     print("════════════════════════════════════════════════════════════")
-    print(f"🔄 Starting Autonomous Promotion Cycle #{cycle_num}")
+    print(f"🚀 Starting High-Velocity Promotion Cycle #{cycle_num}")
     print(f"📋 Active Clean Target Pool: {len(clean_targets)} verified open supergroups")
     print(f"⭐ VIP Golden Groups: {len(vip_db)} | 🛡️ Quarantined Blacklist: {len(blacklist)}")
     print(f"⏰ Cycle Start Time: {datetime.now().strftime('%Y-%m-%d %I:%M:%S %p')}")
@@ -453,6 +476,7 @@ async def run_promoter_cycle(client, cycle_num):
         group_lang = target_info.get("lang", "ar").upper()
         channel_id = target_info.get("id")
         access_hash = target_info.get("access_hash")
+        clean_uname = group_target.lstrip("@").strip().lower()
 
         if is_blacklisted(group_target, load_blacklist()):
             continue
@@ -469,19 +493,15 @@ async def run_promoter_cycle(client, cycle_num):
             else:
                 entity = await asyncio.wait_for(client.get_entity(group_target), timeout=NETWORK_TIMEOUT_SEC)
 
-            # Dead Group Killer Verification with strict timeout
+            # Dead Group Killer Verification (Lightweight)
             try:
-                msgs = await asyncio.wait_for(client.get_messages(entity, limit=6), timeout=8.0)
-                if not msgs or len(msgs) < 2:
-                    add_to_blacklist(group_target, "Dead Group (< 2 messages found)", group_title)
-                    blacklisted_count += 1
-                    continue
-                
-                senders = set(m.sender_id for m in msgs if m.sender_id)
-                if len(senders) < 2:
-                    add_to_blacklist(group_target, "Inactive / Dead Group (Only 1 poster/bot)", group_title)
-                    blacklisted_count += 1
-                    continue
+                msgs = await asyncio.wait_for(client.get_messages(entity, limit=4), timeout=5.0)
+                if msgs and len(msgs) >= 2:
+                    senders = set(m.sender_id for m in msgs if m.sender_id)
+                    if len(senders) < 1:
+                        add_to_blacklist(group_target, "Inactive Group (Zero senders)", group_title)
+                        blacklisted_count += 1
+                        continue
             except Exception:
                 pass
 
@@ -495,6 +515,10 @@ async def run_promoter_cycle(client, cycle_num):
             await asyncio.wait_for(client.send_message(entity, message_text), timeout=NETWORK_TIMEOUT_SEC)
             print(f"  🎉 Message posted successfully to @{group_target}!")
             
+            # Reset fail strike on success
+            if clean_uname in FAIL_STRIKES:
+                del FAIL_STRIKES[clean_uname]
+
             tier, score = record_vip_success(target_info)
             print(f"  ⭐ [VIP Metric Updated]: Tier: {tier} | Engagement Score: {score}")
 
@@ -507,7 +531,7 @@ async def run_promoter_cycle(client, cycle_num):
                 await live_countdown(cooldown, "Inter-Group Cooldown")
 
         except asyncio.TimeoutError:
-            print(f"  ⚠️ Timeout on @{group_target} (> {NETWORK_TIMEOUT_SEC}s). Skipping safely to next target...")
+            print(f"  ⚠️ Timeout on @{group_target} (> {NETWORK_TIMEOUT_SEC}s). Skipping safely...")
             continue
         except FloodWaitError as e:
             if e.seconds > 60:
@@ -519,21 +543,29 @@ async def run_promoter_cycle(client, cycle_num):
             else:
                 print(f"  ⏳ Short FloodWait ({e.seconds}s). Waiting safely...")
                 await asyncio.sleep(e.seconds + 1)
-        except (UserBannedInChannelError, ChatWriteForbiddenError, ChatAdminRequiredError) as e:
-            add_to_blacklist(group_target, f"Posting restricted by admin / muted ({type(e).__name__})", group_title)
+        except (UserBannedInChannelError, ChatAdminRequiredError) as e:
+            # Fatal restrictions -> direct blacklist
+            add_to_blacklist(group_target, f"Permanently restricted ({type(e).__name__})", group_title)
             blacklisted_count += 1
-            await asyncio.sleep(1)
+            await asyncio.sleep(0.5)
+        except ChatWriteForbiddenError as e:
+            # Two-strike rule for write forbidden
+            strikes = FAIL_STRIKES.get(clean_uname, 0) + 1
+            FAIL_STRIKES[clean_uname] = strikes
+            if strikes >= 2:
+                add_to_blacklist(group_target, f"Muted/Forbidden 2 consecutive times", group_title)
+                blacklisted_count += 1
+            else:
+                print(f"  ⚠️ Write restricted on @{group_target} (Strike {strikes}/2) -> Skipping for now.")
+            await asyncio.sleep(0.5)
         except (ChannelPrivateError, ChannelInvalidError, UsernameInvalidError, UsernameNotOccupiedError) as e:
             add_to_blacklist(group_target, f"Chat invalid or private ({type(e).__name__})", group_title)
             blacklisted_count += 1
-            await asyncio.sleep(1)
+            await asyncio.sleep(0.5)
         except Exception as e:
             err_str = str(e)
             if "ALLOW_PAYMENT_REQUIRED" in err_str or "BALANCE_TOO_LOW" in err_str:
                 add_to_blacklist(group_target, "Requires Telegram Stars fee", group_title)
-                blacklisted_count += 1
-            elif "ChatWriteForbidden" in err_str or "banned" in err_str.lower():
-                add_to_blacklist(group_target, f"Write forbidden: {err_str}", group_title)
                 blacklisted_count += 1
             elif "join the discussion group" in err_str.lower() or "discussion group before commenting" in err_str.lower():
                 try:
@@ -547,7 +579,7 @@ async def run_promoter_cycle(client, cycle_num):
                     blacklisted_count += 1
             else:
                 print(f"  ⚠️ Note for @{group_target}: {e} -> Continuing.")
-            await asyncio.sleep(1)
+            await asyncio.sleep(0.5)
 
     print("────────────────────────────────────────────────────────────")
     print(f"📊 Cycle #{cycle_num} Summary: ✅ Posted: {success_count} (💎 VIP: {vip_success_count}) | 🚫 Blacklisted: {blacklisted_count}")
@@ -563,11 +595,11 @@ async def supervisor_main():
         return
 
     print("╔════════════════════════════════════════════════════════════╗")
-    print("║   🌐 UpStore Self-Evolving 24/7 Marketing Engine           ║")
+    print("║   🚀 UpStore Ultra-Fast 24/7 Viral Marketing Engine        ║")
     print("║   🎯 Offer: Gemini Advanced 18M ($0.25) & ChatGPT Plus     ║")
+    print("║   ⚡ Speed: 8s-14s Cooldown | 2-4m Cycle Rest              ║")
     print("║   🧠 Autonomous Group Discovery: ENABLED                   ║")
-    print("║   💀 Dead Group Killer + VIP Registry: ACTIVE              ║")
-    print("║   🛡️ Infinite VPS Daemon: ACTIVE                           ║")
+    print("║   💀 Smart Strike Blacklist + VIP Registry: ACTIVE         ║")
     print("║   📌 Referral Link: " + BOT_REF_LINK[:32] + "...   ║")
     print("╚════════════════════════════════════════════════════════════╝\n")
 
@@ -587,7 +619,7 @@ async def supervisor_main():
             print(f"🛡️ Active Blacklist: {len(blacklist)} groups permanently quarantined.")
             print(f"⭐ VIP Golden Registry: {len(vip_db)} high-engagement groups.")
             print(f"📋 Verified Target Pool: {len(active_pool)} active open supergroups loaded.")
-            print(f"⚡ Mode: Autonomous Perpetual Execution (Runs 24/7/365 indefinitely).\n")
+            print(f"⚡ Mode: Autonomous Continuous Execution (Runs 24/7 perpetually).\n")
 
             # 1. Autonomous Self-Evolution: Discover new groups before cycle
             await autonomous_discover_new_groups(client, max_discover=8)
@@ -595,12 +627,12 @@ async def supervisor_main():
             # 2. Run the main promotion cycle
             await run_promoter_cycle(client, cycle)
             
-            # 3. Inter-cycle scheduled rest
+            # 3. Inter-cycle brief rest (2 to 4 minutes)
             rest_minutes = random.randint(ROUND_REST_MINUTES_MIN, ROUND_REST_MINUTES_MAX)
             rest_seconds = rest_minutes * 60
             next_time = datetime.fromtimestamp(time.time() + rest_seconds).strftime('%I:%M:%S %p')
             
-            print(f"💤 Cycle #{cycle} completed! Resting for {rest_minutes} minutes.")
+            print(f"💤 Cycle #{cycle} completed! Short rest for {rest_minutes} minutes.")
             print(f"⏰ Next Cycle (#{cycle + 1}) will start automatically at: {next_time}\n")
             
             await live_countdown(rest_seconds, f"Auto-Restart Timer (Cycle #{cycle} -> #{cycle + 1})")
@@ -611,8 +643,8 @@ async def supervisor_main():
             break
         except BaseException as e:
             print(f"\n⚠️ [Auto-Recovery Supervisor] Caught: {type(e).__name__}: {e}")
-            print("🔄 Self-healing in progress: Reconnecting and resuming loop in 10 seconds...\n")
-            await asyncio.sleep(10)
+            print("🔄 Self-healing in progress: Reconnecting and resuming loop in 5 seconds...\n")
+            await asyncio.sleep(5)
         finally:
             try:
                 if client.is_connected():
@@ -631,5 +663,5 @@ if __name__ == "__main__":
             print("\n🛑 Process terminated by user.")
             break
         except BaseException as e:
-            print(f"\n[Infinite Resilient Loop] Supervisor caught unhandled exit: {e}. Relaunching in 5s...\n")
-            time.sleep(5)
+            print(f"\n[Infinite Resilient Loop] Supervisor caught unhandled exit: {e}. Relaunching in 3s...\n")
+            time.sleep(3)
