@@ -109,12 +109,14 @@ async def discover_100_pure_chats():
 
                 seen_ids.add(chat.id)
                 chat_data = {
+                    "id": chat.id,
+                    "access_hash": getattr(chat, 'access_hash', 0),
                     "username": username,
                     "title": title,
                     "lang": lang
                 }
                 verified_chats.append(chat_data)
-                print(f"  🎉 [{len(verified_chats):03d}] Confirmed Open Chat: @{username} — '{title}' [{lang.upper()}]", flush=True)
+                print(f"  🎉 [{len(verified_chats):03d}] Confirmed Open Chat: @{username} (ID: {chat.id}) — '{title}' [{lang.upper()}]", flush=True)
 
                 if len(verified_chats) >= 105:
                     break

@@ -1,513 +1,717 @@
 {
-  "generated_at": "2026-09-02T08:03:07.788681",
+  "generated_at": "2026-09-02T09:02:40.727412",
   "total_verified": 102,
   "groups": [
     {
+      "id": 1256857604,
+      "access_hash": 8231604829919315825,
       "username": "akkffh",
       "title": "قروب مصممين √",
       "lang": "ar"
     },
     {
+      "id": 2082675122,
+      "access_hash": -7774463665727038380,
       "username": "A1_des",
       "title": "قروب مصممين جرافيك",
       "lang": "ar"
     },
     {
+      "id": 2184882521,
+      "access_hash": -4118049890063565272,
       "username": "desinhome",
       "title": "🤩 مجتمع مصممين 🤩",
       "lang": "ar"
     },
     {
+      "id": 1276216628,
+      "access_hash": 7135089501630885559,
       "username": "ssss9999ssss",
       "title": "تجمع مصممين كانفا canva",
       "lang": "ar"
     },
     {
+      "id": 1466470644,
+      "access_hash": -6744613514977757194,
       "username": "AiPsGroup",
       "title": "جروب اليستريتور & فوتوشوب",
       "lang": "ar"
     },
     {
+      "id": 2116190048,
+      "access_hash": 5340200946987261032,
       "username": "ugccreater",
       "title": "للباحثين عن صناع محتوى ugc",
       "lang": "ar"
     },
     {
+      "id": 1155211623,
+      "access_hash": -4818331004501118970,
       "username": "GDesigning",
       "title": "Hire Graphic Designers",
       "lang": "en"
     },
     {
+      "id": 1614066217,
+      "access_hash": -2131488400152995055,
       "username": "Designers_Kids_chat",
       "title": "Designers Kids Chat",
       "lang": "en"
     },
     {
+      "id": 1869823613,
+      "access_hash": -2691333461474071119,
       "username": "designers_chat_rus",
       "title": "ДИЗАЙНЕРЫ ЧАТ",
       "lang": "ru"
     },
     {
+      "id": 1797462776,
+      "access_hash": 8105048109725449045,
       "username": "designers_chatik",
       "title": "ВАКАНСИИ ДЛЯ ДИЗАЙНЕРОВ | ЧАТ",
       "lang": "ru"
     },
     {
+      "id": 1320812388,
+      "access_hash": 6701700884115982672,
       "username": "chatinterfasedesign",
       "title": "Interface designers chat",
       "lang": "en"
     },
     {
+      "id": 1236287023,
+      "access_hash": 2059939338348377475,
       "username": "PCB_Designers_Chat",
       "title": "Чатик для господ топологов",
       "lang": "ru"
     },
     {
+      "id": 1520754004,
+      "access_hash": -5190839912874504140,
       "username": "designers_chati",
       "title": "Designers group chat",
       "lang": "en"
     },
     {
+      "id": 2074060103,
+      "access_hash": 4054662490252927245,
       "username": "GPTFreeChats",
       "title": "ChatGPT",
       "lang": "en"
     },
     {
+      "id": 1959676422,
+      "access_hash": -3371276985680688173,
       "username": "AI_Tools_Group",
       "title": "AI Tools by Sagar",
       "lang": "en"
     },
     {
+      "id": 1411728283,
+      "access_hash": -7461093798961784737,
       "username": "claudec_ai",
       "title": "claudec中转交流群",
       "lang": "en"
     },
     {
+      "id": 1133939389,
+      "access_hash": 8839154685252872499,
       "username": "GROUP4AI",
       "title": "الذكاء الاصطناعي | Artificial Intelligence",
       "lang": "ar"
     },
     {
+      "id": 1851926381,
+      "access_hash": -6107364177455169739,
       "username": "kaustAcademy_AI",
       "title": "KAUST Academy - Artificial Intelligence Program",
       "lang": "en"
     },
     {
+      "id": 2065076537,
+      "access_hash": -3969133827780248522,
       "username": "FreeLancerArabs",
       "title": "ملتقى فريلانسر العرب 💻",
       "lang": "ar"
     },
     {
+      "id": 1408584336,
+      "access_hash": -7645528673817050638,
       "username": "geo_gis_word",
       "title": "وظائف و فريلانسر",
       "lang": "ar"
     },
     {
+      "id": 1407516819,
+      "access_hash": -8387408012100532388,
       "username": "fgajah",
       "title": "نقاشات متظاهرين مستقلين",
       "lang": "ar"
     },
     {
+      "id": 1989900911,
+      "access_hash": -5062226172406604310,
       "username": "bdjvxeao7",
       "title": "مستقلين 🥶 🗿💀..",
       "lang": "ar"
     },
     {
+      "id": 1336350053,
+      "access_hash": -7369249206120223606,
       "username": "ghotatejari",
       "title": "سوق الخدمات في المملكة العربية السعودية",
       "lang": "ar"
     },
     {
+      "id": 3942311561,
+      "access_hash": -8147909926249027208,
       "username": "Fin5h",
       "title": "🇸🇦 سوق الخدمات المحاسبية 🇸🇦",
       "lang": "ar"
     },
     {
+      "id": 2189793083,
+      "access_hash": 4995360572327510096,
       "username": "aaha_sa",
       "title": "سوق الخدمات السعودية",
       "lang": "ar"
     },
     {
+      "id": 1539133264,
+      "access_hash": -2701767535944581096,
       "username": "de44j2iklo7",
       "title": "بيع خدمات مصغرة لوسائل التواصل الاجتماعي لدول الخليج",
       "lang": "ar"
     },
     {
+      "id": 4331934974,
+      "access_hash": 5443594902244149705,
       "username": "GroupREFreelancersSociety",
       "title": "RE Freelancers Community",
       "lang": "en"
     },
     {
+      "id": 1510980906,
+      "access_hash": -3790718358535833634,
       "username": "erpnextfreelancers",
       "title": "ERPNext Freelancers",
       "lang": "en"
     },
     {
+      "id": 1640214159,
+      "access_hash": -7777533426032138969,
       "username": "freelancers00",
       "title": "Freelancers | المستقلون",
       "lang": "ar"
     },
     {
+      "id": 1586976996,
+      "access_hash": -1236774156772605168,
       "username": "blockchainfreelancers",
       "title": "Blockchain Freelancers",
       "lang": "en"
     },
     {
+      "id": 2162215108,
+      "access_hash": -3867507784985296613,
       "username": "workremotelybro",
       "title": "Virtual Assistant/Worldwide Jobs/ Remote Works",
       "lang": "en"
     },
     {
+      "id": 2201493927,
+      "access_hash": -2562935583712775501,
       "username": "upwork_freelancer_accounts_chat",
       "title": "Upwork | Freelancer | Linkedin Accounts Rent Chat",
       "lang": "en"
     },
     {
+      "id": 2406657675,
+      "access_hash": -6757516346768986931,
       "username": "Upworkaccountsrental",
       "title": "Upwork rental",
       "lang": "en"
     },
     {
+      "id": 1484454687,
+      "access_hash": 362056683516822205,
       "username": "upwork66",
       "title": "UpWork Chat",
       "lang": "en"
     },
     {
+      "id": 1880349928,
+      "access_hash": -4114985251298246072,
       "username": "freelancer_learning0",
       "title": "Freelancer & Upwork تعلم",
       "lang": "ar"
     },
     {
+      "id": 2577324786,
+      "access_hash": 3494292128154924501,
       "username": "upworku",
       "title": "Upwork sellers || Payoneer accounts 🇺🇸",
       "lang": "en"
     },
     {
+      "id": 1405372278,
+      "access_hash": 7859200824814542043,
       "username": "fiverrhelpgroup",
       "title": "Freelance || فريلانس",
       "lang": "ar"
     },
     {
+      "id": 1617416064,
+      "access_hash": -6933610619572356109,
       "username": "fiverr_upwork",
       "title": "FIVERR | Upwork | Freelancer | Affiliate Marketing 💰 💻📲",
       "lang": "en"
     },
     {
+      "id": 2160955593,
+      "access_hash": -2567900650790964755,
       "username": "keinfam",
       "title": "Фриланс чат - Kwork | Fiverr | Upwork",
       "lang": "ru"
     },
     {
+      "id": 1552556375,
+      "access_hash": 3611637006164294885,
       "username": "fivereviews",
       "title": "Review on Fiverr Upwork Freelancer",
       "lang": "en"
     },
     {
+      "id": 1222677105,
+      "access_hash": 2160052189598196950,
       "username": "fiverrrgig",
       "title": "Freelancers | Fiverr | Up work |",
       "lang": "en"
     },
     {
+      "id": 1423432234,
+      "access_hash": 6193368197671832843,
       "username": "fiverrf",
       "title": "Fiverr",
       "lang": "en"
     },
     {
+      "id": 1331187851,
+      "access_hash": 3918637616969222905,
       "username": "fiverr7",
       "title": "🏆 Fiverr Best Gigs Freelance Promotion 💻",
       "lang": "en"
     },
     {
+      "id": 1439380308,
+      "access_hash": 4727167389651376807,
       "username": "wecodeone_chat",
       "title": "مبرمجين محترفين | WeCodeOne",
       "lang": "ar"
     },
     {
+      "id": 1835737798,
+      "access_hash": -4417066696475889496,
       "username": "Programmers_1_Community_1",
       "title": "مجتمع مبرمجين | ADC",
       "lang": "ar"
     },
     {
+      "id": 1290863643,
+      "access_hash": 2047588934413025654,
       "username": "mobarmegeen",
       "title": "قعدة مبرمجين",
       "lang": "ar"
     },
     {
+      "id": 1653878266,
+      "access_hash": 7534631001066665533,
       "username": "NaqashatDev",
       "title": "نقاشات مبرمجين",
       "lang": "ar"
     },
     {
+      "id": 3953399038,
+      "access_hash": -3408422479978487607,
       "username": "blackarkchat",
       "title": "قروب مطورين مبرمجين",
       "lang": "ar"
     },
     {
+      "id": 2517245889,
+      "access_hash": 2415534127494680861,
       "username": "ROLEXMOD90",
       "title": "جروب حل مشاكل مطورين",
       "lang": "ar"
     },
     {
+      "id": 4293409833,
+      "access_hash": 2772862356639713396,
       "username": "marshallgroup0000",
       "title": "كروب مطورين مبرمجين",
       "lang": "ar"
     },
     {
+      "id": 1148985517,
+      "access_hash": 7818138262707049768,
       "username": "jr_1z",
       "title": "برمجة جافا, اندرويد, فلاتر",
       "lang": "ar"
     },
     {
+      "id": 2583678370,
+      "access_hash": -5336271044510084147,
       "username": "pydon_chat",
       "title": "حل مشاكل بايثون",
       "lang": "ar"
     },
     {
+      "id": 1046016275,
+      "access_hash": -9188042762843183033,
       "username": "arabipython",
       "title": "بايثون - Python Language",
       "lang": "ar"
     },
     {
+      "id": 1444076420,
+      "access_hash": -1490336297906385471,
       "username": "Analysisdesign_systems_databases",
       "title": "تحليل وتصميم قواعد بيانات تطوير مواقع ويب وتطبيقات الهواتف",
       "lang": "ar"
     },
     {
+      "id": 2712121707,
+      "access_hash": 7567783324768503523,
       "username": "pm_ap",
       "title": "جروب تجمع المبرمجين السعوديين مناقشة اكواد تبادل خبرات برمجية برمجه و تطوير برامج و مواقع ويب",
       "lang": "ar"
     },
     {
+      "id": 1450245685,
+      "access_hash": -6297618621902136644,
       "username": "HTML_CSS_ARAB",
       "title": "Html5 | | CSS ¦¦ لغة تطوير ويب",
       "lang": "ar"
     },
     {
+      "id": 1126759264,
+      "access_hash": 2089953301296795152,
       "username": "mohtrefcom",
       "title": "Programmers Forum",
       "lang": "en"
     },
     {
+      "id": 1157916768,
+      "access_hash": 901316101913017917,
       "username": "DevelopersDiamond",
       "title": "🇸🇦💎 دعم بوت الماسه 💎🇸🇦",
       "lang": "ar"
     },
     {
+      "id": 1444285339,
+      "access_hash": -6443144750773054342,
       "username": "BNBChainDevs",
       "title": "BNB Chain Developers Hub",
       "lang": "en"
     },
     {
+      "id": 1505872605,
+      "access_hash": -1632128877276495398,
       "username": "salladev",
       "title": "</Salla Developers>",
       "lang": "en"
     },
     {
+      "id": 2284133217,
+      "access_hash": -715511201988731147,
       "username": "chat_py3hone",
       "title": "𝘾𝙃𝘼𝙏 𝘿𝙀𝙑 𝙋𝙔𝙏𝙃𝙊𝙉 </> 🔥",
       "lang": "en"
     },
     {
+      "id": 1004766182,
+      "access_hash": 1146408648614980773,
       "username": "coding_ru",
       "title": "💻 Coding Ru",
       "lang": "en"
     },
     {
+      "id": 2221150369,
+      "access_hash": -6302978971975724842,
       "username": "Crypt0_Teech",
       "title": "CRYPTO TECH | Chat",
       "lang": "en"
     },
     {
+      "id": 1935653347,
+      "access_hash": -437758898557754672,
       "username": "techweekchat",
       "title": "Tech Week Chat",
       "lang": "en"
     },
     {
+      "id": 1043259505,
+      "access_hash": 2311597119020894760,
       "username": "tech_chat",
       "title": "Technology & Consumer Electronics",
       "lang": "en"
     },
     {
+      "id": 1266527694,
+      "access_hash": -1721712562644389998,
       "username": "Chat_Tech",
       "title": "TechChat",
       "lang": "en"
     },
     {
+      "id": 3598841210,
+      "access_hash": 5048219851360271731,
       "username": "chat_techn",
       "title": "Technology chat",
       "lang": "en"
     },
     {
+      "id": 1838693055,
+      "access_hash": 5894110325870931633,
       "username": "DigitalMarketing443",
       "title": "تسويق رقمي ( عن بعد ) - جامعة القصيم",
       "lang": "ar"
     },
     {
+      "id": 2760207824,
+      "access_hash": -7565956380416803346,
       "username": "Ahmedvvvvv11111",
       "title": "تسويق سوشيال ميديا Vip🐋👑✌",
       "lang": "ar"
     },
     {
+      "id": 1235758744,
+      "access_hash": -2229988629344053857,
       "username": "smedia047",
       "title": "سوشيال ميدياوي 2021",
       "lang": "ar"
     },
     {
+      "id": 2103645481,
+      "access_hash": -3920864594584261641,
       "username": "socialmediaziad",
       "title": "خدمات سوشيال ميديا",
       "lang": "ar"
     },
     {
+      "id": 1769890002,
+      "access_hash": -4833407363505329982,
       "username": "merasushyalmidya",
       "title": "سوشيال ميديا",
       "lang": "ar"
     },
     {
+      "id": 2427831190,
+      "access_hash": -1490566316684456292,
       "username": "SW_UD",
       "title": "كروب تبادل قنوات مشاهدات اشتراكات",
       "lang": "ar"
     },
     {
+      "id": 2784790684,
+      "access_hash": -3313166307176699843,
       "username": "SN_DN",
       "title": "كروب تبادل قنوات مشاهدات اشتراكات",
       "lang": "ar"
     },
     {
+      "id": 1973428890,
+      "access_hash": -838033971625437413,
       "username": "br_0m",
       "title": "تًٌٍبًٌٍاًٌٍدًٌٍلًٌٍ اًٌٍشًٌٍتًٌٍرًٌٍاكًٌٍاًٌٍتًٌٍ قنًٌٍوًٌٍاًٌٍتًٌٍ مًٌٍشًٌٍاًٌٍهًٌٍداًٌٍتًٌٍ اًٌٍعًٌٍضًٌٍاًٌٍءًٌٍ",
       "lang": "ar"
     },
     {
+      "id": 1810526847,
+      "access_hash": -1215971209076385281,
       "username": "digital_marketing_chat01",
       "title": "Чат | digital маркетологов",
       "lang": "ru"
     },
     {
+      "id": 1167144633,
+      "access_hash": -556185789134928523,
       "username": "digital_chat1",
       "title": "Чат Digital Marketing",
       "lang": "ru"
     },
     {
+      "id": 2435748531,
+      "access_hash": -2552291578862170597,
       "username": "DigitalMarketing_AC",
       "title": "ADVERTISING 📢 DIGITAL MARKETING 🌐 chat",
       "lang": "en"
     },
     {
+      "id": 1888744657,
+      "access_hash": 6129049071676055133,
       "username": "Ecommerce5x",
       "title": "💰Dropshipping-E-commerce/💰التجارة/ الإلكترونية",
       "lang": "ar"
     },
     {
+      "id": 1602239527,
+      "access_hash": -3000668244913134440,
       "username": "e_commerces",
       "title": "E-commerce",
       "lang": "en"
     },
     {
+      "id": 1582273313,
+      "access_hash": 2796474088367479597,
       "username": "software_deals_2021_group",
       "title": "Software deals group",
       "lang": "en"
     },
     {
+      "id": 1669737302,
+      "access_hash": -8070261390601633734,
       "username": "CryptoDenisNFT_chat",
       "title": "DENIS | Crypto & NFT | Chat",
       "lang": "en"
     },
     {
+      "id": 1161864232,
+      "access_hash": 1818549714055846562,
       "username": "coinsbit_chat",
       "title": "Coinsbit CryptoExchange",
       "lang": "en"
     },
     {
+      "id": 1436890846,
+      "access_hash": 9047337598339303039,
       "username": "CryptoMoonShots_Chat",
       "title": "CryptoMoonShots Chat 加密月球shots",
       "lang": "en"
     },
     {
+      "id": 3298610276,
+      "access_hash": 3417509591010732152,
       "username": "chatting_indian_ib",
       "title": "Indian singing crypto",
       "lang": "en"
     },
     {
+      "id": 2378122678,
+      "access_hash": -733817736076149998,
       "username": "CryptoNewsChat5",
       "title": "CRYPTO NEWS CHAT🔥🔥",
       "lang": "en"
     },
     {
+      "id": 1476113309,
+      "access_hash": -82913386933786134,
       "username": "cryptox_chat",
       "title": "CryptoX Vietnam | group chat",
       "lang": "en"
     },
     {
+      "id": 1303623202,
+      "access_hash": -914917740900345076,
       "username": "BinanceArabic",
       "title": "Binance Arabic",
       "lang": "en"
     },
     {
+      "id": 1136071376,
+      "access_hash": 5466863434105129322,
       "username": "BinanceChinese",
       "title": "币安官方中文群",
       "lang": "en"
     },
     {
+      "id": 1602105901,
+      "access_hash": -8700687727946592065,
       "username": "BybitArabic",
       "title": "Bybit Arabic",
       "lang": "en"
     },
     {
+      "id": 1211183589,
+      "access_hash": 6983871954510726711,
       "username": "BybitAfrica",
       "title": "Bybit Africa",
       "lang": "en"
     },
     {
+      "id": 4337692569,
+      "access_hash": -1485508099891286495,
       "username": "mjtmmjtj",
       "title": "دردشة العراق 🇮🇶 | تعارف وسوالف",
       "lang": "ar"
     },
     {
+      "id": 3736420793,
+      "access_hash": 8847408200263978835,
       "username": "nsrpro2",
       "title": "أهل الوناسة | دردشة وسوالف",
       "lang": "ar"
     },
     {
+      "id": 1735629946,
+      "access_hash": -8735230136140579945,
       "username": "hm96ss",
       "title": "جروب دردشة وسوالف يمانيه🤞😎",
       "lang": "ar"
     },
     {
+      "id": 2097774944,
+      "access_hash": 2434897188140103285,
       "username": "Midoo87560",
       "title": "دردشة وسوالف يمانيه",
       "lang": "ar"
     },
     {
+      "id": 3927658762,
+      "access_hash": -3896219465624973166,
       "username": "asxctdvhtfbkitvnhfx76",
       "title": "دردشة وسوالف",
       "lang": "ar"
     },
     {
+      "id": 1904530306,
+      "access_hash": 4459014215794635965,
       "username": "soalvdid",
       "title": "قروب تعارف وسوالف سعوديه",
       "lang": "ar"
     },
     {
+      "id": 2604058823,
+      "access_hash": 7149638057022927476,
       "username": "pb1o8",
       "title": "قروب تعارف وسوالف🗿🧃",
       "lang": "ar"
     },
     {
+      "id": 1512252444,
+      "access_hash": 6140194195018930814,
       "username": "nvv_96",
       "title": "قروب تعارف وسوالف - شباب 💙 وبنات 💗",
       "lang": "ar"
     },
     {
+      "id": 1444938861,
+      "access_hash": 441213057506859464,
       "username": "A_ss101",
       "title": "قروب شباب وبنات اليمن🏅كروب 🍂شباب وبنات العراق دردشة شباب بنات 💚قروب شباب بنات السعودية قروبات تعارف شباب وبنات العرب مجموعة",
       "lang": "ar"
     },
     {
+      "id": 1197548119,
+      "access_hash": -5035031444856269991,
       "username": "elMb4tooroom1",
       "title": "دردشة شباب🔥⚔️وبنات ❤️⚔️الوطن العربي",
       "lang": "ar"
     },
     {
+      "id": 2443179211,
+      "access_hash": -1121887181791199317,
       "username": "tala_groub",
       "title": "دردشة شباب وبنات العرب ✨🌒",
       "lang": "ar"
