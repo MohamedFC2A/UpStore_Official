@@ -3,18 +3,15 @@
 ═══════════════════════════════════════════════════════════════════════════════
 🌐 UPSTORE AUTONOMOUS SELF-EVOLVING 24/7 PROMOTION & DISCOVERY ENGINE
 ═══════════════════════════════════════════════════════════════════════════════
-World-Class Autonomous Marketing Engine with:
-1. 🧠 Self-Evolving Group Discovery: Autonomously crawls, discovers, and verifies
-   fresh high-traffic open supergroups across High School, Universities, AI & Tech.
-2. 💀 Instant Dead-Group Execution & Blacklist Quarantining: Auto-purges dead/restricted chats.
-3. ⭐ VIP Golden Registry Intelligence: Tracks and ranks top-performing communities.
-4. 🛡️ Infinite Self-Healing Supervisor:
-   - Clean PM2 Logging & Non-TTY Optimization.
-   - Auto-joins discussion groups and quarantines unjoinable channels.
-   - Windows QuickEdit Freeze Protection.
-   - BaseException / Network Drop Resilience (auto-reconnects & never terminates).
-   - Direct InputPeerChannel Execution (zero username resolve rate-limits).
-5. 🎯 Laser-Focused Conversion Offer:
+Enterprise Indestructible Architecture:
+1. 🔄 Clean Cycle-Level MTProto Lifecycle: Auto-reconnects cleanly every round.
+2. ⚡ Real-Time Unbuffered Logging (flush=True everywhere).
+3. ⏱️ Strict RPC Timeouts (asyncio.wait_for <= 12s on all network calls).
+4. 🧠 Self-Evolving Group Discovery: Autonomously crawls, discovers & verifies open supergroups.
+5. 💀 Instant Dead-Group Execution & Blacklist Quarantining.
+6. ⭐ VIP Golden Registry Intelligence: Tracks and ranks top-performing communities.
+7. 🛡️ Infinite Self-Healing Supervisor: Runs perpetually 24/7/365 on VPS under PM2.
+8. 🎯 Laser-Focused Conversion Offer:
    - Gemini Advanced 18 Months ($0.25) + ChatGPT Plus Wholesale.
    - Ref: https://t.me/upstore_one_bot?start=ref_8495121463
 ═══════════════════════════════════════════════════════════════════════════════
@@ -22,12 +19,16 @@ World-Class Autonomous Marketing Engine with:
 
 import asyncio
 import ctypes
+import functools
 import json
 import os
 import random
 import sys
 import time
 from datetime import datetime
+
+# Enforce real-time unbuffered printing across the entire process
+print = functools.partial(print, flush=True)
 
 try:
     from telethon import TelegramClient
@@ -87,8 +88,8 @@ ROUND_REST_MINUTES_MIN = 15    # Minutes
 ROUND_REST_MINUTES_MAX = 25    # Minutes
 TYPING_DURATION_MIN = 2        # Seconds
 TYPING_DURATION_MAX = 3        # Seconds
+NETWORK_TIMEOUT_SEC = 12       # Maximum seconds per network RPC call
 
-# Autonomous Search Topics Pool for Continuous Organic Group Discovery
 AUTONOMOUS_SEARCH_CLUSTERS = [
     # High School & Baccalaureate 2026/2027
     "ثانوية عامة 2027", "دفعة تالتة ثانوي 2027", "بكالوريا 2027", "توجيهي 2027",
@@ -237,7 +238,7 @@ def save_target_groups(groups):
 
 async def autonomous_discover_new_groups(client, max_discover=10):
     """Autonomously explores and adds verified active supergroups to the target pool."""
-    print("🧠 [Autonomous Discovery] Scanning Telegram network for fresh active supergroups...", flush=True)
+    print("🧠 [Autonomous Discovery] Scanning Telegram network for fresh active supergroups...")
     blacklist = load_blacklist()
     current_targets = load_target_groups()
     seen_unames = set(g["username"].lower().lstrip("@").strip() for g in current_targets)
@@ -247,7 +248,7 @@ async def autonomous_discover_new_groups(client, max_discover=10):
     added_count = 0
 
     try:
-        res = await client(SearchRequest(q=query, limit=30))
+        res = await asyncio.wait_for(client(SearchRequest(q=query, limit=30)), timeout=12.0)
         for chat in res.chats:
             if added_count >= max_discover:
                 break
@@ -279,7 +280,7 @@ async def autonomous_discover_new_groups(client, max_discover=10):
 
             # Verification 4: Dead Group Killer (Multi-user human activity)
             try:
-                msgs = await client.get_messages(chat, limit=6)
+                msgs = await asyncio.wait_for(client.get_messages(chat, limit=6), timeout=8.0)
                 if not msgs or len(msgs) < 2:
                     continue
                 senders = set(m.sender_id for m in msgs if m.sender_id)
@@ -309,13 +310,13 @@ async def autonomous_discover_new_groups(client, max_discover=10):
             seen_unames.add(clean_uname)
             seen_ids.add(chat.id)
             added_count += 1
-            print(f"  ✨ [New Group Discovered]: @{username} | '{title}' [{lang.upper()}]", flush=True)
+            print(f"  ✨ [New Group Discovered]: @{username} | '{title}' [{lang.upper()}]")
 
         if added_count > 0:
             save_target_groups(current_targets)
-            print(f"🧠 [Discovery Complete] Successfully integrated {added_count} new open chats into active database!\n", flush=True)
+            print(f"🧠 [Discovery Complete] Successfully integrated {added_count} new open chats into active database!\n")
     except Exception as e:
-        print(f"⚠️ Note in discovery: {e}", flush=True)
+        print(f"⚠️ Note in discovery: {e}")
 
 # ─────────────────────────────────────────────────────────────────────────────
 # 6. HIGH-CONVERTING PERSUASIVE COPYWRITING (GEMINI & CHATGPT ONLY)
@@ -400,11 +401,10 @@ async def simulate_human_typing(client, entity, duration_sec):
 
 
 async def live_countdown(seconds, label="Safety Cooldown"):
-    # Clean output for background PM2 log files
     if not sys.stdout.isatty():
-        print(f"  ⏳ {label} ({seconds}s)...", flush=True)
+        print(f"  ⏳ {label} ({seconds}s)...")
         await asyncio.sleep(seconds)
-        print(f"  ✅ {label} completed. Proceeding.", flush=True)
+        print(f"  ✅ {label} completed. Proceeding.")
         return
 
     for remaining in range(seconds, 0, -1):
@@ -463,14 +463,15 @@ async def run_promoter_cycle(client, cycle_num):
         try:
             print(f"[{index:03d}/{len(ordered_targets):03d}] 🔍 Target: @{group_target} ({group_title}){vip_tag} [Lang: {group_lang}]")
             
+            # Resolve entity with strict timeout
             if channel_id and access_hash:
                 entity = InputPeerChannel(channel_id, access_hash)
             else:
-                entity = await client.get_entity(group_target)
+                entity = await asyncio.wait_for(client.get_entity(group_target), timeout=NETWORK_TIMEOUT_SEC)
 
-            # Dead Group Killer Verification
+            # Dead Group Killer Verification with strict timeout
             try:
-                msgs = await client.get_messages(entity, limit=6)
+                msgs = await asyncio.wait_for(client.get_messages(entity, limit=6), timeout=8.0)
                 if not msgs or len(msgs) < 2:
                     add_to_blacklist(group_target, "Dead Group (< 2 messages found)", group_title)
                     blacklisted_count += 1
@@ -490,7 +491,8 @@ async def run_promoter_cycle(client, cycle_num):
             print(f"  ✍️ Simulating human typing ({typing_duration}s)...")
             await simulate_human_typing(client, entity, typing_duration)
             
-            await client.send_message(entity, message_text)
+            # Send message with strict timeout
+            await asyncio.wait_for(client.send_message(entity, message_text), timeout=NETWORK_TIMEOUT_SEC)
             print(f"  🎉 Message posted successfully to @{group_target}!")
             
             tier, score = record_vip_success(target_info)
@@ -504,6 +506,9 @@ async def run_promoter_cycle(client, cycle_num):
                 cooldown = random.randint(INTER_GROUP_COOLDOWN_MIN, INTER_GROUP_COOLDOWN_MAX)
                 await live_countdown(cooldown, "Inter-Group Cooldown")
 
+        except asyncio.TimeoutError:
+            print(f"  ⚠️ Timeout on @{group_target} (> {NETWORK_TIMEOUT_SEC}s). Skipping safely to next target...")
+            continue
         except FloodWaitError as e:
             if e.seconds > 60:
                 print(f"  ⚠️ FloodWait rate-limit ({e.seconds}s) on @{group_target}. Quarantining & skipping...")
@@ -531,10 +536,9 @@ async def run_promoter_cycle(client, cycle_num):
                 add_to_blacklist(group_target, f"Write forbidden: {err_str}", group_title)
                 blacklisted_count += 1
             elif "join the discussion group" in err_str.lower() or "discussion group before commenting" in err_str.lower():
-                # Attempt automatic joining once
                 try:
-                    await client(JoinChannelRequest(entity))
-                    await client.send_message(entity, message_text)
+                    await asyncio.wait_for(client(JoinChannelRequest(entity)), timeout=NETWORK_TIMEOUT_SEC)
+                    await asyncio.wait_for(client.send_message(entity, message_text), timeout=NETWORK_TIMEOUT_SEC)
                     print(f"  🎉 Message posted after auto-joining @{group_target}!")
                     tier, score = record_vip_success(target_info)
                     success_count += 1
@@ -551,7 +555,7 @@ async def run_promoter_cycle(client, cycle_num):
 
 
 async def supervisor_main():
-    """Perpetual self-evolving supervisor loop."""
+    """Perpetual self-evolving supervisor loop with clean cycle-level client lifecycle."""
     disable_windows_quickedit()
 
     if not API_ID or not API_HASH:
@@ -563,28 +567,28 @@ async def supervisor_main():
     print("║   🎯 Offer: Gemini Advanced 18M ($0.25) & ChatGPT Plus     ║")
     print("║   🧠 Autonomous Group Discovery: ENABLED                   ║")
     print("║   💀 Dead Group Killer + VIP Registry: ACTIVE              ║")
-    print("║   🛡️ Windows QuickEdit Freeze Protection: ACTIVE           ║")
+    print("║   🛡️ Infinite VPS Daemon: ACTIVE                           ║")
     print("║   📌 Referral Link: " + BOT_REF_LINK[:32] + "...   ║")
     print("╚════════════════════════════════════════════════════════════╝\n")
 
-    client = TelegramClient(SESSION_NAME, API_ID, API_HASH)
-    await client.start()
-    
-    me = await client.get_me()
-    print(f"👤 Authenticated as: {me.first_name} (@{me.username or 'NoUsername'}) [ID: {me.id}]")
-    
-    blacklist = load_blacklist()
-    vip_db = load_vip_database()
-    active_pool = load_target_groups()
-    
-    print(f"🛡️ Active Blacklist: {len(blacklist)} groups permanently quarantined.")
-    print(f"⭐ VIP Golden Registry: {len(vip_db)} high-engagement groups.")
-    print(f"📋 Verified Target Pool: {len(active_pool)} active open supergroups loaded.")
-    print(f"⚡ Mode: Autonomous Perpetual Execution (Runs 24/7/365 indefinitely).\n")
-
     cycle = 1
     while True:
+        client = TelegramClient(SESSION_NAME, API_ID, API_HASH)
         try:
+            await client.start()
+            
+            me = await client.get_me()
+            print(f"👤 Authenticated as: {me.first_name} (@{me.username or 'NoUsername'}) [ID: {me.id}]")
+            
+            blacklist = load_blacklist()
+            vip_db = load_vip_database()
+            active_pool = load_target_groups()
+            
+            print(f"🛡️ Active Blacklist: {len(blacklist)} groups permanently quarantined.")
+            print(f"⭐ VIP Golden Registry: {len(vip_db)} high-engagement groups.")
+            print(f"📋 Verified Target Pool: {len(active_pool)} active open supergroups loaded.")
+            print(f"⚡ Mode: Autonomous Perpetual Execution (Runs 24/7/365 indefinitely).\n")
+
             # 1. Autonomous Self-Evolution: Discover new groups before cycle
             await autonomous_discover_new_groups(client, max_discover=8)
             
@@ -607,16 +611,14 @@ async def supervisor_main():
             break
         except BaseException as e:
             print(f"\n⚠️ [Auto-Recovery Supervisor] Caught: {type(e).__name__}: {e}")
-            print("🔄 Self-healing in progress: Reconnecting client and resuming loop in 10 seconds...\n")
+            print("🔄 Self-healing in progress: Reconnecting and resuming loop in 10 seconds...\n")
             await asyncio.sleep(10)
+        finally:
             try:
-                if not client.is_connected():
-                    await client.connect()
+                if client.is_connected():
+                    await client.disconnect()
             except Exception:
                 pass
-
-    if client.is_connected():
-        await client.disconnect()
 
 
 if __name__ == "__main__":
