@@ -44,38 +44,28 @@ SESSION_NAME = "upstore_promoter_session"
 BOT_REF_LINK = "https://t.me/upstore_one_bot"
 
 # ─────────────────────────────────────────────────────────────────────────────
-# 2. TARGET TELEGRAM COMMUNITIES (Verified Open Supergroups & Discussions)
+# 2. TARGET TELEGRAM COMMUNITIES (100% Verified Pure Open Discussion Chats)
 # ─────────────────────────────────────────────────────────────────────────────
 TARGET_GROUPS = [
-    # Arabic Tech & Skills
-    {"username": "jor294", "lang": "ar", "name": "تبادل خبرات المهارات الرقمية"},
-    {"username": "jor7070", "lang": "ar", "name": "تبادل خبرات التقنية والتعليم"},
-    {"username": "signals_crypto_arabic_chat", "lang": "ar", "name": "مجتمع الكريبتو العربي"},
-    {"username": "Shawxvip2", "lang": "ar", "name": "رواد الذكاء الاصطناعي"},
-    {"username": "modmentadawulgroups", "lang": "ar", "name": "نقاشات عامة"},
-    {"username": "akkffh", "lang": "ar", "name": "مصممي الجرافيك وكانفا"},
-    {"username": "O7nkKzTJfDA3OGQ0", "lang": "ar", "name": "المجتمعات المهنية"},
-    {"username": "A1_des", "lang": "ar", "name": "مصممين جرافيك وكانفا"},
-    {"username": "designerssoftwear", "lang": "ar", "name": "برمجيات المصممين"},
-    {"username": "AIApproachClub", "lang": "ar", "name": "نادي نهج الذكاء الاصطناعي"},
-    {"username": "maryamalbatoulofficielle", "lang": "ar", "name": "خدمات رقمية واشتراكات"},
-    {"username": "progAi2", "lang": "ar", "name": "مبرمجين الذكاء الاصطناعي"},
-    {"username": "Arabdesign21", "lang": "ar", "name": "ملتقى المصممين العرب"},
-    {"username": "sezar_apk_chat", "lang": "ar", "name": "عالم التقنية والتطبيقات"},
-    {"username": "FV_MM", "lang": "ar", "name": "نقاشات عامة"},
-    {"username": "cfvdvhbsn", "lang": "ar", "name": "عالم المصممين"},
-    {"username": "X4JJJ", "lang": "ar", "name": "مطوري البوتات والمبرمجين"},
-    {"username": "AIAgentsEngineersSociety", "lang": "ar", "name": "مهندسي الذكاء الاصطناعي"},
-    {"username": "blackarkchat", "lang": "ar", "name": "مطورين ومبرمجين"},
-    {"username": "ALULYAAi1", "lang": "ar", "name": "عالم الذكاء الاصطناعي"},
-    {"username": "csAlit22", "lang": "ar", "name": "حاسبات وذكاء اصطناعي"},
-    {"username": "chatgpt_arabic", "lang": "ar", "name": "شات جي بي تي بالعربي"},
+    # Top Arabic Active Design, AI & Developer Chats (شاتات مفتوحة ونشطة)
+    {"username": "akkffh", "lang": "ar", "name": "قروب مصممي الجرافيك وكانفا (2.6K)"},
+    {"username": "A1_des", "lang": "ar", "name": "قروب مصممي الجرافيك (1.2K)"},
+    {"username": "modmentadawulgroups", "lang": "ar", "name": "جروب نقاشات عامة وعروض (3.3K)"},
+    {"username": "designerssoftwear", "lang": "ar", "name": "ملتقى برمجيات المصممين (857)"},
+    {"username": "AIApproachClub", "lang": "ar", "name": "نادي نهج الذكاء الاصطناعي (789)"},
+    {"username": "maryamalbatoulofficielle", "lang": "ar", "name": "خدمات رقمية واشتراكات (536)"},
+    {"username": "progAi2", "lang": "ar", "name": "مبرمجين الذكاء الاصطناعي (457)"},
+    {"username": "Arabdesign21", "lang": "ar", "name": "ملتقى المصممين العرب (370)"},
+    {"username": "blackarkchat", "lang": "ar", "name": "قروب مطورين ومبرمجين (140)"},
+    {"username": "ALULYAAi1", "lang": "ar", "name": "نقاشات عالم الذكاء الاصطناعي (123)"},
+    {"username": "csAlit22", "lang": "ar", "name": "حاسبات وذكاء اصطناعي (117)"},
+    {"username": "areejdi", "lang": "ar", "name": "قروب مصممي الجرافيك (91)"},
     
-    # International & Digital Marketing (English & Russian)
-    {"username": "digital_marketing_chat01", "lang": "ru", "name": "Digital Marketing Chat RU"},
-    {"username": "digital_chat1", "lang": "ru", "name": "Digital Chat RU"},
-    {"username": "DigitalMarketing_AC", "lang": "en", "name": "Digital Marketing Global Chat"},
-    {"username": "AI_Tools_Group", "lang": "en", "name": "AI Tools Discussion Group"}
+    # International Active Open Chats (English & Russian)
+    {"username": "digital_marketing_chat01", "lang": "ru", "name": "Digital Marketing Chat (7K)"},
+    {"username": "digital_chat1", "lang": "ru", "name": "Digital Chat RU (856)"},
+    {"username": "DigitalMarketing_AC", "lang": "en", "name": "Digital Marketing Global (243)"},
+    {"username": "AI_Tools_Group", "lang": "en", "name": "AI Tools Discussion Group (194)"}
 ]
 
 # ─────────────────────────────────────────────────────────────────────────────
@@ -220,12 +210,13 @@ async def main():
             print(f"[{index:02d}/{len(TARGET_GROUPS):02d}] 🔍 Target: @{group_target} ({group_name}) [Lang: {group_lang}]")
             entity = await client.get_entity(group_target)
             
-            # Step 1: Auto-join group/channel if not already joined
-            try:
-                await client(JoinChannelRequest(entity))
-                await asyncio.sleep(1.5)
-            except Exception:
-                pass
+            # Step 1: Auto-join group/channel ONLY if not already joined
+            if getattr(entity, 'left', False):
+                try:
+                    await client(JoinChannelRequest(entity))
+                    await asyncio.sleep(1.5)
+                except Exception:
+                    pass
 
             # Step 2: Select native copywriting based on language
             message_text = get_copywriting_for_target(target_info)
