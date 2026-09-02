@@ -1,6 +1,7 @@
 {
   "description": "Persistent blacklist of unusable, restricted, paid, or dead Telegram groups.",
-  "updated_at": "2026-09-02T07:45:00Z",
+  "updated_at": "2026-09-02T07:56:15.115762",
+  "total_blacklisted": 14,
   "blacklisted_groups": {
     "gemini12pro": {
       "reason": "Requires 2 Telegram Stars fee per message (ALLOW_PAYMENT_REQUIRED)",
@@ -49,6 +50,16 @@
     "AIAgentsEngineersSociety": {
       "reason": "Admin-only posting in supergroup",
       "added_at": "2026-09-02 07:45:00 AM"
+    },
+    "areejdi": {
+      "title": "قروب مصممي الجرافيك (91)",
+      "reason": "Posting restricted by admin / muted (ChatWriteForbiddenError)",
+      "added_at": "2026-09-02 07:51:34 AM"
+    },
+    "designerssoftwear": {
+      "title": "ملتقى برمجيات المصممين (857)",
+      "reason": "Posting restricted by admin / muted (ChatWriteForbiddenError)",
+      "added_at": "2026-09-02 07:56:13 AM"
     }
   }
 }
